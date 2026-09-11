@@ -3112,6 +3112,23 @@
   var WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyBvfKOgCehYtXSmR7Ml7Ak2UolUo5zsTK81c9QD51i4uVQW1-KH6TlyPoRuGDbFGj2/exec";
   var FORCE_HYBRID = false;
 
+  
+  // Antrian fetch hybrid: max 3 paralel (hindari 404/timeout Apps Script saat banjir request)
+  var _hybridQ = [];
+  var _hybridActive = 0;
+  var _HYBRID_MAX = 3;
+  function _hybridPump(){
+    while (_hybridActive < _HYBRID_MAX && _hybridQ.length) {
+      var job = _hybridQ.shift();
+      _hybridActive++;
+      job(function(){ _hybridActive--; _hybridPump(); });
+    }
+  }
+  function _hybridEnqueue(runFn){
+    _hybridQ.push(runFn);
+    _hybridPump();
+  }
+
   (function installHybridGasRun(){
     var nativeRun = (window.google && google.script && google.script.run) ? google.script.run : null;
     var host = (location && location.hostname) || "";
@@ -3137,45 +3154,48 @@
 
         // GET untuk request biasa (andal dari GitHub Pages)
         // POST hanya kalau payload besar (upload)
-        var usePost = payload.length > 1500;
-        var req;
-        if (usePost) {
-          req = fetch(WEB_APP_URL, {
-            method: "POST",
-            mode: "cors",
-            redirect: "follow",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: action, args: args }),
-            signal: ctrl ? ctrl.signal : undefined
-          });
-        } else {
-          var url = WEB_APP_URL +
-            (WEB_APP_URL.indexOf("?") >= 0 ? "&" : "?") +
-            "action=" + encodeURIComponent(action) +
-            "&args=" + encodeURIComponent(payload);
-          req = fetch(url, {
-            method: "GET",
-            mode: "cors",
-            redirect: "follow",
-            signal: ctrl ? ctrl.signal : undefined
-          });
-        }
+        _hybridEnqueue(function(done){
+          var usePost = payload.length > 1500;
+          var req;
+          if (usePost) {
+            req = fetch(WEB_APP_URL, {
+              method: "POST",
+              mode: "cors",
+              redirect: "follow",
+              headers: { "Content-Type": "text/plain;charset=utf-8" },
+              body: JSON.stringify({ action: action, args: args }),
+              signal: ctrl ? ctrl.signal : undefined
+            });
+          } else {
+            var url = WEB_APP_URL +
+              (WEB_APP_URL.indexOf("?") >= 0 ? "&" : "?") +
+              "action=" + encodeURIComponent(action) +
+              "&args=" + encodeURIComponent(payload);
+            req = fetch(url, {
+              method: "GET",
+              mode: "cors",
+              redirect: "follow",
+              signal: ctrl ? ctrl.signal : undefined
+            });
+          }
 
-        req.then(function(res){
-          clearTimeout(timer);
-          if (!res.ok) throw new Error("HTTP " + res.status);
-          return res.text();
-        })
-        .then(function(txt){
-          var data;
-          try { data = JSON.parse(txt); }
-          catch (e) { throw new Error("Respons bukan JSON: " + String(txt).slice(0, 160)); }
-          okFn(data);
-        })
-        .catch(function(err){
-          clearTimeout(timer);
-          var msg = (err && err.name === "AbortError") ? "Timeout ke server (60 dtk)" : (err && err.message ? err.message : String(err));
-          errFn({ message: msg });
+          req.then(function(res){
+            clearTimeout(timer);
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.text();
+          })
+          .then(function(txt){
+            var data;
+            try { data = JSON.parse(txt); }
+            catch (e) { throw new Error("Respons bukan JSON: " + String(txt).slice(0, 160)); }
+            okFn(data);
+          })
+          .catch(function(err){
+            clearTimeout(timer);
+            var msg = (err && err.name === "AbortError") ? "Timeout ke server (60 dtk)" : (err && err.message ? err.message : String(err));
+            errFn({ message: msg });
+          })
+          .then(function(){ done(); }, function(){ done(); });
         });
       }
 
@@ -7789,13 +7809,9 @@
       syncKanitAuditFromTanggal();
     };
   }
-  if(typeof loadAuditAdmin === "function"){
-    var _laa = loadAuditAdmin;
-    loadAuditAdmin = function(){
-      _laa();
-      loadAuditPengajuanAdmin();
-    };
-  }
+  // Antrian pengajuan: jangan auto-load (berat + sering timeout/404 di hybrid).
+  // User klik "Muat antrian" saja.
+
 
 
   function openKanitAuditReportPage(){
