@@ -3123,10 +3123,8 @@
     function makeRunner(){
       var okFn = function(){};
       var errFn = function(){};
-      var runner = {
-        withSuccessHandler: function(fn){ okFn = typeof fn === "function" ? fn : function(){}; return runner; },
-        withFailureHandler: function(fn){ errFn = typeof fn === "function" ? fn : function(){}; return runner; }
-      };
+      var proxy;
+
       function callAction(action, args){
         if (!WEB_APP_URL) {
           errFn({ message: "WEB_APP_URL belum diisi. Isi URL Web App Apps Script di Index.html." });
@@ -3137,8 +3135,8 @@
         var ctrl = (typeof AbortController === "function") ? new AbortController() : null;
         var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, 60000);
 
-        // GET untuk request biasa (sudah terbukti jalan di browser lewat ?api=1)
-        // POST hanya kalau payload besar (upload base64 dll) — limit URL ~8KB
+        // GET untuk request biasa (andal dari GitHub Pages)
+        // POST hanya kalau payload besar (upload)
         var usePost = payload.length > 1500;
         var req;
         if (usePost) {
@@ -3180,22 +3178,24 @@
           errFn({ message: msg });
         });
       }
-      // Proxy agar google.script.run.anyFunction(...) tetap jalan
-      if (typeof Proxy === "function") {
-        return new Proxy(runner, {
-          get: function(target, prop){
-            if (prop in target) return target[prop];
-            if (typeof prop === "symbol") return undefined;
-            return function(){
-              var args = Array.prototype.slice.call(arguments);
-              callAction(String(prop), args);
-            };
-          }
-        });
-      }
-      // Fallback tanpa Proxy (jarang)
-      runner.__call = callAction;
-      return runner;
+
+      var runner = {
+        // WAJIB return proxy, bukan runner mentah — supaya .getCabangList() tetap ke-Proxy
+        withSuccessHandler: function(fn){ okFn = typeof fn === "function" ? fn : function(){}; return proxy; },
+        withFailureHandler: function(fn){ errFn = typeof fn === "function" ? fn : function(){}; return proxy; }
+      };
+
+      proxy = new Proxy(runner, {
+        get: function(target, prop){
+          if (prop in target) return target[prop];
+          if (typeof prop === "symbol") return undefined;
+          return function(){
+            var args = Array.prototype.slice.call(arguments);
+            callAction(String(prop), args);
+          };
+        }
+      });
+      return proxy;
     }
 
     window.google = window.google || {};
