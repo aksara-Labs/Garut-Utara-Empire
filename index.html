@@ -3132,18 +3132,38 @@
           errFn({ message: "WEB_APP_URL belum diisi. Isi URL Web App Apps Script di Index.html." });
           return;
         }
-        // text/plain = hindari CORS preflight (OPTIONS) yang sering gagal di Apps Script
+        args = args || [];
+        var payload = JSON.stringify(args);
         var ctrl = (typeof AbortController === "function") ? new AbortController() : null;
-        var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, 45000);
-        fetch(WEB_APP_URL, {
-          method: "POST",
-          mode: "cors",
-          redirect: "follow",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action: action, args: args || [] }),
-          signal: ctrl ? ctrl.signal : undefined
-        })
-        .then(function(res){
+        var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, 60000);
+
+        // GET untuk request biasa (sudah terbukti jalan di browser lewat ?api=1)
+        // POST hanya kalau payload besar (upload base64 dll) — limit URL ~8KB
+        var usePost = payload.length > 1500;
+        var req;
+        if (usePost) {
+          req = fetch(WEB_APP_URL, {
+            method: "POST",
+            mode: "cors",
+            redirect: "follow",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: action, args: args }),
+            signal: ctrl ? ctrl.signal : undefined
+          });
+        } else {
+          var url = WEB_APP_URL +
+            (WEB_APP_URL.indexOf("?") >= 0 ? "&" : "?") +
+            "action=" + encodeURIComponent(action) +
+            "&args=" + encodeURIComponent(payload);
+          req = fetch(url, {
+            method: "GET",
+            mode: "cors",
+            redirect: "follow",
+            signal: ctrl ? ctrl.signal : undefined
+          });
+        }
+
+        req.then(function(res){
           clearTimeout(timer);
           if (!res.ok) throw new Error("HTTP " + res.status);
           return res.text();
@@ -3151,12 +3171,12 @@
         .then(function(txt){
           var data;
           try { data = JSON.parse(txt); }
-          catch (e) { throw new Error("Respons bukan JSON: " + String(txt).slice(0, 120)); }
+          catch (e) { throw new Error("Respons bukan JSON: " + String(txt).slice(0, 160)); }
           okFn(data);
         })
         .catch(function(err){
           clearTimeout(timer);
-          var msg = (err && err.name === "AbortError") ? "Timeout 45 detik ke server" : (err && err.message ? err.message : String(err));
+          var msg = (err && err.name === "AbortError") ? "Timeout ke server (60 dtk)" : (err && err.message ? err.message : String(err));
           errFn({ message: msg });
         });
       }
