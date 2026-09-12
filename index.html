@@ -3227,6 +3227,73 @@
     display:flex; align-items:center; gap:10px;
   }
 
+
+  /* Cash Opname — teks & nominal harus terbaca */
+  #tab-cashopname, #tab-cashopname *{
+    color:#E2E8F0;
+  }
+  #tab-cashopname h3,
+  #tab-cashopname h4,
+  #tab-cashopname .co-card h4,
+  #tab-cashopname .admin-section-title{
+    color:#F8FAFC !important;
+  }
+  #tab-cashopname label,
+  #tab-cashopname .lab,
+  #tab-cashopname .co-card label,
+  #tab-cashopname .co-card .lab,
+  #tab-cashopname .co-line{
+    color:#CBD5E1 !important;
+  }
+  #tab-cashopname .co-denom-table td,
+  #tab-cashopname .co-denom-table th,
+  #tab-cashopname .co-denom-table .co-sum,
+  #tab-cashopname .co-denom-foot,
+  #tab-cashopname .co-denom-foot span,
+  #tab-cashopname .co-denom-head,
+  #tab-cashopname .co-denom-head span{
+    color:#F1F5F9 !important;
+  }
+  #tab-cashopname input,
+  #tab-cashopname select,
+  #tab-cashopname textarea,
+  #tab-cashopname input.co-qty,
+  #tab-cashopname #coDataProgram,
+  #tab-cashopname #coKkPakai,
+  #tab-cashopname #coKkAwal,
+  #tab-cashopname #coKkSisa,
+  #tab-cashopname #coMateraiPakai,
+  #tab-cashopname #coMateraiNilai,
+  #tab-cashopname #coMateraiSisa,
+  #tab-cashopname [id^="co"]{
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+    background:rgba(15,23,42,0.85) !important;
+    border:1px solid rgba(255,255,255,0.18) !important;
+  }
+  #tab-cashopname input:disabled,
+  #tab-cashopname input[readonly],
+  #tab-cashopname [readonly],
+  #tab-cashopname [disabled]{
+    color:#E2E8F0 !important;
+    -webkit-text-fill-color:#E2E8F0 !important;
+    opacity:1 !important;
+  }
+  #tab-cashopname .co-result-big,
+  #tab-cashopname #coSideProgram,
+  #tab-cashopname #coSideFisik,
+  #tab-cashopname #coSelisihVal,
+  #tab-cashopname #coSelisihLbl{
+    color:#FFFFFF !important;
+  }
+  #tab-cashopname .co-sign .lab{ color:#94A3B8 !important; }
+  #tab-cashopname .co-sign .name{ color:#F8FAFC !important; }
+  #tab-cashopname .co-status .msg,
+  #tab-cashopname .co-status p,
+  #tab-cashopname .co-status div{
+    color:#E2E8F0 !important;
+  }
+
 </style>
 </head>
 <body>
@@ -4066,7 +4133,7 @@
             </div>
             <div class="co-card">
               <h4>Kas Kecil</h4>
-              <div class="field"><label>Saldo awal (otomatis)</label><input type="text" id="coKkAwal" value="0" readonly></div>
+              <div class="field"><label>Saldo awal (otomatis)</label><input type="text" id="coKkAwal" value="0" readonly><div id="coKkAwalHint" style="font-size:11px;color:#94A3B8;margin-top:4px;"></div></div>
               <div class="field"><label>Pemakaian</label><input type="text" inputmode="decimal" id="coKkPakai" value="" placeholder="—" autocomplete="off"></div>
               <div class="field"><label>Sisa kas kecil</label><div id="coKkSisa" style="font-family:JetBrains Mono,monospace;font-weight:700;">Rp 0</div></div>
             </div>
@@ -4440,7 +4507,7 @@
         args = args || [];
         var payload = JSON.stringify(args);
         var ctrl = (typeof AbortController === "function") ? new AbortController() : null;
-        var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, 60000);
+        var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, 25000);
 
         // GET untuk request biasa (andal dari GitHub Pages)
         // POST hanya kalau payload besar (upload)
@@ -4546,13 +4613,17 @@
   };
 
   // Cache browser: data terakhir langsung tampil, refresh di background
-  function cKey(parts){ return "gue_v2_" + (Array.isArray(parts) ? parts.join("|") : String(parts)); }
-  var CACHE_TTL_MS = 10 * 60 * 1000; // 10 menit tampil dari cache, skip refresh
+  function cKey(parts){ return "gue_v4_" + (Array.isArray(parts) ? parts.join("|") : String(parts)); }
+  var CACHE_TTL_MS = 30 * 60 * 1000; // 30 menit — tampil instan dari cache
+  function cReadRaw_(key){
+    try{
+      var raw = sessionStorage.getItem(key) || localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    }catch(e){ return null; }
+  }
   function cGet(key, maxAge){
     try{
-      var raw = sessionStorage.getItem(key);
-      if(!raw) return null;
-      var o = JSON.parse(raw);
+      var o = cReadRaw_(key);
       if(!o || o.data === undefined) return null;
       if(maxAge && o.t && (Date.now() - o.t > maxAge)) return null;
       return o.data;
@@ -4560,14 +4631,14 @@
   }
   function cAge(key){
     try{
-      var raw = sessionStorage.getItem(key);
-      if(!raw) return null;
-      var o = JSON.parse(raw);
+      var o = cReadRaw_(key);
       return o && o.t ? (Date.now() - o.t) : null;
     }catch(e){ return null; }
   }
   function cSet(key, data){
-    try{ sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), data: data })); }catch(e){}
+    var payload = JSON.stringify({ t: Date.now(), data: data });
+    try{ sessionStorage.setItem(key, payload); }catch(e){}
+    try{ localStorage.setItem(key, payload); }catch(e){}
   }
   function cIsFresh(key, maxAge){
     var a = cAge(key);
@@ -5338,12 +5409,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         if(r.ok){
           session.adminPin = pin;
           openAdminDashboard();
-          // prefetch data berat di background (paralel)
-          setTimeout(function(){
-            try{ loadAdminSummary(); }catch(e){}
-            try{ loadKinerjaHarian(false); }catch(e){}
-            try{ loadAdminBertugas(); }catch(e){}
-          }, 100);
+          // Hanya ringkasan (ringan). Data berat load saat buka tab-nya.
         } else {
           showMsg(msgEl, "PIN admin salah.", "err");
         }
@@ -5392,8 +5458,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
   }
 
   function openAdminDashboard(){
-    setTimeout(function(){ try{ loadAdminNotifications(); }catch(e){} }, 1200);
-    setTimeout(function(){ try{ loadAdminBertugas(); }catch(e){} }, 800);
+    /* notifikasi & bertugas: load saat tab dibuka, bukan saat login */
     document.getElementById("adminGreeting").innerHTML = getGreeting() + ", <b>" + getAdminDisplayName() + "</b>";
     showScreen("screen-admin-dashboard");
     document.getElementById("statusDate").value = todayStr();
@@ -6473,8 +6538,9 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var cached = cGet(key);
     if(cached){ try{ renderAdminSummaryCards(cached); adminSummaryLoaded = true; }catch(e){} }
     else if(wrap) wrap.innerHTML = '<div class="empty-log">Memuat ringkasan...</div>';
-    // Cache segar < 10 menit → jangan fetch ulang (biar gak lemot)
-    if(!force && cIsFresh(key, CACHE_TTL_MS)) return;
+    // Cache 30 menit: tampil instan, skip network
+    if(!force && cIsFresh(key, CACHE_TTL_MS) && cached &&
+       (typeof cached.omsetKemarin === "number")) return;
     google.script.run
       .withSuccessHandler(function(r){
         if(!r || r.status !== "OK"){
@@ -9703,10 +9769,24 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       inp.addEventListener("focus", function(){ try{ inp.select(); }catch(e){} });
     });
   }
+  function coKasKecilFromInfo(info){
+    info = info || {};
+    var kelas = Number(info.kelas) || 1;
+    var base = (kelas === 1) ? 700000 : 500000;
+    var bonus = info.kcu ? 500000 : 0;
+    return base + bonus;
+  }
   function coApplyKasKecil(cabang){
-    var info = coCabangInfo[cabang] || { kelas:1, kcu:false, kasKecilAwal:700000 };
+    var info = coCabangInfo[cabang] || { kelas:1, kcu:false };
+    var awal = coKasKecilFromInfo(info);
     var el = document.getElementById("coKkAwal");
-    if(el) el.value = "Rp " + coFormatIdNum(info.kasKecilAwal || 0);
+    if(el) el.value = "Rp " + coFormatIdNum(awal);
+    var hint = document.getElementById("coKkAwalHint");
+    if(hint){
+      hint.textContent = info.kcu
+        ? ("Kelas "+(info.kelas||1)+" + KCU → Rp "+coFormatIdNum(awal))
+        : ("Kelas "+(info.kelas||1)+" → Rp "+coFormatIdNum(awal));
+    }
     coRecalc();
   }
   function coFormatMoneyInput(el){
