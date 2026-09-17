@@ -2229,11 +2229,10 @@
   .admin-content .kpi-card,
   .admin-content .kpi-card *,
   .admin-content .tile-code, .admin-content .tile-name, .admin-content .tile-meta,
-  .admin-content table td, .admin-content table th,
   .admin-content .empty-log, .admin-content .hub-meta, .admin-content .sub,
-  .admin-content label, .admin-content .hint, .admin-content p, .admin-content span,
+  .admin-content label, .admin-content .hint, .admin-content p,
   .admin-content .bar-label, .admin-content .bar-pct, .admin-content .bar-detail{
-    color:#111827 !important;
+    color:#CBD5E1 !important;
   }
   .admin-content .empty-log,
   .admin-content .hub-meta,
@@ -3294,6 +3293,560 @@
     color:#E2E8F0 !important;
   }
 
+
+  /* ===== Omset Harian: tabel modern & terbaca ===== */
+  .admin-content .harian-table-wrap,
+  .harian-sync-wrap .harian-table-wrap{
+    background:rgba(15,18,24,0.75) !important;
+    border:1px solid rgba(255,255,255,0.12) !important;
+    border-radius:14px !important;
+    overflow:auto;
+  }
+  .admin-content .harian-table,
+  .harian-table.harian-table-synced{
+    font-family:'Inter',system-ui,sans-serif !important;
+    font-size:12px !important;
+  }
+  .admin-content .harian-table th,
+  .harian-table.harian-table-synced th{
+    background:rgba(30,41,59,0.95) !important;
+    color:#F8FAFC !important;
+    border-bottom:1px solid rgba(255,255,255,0.12) !important;
+    border-right:1px solid rgba(255,255,255,0.06) !important;
+    padding:8px 6px !important;
+    font-weight:600 !important;
+    text-transform:none !important;
+    letter-spacing:0 !important;
+  }
+  .admin-content .harian-table th.harian-day-th,
+  .harian-table th.harian-day-th{
+    vertical-align:bottom !important;
+    min-width:42px !important;
+  }
+  .admin-content .harian-table th .day-num,
+  .harian-table th .day-num{
+    display:block !important;
+    font-size:13px !important;
+    font-weight:700 !important;
+    color:#FFFFFF !important;
+    line-height:1.2 !important;
+  }
+  .admin-content .harian-table th .dow,
+  .harian-table th .dow{
+    display:block !important;
+    font-size:10px !important;
+    font-weight:500 !important;
+    color:#94A3B8 !important;
+    margin-top:2px !important;
+    text-transform:capitalize !important;
+  }
+  .admin-content .harian-table td,
+  .harian-table.harian-table-synced td{
+    color:#E2E8F0 !important;
+    background:transparent !important;
+    border-bottom:1px solid rgba(255,255,255,0.06) !important;
+    border-right:1px solid rgba(255,255,255,0.04) !important;
+    padding:7px 6px !important;
+    font-variant-numeric:tabular-nums !important;
+  }
+  .admin-content .harian-table th.label-col,
+  .admin-content .harian-table td.label-col,
+  .harian-table th.label-col,
+  .harian-table td.label-col{
+    background:#0F172A !important;
+    color:#F8FAFC !important;
+    font-weight:700 !important;
+    border-right:2px solid rgba(59,130,246,0.35) !important;
+    text-align:left !important;
+    min-width:72px !important;
+    position:sticky !important;
+    left:0 !important;
+    z-index:2 !important;
+  }
+  .admin-content .harian-table th.total-col,
+  .admin-content .harian-table td.total-col,
+  .harian-table th.total-col,
+  .harian-table td.total-col{
+    background:rgba(30,41,59,0.9) !important;
+    color:#93C5FD !important;
+    font-weight:700 !important;
+    border-left:1px solid rgba(255,255,255,0.1) !important;
+  }
+  .admin-content .harian-table tr.total-row td,
+  .harian-table tr.total-row td{
+    color:#FFFFFF !important;
+    font-weight:700 !important;
+    background:rgba(59,130,246,0.12) !important;
+  }
+  .admin-content .harian-table tr.total-row td.label-col{
+    background:#1E3A5F !important;
+    color:#FFFFFF !important;
+  }
+  .admin-content .harian-table td.max-day-cell,
+  .harian-table td.max-day-cell{
+    background:rgba(239,68,68,0.2) !important;
+    color:#FCA5A5 !important;
+    font-weight:700 !important;
+    border-radius:4px !important;
+  }
+  .admin-content .harian-table tr.chart-row td,
+  .harian-table tr.chart-row td{
+    background:rgba(15,23,42,0.5) !important;
+    vertical-align:bottom !important;
+  }
+  .admin-content .harian-table tr:nth-child(even):not(.total-row):not(.chart-row) td{
+    background:rgba(255,255,255,0.03) !important;
+  }
+  .admin-content .harian-table tr:nth-child(even):not(.total-row) td.label-col{
+    background:#0F172A !important;
+  }
+  .harian-chart-val{
+    color:#E2E8F0 !important;
+    font-size:10px !important;
+    font-weight:600 !important;
+  }
+  .harian-chart-val.is-max{ color:#FCA5A5 !important; }
+  .harian-chart-bar{
+    background:linear-gradient(180deg,#60A5FA,#3B82F6) !important;
+    border-radius:4px 4px 0 0 !important;
+  }
+  .harian-chart-bar.is-max{
+    background:linear-gradient(180deg,#F87171,#EF4444) !important;
+  }
+  /* summary cards omset harian */
+  .admin-content .ob-summary-card{
+    background:rgba(255,255,255,0.08) !important;
+    border:1px solid rgba(255,255,255,0.12) !important;
+  }
+  .admin-content .ob-summary-card .v{ color:#FFFFFF !important; font-weight:700 !important; }
+  .admin-content .ob-summary-card .k{ color:#94A3B8 !important; }
+
+
+  /* Label kolom kiri Omset Harian — WAJIB terbaca */
+  .admin-content .harian-table th.label-col,
+  .admin-content .harian-table td.label-col,
+  .harian-table th.label-col,
+  .harian-table td.label-col,
+  .harian-sync-wrap .harian-table th.label-col,
+  .harian-sync-wrap .harian-table td.label-col{
+    background:#0B1220 !important;
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+    font-weight:700 !important;
+    font-size:12px !important;
+    opacity:1 !important;
+    text-shadow:none !important;
+    border-right:2px solid #3B82F6 !important;
+  }
+  .admin-content .harian-table tr.chart-row td.label-col,
+  .harian-table tr.chart-row td.label-col{
+    background:#111827 !important;
+    color:#CBD5E1 !important;
+    -webkit-text-fill-color:#CBD5E1 !important;
+  }
+  .admin-content .harian-table tr.total-row td.label-col,
+  .harian-table tr.total-row td.label-col{
+    background:#1D4ED8 !important;
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+  }
+  /* netralisasi override putih yang bikin tulisan hilang */
+  .admin-content .harian-table th.label-col,
+  .admin-content .harian-table td.label-col{
+    background:#0B1220 !important;
+    color:#FFFFFF !important;
+  }
+
+
+  /* NUCLEAR: semua tabel admin gelap + teks putih (Rejected, Harian, dll) */
+  .admin-content .rejected-detail-table,
+  .admin-content .rejected-detail-table th,
+  .admin-content .rejected-detail-table td,
+  .admin-content .rejected-detail-table td *,
+  .admin-content .rejected-detail-table th *,
+  .admin-content .rejected-detail-table span,
+  .admin-content .rejected-detail-table .sub{
+    color:#F1F5F9 !important;
+    -webkit-text-fill-color:#F1F5F9 !important;
+    opacity:1 !important;
+  }
+  .admin-content .rejected-detail-table th{
+    background:#1E3A5F !important;
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+  }
+  .admin-content .rejected-detail-table td{
+    background:rgba(15,23,42,0.55) !important;
+  }
+  .admin-content .rejected-detail-table tr:nth-child(even) td{
+    background:rgba(30,41,59,0.7) !important;
+  }
+  .admin-content .rejected-detail-table td .sub{
+    color:#94A3B8 !important;
+    -webkit-text-fill-color:#94A3B8 !important;
+  }
+  .admin-content .rejected-detail-table-wrap{
+    background:rgba(15,18,24,0.6) !important;
+    border:1px solid rgba(255,255,255,0.14) !important;
+  }
+  /* netralisasi rule span gelap di dalam tabel */
+  .admin-content table.rejected-detail-table span,
+  .admin-content table.harian-table span,
+  .admin-content table.libur-table span{
+    color:inherit !important;
+  }
+  .admin-content table.rejected-detail-table td,
+  .admin-content table.rejected-detail-table th{
+    color:#F1F5F9 !important;
+  }
+
+
+  /* Jadwal Libur tabel senada Rejected/Omset Harian */
+  .admin-content .libur-table-wrap{
+    background:rgba(15,18,24,0.75) !important;
+    border:1px solid rgba(255,255,255,0.12) !important;
+    border-radius:14px !important;
+  }
+  .admin-content .libur-table th{
+    background:#1E3A5F !important;
+    color:#FFFFFF !important;
+    border-bottom:1px solid rgba(255,255,255,0.12) !important;
+    border-right:1px solid rgba(255,255,255,0.06) !important;
+  }
+  .admin-content .libur-table th .dow{
+    display:block !important;
+    color:#94A3B8 !important;
+    font-size:9px !important;
+  }
+  .admin-content .libur-table td{
+    background:transparent !important;
+    color:#E2E8F0 !important;
+    border-bottom:1px solid rgba(255,255,255,0.06) !important;
+  }
+  .admin-content .libur-table th.label-col,
+  .admin-content .libur-table td.label-col{
+    background:#0B1220 !important;
+    color:#FFFFFF !important;
+    border-right:2px solid #3B82F6 !important;
+  }
+  .admin-content .libur-person-name{ color:#F8FAFC !important; }
+  .admin-content .libur-person-job{ color:#94A3B8 !important; }
+  .admin-content .libur-cell{
+    background:rgba(255,255,255,0.04) !important;
+    color:#94A3B8 !important;
+  }
+  .admin-content .libur-cell.st-libur{
+    background:#FEE2E2 !important;
+    color:#DC2626 !important;
+    font-weight:800 !important;
+  }
+  .admin-content .libur-cell.st-cuti{
+    background:#CCFBF1 !important;
+    color:#0F766E !important;
+    font-weight:800 !important;
+  }
+  .admin-content .libur-cell.st-sakit{
+    background:#FFEDD5 !important;
+    color:#C2410C !important;
+    font-weight:800 !important;
+  }
+
+
+  /* LIBUR TABLE force theme (akhir file biar menang) */
+  #jadwalLiburWrap .libur-table-wrap,
+  #kanitJadwalLiburWrap .libur-table-wrap,
+  .admin-content #jadwalLiburWrap .libur-table-wrap{
+    background:#0F172A !important;
+    border:1px solid rgba(255,255,255,0.14) !important;
+    border-radius:14px !important;
+  }
+  #jadwalLiburWrap .libur-table th,
+  #kanitJadwalLiburWrap .libur-table th{
+    background:#1E3A5F !important;
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+  }
+  #jadwalLiburWrap .libur-table th .dow,
+  #kanitJadwalLiburWrap .libur-table th .dow{
+    display:block !important;
+    color:#94A3B8 !important;
+    -webkit-text-fill-color:#94A3B8 !important;
+  }
+  #jadwalLiburWrap .libur-table td,
+  #kanitJadwalLiburWrap .libur-table td{
+    background:rgba(15,23,42,0.9) !important;
+    color:#E2E8F0 !important;
+  }
+  #jadwalLiburWrap .libur-table td.label-col,
+  #jadwalLiburWrap .libur-table th.label-col,
+  #kanitJadwalLiburWrap .libur-table td.label-col,
+  #kanitJadwalLiburWrap .libur-table th.label-col{
+    background:#0B1220 !important;
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+  }
+  #jadwalLiburWrap .libur-person-name,
+  #kanitJadwalLiburWrap .libur-person-name{ color:#F8FAFC !important; -webkit-text-fill-color:#F8FAFC !important; }
+  #jadwalLiburWrap .libur-person-job,
+  #kanitJadwalLiburWrap .libur-person-job{ color:#94A3B8 !important; }
+  #jadwalLiburWrap .libur-cell.st-libur,
+  #kanitJadwalLiburWrap .libur-cell.st-libur{ background:#FEE2E2 !important; color:#DC2626 !important; }
+  #jadwalLiburWrap .libur-cell.st-cuti,
+  #kanitJadwalLiburWrap .libur-cell.st-cuti{ background:#CCFBF1 !important; color:#0F766E !important; }
+  #jadwalLiburWrap .libur-cell.st-sakit,
+  #kanitJadwalLiburWrap .libur-cell.st-sakit{ background:#FFEDD5 !important; color:#C2410C !important; }
+
+  /* Cash Opname labels di luar kolom */
+  #tab-cashopname label,
+  #tab-cashopname .lab,
+  #tab-cashopname .field label,
+  #tab-cashopname h4,
+  #tab-cashopname .co-card h4,
+  #tab-cashopname .rejected-top3-title,
+  #tab-cashopname .co-line,
+  #tab-cashopname .co-denom-foot,
+  #tab-cashopname .co-denom-foot span{
+    color:#E2E8F0 !important;
+    -webkit-text-fill-color:#E2E8F0 !important;
+    opacity:1 !important;
+  }
+  #tab-cashopname .field label{
+    color:#94A3B8 !important;
+    -webkit-text-fill-color:#94A3B8 !important;
+  }
+  #tab-cashopname #coKkAwalHint{ color:#94A3B8 !important; }
+  #tab-cashopname #coMateraiNilai,
+  #tab-cashopname #coKkSisa,
+  #tab-cashopname #coTotalLaci,
+  #tab-cashopname #coTotalBrankas,
+  #tab-cashopname [id^="coTotal"],
+  #tab-cashopname .co-result-big{
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+  }
+
+
+  /* ===== SIMPEL & JELAS: Jadwal Libur + Cash Opname ===== */
+  #jadwalLiburWrap .libur-person-name,
+  #kanitJadwalLiburWrap .libur-person-name{
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+    font-size:13px !important;
+    font-weight:700 !important;
+  }
+  #jadwalLiburWrap .libur-person-job,
+  #kanitJadwalLiburWrap .libur-person-job{
+    color:#93C5FD !important;
+    -webkit-text-fill-color:#93C5FD !important;
+    font-size:11px !important;
+  }
+  #jadwalLiburWrap .kuota-pill,
+  #kanitJadwalLiburWrap .kuota-pill,
+  .admin-content .libur-table .kuota-pill,
+  .libur-table .kuota-pill{
+    display:inline-block !important;
+    margin-top:4px !important;
+    padding:3px 10px !important;
+    border-radius:999px !important;
+    background:#2563EB !important;
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+    font-size:11px !important;
+    font-weight:700 !important;
+    border:none !important;
+    box-shadow:none !important;
+    opacity:1 !important;
+  }
+  #jadwalLiburWrap .kuota-pill.is-empty,
+  #kanitJadwalLiburWrap .kuota-pill.is-empty,
+  .libur-table .kuota-pill.is-empty{
+    background:#DC2626 !important;
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+  }
+  #jadwalLiburWrap .libur-table td.label-col,
+  #kanitJadwalLiburWrap .libur-table td.label-col{
+    background:#0B1220 !important;
+    min-width:180px !important;
+  }
+
+  /* Cash Opname: pecahan / lembar / jumlah */
+  #tab-cashopname .co-denom-table td,
+  #tab-cashopname .co-denom-table th,
+  #tab-cashopname .co-line{
+    color:#F8FAFC !important;
+    -webkit-text-fill-color:#F8FAFC !important;
+    font-weight:600 !important;
+  }
+  #tab-cashopname .co-line{
+    color:#86EFAC !important;
+    -webkit-text-fill-color:#86EFAC !important;
+    font-family:'JetBrains Mono',monospace !important;
+  }
+  #tab-cashopname .co-denom-table td:first-child{
+    color:#E2E8F0 !important;
+    -webkit-text-fill-color:#E2E8F0 !important;
+  }
+  #tab-cashopname .co-denom-head,
+  #tab-cashopname .co-denom-foot,
+  #tab-cashopname .co-denom-head span,
+  #tab-cashopname .co-denom-foot span{
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+  }
+  #tab-cashopname input.co-qty{
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+    background:#1E293B !important;
+    border:1px solid #475569 !important;
+    font-weight:700 !important;
+    text-align:center !important;
+  }
+
+
+  #tab-dokumen.active{ display:block !important; }
+  #tab-dokumen .doc-form-panel{ color:#E2E8F0; }
+  #tab-dokumen .co-card{
+    background:rgba(15,23,42,0.9) !important;
+    border:1px solid rgba(255,255,255,0.12) !important;
+    border-radius:14px;
+  }
+  #tab-dokumen .field label{ color:#94A3B8 !important; }
+  #tab-dokumen input, #tab-dokumen select{
+    color:#F8FAFC !important;
+    background:#1E293B !important;
+    border:1px solid #475569 !important;
+  }
+
+
+  #tab-dokumen .admin-section-title,
+  #tab-dokumen .admin-menu-card-title{ color:#F8FAFC !important; }
+  #tab-dokumen .hint,
+  #tab-dokumen .admin-menu-card-desc{ color:#94A3B8 !important; }
+  #tab-dokumen .doc-form-card{
+    background:rgba(15,23,42,0.95) !important;
+    border:1px solid rgba(148,163,184,0.35) !important;
+    border-radius:16px;
+    padding:18px 16px;
+    margin-top:12px;
+  }
+  #tab-dokumen .doc-form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:12px 14px;
+  }
+  #tab-dokumen .field label{
+    color:#CBD5E1 !important;
+    font-size:11.5px !important;
+    font-weight:600 !important;
+    display:block;
+    margin-bottom:5px;
+  }
+  #tab-dokumen input,
+  #tab-dokumen select{
+    width:100%;
+    color:#F8FAFC !important;
+    -webkit-text-fill-color:#F8FAFC !important;
+    background:#0F172A !important;
+    border:1px solid #64748B !important;
+    border-radius:10px !important;
+    padding:10px 12px !important;
+    font-size:13.5px !important;
+  }
+  #tab-dokumen input::placeholder{ color:#64748B !important; }
+  #tab-dokumen .btn-xs{
+    color:#0F172A !important;
+    background:#38BDF8 !important;
+    border:none !important;
+    font-weight:700 !important;
+    padding:10px 16px !important;
+    border-radius:10px !important;
+  }
+  #tab-dokumen .btn-xs.secondary{
+    background:transparent !important;
+    color:#E2E8F0 !important;
+    border:1px solid #64748B !important;
+  }
+  #tab-dokumen .hub-back-btn{
+    color:#93C5FD !important;
+    background:transparent !important;
+    border:none !important;
+    font-weight:600 !important;
+    cursor:pointer;
+    padding:0;
+    margin-bottom:4px;
+  }
+  #tab-dokumen .admin-menu-card{
+    background:rgba(15,23,42,0.9) !important;
+    border:1px solid rgba(148,163,184,0.3) !important;
+  }
+
+
+  #tab-dokumen .doc-hub-card{
+    cursor:pointer !important;
+    pointer-events:auto !important;
+    position:relative;
+    z-index:2;
+  }
+  #tab-dokumen .doc-hub-card *{
+    pointer-events:none;
+  }
+  #tab-dokumen .doc-form-page{
+    display:none;
+  }
+  #tab-dokumen .doc-form-page[style*="block"]{
+    display:block !important;
+  }
+
+
+  #tab-dokumen label,
+  #tab-dokumen .field label,
+  #tab-dokumen .doc-form-card label,
+  #tab-dokumen .doc-form-page label{
+    color:#F1F5F9 !important;
+    -webkit-text-fill-color:#F1F5F9 !important;
+    opacity:1 !important;
+    font-size:12px !important;
+    font-weight:700 !important;
+    letter-spacing:0.02em;
+    margin-bottom:6px !important;
+    display:block !important;
+  }
+  #tab-dokumen .admin-section-title{
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+  }
+  #tab-dokumen .hint,
+  #tab-dokumen .rejected-top3-title{
+    color:#CBD5E1 !important;
+    -webkit-text-fill-color:#CBD5E1 !important;
+  }
+  #tab-dokumen input,
+  #tab-dokumen select,
+  #tab-dokumen textarea{
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+    background:#0B1220 !important;
+    border:1px solid #94A3B8 !important;
+  }
+  #tab-dokumen .doc-form-card{
+    background:#111827 !important;
+    border:1px solid #64748B !important;
+  }
+
+
+  #tab-dokumen .progress-bar-wrap{
+    height:10px; border-radius:999px; background:rgba(255,255,255,0.12);
+    overflow:hidden;
+  }
+  #tab-dokumen .progress-bar-fill{
+    height:100%; width:0%; background:linear-gradient(90deg,#38BDF8,#818CF8);
+    border-radius:999px; transition:width 0.2s linear;
+  }
+  #tab-dokumen .progress-bar-pct{
+    font-size:12px; color:#E2E8F0; margin-top:4px; font-weight:700;
+  }
+
 </style>
 </head>
 <body>
@@ -3502,14 +4055,18 @@
           </div>
         </div>
         <nav class="admin-sidebar-nav">
+          <div class="admin-sidebar-section">Utama</div>
           <button class="tab-btn admin-nav-btn active" data-tab="kanitinput"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4L16.5 3.5z"/></svg></span><span class="admin-nav-label">Input Omset</span></button>
+          <div class="admin-sidebar-section">Omset & Kinerja</div>
           <button class="tab-btn admin-nav-btn" data-tab="kanitkinerjaharian"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M12 19V5M20 19v-7"/></svg></span><span class="admin-nav-label">Dashboard Harian</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kanitmenuharian"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M12 19V5M20 19v-7"/></svg></span><span class="admin-nav-label">Omset Harian</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kanitomsetbulanan"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="admin-nav-label">Omset Bulanan</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kanitpencapaian"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H5a2 2 0 0 0 2 4M17 6h2a2 2 0 0 1-2 4"/></svg></span><span class="admin-nav-label">Pencapaian</span></button>
+          <div class="admin-sidebar-section">Operasional</div>
           <button class="tab-btn admin-nav-btn" data-tab="kanitrejected"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg></span><span class="admin-nav-label">Rejected</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kanitjadwallibur"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><span class="admin-nav-label">Jadwal Libur &amp; Cuti</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kanitaudit"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a1 1 0 0 1 1-1h9l6 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></span><span class="admin-nav-label">Dashboard Audit</span></button>
+          <button class="tab-btn admin-nav-btn" data-tab="dokumen"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span><span class="admin-nav-label">Pembuatan Dokumen</span></button>
         </nav>
       </aside>
       <div class="admin-main">
@@ -3783,20 +4340,21 @@
         </div>
 
         <nav class="admin-sidebar-nav">
-          <div class="admin-sidebar-section">Menu Utama</div>
+          <div class="admin-sidebar-section">Utama</div>
           <button class="tab-btn admin-nav-btn active" data-tab="dashboard"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z"/></svg></span><span class="admin-nav-label">Dashboard</span></button>
+          <div class="admin-sidebar-section">Omset & Kinerja</div>
           <button class="tab-btn admin-nav-btn" data-tab="kinerjaharian"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><span class="admin-nav-label">Dashboard Harian</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="menuharian"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M12 19V5M20 19v-7"/></svg></span><span class="admin-nav-label">Omset Harian</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="pemantauan"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M12 19V5M20 19v-7"/></svg></span><span class="admin-nav-label">Pemantauan Harian</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="omsetbulanan"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="admin-nav-label">Omset Bulanan</span></button>
+          <button class="tab-btn admin-nav-btn" data-tab="kpibisnis"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="admin-nav-label">KPI Bisnis</span></button>
+          <div class="admin-sidebar-section">Operasional</div>
           <button class="tab-btn admin-nav-btn" data-tab="rejected"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg></span><span class="admin-nav-label">Rejected</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="jadwallibur"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><span class="admin-nav-label">Jadwal Libur &amp; Cuti</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="audit"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a1 1 0 0 1 1-1h9l6 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></span><span class="admin-nav-label">Dashboard Audit</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="cashopname"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="admin-nav-label">Cash Opname</span></button>
-          <button class="tab-btn admin-nav-btn" data-tab="kpibisnis"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="admin-nav-label">KPI Bisnis</span></button>
-          <div class="admin-sidebar-section">Data &amp; Pengaturan</div>
+          <div class="admin-sidebar-section">Pengaturan</div>
           <button class="tab-btn admin-nav-btn" data-tab="updatedata"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L18 10l-4-4L4 16v4z"/><path d="m12 6 4 4"/></svg></span><span class="admin-nav-label">Update Data</span></button>
-          <!-- Kelola PIN digabung ke profil topbar -->
           <button class="tab-btn admin-nav-btn" data-tab="kelolacabang"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h16M6 20V10l6-6 6 6v10"/><path d="M9 20v-6h6v6"/></svg></span><span class="admin-nav-label">Kelola Cabang</span></button>
         </nav>
 
@@ -4019,7 +4577,130 @@
     </div>
 
     <!-- KPI Bisnis (Gadai/PP/Nasabah/Gaol, total gabungan cabang Syahrul) -->
-    <div class="panel subpanel" id="tab-kpibisnis">
+    
+    <!-- Pembuatan Dokumen -->
+    <div class="panel subpanel" id="tab-dokumen">
+      <!-- Hub pilih jenis -->
+      
+      <!-- KC: hanya riwayat -->
+      <div id="docRiwayatKC" style="display:none;">
+        <div class="admin-section-title">Riwayat Pembuatan Dokumen</div>
+        <div class="hint" style="margin-bottom:12px;">Rekap dokumen yang dibuat cabang (BA SN, BA GA, Surat Pernyataan).</div>
+        <div class="filter-row-compact" style="gap:10px;margin-bottom:12px;">
+          <div class="field" style="min-width:140px;">
+            <label>Filter cabang</label>
+            <select id="docRiwayatCabang"><option value="SEMUA">Semua Cabang</option></select>
+          </div>
+          <button type="button" id="docRiwayatLoadBtn" class="btn-xs">Tampilkan</button>
+        </div>
+        <div id="docRiwayatKpi" class="audit-kpi-grid" style="margin-bottom:12px;"></div>
+        <div id="docRiwayatWrap"><div class="empty-log">Pilih filter lalu Tampilkan.</div></div>
+        <div class="msg" id="docRiwayatMsg"></div>
+      </div>
+
+      <div id="docHub">
+        <div class="admin-section-title">Pembuatan Dokumen</div>
+        <div class="hint" style="margin-bottom:14px;">Pilih jenis dokumen. Form akan terbuka di halaman terpisah.</div>
+        <div class="admin-menu-grid" style="margin-top:8px;">
+          <button type="button" class="admin-menu-card doc-hub-card" data-doc="sn">
+            <div class="admin-menu-icon dark">SN</div>
+            <div class="admin-menu-card-body">
+              <div class="admin-menu-card-title">BA SN Perusahaan</div>
+              <div class="admin-menu-card-desc">Berita acara serial number / IMEI perusahaan</div>
+            </div>
+            <span class="admin-menu-arrow">&rarr;</span>
+          </button>
+          <button type="button" class="admin-menu-card doc-hub-card" data-doc="ga">
+            <div class="admin-menu-icon accent">GA</div>
+            <div class="admin-menu-card-body">
+              <div class="admin-menu-card-title">BA Pengadaan Barang</div>
+              <div class="admin-menu-card-desc">Berita acara pengadaan + foto bukti</div>
+            </div>
+            <span class="admin-menu-arrow">&rarr;</span>
+          </button>
+          <button type="button" class="admin-menu-card doc-hub-card" data-doc="sp">
+            <div class="admin-menu-icon dark">SP</div>
+            <div class="admin-menu-card-body">
+              <div class="admin-menu-card-title">Surat Pernyataan</div>
+              <div class="admin-menu-card-desc">Kwitansi manual / pernyataan pengeluaran</div>
+            </div>
+            <span class="admin-menu-arrow">&rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Form SN (halaman baru) -->
+      <div id="docFormSN" class="doc-form-page hub-panel-full" style="display:none;">
+        <button type="button" class="hub-back-btn doc-back-btn">&larr; Kembali</button>
+        <div class="admin-section-title" style="margin-top:8px;">BA SN Perusahaan</div>
+        <div class="doc-form-card">
+          <div class="doc-form-grid">
+            <div class="field"><label>Cabang</label><select id="docSnCabang"></select></div>
+            <div class="field"><label>Nomor BA</label><input type="text" id="docSnNomor" placeholder="001"></div>
+            <input type="hidden" id="docSnKU" value="">
+            <div class="field"><label>Tgl Barang Masuk</label><input type="date" id="docSnTgl"></div>
+            <div class="field"><label>Nama Nasabah</label><input type="text" id="docSnNasabah"></div>
+            <div class="field"><label>Merk &amp; Type</label><input type="text" id="docSnMerk"></div>
+            <div class="field"><label>No Faktur</label><input type="text" id="docSnFaktur"></div>
+            <div class="field"><label>SN Perusahaan</label><input type="text" id="docSnSN"></div>
+            <div class="field"><label>Foto Kitir</label><input type="file" id="docSnKitir" accept="image/*"></div>
+            <div class="field"><label>Foto Barang</label><input type="file" id="docSnBarang" accept="image/*"></div>
+          </div>
+          <button type="button" id="docSnSubmit" class="btn-xs" style="margin-top:16px;">Buat BA SN</button>
+          <div class="hint" id="docSnWaitHint" style="display:none;margin-top:10px;">Sedang membuat dokumen…</div>
+          <div class="progress-bar-wrap" id="docSnBar" style="display:none;margin-top:8px;"><div class="progress-bar-fill"></div></div>
+          <div class="progress-bar-pct" id="docSnPct" style="display:none;"></div>
+          <div class="msg" id="docSnMsg"></div>
+          <div id="docSnResult" style="margin-top:10px;"></div>
+        </div>
+      </div>
+
+      <!-- Form GA -->
+      <div id="docFormGA" class="doc-form-page hub-panel-full" style="display:none;">
+        <button type="button" class="hub-back-btn doc-back-btn">&larr; Kembali</button>
+        <div class="admin-section-title" style="margin-top:8px;">BA Pengadaan Barang (GA)</div>
+        <div class="doc-form-card">
+          <div class="doc-form-grid">
+            <div class="field"><label>Cabang</label><select id="docGaCabang"></select></div>
+            <div class="field"><label>Nomor BA</label><input type="text" id="docGaNomor" placeholder="001"></div>
+            <div class="field"><label>Tanggal</label><input type="date" id="docGaTgl"></div>
+          </div>
+          <div class="rejected-top3-title" style="margin:16px 0 8px;color:#E2E8F0;">Barang / Keperluan</div>
+          <div id="docGaItems"></div>
+          <button type="button" id="docGaAddItem" class="btn-xs secondary" style="margin-top:8px;">+ Tambah baris</button>
+          <button type="button" id="docGaSubmit" class="btn-xs" style="margin-top:14px;display:block;">Buat BA GA</button>
+          <div class="hint" id="docGaWaitHint" style="display:none;margin-top:10px;">Sedang membuat dokumen…</div>
+          <div class="progress-bar-wrap" id="docGaBar" style="display:none;margin-top:8px;"><div class="progress-bar-fill"></div></div>
+          <div class="progress-bar-pct" id="docGaPct" style="display:none;"></div>
+          <div class="msg" id="docGaMsg"></div>
+          <div id="docGaResult" style="margin-top:10px;"></div>
+        </div>
+      </div>
+
+      <!-- Form SP -->
+      <div id="docFormSP" class="doc-form-page hub-panel-full" style="display:none;">
+        <button type="button" class="hub-back-btn doc-back-btn">&larr; Kembali</button>
+        <div class="admin-section-title" style="margin-top:8px;">Surat Pernyataan</div>
+        <div class="doc-form-card">
+          <div class="doc-form-grid">
+            <div class="field"><label>Cabang</label><select id="docSpCabang"></select></div>
+            <div class="field"><label>NIK</label><input type="text" id="docSpNik"></div>
+            <div class="field"><label>No. HP</label><input type="text" id="docSpHp"></div>
+            <div class="field"><label>Tgl Kwitansi</label><input type="text" id="docSpTgl" placeholder="22/08/2026"></div>
+            <div class="field"><label>Jenis Pengeluaran</label><input type="text" id="docSpJenis"></div>
+            <div class="field"><label>Nominal</label><input type="text" id="docSpNominal" placeholder="25000"></div>
+          </div>
+          <button type="button" id="docSpSubmit" class="btn-xs" style="margin-top:16px;">Buat Surat Pernyataan</button>
+          <div class="hint" id="docSpWaitHint" style="display:none;margin-top:10px;">Sedang membuat dokumen…</div>
+          <div class="progress-bar-wrap" id="docSpBar" style="display:none;margin-top:8px;"><div class="progress-bar-fill"></div></div>
+          <div class="progress-bar-pct" id="docSpPct" style="display:none;"></div>
+          <div class="msg" id="docSpMsg"></div>
+          <div id="docSpResult" style="margin-top:10px;"></div>
+        </div>
+      </div>
+    </div>
+
+<div class="panel subpanel" id="tab-kpibisnis">
       <div class="hint" style="margin-top:0;">
         Total KPI Bisnis gabungan semua cabang yang dipegang Syahrul Zuniardin sebagai
         Kepala Cabang, dari sheet "KPI Bisnis All Month" — mencakup 4 metrik: Gadai, PP,
@@ -4297,6 +4978,16 @@
         <div class="msg" id="cabangConfigMsg"></div>
       </div>
 
+      
+      <!-- Panel: Karyawan & TTD per cabang -->
+      <div id="cabangTtdPanel" class="hub-panel-full" style="display:none;">
+        <button type="button" class="hub-back-btn" data-hub="kelolaCabang">&larr; Kembali</button>
+        <div class="admin-section-title" style="margin-top:8px;">Karyawan &amp; TTD — <span id="cabangTtdKode">—</span></div>
+        <div class="hint">Upload tanda tangan per karyawan. Untuk dokumen BA, centang <b>Jadikan Kepala Unit cabang</b> (wajib sudah ada TTD).</div>
+        <div id="cabangTtdWrap" style="margin-top:14px;"><div class="empty-log">Memuat...</div></div>
+        <div class="msg" id="cabangTtdMsg"></div>
+      </div>
+
       <!-- Panel: Tambah Cabang -->
       <div id="cabangTambahPanel" class="hub-panel-full" style="display:none;">
         <button type="button" class="hub-back-btn" data-hub="kelolaCabang">&larr; Kembali</button>
@@ -4507,7 +5198,9 @@
         args = args || [];
         var payload = JSON.stringify(args);
         var ctrl = (typeof AbortController === "function") ? new AbortController() : null;
-        var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, 25000);
+        var isDoc = String(action || "").indexOf("docProses") === 0 || String(action || "") === "docUploadTtdKaryawan";
+        var timeoutMs = isDoc ? 180000 : 25000; // BA butuh 1–3 menit
+        var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, timeoutMs);
 
         // GET untuk request biasa (andal dari GitHub Pages)
         // POST hanya kalau payload besar (upload)
@@ -4549,7 +5242,7 @@
           })
           .catch(function(err){
             clearTimeout(timer);
-            var msg = (err && err.name === "AbortError") ? "Timeout ke server (60 dtk)" : (err && err.message ? err.message : String(err));
+            var msg = (err && err.name === "AbortError") ? "Timeout ke server (proses dokumen max 3 menit)" : (err && err.message ? err.message : String(err));
             errFn({ message: msg });
           })
           .then(function(){ done(); }, function(){ done(); });
@@ -5700,7 +6393,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
 
     // Chart + data dalam 1 tabel yang sama → kolom tanggal pasti sejajar.
     var CHART_H = 100;
-    var DOW = ["MIN","SEN","SEL","RAB","KAM","JUM","SAB"];
+    var DOW = ["Min","Sen","Sel","Rab","Kam","Jum","Sab"];
     function dayDow_(dayNum){
       // data.year/month dari server; fallback parse monthLabel "September 2026"
       var y = data.year, m = data.month; // month 1-12
@@ -5719,7 +6412,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     }
     var headerCells = days.map(function(d){
       var dow = dayDow_(d.day);
-      return '<th>'+String(d.day).padStart(2,"0")+(dow?'<span class="dow">'+dow+'</span>':'')+'</th>';
+      return '<th class="harian-day-th"><span class="day-num">'+String(d.day).padStart(2,"0")+'</span>'+(dow?'<span class="dow">'+dow+'</span>':'')+'</th>';
     }).join("");
     function rowCells(key, isTotalRow){
       return days.map(function(d){
@@ -5743,9 +6436,9 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       '<div class="rejected-top3-title" style="margin-top:16px;">Grafik &amp; Rincian Harian</div>'+
       '<div class="harian-sync-wrap"><div class="harian-table-wrap">'+
         '<table class="harian-table harian-table-synced"><thead><tr>'+
-          '<th class="label-col">Tipe</th>'+headerCells+'<th class="total-col">Total</th>'+
+          '<th class="label-col">Tanggal</th>'+headerCells+'<th class="total-col">Total</th>'+
         '</tr></thead><tbody>'+
-          '<tr class="chart-row"><td class="label-col">Chart</td>'+chartCells+'<td class="total-col"></td></tr>'+
+          '<tr class="chart-row"><td class="label-col">Grafik</td>'+chartCells+'<td class="total-col"></td></tr>'+
           '<tr><td class="label-col">GE</td>'+rowCells('ge')+'<td class="total-col">'+fmt(sumGe)+'</td></tr>'+
           '<tr><td class="label-col">GB</td>'+rowCells('gb')+'<td class="total-col">'+fmt(sumGb)+'</td></tr>'+
           '<tr><td class="label-col">GG</td>'+rowCells('gg')+'<td class="total-col">'+fmt(sumGg)+'</td></tr>'+
@@ -5943,14 +6636,18 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var rowsHtml = sortedKar.map(function(k, idx){
       var cutiSet = {};
       (k.hariCuti||[]).forEach(function(d){ cutiSet[d] = true; });
+      var sakitSet = {};
+      (k.hariSakit||[]).forEach(function(d){ sakitSet[d] = true; });
       var cells = "";
       for(var d=1; d<=data.jumlahHari; d++){
         var isMinggu = data.hariMingguArr[d-1] === 0;
+        var isSakit = !!sakitSet[d];
         var isCuti = !!cutiSet[d];
         var isLibur = editable ? !!(kanitLiburState[k.id] && kanitLiburState[k.id][d]) : ((k.hariLibur||[]).indexOf(d) !== -1);
-        var stateCls = isCuti ? "st-cuti" : (isLibur ? "st-libur" : "");
-        var title = isCuti ? "Cuti" : (isLibur ? "Libur" : "Kerja");
-        cells += '<td><div class="libur-cell '+(isMinggu?'is-minggu':'')+' '+stateCls+'" data-kar="'+k.id+'" data-day="'+d+'" title="'+title+'">'+(isCuti?"C":(isLibur?"L":""))+'</div></td>';
+        var stateCls = isSakit ? "st-sakit" : (isCuti ? "st-cuti" : (isLibur ? "st-libur" : ""));
+        var title = isSakit ? "Sakit" : (isCuti ? "Cuti" : (isLibur ? "Libur" : "Kerja"));
+        var letter = isSakit ? "S" : (isCuti ? "C" : (isLibur ? "L" : ""));
+        cells += '<td><div class="libur-cell '+(isMinggu?'is-minggu':'')+' '+stateCls+'" data-kar="'+k.id+'" data-day="'+d+'" title="'+title+'">'+letter+'</div></td>';
       }
       var kuota = (typeof k.kuota === "number") ? k.kuota : (data.kuotaLibur || 0);
       var pakai = editable
@@ -5958,7 +6655,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         : (k.hariLibur || []).length;
       var sisa = Math.max(0, kuota - pakai);
       var kuotaHtml = data.modeCutiSakitOnly ? "" :
-        '<span class="kuota-pill'+(sisa<=0?" is-empty":"")+'">📍 Kuota '+kuota+' · pakai '+pakai+' · sisa '+sisa+'</span>';
+        '<span class="kuota-pill'+(sisa<=0?" is-empty":"")+'">'+pakai+'/'+kuota+' · sisa '+sisa+'</span>';
       var initial = String(k.nama||"?").trim().charAt(0).toUpperCase();
       var av = AV_COLORS[idx % AV_COLORS.length];
       var person = '<div class="libur-person">'+
@@ -6053,7 +6750,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         if(!pill || !kid) return;
         var p = Object.keys(kanitLiburState[kid]||{}).length;
         var s = Math.max(0, _liburKuotaBulan - p);
-        pill.textContent = "Kuota "+_liburKuotaBulan+" · pakai "+p+" · sisa "+s;
+        pill.textContent = p+"/"+_liburKuotaBulan+" · sisa "+s;
         pill.classList.toggle("is-empty", s<=0);
       });
     }catch(e){}
@@ -6449,7 +7146,19 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       scope.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
       scope.querySelectorAll(".subpanel").forEach(function(p){ p.classList.remove("active"); });
       btn.classList.add("active");
-      scope.querySelector("#tab-"+btn.dataset.tab).classList.add("active");
+      var tabId = "tab-" + btn.dataset.tab;
+      var panel = scope.querySelector("#" + tabId) || document.getElementById(tabId);
+      if(panel){
+        // Pindahkan panel dokumen ke layar aktif (KC/Kanit) supaya tidak kosong
+        if(btn.dataset.tab === "dokumen"){
+          var host = scope.querySelector(".admin-content") || scope.querySelector(".admin-main") || scope;
+          if(host && panel.parentElement !== host){
+            try{ host.appendChild(panel); }catch(eMove){}
+          }
+          panel.style.display = "";
+        }
+        panel.classList.add("active");
+      }
       // Auto-load pertama kali tab dibuka BOLEH pakai cache (biar instan) --
       // begitu user klik "Tampilkan" sendiri, itu baru dipaksa baca langsung.
       if(btn.dataset.tab === "kinerjaharian"){
@@ -6466,6 +7175,10 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       }
       if(btn.dataset.tab === "kelolacabang" && !cabangConfigLoaded){
         loadCabangConfigTab();
+      }
+      
+      if(btn.dataset.tab === "dokumen" || btn.dataset.tab === "kanitdokumen"){
+        try{ loadDokumenTab(); }catch(e){}
       }
       if(btn.dataset.tab === "dashboard" && !adminSummaryLoaded){
         loadAdminSummary();
@@ -6523,14 +7236,29 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var wrap = document.getElementById("adminSummaryWrap");
     if(!wrap || !r) return;
     var pencapaianLabel = (r.pencapaianPersen === null || r.pencapaianPersen === undefined) ? "–" : r.pencapaianPersen + "%";
-    var proyeksiLabel = (r.proyeksiPersen === null || r.proyeksiPersen === undefined) ? "–" : r.proyeksiPersen + "%";
     var omsetKemarin = (typeof r.omsetKemarin === "number") ? r.omsetKemarin : 0;
     var omsetLabel = (typeof fmt === "function") ? fmt(omsetKemarin) : String(omsetKemarin);
+    // Vs periode sama
+    var vsValue = "–";
+    var vsSub = "Belum bisa dibanding (tgl 1)";
+    var vsColor = "";
+    if(r.vsComparable){
+      var sel = Number(r.vsSelisih) || 0;
+      var sign = sel > 0 ? "+" : "";
+      vsValue = sign + ((typeof fmt === "function") ? fmt(sel) : String(sel));
+      if(r.vsPersen !== null && r.vsPersen !== undefined){
+        vsValue += " (" + (r.vsPersen > 0 ? "+" : "") + r.vsPersen + "%)";
+      }
+      vsColor = sel > 0 ? "color:#4ADE80;" : (sel < 0 ? "color:#F87171;" : "");
+      var prevShort = String(r.vsPrevLabel||"").split(" ")[0].slice(0,3);
+      var curShort = String(r.vsCurLabel||"").split(" ")[0].slice(0,3);
+      vsSub = (r.vsRangeLabel||"")+" "+prevShort+": "+fmt(r.vsPrevSum||0)+" · "+(r.vsRangeLabel||"")+" "+curShort+": "+fmt(r.vsCurSum||0);
+    }
     wrap.innerHTML =
       '<div class="admin-stat-card"><div class="admin-stat-icon">✓</div><div class="admin-stat-value">'+(r.cabangSudahInput||0)+' / '+(r.totalCabang||0)+'</div><div class="admin-stat-label">Cabang Sudah Input Hari Ini</div></div>'+
       '<div class="admin-stat-card"><div class="admin-stat-icon">◎</div><div class="admin-stat-value">'+pencapaianLabel+'</div><div class="admin-stat-label">Pencapaian Target Bulan Ini</div><div class="admin-stat-trend"><span class="muted">Gadai, semua cabang</span></div></div>'+
       '<div class="admin-stat-card"><div class="admin-stat-icon">₫</div><div class="admin-stat-value" style="font-size:22px;">'+omsetLabel+'</div><div class="admin-stat-label">Omset Hari Kemarin</div><div class="admin-stat-trend"><span class="muted">GE+GB+GG semua cabang</span></div></div>'+
-      '<div class="admin-stat-card"><div class="admin-stat-icon">↗</div><div class="admin-stat-value">'+proyeksiLabel+'</div><div class="admin-stat-label">Proyeksi Akhir Bulan</div><div class="admin-stat-trend"><span class="muted">Estimasi capaian</span></div></div>';
+      '<div class="admin-stat-card"><div class="admin-stat-icon">↔</div><div class="admin-stat-value" style="font-size:18px;'+vsColor+'">'+vsValue+'</div><div class="admin-stat-label">Vs Periode Sama</div><div class="admin-stat-trend"><span class="muted">'+vsSub+'</span></div></div>';
   }
   function loadAdminSummary(force){
     var wrap = document.getElementById("adminSummaryWrap");
@@ -6540,7 +7268,8 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     else if(wrap) wrap.innerHTML = '<div class="empty-log">Memuat ringkasan...</div>';
     // Cache 30 menit: tampil instan, skip network
     if(!force && cIsFresh(key, CACHE_TTL_MS) && cached &&
-       (typeof cached.omsetKemarin === "number")) return;
+       (typeof cached.omsetKemarin === "number") &&
+       (cached.vsComparable === true || cached.vsComparable === false)) return;
     google.script.run
       .withSuccessHandler(function(r){
         if(!r || r.status !== "OK"){
@@ -7594,13 +8323,43 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     }
 
     var metrics = [
-      {key:"gadai", label:"Gadai"},
-      {key:"pp", label:"PP"},
-      {key:"nasabah", label:"Nasabah"},
-      {key:"gaol", label:"Gaol"}
+      {key:"gadai", label:"Gadai", icon:"🔒"},
+      {key:"pp", label:"PP", icon:"📦"},
+      {key:"nasabah", label:"Nasabah", icon:"👥"},
+      {key:"gaol", label:"Gaol", icon:"🏅"}
     ];
     var CHART_H = 200, LABEL_PAD = 22;
     var totalBobot = 0, totalNilaiKpi = 0;
+
+    // Kartu ringkasan atas (gaya Dashboard Harian) — paling atas
+    var bobotMap = (typeof BOBOT_KPI === "object" && BOBOT_KPI) ? BOBOT_KPI : {gadai:25,pp:25,nasabah:25,gaol:25};
+    var cardsHtml = '<div class="kinerja-kpi-grid kpi-bisnis-top" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:0 0 22px 0;">' + metrics.map(function(metric){
+      var tt = data.totals[metric.key] || {aktual:0,target:0};
+      var nAktual = Number(tt.aktual) || 0;
+      var nTarget = Number(tt.target) || 0;
+      var pctRaw = nTarget > 0 ? (nAktual / nTarget) * 100 : 0;
+      var pct = Math.round(pctRaw);
+      var ringPct = Math.max(0, Math.min(100, pctRaw));
+      var wAktual = Math.max(0, Math.min(100, pctRaw));
+      var selisih = nAktual - nTarget;
+      var bobot = Number(bobotMap[metric.key]) || 25;
+      var scoring = (typeof scoringFromPersentase_ === "function") ? scoringFromPersentase_(pctRaw) : (pctRaw >= 100 ? 1 : pctRaw/100);
+      var nilaiKpi = Math.round(bobot * scoring * 100) / 100;
+      return '<div class="kinerja-kpi-card" style="background:rgba(15,23,42,0.85);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:14px 16px;color:#F8FAFC;">'+
+        '<div class="kinerja-kpi-card-head" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'+
+          '<span class="label" style="color:#F8FAFC;font-weight:700;font-size:13px;">'+metric.icon+' '+metric.label.toUpperCase()+'</span>'+
+          '<div class="kinerja-kpi-ring" style="--ring-pct:'+ringPct+'%;--ring-color:#38BDF8;color:#F8FAFC;"><span style="color:#F8FAFC;">'+pct+'%</span></div>'+
+        '</div>'+
+        '<div class="kinerja-kpi-nums" style="color:#CBD5E1;font-size:12px;margin-bottom:10px;">Aktual: <b style="color:#FFF;">'+fmt(nAktual)+'</b> &nbsp;|&nbsp; Target: <b style="color:#FFF;">'+fmt(nTarget)+'</b></div>'+
+        '<div class="kpi-tri-bar" style="height:10px;background:rgba(255,255,255,0.12);border-radius:999px;overflow:hidden;position:relative;">'+
+          '<div class="seg aktual" style="position:absolute;left:0;top:0;bottom:0;width:'+wAktual+'%;background:#38BDF8;border-radius:999px;"></div>'+
+        '</div>'+
+        '<div class="kinerja-kpi-footer" style="margin-top:10px;display:flex;flex-direction:column;gap:4px;font-size:11px;color:#94A3B8;">'+
+          '<span>Selisih: <b style="color:'+(selisih>=0?'#4ADE80':'#F87171')+';">'+(selisih>=0?"+":"")+fmt(selisih)+'</b></span>'+
+          '<span>Nilai KPI: <b style="color:#F8FAFC;">'+fmt(nilaiKpi)+'</b> · bobot '+bobot+'</span>'+
+        '</div>'+
+      '</div>';
+    }).join("") + '</div>';
 
     var sectionsHtml = metrics.map(function(metric){
       var t = data.totals[metric.key];
@@ -7652,12 +8411,12 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     }).join("");
 
     var totalHtml =
-      '<div class="ob-summary-card ach" style="max-width:340px; margin-bottom:24px;">'+
+      '<div class="ob-summary-card ach" style="max-width:360px; margin-bottom:20px;">'+
         '<div class="k">Total Nilai KPI Bisnis</div>'+
         '<div class="v" style="font-size:24px;">'+fmt(totalNilaiKpi)+' <span style="font-size:13px; color:var(--ink-soft); font-weight:400;">/ '+totalBobot+'</span></div>'+
       '</div>';
 
-    wrap.innerHTML = totalHtml + sectionsHtml;
+    wrap.innerHTML = cardsHtml + totalHtml + sectionsHtml;
   }
 
   document.getElementById("kpiBisnisLoadBtn").addEventListener("click", function(){
@@ -7938,7 +8697,8 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
           '<span class="cabang-cfg-badge '+(c.kcu?"is-kcu":"is-kcp")+'">'+statusLbl+'</span>'+
         '</label>'+
         '<label class="cabang-cfg-check"><input type="checkbox" data-kode="'+c.kode+'" class="cabang-libur-toggle"'+(c.liburMinggu ? ' checked' : '')+'> Minggu</label>'+
-        '<button type="button" class="btn-xs secondary cabang-reset-pin-btn" data-kode="'+c.kode+'">Reset PIN</button>'+
+        '<button type="button" class="btn-xs secondary cabang-reset-pin-btn" data-kode="'+c.kode+'">Reset PIN</button> '+
+        '<button type="button" class="btn-xs cabang-ttd-btn" data-kode="'+c.kode+'">Karyawan &amp; TTD</button>'+
       '</div>';
     }).join("")+'</div>';
     // klik radio yang sama lagi = uncheck (opsional tanpa KCU)
@@ -9367,6 +10127,471 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
   })();
 
 
+
+
+  // ---- Cabang: Karyawan & TTD ----
+  function openCabangTtdPanel(kode){
+    document.getElementById("kelolaCabangHub").style.display = "none";
+    document.querySelectorAll("#tab-kelolacabang .hub-panel-full").forEach(function(p){ p.style.display = "none"; });
+    var panel = document.getElementById("cabangTtdPanel");
+    if(panel) panel.style.display = "";
+    document.getElementById("cabangTtdKode").textContent = kode;
+    loadCabangTtd(kode);
+  }
+  function loadCabangTtd(kode){
+    var wrap = document.getElementById("cabangTtdWrap");
+    var msg = document.getElementById("cabangTtdMsg");
+    if(wrap) wrap.innerHTML = '<div class="empty-log">Memuat karyawan...</div>';
+    clearMsg(msg);
+    google.script.run
+      .withSuccessHandler(function(r){
+        if(!r || r.status !== "OK"){
+          if(wrap) wrap.innerHTML = '<div class="empty-log">'+(r && r.reason || "Gagal")+'</div>';
+          return;
+        }
+        renderCabangTtdList(r);
+      })
+      .withFailureHandler(function(err){
+        if(wrap) wrap.innerHTML = '<div class="empty-log">'+String(err.message||err)+'</div>';
+      })
+      .docListTtdByCabang(session.adminPin, kode);
+  }
+  function renderCabangTtdList(r){
+    var wrap = document.getElementById("cabangTtdWrap");
+    var list = r.karyawan || [];
+    if(!list.length){
+      wrap.innerHTML = '<div class="empty-log">Belum ada karyawan di cabang ini.</div>';
+      return;
+    }
+    wrap.innerHTML = '<div class="hint" style="margin-bottom:10px;">Kepala Unit aktif untuk dokumen: <b>'+(r.kuAktif||"— belum diset")+'</b></div>'+
+      '<div class="karyawan-table-wrap"><table class="karyawan-table"><thead><tr>'+
+      '<th>Nama</th><th>Jabatan</th><th>TTD</th><th>Aksi</th></tr></thead><tbody>'+
+      list.map(function(k){
+        var badge = k.hasTtd
+          ? '<span style="color:#4ADE80;font-weight:700;">Ada</span>'
+          : '<span style="color:#F87171;">Belum</span>';
+        if(k.isKuCabang) badge += ' <span style="color:#93C5FD;font-size:11px;">· KU dokumen</span>';
+        return '<tr data-nama="'+String(k.nama).replace(/"/g,"&quot;")+'">'+
+          '<td><b style="color:#F8FAFC;">'+k.nama+'</b></td>'+
+          '<td>'+(k.jabatan||"—")+'</td>'+
+          '<td>'+badge+'</td>'+
+          '<td style="white-space:nowrap;">'+
+            '<label class="btn-xs" style="cursor:pointer;display:inline-block;">Upload TTD'+
+              '<input type="file" accept="image/*" class="cabang-ttd-file" data-nama="'+String(k.nama).replace(/"/g,"&quot;")+'" style="display:none;">'+
+            '</label> '+
+            (k.hasTtd ? '<button type="button" class="btn-xs secondary cabang-set-ku-btn" data-nama="'+String(k.nama).replace(/"/g,"&quot;")+'">Jadikan KU</button>' : '')+
+          '</td></tr>';
+      }).join("")+'</tbody></table></div>';
+
+    var kode = r.cabang;
+    wrap.querySelectorAll(".cabang-ttd-file").forEach(function(inp){
+      inp.addEventListener("change", function(){
+        var file = inp.files && inp.files[0];
+        if(!file) return;
+        var nama = inp.getAttribute("data-nama");
+        var msg = document.getElementById("cabangTtdMsg");
+        showMsg(msg, "Mengupload TTD "+nama+"...", "ok");
+        var reader = new FileReader();
+        reader.onload = function(){
+          var s = String(reader.result||"");
+          var i = s.indexOf(",");
+          var b64 = i>=0 ? s.slice(i+1) : s;
+          var isKu = String((list.filter(function(x){ return x.nama===nama; })[0]||{}).jabatan||"").toLowerCase().indexOf("kepala unit")>=0;
+          google.script.run
+            .withSuccessHandler(function(res){
+              if(!res || res.status!=="OK"){ showMsg(msg, (res&&res.reason)||"Gagal", "err"); return; }
+              showMsg(msg, "TTD tersimpan"+(isKu?" & diset sebagai KU cabang":"")+".", "ok");
+              loadCabangTtd(kode);
+            })
+            .withFailureHandler(function(err){ showMsg(msg, String(err.message||err), "err"); })
+            .docUploadTtdKaryawan(session.adminPin, {
+              nama: nama,
+              cabang: kode,
+              setAsKepalaUnit: isKu,
+              foto: { base64: b64, mimeType: file.type || "image/png" }
+            });
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+    wrap.querySelectorAll(".cabang-set-ku-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var nama = btn.getAttribute("data-nama");
+        var msg = document.getElementById("cabangTtdMsg");
+        showMsg(msg, "Menyetel KU dokumen...", "ok");
+        google.script.run
+          .withSuccessHandler(function(res){
+            if(!res || res.status!=="OK"){ showMsg(msg, (res&&res.reason)||"Gagal", "err"); return; }
+            showMsg(msg, nama+" jadi Kepala Unit dokumen cabang "+kode+".", "ok");
+            loadCabangTtd(kode);
+          })
+          .withFailureHandler(function(err){ showMsg(msg, String(err.message||err), "err"); })
+          .docSetKepalaUnitCabang(session.adminPin, kode, nama);
+      });
+    });
+  }
+
+  document.getElementById("cabangConfigWrap").addEventListener("click", function(e){
+    var btn = e.target.closest(".cabang-ttd-btn");
+    if(!btn) return;
+    openCabangTtdPanel(btn.getAttribute("data-kode"));
+  });
+
+  // ---- Pembuatan Dokumen ----
+  var docMetaCache = null;
+  function docFileToB64(file, cb){
+    if(!file){ cb(null); return; }
+    var reader = new FileReader();
+    reader.onload = function(){
+      var s = String(reader.result||"");
+      var i = s.indexOf(",");
+      cb({ base64: i>=0 ? s.slice(i+1) : s, mimeType: file.type || "image/jpeg", namaFile: file.name || "foto.jpg" });
+    };
+    reader.onerror = function(){ cb(null); };
+    reader.readAsDataURL(file);
+  }
+  function docIsKanit_(){
+    try{
+      if(session && session.cabang) return true;
+      if(session && session.role === "kanit") return true;
+    }catch(e){}
+    return false;
+  }
+  function docCabangAktif_(){
+    try{ if(session && session.cabang) return session.cabang; }catch(e){}
+    return "";
+  }
+  function docFillCabangSelects(meta){
+    var peta = meta.petaKepalaUnitPerCabang || {};
+    var codes = meta.kodeCabang || Object.keys(peta);
+    var isKanit = docIsKanit_();
+    var lockCabang = isKanit ? docCabangAktif_() : "";
+    ["docSnCabang","docGaCabang","docSpCabang"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      var wrap = el.closest(".field");
+      if(isKanit && lockCabang){
+        // Kanit: tidak perlu pilih cabang — isi hidden & sembunyikan
+        el.innerHTML = '<option value="'+lockCabang+'">'+lockCabang+'</option>';
+        el.value = lockCabang;
+        if(wrap) wrap.style.display = "none";
+        else el.style.display = "none";
+      } else {
+        // KC: tetap bisa pilih cabang
+        if(wrap) wrap.style.display = "";
+        el.style.display = "";
+        el.disabled = false;
+        el.innerHTML = codes.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join("");
+      }
+    });
+    function syncKU(){
+      var cab = document.getElementById("docSnCabang");
+      var kuEl = document.getElementById("docSnKU");
+      if(cab && kuEl) kuEl.value = peta[cab.value] || "";
+    }
+    var cabEl = document.getElementById("docSnCabang");
+    if(cabEl){ cabEl.onchange = syncKU; syncKU(); }
+  }
+  function loadDokumenTab(){
+    var isKanit = false;
+    try{ isKanit = !!(session && session.cabang); }catch(e){}
+    var hub = document.getElementById("docHub");
+    var hist = document.getElementById("docRiwayatKC");
+    if(isKanit){
+      if(hist) hist.style.display = "none";
+      if(hub) hub.style.display = "";
+      try{ docShowHub(); }catch(e){}
+      if(docMetaCache){ docFillCabangSelects(docMetaCache); return; }
+      google.script.run
+        .withSuccessHandler(function(r){
+          if(!r || r.status !== "OK") return;
+          docMetaCache = r;
+          docFillCabangSelects(r);
+        })
+        .withFailureHandler(function(){})
+        .docAmbilDropdown();
+    } else {
+      // KC: hanya riwayat
+      if(hub) hub.style.display = "none";
+      ["docFormSN","docFormGA","docFormSP"].forEach(function(id){
+        var el = document.getElementById(id); if(el) el.style.display = "none";
+      });
+      if(hist) hist.style.display = "";
+      // isi filter cabang
+      var sel = document.getElementById("docRiwayatCabang");
+      if(sel && sel.options.length <= 1 && typeof CABANG_LIST !== "undefined"){
+        (CABANG_LIST||[]).forEach(function(c){
+          var o = document.createElement("option"); o.value = c; o.textContent = c; sel.appendChild(o);
+        });
+      }
+      try{ loadDocRiwayat(); }catch(e){}
+    }
+  }
+  function loadDocRiwayat(){
+    var wrap = document.getElementById("docRiwayatWrap");
+    var msg = document.getElementById("docRiwayatMsg");
+    var cab = (document.getElementById("docRiwayatCabang")||{}).value || "SEMUA";
+    if(wrap) wrap.innerHTML = '<div class="empty-log">Memuat riwayat...</div>';
+    clearMsg(msg);
+    google.script.run
+      .withSuccessHandler(function(r){
+        if(!r || r.status !== "OK"){
+          if(wrap) wrap.innerHTML = '<div class="empty-log">'+(r&&r.reason||"Gagal")+'</div>';
+          return;
+        }
+        var kpi = document.getElementById("docRiwayatKpi");
+        if(kpi){
+          kpi.innerHTML =
+            '<div class="audit-kpi"><div class="k">BA SN</div><div class="v">'+(r.totalSN||0)+'</div></div>'+
+            '<div class="audit-kpi"><div class="k">BA GA</div><div class="v">'+(r.totalGA||0)+'</div></div>'+
+            '<div class="audit-kpi"><div class="k">Surat Pernyataan</div><div class="v">'+(r.totalSP||0)+'</div></div>';
+        }
+        var list = r.riwayat || [];
+        if(!list.length){
+          wrap.innerHTML = '<div class="empty-log">Belum ada riwayat dokumen.</div>';
+          return;
+        }
+        wrap.innerHTML = '<div class="karyawan-table-wrap"><table class="karyawan-table"><thead><tr>'+
+          '<th>Waktu</th><th>Cabang</th><th>Jenis</th><th>Nomor / Ket</th><th>Kepala Unit</th><th>Dokumen</th>'+
+          '</tr></thead><tbody>'+
+          list.map(function(row){
+            var link = row.link ? '<a href="'+row.link+'" target="_blank" rel="noopener" class="btn-xs secondary">Buka</a>' : '—';
+            return '<tr><td>'+row.waktu+'</td><td><b>'+row.cabang+'</b></td><td>'+row.jenis+'</td><td>'+row.nomor+'</td><td>'+row.kepalaUnit+'</td><td>'+link+'</td></tr>';
+          }).join("")+'</tbody></table></div>'+
+          (r.linkSpreadsheet ? '<div class="hint" style="margin-top:10px;"><a href="'+r.linkSpreadsheet+'" target="_blank" rel="noopener">Buka spreadsheet log</a></div>' : '');
+      })
+      .withFailureHandler(function(err){
+        if(wrap) wrap.innerHTML = '<div class="empty-log">'+String(err.message||err)+'</div>';
+      })
+      .docAmbilRiwayat(session.adminPin, cab);
+  }
+  var _docRiwayatBtn = document.getElementById("docRiwayatLoadBtn");
+  if(_docRiwayatBtn){
+    _docRiwayatBtn.addEventListener("click", function(){ loadDocRiwayat(); });
+  }
+  function docShowResult(elId, r){
+    var el = document.getElementById(elId);
+    if(!el) return;
+    if(!r || (r.status !== "OK" && !r.sukses)){
+      el.innerHTML = '<div class="empty-log">'+(r && (r.reason||r.pesan) || "Gagal")+'</div>';
+      return;
+    }
+    var url = r.docUrl || r.fileUrl || "";
+    var html = url ? '<a href="'+url+'" target="_blank" rel="noopener" class="btn-xs">Buka Dokumen</a> ' : "";
+    if(r.pdfBase64 && r.pdfFileName){
+      html += '<a class="btn-xs secondary" download="'+r.pdfFileName+'" href="data:application/pdf;base64,'+r.pdfBase64+'">Download PDF</a>';
+    }
+    el.innerHTML = html || '<div class="empty-log">Selesai</div>';
+  }
+  function docShowHub(){
+    var hub = document.getElementById("docHub");
+    if(hub) hub.style.display = "";
+    ["docFormSN","docFormGA","docFormSP"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.style.display = "none";
+    });
+  }
+  function docOpenForm(kind){
+    var hub = document.getElementById("docHub");
+    if(hub) hub.style.display = "none";
+    ["docFormSN","docFormGA","docFormSP"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.style.display = "none";
+    });
+    var map = { sn:"docFormSN", ga:"docFormGA", sp:"docFormSP" };
+    var el = document.getElementById(map[kind]);
+    if(el){
+      el.style.display = "block";
+      el.style.visibility = "visible";
+    }
+    try{
+      if(docMetaCache) docFillCabangSelects(docMetaCache);
+      else loadDokumenTab();
+    }catch(e){}
+  }
+  // Event delegation — aman walau panel dipindah antar layar KC/Kanit
+  document.addEventListener("click", function(ev){
+    var card = ev.target.closest(".doc-hub-card");
+    if(card){
+      ev.preventDefault();
+      ev.stopPropagation();
+      var kind = card.getAttribute("data-doc");
+      if(kind) docOpenForm(kind);
+      return;
+    }
+    var back = ev.target.closest(".doc-back-btn");
+    if(back){
+      ev.preventDefault();
+      ev.stopPropagation();
+      docShowHub();
+    }
+  });
+  function docGaAddRow(){
+    var wrap = document.getElementById("docGaItems");
+    if(!wrap) return;
+    var div = document.createElement("div");
+    div.className = "filter-row-compact doc-ga-row";
+    div.style.cssText = "gap:8px;flex-wrap:wrap;margin-bottom:8px;";
+    div.innerHTML = '<div class="field"><label>Permintaan</label><input type="text" class="ga-perm"></div>'+
+      '<div class="field" style="max-width:90px;"><label>Jumlah</label><input type="number" class="ga-jml" min="1" value="1"></div>'+
+      '<div class="field"><label>Keterangan</label><input type="text" class="ga-ket"></div>'+
+      '<div class="field"><label>Foto bukti</label><input type="file" class="ga-foto" accept="image/*"></div>';
+    wrap.appendChild(div);
+  }
+  var gaAdd = document.getElementById("docGaAddItem");
+  if(gaAdd) gaAdd.addEventListener("click", docGaAddRow);
+  if(document.getElementById("docGaItems") && !document.getElementById("docGaItems").children.length) docGaAddRow();
+
+  var snBtn = document.getElementById("docSnSubmit");
+  if(snBtn) snBtn.addEventListener("click", function(){
+    var msg = document.getElementById("docSnMsg");
+    clearMsg(msg);
+    var kitir = document.getElementById("docSnKitir").files[0];
+    var barang = document.getElementById("docSnBarang").files[0];
+    if(!kitir || !barang){
+      showMsg(msg, "Foto Kitir dan Foto Barang wajib diupload.", "err");
+      return;
+    }
+    if(!document.getElementById("docSnNomor").value || !document.getElementById("docSnTgl").value ||
+       !document.getElementById("docSnNasabah").value || !document.getElementById("docSnFaktur").value){
+      showMsg(msg, "Lengkapi nomor BA, tanggal, nasabah, dan no faktur.", "err");
+      return;
+    }
+    var hint = document.getElementById("docSnWaitHint");
+    if(hint) hint.style.display = "";
+    snBtn.disabled = true;
+    var prog = startProgressBar("docSnBar", "docSnPct", null, 180000);
+    showMsg(msg, "Membuat dokumen… mohon tunggu.", "ok");
+    docFileToB64(kitir, function(fk){
+      docFileToB64(barang, function(fb){
+        if(!fk || !fb){
+          if(prog) prog.stop();
+          if(hint) hint.style.display = "none";
+          snBtn.disabled = false;
+          showMsg(msg, "Gagal membaca foto. Coba lagi.", "err");
+          return;
+        }
+        google.script.run
+          .withSuccessHandler(function(r){
+            if(prog) prog.finish();
+            if(hint) hint.style.display = "none";
+            snBtn.disabled = false;
+            if(r && (r.status==="OK" || r.sukses)) showMsg(msg, "Berhasil dibuat.", "ok");
+            else showMsg(msg, (r && (r.reason||r.pesan)) || "Gagal", "err");
+            docShowResult("docSnResult", r);
+          })
+          .withFailureHandler(function(err){
+            if(prog) prog.stop();
+            if(hint) hint.style.display = "none";
+            snBtn.disabled = false;
+            showMsg(msg, String(err.message||err), "err");
+          })
+          .docProsesBA_SN({
+            kodeCabang: document.getElementById("docSnCabang").value,
+            nomorBA: document.getElementById("docSnNomor").value,
+            namaKepalaUnit: document.getElementById("docSnKU").value,
+            tanggalBarangMasuk: document.getElementById("docSnTgl").value,
+            namaNasabah: document.getElementById("docSnNasabah").value,
+            merkType: document.getElementById("docSnMerk").value,
+            noFaktur: document.getElementById("docSnFaktur").value,
+            snPerusahaan: document.getElementById("docSnSN").value,
+            fotoKitir: fk,
+            fotoBarang: fb
+          });
+      });
+    });
+  });
+
+  var gaBtn = document.getElementById("docGaSubmit");
+  if(gaBtn) gaBtn.addEventListener("click", function(){
+    var msg = document.getElementById("docGaMsg");
+    clearMsg(msg);
+    var rows = Array.prototype.slice.call(document.querySelectorAll(".doc-ga-row"));
+    if(!rows.length){ showMsg(msg, "Tambah minimal 1 baris.", "err"); return; }
+    var missingFoto = rows.some(function(row){ return !(row.querySelector(".ga-foto") && row.querySelector(".ga-foto").files[0]); });
+    if(missingFoto){ showMsg(msg, "Setiap baris wajib ada foto bukti.", "err"); return; }
+    var hint = document.getElementById("docGaWaitHint");
+    if(hint) hint.style.display = "";
+    gaBtn.disabled = true;
+    var prog = startProgressBar("docGaBar", "docGaPct", null, 180000);
+    showMsg(msg, "Membuat BA GA… mohon tunggu.", "ok");
+    var items = [];
+    var i = 0;
+    function next(){
+      if(i >= rows.length){
+        google.script.run
+          .withSuccessHandler(function(r){
+            if(prog) prog.finish();
+            if(hint) hint.style.display = "none";
+            gaBtn.disabled = false;
+            if(r && r.status==="OK") showMsg(msg, "Berhasil.", "ok");
+            else showMsg(msg, (r && r.reason) || "Gagal", "err");
+            docShowResult("docGaResult", r);
+          })
+          .withFailureHandler(function(err){
+            if(prog) prog.stop();
+            if(hint) hint.style.display = "none";
+            gaBtn.disabled = false;
+            showMsg(msg, String(err.message||err), "err");
+          })
+          .docProsesBA_GA({
+            cabang: document.getElementById("docGaCabang").value,
+            nomor: document.getElementById("docGaNomor").value,
+            tanggal: document.getElementById("docGaTgl").value,
+            items: items
+          });
+        return;
+      }
+      var row = rows[i++];
+      var file = row.querySelector(".ga-foto").files[0];
+      docFileToB64(file, function(f){
+        items.push({
+          permintaan: row.querySelector(".ga-perm").value,
+          jumlah: row.querySelector(".ga-jml").value,
+          keterangan: row.querySelector(".ga-ket").value,
+          fotoBase64: f && f.base64,
+          fotoMimeType: f && f.mimeType
+        });
+        next();
+      });
+    }
+    next();
+  });
+
+  var spBtn = document.getElementById("docSpSubmit");
+  if(spBtn) spBtn.addEventListener("click", function(){
+    var msg = document.getElementById("docSpMsg");
+    clearMsg(msg);
+    var hint = document.getElementById("docSpWaitHint");
+    if(hint) hint.style.display = "";
+    spBtn.disabled = true;
+    var prog = startProgressBar("docSpBar", "docSpPct", null, 180000);
+    showMsg(msg, "Membuat surat… mohon tunggu.", "ok");
+    google.script.run
+      .withSuccessHandler(function(r){
+        if(prog) prog.finish();
+        if(hint) hint.style.display = "none";
+        spBtn.disabled = false;
+        if(r && r.status==="OK") showMsg(msg, "Berhasil.", "ok");
+        else showMsg(msg, (r && r.reason) || "Gagal", "err");
+        docShowResult("docSpResult", r);
+      })
+      .withFailureHandler(function(err){
+        if(prog) prog.stop();
+        if(hint) hint.style.display = "none";
+        spBtn.disabled = false;
+        showMsg(msg, String(err.message||err), "err");
+      })
+      .docProsesSP({
+        kodeCabang: document.getElementById("docSpCabang").value,
+        nik: document.getElementById("docSpNik").value,
+        noHp: document.getElementById("docSpHp").value,
+        tanggal: document.getElementById("docSpTgl").value,
+        jenisPengeluaran: document.getElementById("docSpJenis").value,
+        nominal: document.getElementById("docSpNominal").value
+      });
+  });
+
   // ---- Jadwal: auto-load on cabang change, next month btn, GRT013 mode ----
   var adminLiburModeCutiSakit = false;
   function currentJadwalMonthLabel(){
@@ -9478,13 +10703,16 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var actHapus = document.getElementById("kanitLiburActHapus");
     var actCuti = document.getElementById("kanitLiburActCuti");
     var actSakit = document.getElementById("kanitLiburActSakit");
+    // Sakit: HANYA KC, semua cabang
+    if(actSakit) actSakit.style.display = isAdmin ? "" : "none";
     if(modeCS){
+      // cabang tutup Minggu: tidak ada rotasi libur, hanya Cuti/Sakit oleh KC
       if(actLibur) actLibur.style.display = "none";
       if(actHapus) actHapus.style.display = "none";
-      if(actCuti) actCuti.style.display = "";
-      if(actSakit) actSakit.style.display = "";
-    } else {
-      if(actSakit) actSakit.style.display = "none";
+      if(actCuti) actCuti.style.display = isAdmin ? "" : "none";
+    } else if(isAdmin){
+      // KC di cabang normal: Libur + Sakit (cuti diajukan Kanit)
+      if(actCuti) actCuti.style.display = "none";
     }
   };
 
@@ -9509,7 +10737,14 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var btn = e.target.closest("button[data-act]");
     if(!btn || ! _liburPopupTarget) return;
     var act = btn.getAttribute("data-act");
-    if(act !== "sakit" && !(act === "cuti" && session.adminPin && adminLiburModeCutiSakit)) return;
+    var isAdmin = !!(session.adminPin && !session.cabangPin);
+    if(act === "sakit"){
+      if(!isAdmin) return;
+    } else if(act === "cuti" && isAdmin && adminLiburModeCutiSakit){
+      // ok: KC input cuti di cabang tutup Minggu
+    } else {
+      return;
+    }
     var kar = _liburPopupTarget.kar, day = _liburPopupTarget.day;
     closeKanitLiburActionPopup();
     var bulan = adminLiburBulan || document.getElementById("jadwalLiburBulan").value;
@@ -9584,36 +10819,38 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     return "Rp " + n.toLocaleString("id-ID");
   }
   // Parse angka Indonesia + rumus sederhana (10+10, 5*2)
+  // Parse angka Indonesia + rumus (12+12 → 24) tanpa eval/Function (CSP-safe)
   function coParseExpr(raw){
     var s = String(raw == null ? "" : raw).trim();
     if(!s) return 0;
-    // buang label mata uang: Rp / RP / rp
     s = s.replace(/rp/gi, "").replace(/\s/g, "");
     if(!s) return 0;
-    function normToken(tok){
-      tok = String(tok).trim();
-      if(!tok) return "0";
-      // 44.399.195 atau 1.000.000
-      if(/^\d{1,3}(\.\d{3})+$/.test(tok)) return String(Number(tok.replace(/\./g, "")));
-      // 44,399,195
-      if(/^\d{1,3}(,\d{3})+$/.test(tok)) return String(Number(tok.replace(/,/g, "")));
-      // desimal 12,5 atau 12.5
-      if(/^\d+[.,]\d{1,2}$/.test(tok)) return String(Number(tok.replace(",", ".")));
-      // buang pemisah ribuan sisa
+    function normNum(tok){
+      tok = String(tok || "").trim();
+      if(!tok) return 0;
+      if(/^\d{1,3}(\.\d{3})+$/.test(tok)) return Number(tok.replace(/\./g, "")) || 0;
+      if(/^\d{1,3}(,\d{3})+$/.test(tok)) return Number(tok.replace(/,/g, "")) || 0;
+      if(/^\d+[.,]\d{1,2}$/.test(tok)) return Number(tok.replace(",", ".")) || 0;
       var cleaned = tok.replace(/\./g, "").replace(/,/g, "");
-      if(/^\d+$/.test(cleaned)) return cleaned;
-      return "0";
+      if(/^\d+$/.test(cleaned)) return Number(cleaned) || 0;
+      return 0;
     }
-    if(/[+\-*/()]/.test(s)){
-      var expr = s.replace(/(\d[\d.,]*|\.\d+)/g, function(m){ return normToken(m); });
-      if(!/^[\d+\-*/().]+$/.test(expr)) return 0;
-      try{
-        var v = Function('"use strict";return (' + expr + ");")();
-        if(typeof v !== "number" || !isFinite(v)) return 0;
-        return Math.round(v);
-      }catch(e){ return 0; }
+    if(/[+\-*/]/.test(s)){
+      var parts = s.split(/([+\-*/])/);
+      if(!parts.length || parts[0] === "") return 0;
+      var acc = normNum(parts[0]);
+      for(var i = 1; i < parts.length - 1; i += 2){
+        var op = parts[i];
+        var rhs = normNum(parts[i + 1]);
+        if(op === "+") acc += rhs;
+        else if(op === "-") acc -= rhs;
+        else if(op === "*") acc *= rhs;
+        else if(op === "/") acc = rhs ? (acc / rhs) : 0;
+      }
+      if(!isFinite(acc)) return 0;
+      return Math.round(acc);
     }
-    return Math.round(Number(normToken(s)) || 0);
+    return Math.round(normNum(s));
   }
   function coBuildDenomTables(){
     function rows(prefix){
@@ -9634,10 +10871,11 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       inp.addEventListener("keydown", function(e){
         if(e.key === "Enter"){
           e.preventDefault();
-          var n = coParseExpr(inp.value);
-          inp.value = n ? String(n) : "";
+          e.stopImmediatePropagation();
+          var raw = String(inp.value||"").trim();
+          var n = raw ? coParseExpr(raw) : 0;
+          inp.value = raw ? String(n) : "";
           if(typeof coRecalc === "function") coRecalc();
-          else if(typeof coUpdateTotals === "function") coUpdateTotals();
           var list = Array.prototype.slice.call(document.querySelectorAll("#tab-cashopname input.co-qty"));
           var i = list.indexOf(inp);
           if(i >= 0 && i < list.length-1) list[i+1].focus();
@@ -9751,9 +10989,12 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
           e.preventDefault();
           if(id === "coDataProgram"){
             var v = coParseExpr(el.value);
-            el.value = v ? coFormatIdNum(v) : "";
+            el.value = (String(el.value||"").trim()) ? ("Rp " + coFormatIdNum(v)) : "";
           } else if(id === "coKkPakai"){
             coFormatMoneyInput(el);
+          } else if(id === "coMateraiPakai"){
+            var v2 = coParseExpr(el.value);
+            el.value = String(el.value||"").trim() ? String(v2) : "";
           }
           coRecalc();
           coFocusNext(el);
@@ -9761,10 +11002,26 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       });
     });
     document.querySelectorAll(".co-qty").forEach(function(inp){
-      inp.addEventListener("input", coRecalc);
-      inp.addEventListener("blur", coRecalc);
+      if(inp.dataset.coBound) return;
+      inp.dataset.coBound = "1";
+      inp.addEventListener("input", function(){ coRecalc(); });
+      inp.addEventListener("blur", function(){
+        var raw = String(inp.value||"").trim();
+        if(!raw){ inp.value = ""; coRecalc(); return; }
+        var n = coParseExpr(raw);
+        inp.value = String(n);
+        coRecalc();
+      });
       inp.addEventListener("keydown", function(e){
-        if(e.key === "Enter"){ e.preventDefault(); coRecalc(); coFocusNext(inp); }
+        if(e.key === "Enter"){
+          e.preventDefault();
+          e.stopPropagation();
+          var raw = String(inp.value||"").trim();
+          var n = raw ? coParseExpr(raw) : 0;
+          inp.value = raw ? String(n) : "";
+          coRecalc();
+          coFocusNext(inp);
+        }
       });
       inp.addEventListener("focus", function(){ try{ inp.select(); }catch(e){} });
     });
