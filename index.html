@@ -3903,6 +3903,25 @@
     padding:6px 8px !important; color:#E2E8F0 !important;
   }
 
+
+  .audit-charts.audit-charts-2{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:12px !important;
+  }
+  @media(max-width:900px){
+    .audit-charts.audit-charts-2{ grid-template-columns:1fr !important; }
+  }
+  /* Semua ikon kalender putih */
+  input[type="date"]{
+    color-scheme: dark;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator{
+    filter: invert(1) brightness(1.4);
+    opacity: 1 !important;
+    cursor: pointer;
+  }
+
 </style>
 </head>
 <body>
@@ -4922,10 +4941,8 @@
         <button type="button" id="auditRefreshBtn" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
       </div>
       <div id="auditKpi" class="audit-kpi-grid"></div>
-      <div class="audit-charts audit-charts-full">
+      <div class="audit-charts audit-charts-2" style="margin-bottom:12px;">
         <div class="audit-card"><h4>Tren per bulan</h4><div id="auditTren"></div></div>
-      </div>
-      <div class="audit-charts audit-charts-full" style="margin-bottom:12px;">
         <div class="audit-card"><h4>Per cabang</h4><div id="auditCabangChart"></div></div>
       </div>
       <div class="audit-charts audit-charts-3">
