@@ -3847,6 +3847,62 @@
     font-size:12px; color:#E2E8F0; margin-top:4px; font-weight:700;
   }
 
+
+  .audit-charts.audit-charts-3{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:12px !important;
+  }
+  @media(max-width:900px){
+    .audit-charts.audit-charts-3{ grid-template-columns:1fr !important; }
+  }
+  #tab-kanitinput label,
+  #tab-kanitinput .tag,
+  #tab-kanitinput .hint,
+  #tab-kanitinput .field label,
+  #tab-kanitinput h2,
+  #tab-kanitinput .log-header h2,
+  #tab-kanitinput .empty-log{
+    color:#E2E8F0 !important;
+    -webkit-text-fill-color:#E2E8F0 !important;
+  }
+  #tab-kanitinput input,
+  #tab-kanitinput select{
+    color:#F8FAFC !important;
+    -webkit-text-fill-color:#F8FAFC !important;
+    background:#0F172A !important;
+    border:1px solid #64748B !important;
+  }
+  #tab-kanitinput input[type=number]::-webkit-outer-spin-button,
+  #tab-kanitinput input[type=number]::-webkit-inner-spin-button{
+    -webkit-appearance:none !important; margin:0 !important;
+  }
+  #tab-kanitinput input[type=number]{ -moz-appearance:textfield !important; }
+  #tab-dokumen input[type="date"]{ color-scheme:dark; min-height:40px; }
+  #tab-dokumen input[type="date"]::-webkit-calendar-picker-indicator{
+    filter:invert(1); opacity:1; cursor:pointer;
+  }
+  #tab-cashopname .co-card{
+    background:rgba(15,23,42,0.92) !important;
+    border:1px solid rgba(148,163,184,0.28) !important;
+    border-radius:14px !important;
+    padding:14px !important;
+  }
+  #tab-cashopname label, #tab-cashopname h3, #tab-cashopname h4, #tab-cashopname .hint{
+    color:#E2E8F0 !important; -webkit-text-fill-color:#E2E8F0 !important;
+  }
+  #tab-cashopname input, #tab-cashopname select{
+    color:#F8FAFC !important; -webkit-text-fill-color:#F8FAFC !important;
+    background:#0F172A !important; border:1px solid #64748B !important; border-radius:10px !important;
+  }
+  #tab-cashopname .co-denom-table th{
+    background:#1E293B !important; color:#F8FAFC !important; padding:8px !important;
+  }
+  #tab-cashopname .co-denom-table td{
+    border-bottom:1px solid rgba(148,163,184,0.2) !important;
+    padding:6px 8px !important; color:#E2E8F0 !important;
+  }
+
 </style>
 </head>
 <body>
@@ -4127,7 +4183,7 @@
       </form>
 
       <div style="text-align:center; margin-top:16px;">
-        <button class="link-btn" id="showChangeCabangPinFromForm">Ganti PIN cabang</button>
+        <!-- PIN di profil -->
       </div>
 
       <div class="log">
@@ -4248,12 +4304,10 @@
       <div class="audit-charts audit-charts-full">
         <div class="audit-card audit-tren-card"><h4>Tren per bulan</h4><div id="kanitAuditTren"></div></div>
       </div>
-      <div class="audit-charts">
+      <div class="audit-charts audit-charts-3">
         <div class="audit-card"><h4>Top petugas</h4><div id="kanitAuditTopPetugas"></div></div>
-        <div class="audit-card"><h4>Distribusi TW</h4><div id="kanitAuditTw"></div></div>
-      </div>
-      <div class="audit-charts audit-charts-full">
         <div class="audit-card"><h4>Top jenis temuan</h4><div id="kanitAuditTopTemuan"></div></div>
+        <div class="audit-card"><h4>Distribusi TW</h4><div id="kanitAuditTw"></div></div>
       </div>
       <div class="rejected-top3-title">Detail temuan cabang</div>
       <div class="audit-table-wrap"><table class="audit-table"><thead><tr><th>Bulan</th><th>TW</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="kanitAuditDetailBody"></tbody></table></div>
@@ -4871,14 +4925,14 @@
       <div class="audit-charts audit-charts-full">
         <div class="audit-card"><h4>Tren per bulan</h4><div id="auditTren"></div></div>
       </div>
-      <div class="audit-charts">
+      <div class="audit-charts audit-charts-full" style="margin-bottom:12px;">
         <div class="audit-card"><h4>Per cabang</h4><div id="auditCabangChart"></div></div>
+      </div>
+      <div class="audit-charts audit-charts-3">
         <div class="audit-card"><h4>Top petugas</h4><div id="auditTopPetugas"></div></div>
-      </div>
-      <div class="audit-charts audit-charts-full">
         <div class="audit-card"><h4>Top jenis temuan</h4><div id="auditTopTemuan"></div></div>
+        <div class="audit-card"><h4>Distribusi TW</h4><div id="auditTw"></div></div>
       </div>
-      <div class="audit-card" style="margin-bottom:12px;"><h4>Distribusi TW</h4><div id="auditTw"></div></div>
       <div class="rejected-top3-title">Detail temuan</div>
       <div class="audit-table-wrap"><table class="audit-table"><thead><tr><th>Cabang</th><th>Bulan</th><th>TW</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="auditDetailBody"></tbody></table></div>
       <div class="audit-input-box">
@@ -5768,7 +5822,8 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       .changeCabangPin(session.cabang, oldPin, n1);
   });
 
-  document.getElementById("showChangeCabangPinFromForm").addEventListener("click", function(){
+  var _pinFromForm = document.getElementById("showChangeCabangPinFromForm");
+  if(_pinFromForm) _pinFromForm.addEventListener("click", function(){
     openCabangGate(session.cabang);
     document.getElementById("showChangeCabangPin").click();
   });
@@ -10824,6 +10879,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var s = String(raw == null ? "" : raw).trim();
     if(!s) return 0;
     s = s.replace(/rp/gi, "").replace(/\s/g, "");
+    if(s.charAt(0) === "=") s = s.slice(1);
     if(!s) return 0;
     function normNum(tok){
       tok = String(tok || "").trim();
