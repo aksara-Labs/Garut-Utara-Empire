@@ -5121,112 +5121,143 @@ input:focus-visible{
 }
 
 
-/* ===== Cash Opname — restyle charcoal + gold (rapih) ===== */
+
+/* ===== Cash Opname CO-1 — hierarchy + sticky summary ===== */
 #tab-cashopname{
   --co-bg: rgba(255,255,255,0.03);
-  --co-bg-2: rgba(18,21,26,0.92);
+  --co-panel: rgba(18,21,26,0.92);
   --co-border: rgba(255,255,255,0.08);
-  --co-border-gold: rgba(212,137,74,0.35);
+  --co-gold: #E0A06A;
   --co-text: #F3F4F6;
   --co-muted: #9CA3AF;
-  --co-gold: #E0A06A;
-  --co-input-bg: rgba(0,0,0,0.28);
+  --co-input: rgba(0,0,0,0.28);
 }
-#tab-cashopname .co-layout{
-  display: grid !important;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) !important;
-  gap: 16px !important;
-  align-items: start !important;
-}
-#tab-cashopname .co-zone{
-  background: var(--co-bg-2) !important;
-  border: 1px solid var(--co-border) !important;
-  border-radius: 16px !important;
-  padding: 0 !important;
-  margin-bottom: 14px !important;
-  overflow: hidden !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
-}
-#tab-cashopname .co-zone-head{
+#tab-cashopname .co-toolbar{
   display: flex !important;
-  align-items: center !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
   gap: 10px !important;
-  padding: 12px 14px !important;
-  background: rgba(212,137,74,0.08) !important;
-  border-bottom: 1px solid var(--co-border) !important;
-  color: var(--co-text) !important;
-  font-weight: 700 !important;
-  font-size: 13px !important;
-  letter-spacing: 0.02em !important;
+  margin-bottom: 12px !important;
 }
-#tab-cashopname .co-zone-head .zn{
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 22px !important;
-  height: 22px !important;
-  border-radius: 8px !important;
-  background: rgba(212,137,74,0.25) !important;
-  color: var(--co-gold) !important;
-  font-size: 12px !important;
-  font-weight: 800 !important;
+#tab-cashopname .co-toolbar .field{ margin: 0 !important; min-width: 140px !important; }
+#tab-cashopname .co-toolbar label{ color: var(--co-muted) !important; font-size: 11px !important; }
+
+/* Sticky summary bar */
+#tab-cashopname .co-summary{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 20 !important;
+  padding: 4px 0 10px !important;
+  background: linear-gradient(180deg, #0B0D10 70%, transparent) !important;
 }
-#tab-cashopname .co-zone-body{
-  padding: 14px !important;
-}
-#tab-cashopname .co-card{
-  background: var(--co-bg) !important;
+#tab-cashopname .co-sum-item{
+  background: var(--co-panel) !important;
   border: 1px solid var(--co-border) !important;
   border-radius: 14px !important;
   padding: 12px 14px !important;
-  margin-bottom: 12px !important;
-  box-shadow: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
 }
-#tab-cashopname .co-card h4,
-#tab-cashopname h4{
-  margin: 0 0 10px 0 !important;
-  font-size: 13px !important;
+#tab-cashopname .co-sum-lab{
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--co-muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+#tab-cashopname .co-sum-val{
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: var(--co-text) !important;
+}
+#tab-cashopname .co-sum-sub{
+  font-size: 11px !important;
+  color: var(--co-muted) !important;
+}
+#tab-cashopname .co-sum-selisih{
+  border-color: rgba(212,137,74,0.35) !important;
+  background: rgba(212,137,74,0.08) !important;
+}
+#tab-cashopname .co-sum-selisih.is-ok .co-sum-val,
+#tab-cashopname .co-sum-selisih.ok .co-sum-val{ color: #4ADE80 !important; }
+#tab-cashopname .co-sum-selisih.is-bad .co-sum-val,
+#tab-cashopname .co-sum-selisih.bad .co-sum-val,
+#tab-cashopname .co-sum-selisih.err .co-sum-val{ color: #F87171 !important; }
+#tab-cashopname .co-badge{
+  display: inline-flex !important;
+  padding: 2px 8px !important;
+  border-radius: 99px !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  background: rgba(74,222,128,0.15) !important;
+  color: #4ADE80 !important;
+  letter-spacing: 0.04em !important;
+}
+#tab-cashopname .co-sum-selisih.is-bad .co-badge,
+#tab-cashopname .co-sum-selisih.bad .co-badge,
+#tab-cashopname .co-sum-selisih.err .co-badge{
+  background: rgba(248,113,113,0.15) !important;
+  color: #F87171 !important;
+}
+
+#tab-cashopname .co-layout{
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.9fr) !important;
+  gap: 14px !important;
+  align-items: start !important;
+}
+#tab-cashopname .co-panel{
+  background: var(--co-panel) !important;
+  border: 1px solid var(--co-border) !important;
+  border-radius: 14px !important;
+  margin-bottom: 12px !important;
+  overflow: hidden !important;
+}
+#tab-cashopname .co-panel-head{
+  padding: 10px 14px !important;
+  font-size: 12px !important;
   font-weight: 700 !important;
   color: var(--co-gold) !important;
-  letter-spacing: 0.02em !important;
+  letter-spacing: 0.03em !important;
+  border-bottom: 1px solid var(--co-border) !important;
+  background: rgba(212,137,74,0.06) !important;
 }
-#tab-cashopname label,
-#tab-cashopname .lab,
-#tab-cashopname .co-line{
-  color: var(--co-muted) !important;
-  -webkit-text-fill-color: var(--co-muted) !important;
-  font-size: 12px !important;
+#tab-cashopname .co-hist-head{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
 }
-#tab-cashopname input[type="text"],
-#tab-cashopname input[type="number"],
-#tab-cashopname input[type="date"],
-#tab-cashopname input.co-qty,
-#tab-cashopname select,
-#tab-cashopname textarea{
-  background: var(--co-input-bg) !important;
-  border: 1px solid var(--co-border) !important;
-  border-radius: 10px !important;
-  color: var(--co-text) !important;
-  -webkit-text-fill-color: var(--co-text) !important;
-  font-weight: 600 !important;
-  padding: 8px 10px !important;
+#tab-cashopname .co-panel-body{ padding: 12px 14px !important; }
+#tab-cashopname .co-panel-body.co-compact{
+  display: grid !important;
+  gap: 8px !important;
 }
-#tab-cashopname input:focus,
-#tab-cashopname select:focus,
-#tab-cashopname textarea:focus,
-#tab-cashopname input.co-qty:focus{
-  border-color: var(--co-border-gold) !important;
-  outline: none !important;
-  box-shadow: 0 0 0 2px rgba(212,137,74,0.15) !important;
+#tab-cashopname .co-field-program{ max-width: 320px !important; margin-bottom: 12px !important; }
+#tab-cashopname .co-side-grid{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  margin-bottom: 12px !important;
 }
-/* Denom boxes Laci / Brankas */
+#tab-cashopname .co-side-grid .co-panel{ margin-bottom: 0 !important; }
+
 #tab-cashopname .co-denom-grid{
   display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns: 1fr 1fr !important;
   gap: 12px !important;
 }
 #tab-cashopname .co-denom-box{
-  background: rgba(0,0,0,0.2) !important;
+  background: rgba(0,0,0,0.22) !important;
   border: 1px solid var(--co-border) !important;
   border-radius: 12px !important;
   overflow: hidden !important;
@@ -5236,13 +5267,11 @@ input:focus-visible{
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  padding: 10px 12px !important;
+  padding: 8px 12px !important;
   background: rgba(255,255,255,0.04) !important;
-  border-color: var(--co-border) !important;
-  color: var(--co-text) !important;
-  -webkit-text-fill-color: var(--co-text) !important;
-  font-weight: 700 !important;
   font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: var(--co-text) !important;
 }
 #tab-cashopname .co-denom-head span:last-child,
 #tab-cashopname .co-denom-foot span:last-child,
@@ -5250,146 +5279,272 @@ input:focus-visible{
 #tab-cashopname #coTotalBrankas,
 #tab-cashopname #coTotalLaciLbl,
 #tab-cashopname #coTotalBrankasLbl{
-  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  font-family: 'JetBrains Mono', monospace !important;
   color: var(--co-gold) !important;
-  -webkit-text-fill-color: var(--co-gold) !important;
-  font-weight: 700 !important;
 }
-#tab-cashopname .co-denom-table{
-  width: 100% !important;
-  border-collapse: collapse !important;
-}
+#tab-cashopname .co-denom-table{ width: 100% !important; border-collapse: collapse !important; }
 #tab-cashopname .co-denom-table th{
   background: transparent !important;
   color: var(--co-muted) !important;
-  -webkit-text-fill-color: var(--co-muted) !important;
-  font-size: 11px !important;
-  font-weight: 600 !important;
+  font-size: 10px !important;
   text-transform: uppercase !important;
   letter-spacing: 0.04em !important;
-  padding: 8px 10px !important;
+  padding: 6px 10px !important;
   border-bottom: 1px solid var(--co-border) !important;
+  text-align: left !important;
 }
 #tab-cashopname .co-denom-table td{
+  padding: 5px 10px !important;
   border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-  padding: 6px 10px !important;
   color: var(--co-text) !important;
-  -webkit-text-fill-color: var(--co-text) !important;
   font-size: 12.5px !important;
   background: transparent !important;
 }
 #tab-cashopname .co-denom-table td:first-child{
   color: var(--co-muted) !important;
-  -webkit-text-fill-color: var(--co-muted) !important;
   font-family: 'JetBrains Mono', monospace !important;
   font-size: 12px !important;
 }
-#tab-cashopname .co-denom-table td:last-child,
-#tab-cashopname .co-line{
-  font-family: 'JetBrains Mono', monospace !important;
+#tab-cashopname input[type="text"],
+#tab-cashopname input[type="date"],
+#tab-cashopname input[type="number"],
+#tab-cashopname input.co-qty,
+#tab-cashopname select,
+#tab-cashopname textarea{
+  background: var(--co-input) !important;
+  border: 1px solid var(--co-border) !important;
+  border-radius: 10px !important;
   color: var(--co-text) !important;
-  -webkit-text-fill-color: var(--co-text) !important;
+  padding: 8px 10px !important;
   font-weight: 600 !important;
 }
-/* Result side */
-#tab-cashopname .co-result-big,
-#tab-cashopname #coSideProgram,
-#tab-cashopname #coSideFisik,
-#tab-cashopname #coSelisihVal{
-  color: var(--co-text) !important;
-  -webkit-text-fill-color: var(--co-text) !important;
+#tab-cashopname input:focus,
+#tab-cashopname select:focus,
+#tab-cashopname textarea:focus{
+  border-color: rgba(212,137,74,0.45) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(212,137,74,0.12) !important;
+}
+#tab-cashopname label{ color: var(--co-muted) !important; font-size: 11.5px !important; }
+#tab-cashopname .co-mono{
   font-family: 'JetBrains Mono', monospace !important;
   font-weight: 700 !important;
+  color: var(--co-text) !important;
 }
-#tab-cashopname #coSelisihVal.is-plus,
-#tab-cashopname .co-selisih-ok{
-  color: #4ADE80 !important;
-  -webkit-text-fill-color: #4ADE80 !important;
-}
-#tab-cashopname #coSelisihVal.is-minus,
-#tab-cashopname .co-selisih-bad{
-  color: #F87171 !important;
-  -webkit-text-fill-color: #F87171 !important;
-}
+#tab-cashopname .co-hint{ font-size: 11px !important; color: var(--co-muted) !important; margin-top: 4px !important; }
 #tab-cashopname .co-sign{
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
-  gap: 10px !important;
-  margin-top: 10px !important;
+  gap: 8px !important;
+  margin-bottom: 12px !important;
 }
 #tab-cashopname .co-sign .col{
   background: var(--co-bg) !important;
   border: 1px solid var(--co-border) !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   padding: 10px !important;
   text-align: center !important;
 }
-#tab-cashopname .co-sign .lab{ color: var(--co-muted) !important; font-size: 11px !important; }
-#tab-cashopname .co-sign .name{ color: var(--co-text) !important; font-weight: 600 !important; font-size: 13px !important; }
+#tab-cashopname .co-sign .lab{ font-size: 10px !important; color: var(--co-muted) !important; text-transform: uppercase !important; }
+#tab-cashopname .co-sign .name{ font-size: 13px !important; font-weight: 600 !important; color: var(--co-text) !important; margin-top: 4px !important; }
+#tab-cashopname .co-save-btn{
+  width: 100% !important;
+  padding: 12px 16px !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  background: linear-gradient(135deg, #D4894A, #B87333) !important;
+  color: #0B0D10 !important;
+}
 #tab-cashopname .co-history-item{
   background: var(--co-bg) !important;
   border: 1px solid var(--co-border) !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   padding: 10px 12px !important;
   margin-bottom: 8px !important;
 }
-#tab-cashopname .co-history-item .top{
-  color: var(--co-text) !important;
-  font-weight: 600 !important;
-}
-#tab-cashopname .co-history-item .meta{
-  color: var(--co-muted) !important;
-  font-size: 12px !important;
-}
-#tab-cashopname #coSaveBtn{
-  background: linear-gradient(135deg, #D4894A, #B87333) !important;
-  border: none !important;
-  color: #0B0D10 !important;
-  font-weight: 700 !important;
-  border-radius: 12px !important;
-  padding: 10px 18px !important;
-}
 @media (max-width: 1100px){
-  #tab-cashopname .co-layout{
-    grid-template-columns: minmax(0, 1fr) !important;
-  }
+  #tab-cashopname .co-layout{ grid-template-columns: 1fr !important; }
+  #tab-cashopname .co-summary{ grid-template-columns: 1fr !important; position: relative !important; }
 }
 @media (max-width: 700px){
-  #tab-cashopname .co-denom-grid{
-    grid-template-columns: minmax(0, 1fr) !important;
+  #tab-cashopname .co-denom-grid,
+  #tab-cashopname .co-side-grid,
+  #tab-cashopname .co-sign{ grid-template-columns: 1fr !important; }
+}
+
+
+
+/* Start + lock + KK denom */
+#tab-cashopname .co-field-program-tb{ min-width: 160px; flex: 1 1 160px; }
+#tab-cashopname .co-start-btn{
+  padding: 10px 20px !important;
+  border-radius: 12px !important;
+  border: none !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.04em !important;
+  background: linear-gradient(135deg, #D4894A, #B87333) !important;
+  color: #0B0D10 !important;
+  cursor: pointer !important;
+  height: 42px !important;
+  align-self: flex-end !important;
+}
+#tab-cashopname .co-start-btn:disabled{
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  filter: grayscale(0.3);
+}
+#tab-cashopname .co-start-btn.is-on{
+  background: linear-gradient(135deg, #34D399, #059669) !important;
+  color: #042f1a !important;
+}
+#tab-cashopname.co-locked .co-layout,
+#tab-cashopname.co-locked .co-summary{
+  opacity: 0.45;
+  pointer-events: none;
+  user-select: none;
+}
+#tab-cashopname.co-locked .co-toolbar{
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+#tab-cashopname .co-kk-meta{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+  gap: 10px !important;
+}
+#tab-cashopname .co-side-grid{ grid-template-columns: 1fr !important; }
+#tab-cashopname #coTotalKk, #tab-cashopname #coTotalKkFoot{
+  font-family: 'JetBrains Mono', monospace !important;
+  color: #E0A06A !important;
+  font-weight: 700 !important;
+}
+@media (max-width: 700px){
+  #tab-cashopname .co-kk-meta{ grid-template-columns: 1fr !important; }
+}
+
+/* ===== Cash Opname CO-3 — riwayat kartu + mobile ===== */
+#tab-cashopname .co-hist-empty{
+  text-align: center;
+  padding: 20px 12px;
+  color: #9CA3AF;
+  font-size: 13px;
+}
+#tab-cashopname .co-hist-card{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+}
+#tab-cashopname .co-hist-card .row1{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#tab-cashopname .co-hist-card .cab{
+  font-weight: 700;
+  color: #F3F4F6;
+  font-size: 13px;
+}
+#tab-cashopname .co-hist-card .tgl{
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: #9CA3AF;
+}
+#tab-cashopname .co-hist-card .row2{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  font-size: 12px;
+  color: #CBD5E1;
+}
+#tab-cashopname .co-hist-card .row2 strong{
+  font-family: 'JetBrains Mono', monospace;
+  color: #E0A06A;
+}
+#tab-cashopname .co-hist-card .st{
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+#tab-cashopname .co-hist-card .st.ok{
+  background: rgba(74,222,128,0.15);
+  color: #4ADE80;
+}
+#tab-cashopname .co-hist-card .st.bad{
+  background: rgba(248,113,113,0.15);
+  color: #F87171;
+}
+#tab-cashopname .co-denom-head{
+  justify-content: flex-start !important;
+}
+@media (max-width: 700px){
+  #tab-cashopname .co-toolbar{
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
-  #tab-cashopname .co-sign{
-    grid-template-columns: minmax(0, 1fr) !important;
+  #tab-cashopname .co-toolbar .field{
+    width: 100% !important;
+    max-width: none !important;
+  }
+  #tab-cashopname .co-summary{
+    gap: 8px !important;
+  }
+  #tab-cashopname .co-sum-val{
+    font-size: 16px !important;
+  }
+  #tab-cashopname .co-panel-body{
+    padding: 10px 12px !important;
+  }
+  #tab-cashopname .co-denom-table th,
+  #tab-cashopname .co-denom-table td{
+    padding: 6px 8px !important;
+    font-size: 12px !important;
   }
 }
 
-
-/* Scrollbar abu (bukan putih) */
-*{
-  scrollbar-width: thin;
-  scrollbar-color: #4B5563 #1A1F28;
+/* ===== Cash Opname CO-2 — input focus + feedback ===== */
+#tab-cashopname tr.co-row-active td{
+  background: rgba(212,137,74,0.1) !important;
 }
-*::-webkit-scrollbar{
-  width: 10px;
-  height: 10px;
+#tab-cashopname input.co-qty:focus{
+  border-color: rgba(212,137,74,0.55) !important;
+  background: rgba(212,137,74,0.08) !important;
 }
-*::-webkit-scrollbar-track{
-  background: #1A1F28;
-  border-radius: 8px;
+#tab-cashopname .co-save-btn:disabled{
+  opacity: 0.65 !important;
+  cursor: wait !important;
 }
-*::-webkit-scrollbar-thumb{
-  background: #4B5563;
-  border-radius: 8px;
-  border: 2px solid #1A1F28;
+#tab-cashopname .co-save-btn.co-save-ok{
+  background: linear-gradient(135deg, #34D399, #059669) !important;
+  color: #042f1a !important;
 }
-*::-webkit-scrollbar-thumb:hover{
-  background: #6B7280;
+#tab-cashopname #coMsg.ok,
+#tab-cashopname .msg.ok{
+  color: #4ADE80 !important;
+  font-weight: 600 !important;
 }
-*::-webkit-scrollbar-corner{
-  background: #1A1F28;
+#tab-cashopname #coMsg.err,
+#tab-cashopname .msg.err{
+  color: #F87171 !important;
+  font-weight: 600 !important;
 }
-
-
+#tab-cashopname #coDataProgram:invalid,
+#tab-cashopname #coDataProgram.co-invalid{
+  border-color: #F87171 !important;
+}
 
 /* ===== Audit detail table — dark theme (force, match rejected) ===== */
 #tab-audit .audit-table-wrap,
@@ -5710,6 +5865,42 @@ html, body{
   }
   .dash-kpi-grid{ grid-template-columns: 1fr !important; }
 }
+
+/* Profile clickable + modal on top */
+.admin-topbar{ z-index: 200 !important; position: sticky !important; }
+.admin-topbar-right, .topbar-user-group, .admin-topbar-avatar, #adminProfileBtn, #kanitProfileBtn{
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  position: relative;
+  z-index: 210 !important;
+}
+.profile-modal-overlay{
+  z-index: 10050 !important;
+}
+.profile-modal-overlay.show{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+
+button.admin-topbar-avatar{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  border: none !important;
+  background: transparent !important;
+  font: inherit !important;
+  color: inherit !important;
+  padding: 4px 6px !important;
+  border-radius: 10px !important;
+  z-index: 250 !important;
+  position: relative !important;
+}
+.admin-topbar, .admin-topbar-right{ z-index: 240 !important; pointer-events: auto !important; }
+
 </style>
 </head>
 <body>
@@ -6249,13 +6440,13 @@ html, body{
               </div>
             </div>
             <div class="topbar-user-group">
-            <div class="admin-topbar-avatar" id="adminProfileBtn" title="Profil &amp; PIN" role="button" tabindex="0">
+            <button type="button" class="admin-topbar-avatar" id="adminProfileBtn" title="Profil &amp; PIN">
               <div class="admin-avatar-circle" id="adminAvatarInitial">S</div>
               <div class="admin-avatar-text">
                 <div class="admin-avatar-name" id="adminAvatarName">Syahrul</div>
-                <div class="admin-avatar-role">Kepala Admin</div>
+                <div class="admin-avatar-role">Kepala Cabang</div>
               </div>
-            </div>
+            </button>
             <button type="button" class="power-btn" id="logoutFromAdminTop" title="Keluar"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2v10"/><path d="M6.1 5.5a8 8 0 1 0 11.8 0"/></svg></button>
             </div>
           </div>
@@ -6650,101 +6841,111 @@ html, body{
     
 
     <!-- Cash Opname (KC) -->
-    <div class="panel subpanel" id="tab-cashopname">
-      <div class="filter-row-compact" style="align-items:flex-end;">
+    <div class="panel subpanel" id="tab-cashopname" class="co-locked">
+      <!-- CO-1: toolbar + sticky summary -->
+      <div class="co-toolbar">
         <div class="field"><label>Tanggal</label><input type="date" id="coTanggal"></div>
         <div class="field"><label>Cabang</label><select id="coCabang"><option value="">— pilih —</option></select></div>
+        <div class="field co-field-program-tb"><label>Data Program *</label><input type="text" inputmode="decimal" id="coDataProgram" placeholder="0" autocomplete="off"></div>
         <input type="hidden" id="coKasir" value="">
-        <button type="button" id="coRefreshHistBtn" class="btn-icon-refresh" title="Refresh riwayat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
+        <button type="button" id="coStartBtn" class="co-start-btn" disabled title="Isi tanggal, cabang & data program">Start</button>
+      </div>
+
+      <div class="co-summary" id="coSummaryBar" aria-live="polite">
+        <div class="co-sum-item">
+          <span class="co-sum-lab">Data Program</span>
+          <span class="co-sum-val" id="coSideProgram">Rp 0</span>
+        </div>
+        <div class="co-sum-item">
+          <span class="co-sum-lab">Kas Fisik</span>
+          <span class="co-sum-val" id="coSideFisik">Rp 0</span>
+          <span class="co-sum-sub">Laci <span id="coSideLaci">Rp 0</span> · Brankas <span id="coSideBrankas">Rp 0</span></span>
+        </div>
+        <div class="co-sum-item co-sum-selisih" id="coStatusBox">
+          <span class="co-sum-lab"><span class="co-badge" id="coStatusBadge">SESUAI</span> Selisih</span>
+          <span class="co-sum-val" id="coSelisihLbl">Rp 0</span>
+          <span class="co-sum-sub" id="coStatusNote">Kas fisik = Data Program</span>
+        </div>
       </div>
 
       <div class="co-layout">
         <div class="co-col-input">
-          <div class="co-zone">
-            <div class="co-zone-head"><span class="zn">1</span> Input — Hitung Fisik</div>
-            <div class="co-zone-body">
-          <div class="co-card" style="border:none;background:transparent;padding:0;margin:0;">
-            <h4>Hitung Fisik Kas</h4>
-                        <div class="field" style="max-width:280px;margin-bottom:12px;">
-              <label>Data Program (Patokan) *</label>
-              <input type="text" inputmode="decimal" id="coDataProgram" placeholder="0 atau 10+10" autocomplete="off">
-            </div>
-            <div class="co-denom-grid">
-              <div class="co-denom-box">
-                <div class="co-denom-head"><span>Laci</span><span id="coTotalLaciLbl">Rp 0</span></div>
-                <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
-                <tbody id="coLaciBody"></tbody></table>
-                <div class="co-denom-foot"><span>Total Laci</span><span id="coTotalLaci">Rp 0</span></div>
-              </div>
-              <div class="co-denom-box">
-                <div class="co-denom-head"><span>Brankas</span><span id="coTotalBrankasLbl">Rp 0</span></div>
-                <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
-                <tbody id="coBrankasBody"></tbody></table>
-                <div class="co-denom-foot"><span>Total Brankas</span><span id="coTotalBrankas">Rp 0</span></div>
+          <div class="co-panel">
+            <div class="co-panel-head">Hitung fisik</div>
+            <div class="co-panel-body">
+              <div class="co-denom-grid">
+                <div class="co-denom-box">
+                  <div class="co-denom-head"><span>Laci</span></div>
+                  <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
+                  <tbody id="coLaciBody"></tbody></table>
+                  <div class="co-denom-foot"><span>Total Laci</span><span id="coTotalLaci">Rp 0</span></div><span id="coTotalLaciLbl" style="display:none">Rp 0</span>
+                </div>
+                <div class="co-denom-box">
+                  <div class="co-denom-head"><span>Brankas</span></div>
+                  <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
+                  <tbody id="coBrankasBody"></tbody></table>
+                  <div class="co-denom-foot"><span>Total Brankas</span><span id="coTotalBrankas">Rp 0</span></div><span id="coTotalBrankasLbl" style="display:none">Rp 0</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div class="co-card">
-              <h4>Uang Materai</h4>
-              <div class="field"><label>Terpakai (lembar)</label><input type="text" inputmode="decimal" id="coMateraiPakai" value="" placeholder="—" autocomplete="off"></div>
-              <div class="field"><label>Nilai terpakai</label><div id="coMateraiNilai" style="font-family:JetBrains Mono,monospace;">Rp 0</div></div>
-              <div class="field"><label>Sisa materai (lembar)</label><input type="text" inputmode="decimal" id="coMateraiSisa" value="25" autocomplete="off" readonly title="Otomatis: 25 − terpakai"></div>
+          <div class="co-side-grid">
+            <div class="co-panel">
+              <div class="co-panel-head">Uang materai</div>
+              <div class="co-panel-body co-compact">
+                <div class="field"><label>Terpakai (lembar)</label><input type="text" inputmode="decimal" id="coMateraiPakai" value="" placeholder="—" autocomplete="off"></div>
+                <div class="field"><label>Nilai terpakai</label><div id="coMateraiNilai" class="co-mono">Rp 0</div></div>
+                <div class="field"><label>Sisa (lembar)</label><input type="text" inputmode="decimal" id="coMateraiSisa" value="25" autocomplete="off" readonly title="Otomatis: 25 − terpakai"></div>
+              </div>
             </div>
-            <div class="co-card">
-              <h4>Kas Kecil</h4>
-              <div class="field"><label>Saldo awal (otomatis)</label><input type="text" id="coKkAwal" value="0" readonly><div id="coKkAwalHint" style="font-size:11px;color:#94A3B8;margin-top:4px;"></div></div>
-              <div class="field"><label>Pemakaian</label><input type="text" inputmode="decimal" id="coKkPakai" value="" placeholder="—" autocomplete="off"></div>
-              <div class="field"><label>Sisa kas kecil</label><div id="coKkSisa" style="font-family:JetBrains Mono,monospace;font-weight:700;">Rp 0</div></div>
+            <div class="co-panel co-panel-kk">
+              <div class="co-panel-head">Kas kecil</div>
+              <div class="co-panel-body">
+                <div class="co-kk-meta">
+                  <div class="field"><label>Saldo awal</label><input type="text" id="coKkAwal" value="0" readonly><div id="coKkAwalHint" class="co-hint"></div></div>
+                  <div class="field"><label>Pemakaian (otomatis)</label><input type="text" id="coKkPakai" value="0" readonly title="Saldo awal − total fisik"><div class="co-hint">Awal − hitungan lembar</div></div>
+                  <div class="field"><label>Sisa (fisik)</label><div id="coKkSisa" class="co-mono">Rp 0</div></div>
+                </div>
+                <div class="co-denom-box" style="margin-top:10px;">
+                  <div class="co-denom-head"><span>Hitung sisa kas kecil</span><span id="coTotalKk">Rp 0</span></div>
+                  <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
+                  <tbody id="coKkBody"></tbody></table>
+                  <div class="co-denom-foot"><span>Total fisik KK</span><span id="coTotalKkFoot">Rp 0</span></div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="co-card">
-            <h4>Catatan / Temuan Opname</h4>
-            <div class="field"><textarea id="coCatatan" rows="3" placeholder="Temuan, selisih, keterangan..." style="width:100%;min-height:72px;resize:vertical;"></textarea></div>
+          <div class="co-panel">
+            <div class="co-panel-head">Catatan</div>
+            <div class="co-panel-body">
+              <div class="field"><textarea id="coCatatan" rows="2" placeholder="Temuan, selisih, keterangan..." style="width:100%;min-height:56px;resize:vertical;"></textarea></div>
+            </div>
           </div>
-            </div><!-- /zone-body -->
-          </div><!-- /zone 1 -->
         </div>
 
         <div class="co-col-result">
-          <div class="co-zone">
-            <div class="co-zone-head"><span class="zn">2</span> Hasil Opname</div>
-            <div class="co-zone-body">
-          <div class="co-card" style="border:none;background:transparent;padding:0;margin:0;">
-            <h4 style="display:none;">Hasil Cash Opname</h4>
-            <div class="field"><label>Data Program (Patokan)</label><div id="coSideProgram" class="co-result-big" style="font-size:18px;">Rp 0</div></div>
-            <div class="field"><label>Total Kas Fisik</label><div id="coSideFisik" class="co-result-big">Rp 0</div>
-              <div style="font-size:11.5px;color:var(--ink-soft);">Laci <span id="coSideLaci">Rp 0</span> · Brankas <span id="coSideBrankas">Rp 0</span></div>
-            </div>
-            <div id="coStatusBox" class="co-status ok">
-              <div class="badge">SESUAI</div>
-              <div class="co-result-big" id="coSelisihLbl" style="font-size:22px;">Rp 0</div>
-              <div style="font-size:11.5px;color:var(--ink-soft);" id="coStatusNote">Kas fisik sama persis dengan Data Program</div>
-            </div>
-            </div><!-- /hasil card body -->
-            </div><!-- /zone2 body -->
-          </div><!-- /zone 2 -->
-
-          <div class="co-zone">
-            <div class="co-zone-head"><span class="zn">3</span> Tanda Tangan & Simpan</div>
-            <div class="co-zone-body">
-            <div class="co-sign">
-              <div class="col"><div class="lab">Menyetujui · Kasir</div><div class="name" id="coSignKasir">—</div></div>
-              <div class="col"><div class="lab">Mengetahui · KC</div><div class="name" id="coSignKc">Syahrul Zuniardin</div></div>
-            </div>
-            <button type="button" id="coSaveBtn" class="btn-xs" style="width:100%;margin-top:12px;padding:12px;">Simpan Cash Opname</button>
-            <div class="msg" id="coMsg"></div>
+          <div class="co-panel">
+            <div class="co-panel-head">Tanda tangan &amp; simpan</div>
+            <div class="co-panel-body">
+              <div class="co-sign">
+                <div class="col"><div class="lab">Kasir</div><div class="name" id="coSignKasir">—</div></div>
+                <div class="col"><div class="lab">Kepala Cabang</div><div class="name" id="coSignKc">Syahrul Zuniardin</div></div>
+              </div>
+              <button type="button" id="coSaveBtn" class="co-save-btn">Simpan Cash Opname</button>
+              <div class="msg" id="coMsg"></div>
             </div>
           </div>
 
-          <div class="co-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
-              <h4 style="margin:0;">Riwayat Kunjungan</h4>
-              <button type="button" id="coShowHistBtn" class="btn-xs secondary">Tampilkan Riwayat</button>
+          <div class="co-panel">
+            <div class="co-panel-head co-hist-head">
+              <span>Riwayat kunjungan</span>
+              <button type="button" id="coShowHistBtn" class="btn-xs secondary">Tampilkan</button>
             </div>
-            <div id="coHistory" style="display:none;"></div>
+            <div class="co-panel-body">
+              <div id="coHistory" style="display:none;"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -11678,6 +11879,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     }
     function closeModal(){ modal.classList.remove("show"); }
     btn.addEventListener("click", openModal);
+    btn.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openModal(); } });
     document.getElementById("adminProfileClose").addEventListener("click", closeModal);
     modal.addEventListener("click", function(e){ if(e.target === modal) closeModal(); });
     document.getElementById("adminProfileTogglePin").addEventListener("click", function(){
@@ -13345,8 +13547,19 @@ function loadAdminBertugas(){
     var bb = document.getElementById("coBrankasBody");
     if(lb) lb.innerHTML = rows("laci");
     if(bb) bb.innerHTML = rows("brankas");
+    var kb = document.getElementById("coKkBody");
+    if(kb) kb.innerHTML = rows("kk");
     // co-qty-enter-bind: Enter = hitung rumus + pindah kolom
     document.querySelectorAll("#tab-cashopname input.co-qty").forEach(function(inp){
+      inp.addEventListener("focus", function(){
+        var tr = inp.closest("tr");
+        document.querySelectorAll("#tab-cashopname tr.co-row-active").forEach(function(r){ r.classList.remove("co-row-active"); });
+        if(tr) tr.classList.add("co-row-active");
+      });
+      inp.addEventListener("blur", function(){
+        var tr = inp.closest("tr");
+        if(tr) tr.classList.remove("co-row-active");
+      });
       inp.addEventListener("keydown", function(e){
         if(e.key === "Enter"){
           e.preventDefault();
@@ -13358,6 +13571,7 @@ function loadAdminBertugas(){
           var list = Array.prototype.slice.call(document.querySelectorAll("#tab-cashopname input.co-qty"));
           var i = list.indexOf(inp);
           if(i >= 0 && i < list.length-1) list[i+1].focus();
+          else if(typeof coFocusNext === "function") coFocusNext(inp);
         }
       });
       inp.addEventListener("blur", function(){
@@ -13377,6 +13591,63 @@ function loadAdminBertugas(){
     });
     return map;
   }
+  
+  var coStarted = false;
+  function coCanStart(){
+    var tgl = (document.getElementById("coTanggal")||{}).value || "";
+    var cab = (document.getElementById("coCabang")||{}).value || "";
+    var prog = String((document.getElementById("coDataProgram")||{}).value || "").trim();
+    return !!(tgl && cab && prog);
+  }
+  function coUpdateStartBtn(){
+    var btn = document.getElementById("coStartBtn");
+    if(!btn) return;
+    if(coStarted){
+      btn.disabled = false;
+      btn.textContent = "Started";
+      btn.classList.add("is-on");
+      return;
+    }
+    btn.classList.remove("is-on");
+    btn.textContent = "Start";
+    btn.disabled = !coCanStart();
+  }
+  function coSetLocked(locked){
+    var tab = document.getElementById("tab-cashopname");
+    if(!tab) return;
+    if(locked) tab.classList.add("co-locked");
+    else tab.classList.remove("co-locked");
+  }
+  function coDoStart(){
+    if(!coCanStart()){ coUpdateStartBtn(); return; }
+    coStarted = true;
+    coSetLocked(false);
+    coUpdateStartBtn();
+    try{ if(typeof coRecalc==="function") coRecalc(); }catch(e){}
+    try{
+      var first = document.querySelector("#tab-cashopname input.co-qty");
+      if(first) first.focus();
+    }catch(e){}
+  }
+  (function bindCoStart(){
+    var btn = document.getElementById("coStartBtn");
+    if(btn) btn.addEventListener("click", function(){ if(!coStarted) coDoStart(); });
+    ["coTanggal","coCabang","coDataProgram"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener("input", function(){ if(!coStarted) coUpdateStartBtn(); });
+      el.addEventListener("change", function(){ if(!coStarted) coUpdateStartBtn(); });
+    });
+    var cab = document.getElementById("coCabang");
+    if(cab) cab.addEventListener("change", function(){
+      coStarted = false;
+      coSetLocked(true);
+      coUpdateStartBtn();
+    });
+    coSetLocked(true);
+    coUpdateStartBtn();
+  })();
+
   function coRecalc(){
     function total(side){
       var t = 0;
@@ -13415,17 +13686,36 @@ function loadAdminBertugas(){
       sisaEl.value = String(sisa);
       sisaEl.readOnly = true;
     }
+    var kkFisik = total("kk");
     var kkA = coParseExpr((el("coKkAwal")||{}).value);
-    var kkP = coParseExpr((el("coKkPakai")||{}).value);
-    if(el("coKkSisa")) el("coKkSisa").textContent = coFmt(kkA - kkP);
+    var kkP = Math.max(0, kkA - kkFisik);
+    if(el("coKkPakai")) el("coKkPakai").value = kkP ? String(kkP) : "0";
+    if(el("coKkSisa")) el("coKkSisa").textContent = coFmt(kkFisik);
+    if(el("coTotalKk")) el("coTotalKk").textContent = coFmt(kkFisik);
+    if(el("coTotalKkFoot")) el("coTotalKkFoot").textContent = coFmt(kkFisik);
+    if(kkFisik > kkA && kkA > 0){
+      var hint = el("coKkAwalHint");
+      if(hint && hint.textContent.indexOf("Fisik") < 0) hint.textContent = (hint.textContent || "") + " · ⚠ Fisik > awal";
+    }
 
     var box = el("coStatusBox");
     var note = el("coStatusNote");
+    var badge = el("coStatusBadge") || (box && box.querySelector(".co-badge, .badge"));
     if(box){
-      box.classList.remove("ok","lebih","kurang");
-      if(selisih === 0){ box.classList.add("ok"); box.querySelector(".badge").textContent = "SESUAI"; if(note) note.textContent = "Kas fisik sama persis dengan Data Program"; }
-      else if(selisih > 0){ box.classList.add("lebih"); box.querySelector(".badge").textContent = "LEBIH"; if(note) note.textContent = "Fisik lebih besar dari Data Program"; }
-      else { box.classList.add("kurang"); box.querySelector(".badge").textContent = "KURANG"; if(note) note.textContent = "Fisik lebih kecil dari Data Program"; }
+      box.classList.remove("ok","lebih","kurang","is-ok","is-bad","err","bad");
+      if(selisih === 0){
+        box.classList.add("ok","is-ok");
+        if(badge) badge.textContent = "SESUAI";
+        if(note) note.textContent = "Kas fisik = Data Program";
+      } else if(selisih > 0){
+        box.classList.add("lebih","is-bad");
+        if(badge) badge.textContent = "LEBIH";
+        if(note) note.textContent = "Fisik lebih besar dari Data Program";
+      } else {
+        box.classList.add("kurang","is-bad");
+        if(badge) badge.textContent = "KURANG";
+        if(note) note.textContent = "Fisik lebih kecil dari Data Program";
+      }
     }
   }
   function coFocusNext(fromEl){
@@ -13605,7 +13895,7 @@ function loadAdminBertugas(){
       var hist = document.getElementById("coHistory");
       var btn = document.getElementById("coShowHistBtn");
       if(hist){ hist.style.display = "none"; hist.innerHTML = ""; }
-      if(btn){ btn.textContent = "Tampilkan Riwayat"; btn.style.display = ""; }
+      if(btn){ btn.textContent = "Tampilkan"; btn.style.display = ""; }
     });
   }
   var coHistoryVisible = false;
@@ -13617,18 +13907,26 @@ function loadAdminBertugas(){
     wrap.innerHTML = '<div class="empty-log">Memuat...</div>';
     coHistoryVisible = true;
     var showBtn = document.getElementById("coShowHistBtn");
-    if(showBtn) showBtn.textContent = "Sembunyikan Riwayat";
+    if(showBtn) showBtn.textContent = "Sembunyikan";
     google.script.run
       .withSuccessHandler(function(r){
         if(!r || r.status!=="OK"){ wrap.innerHTML = '<div class="empty-log">'+(r&&r.reason||"Gagal")+'</div>'; return; }
         var list = r.list || [];
-        if(!list.length){ wrap.innerHTML = '<div class="empty-log">Belum ada riwayat.</div>'; return; }
+        if(!list.length){ wrap.innerHTML = '<div class="co-hist-empty">Belum ada kunjungan tersimpan.</div>'; return; }
         wrap.innerHTML = list.map(function(x){
-          return '<div class="co-history-item">'+
-            '<div class="top"><span>'+escHtml(x.cabang)+' · '+escHtml(x.tanggal)+'</span><span>'+escHtml(x.status)+'</span></div>'+
-            '<div class="meta">Fisik '+coFmt(x.totalFisik)+' · Program '+coFmt(x.dataProgram)+' · Selisih '+coFmt(x.selisih)+
-            (x.kasir?' · Kasir '+escHtml(x.kasir):'')+'</div>'+
-            (x.catatan?'<div class="meta">'+escHtml(x.catatan)+'</div>':'')+
+          var st = String(x.status||"");
+          var stOk = /sesuai|ok|match/i.test(st);
+          var stCls = stOk ? "ok" : "bad";
+          return '<div class="co-hist-card">'+
+            '<div class="row1"><span class="cab">'+escHtml(x.cabang||"—")+'</span>'+
+            '<span class="st '+stCls+'">'+escHtml(st||"—")+'</span></div>'+
+            '<div class="tgl">'+escHtml(x.tanggal||"")+(x.kasir?' · '+escHtml(x.kasir):'')+'</div>'+
+            '<div class="row2">'+
+              '<span>Program <strong>'+coFmt(x.dataProgram)+'</strong></span>'+
+              '<span>Fisik <strong>'+coFmt(x.totalFisik)+'</strong></span>'+
+              '<span>Selisih <strong>'+coFmt(x.selisih)+'</strong></span>'+
+            '</div>'+
+            (x.catatan?'<div class="tgl">'+escHtml(x.catatan)+'</div>':'')+
           '</div>';
         }).join("");
       })
@@ -13661,12 +13959,17 @@ function loadAdminBertugas(){
       coSaveBtn.dataset.busy = "1";
       var msg = document.getElementById("coMsg");
       clearMsg(msg);
+      if(typeof coStarted !== "undefined" && !coStarted){ showMsg(msg, "Klik Start dulu sebelum menyimpan.", "err"); coSaveBtn.dataset.busy = "0"; return; }
       if(!adminSessionGuard(msg)){ coSaveBtn.dataset.busy = "0"; return; }
       var tanggal = document.getElementById("coTanggal").value;
       var cabang = document.getElementById("coCabang").value;
       var kasir = (document.getElementById("coKasir")||{}).value || "";
-      if(!tanggal){ showMsg(msg, "Tanggal wajib.", "err"); return; }
-      if(!cabang){ showMsg(msg, "Pilih cabang.", "err"); return; }
+      if(!tanggal){ showMsg(msg, "Tanggal wajib diisi.", "err"); coSaveBtn.dataset.busy = "0"; return; }
+      if(!cabang){ showMsg(msg, "Pilih cabang dulu.", "err"); coSaveBtn.dataset.busy = "0"; return; }
+      var dataProgVal = coParseExpr((document.getElementById("coDataProgram")||{}).value);
+      if(!dataProgVal && dataProgVal !== 0){ /* allow 0 */ }
+      var dpRaw = String((document.getElementById("coDataProgram")||{}).value || "").trim();
+      if(!dpRaw){ showMsg(msg, "Data Program wajib diisi.", "err"); coSaveBtn.dataset.busy = "0"; try{ document.getElementById("coDataProgram").focus(); }catch(e){} return; }
       var kkAwalVal = coParseExpr(document.getElementById("coKkAwal").value);
       if(!kkAwalVal && cabang && coCabangInfo[cabang]){
         kkAwalVal = Number(coCabangInfo[cabang].kasKecilAwal) || 0;
@@ -13693,8 +13996,13 @@ function loadAdminBertugas(){
           coSaveBtn.disabled = false;
           if(!r || r.status!=="OK"){ showMsg(msg, (r&&r.reason)||"Gagal simpan.", "err"); return; }
           try{ cInvalidate(["cash","opname","co_"]); }catch(e){}
-          showMsg(msg, "Tersimpan. Status: "+r.statusOpname+" · Fisik "+coFmt(r.totalFisik), "ok");
+          var st = r.statusOpname || "OK";
+          showMsg(msg, "✓ Tersimpan — "+st+" · Fisik "+coFmt(r.totalFisik)+" · Selisih "+coFmt(r.selisih||0), "ok");
           if(coHistoryVisible) loadCashOpnameHistory();
+          try{
+            var sb = document.getElementById("coSaveBtn");
+            if(sb){ sb.classList.add("co-save-ok"); setTimeout(function(){ sb.classList.remove("co-save-ok"); }, 1600); }
+          }catch(e){}
         })
         .withFailureHandler(function(err){
           coSaveBtn.dataset.busy = "0";
@@ -13804,5 +14112,86 @@ function loadAdminBertugas(){
   })();
 
 </script>
+
+<script>
+/* Profile open — robust fallback (event delegation) */
+(function(){
+  function openOverlay(id){
+    var modal = document.getElementById(id);
+    if(!modal) return false;
+    modal.removeAttribute("hidden");
+    modal.setAttribute("aria-hidden","false");
+    modal.classList.add("show");
+    modal.style.cssText = "display:flex !important; position:fixed !important; inset:0 !important; z-index:10050 !important; align-items:center; justify-content:center; background:rgba(0,0,0,0.65); padding:16px;";
+    return true;
+  }
+  function closeOverlay(id){
+    var modal = document.getElementById(id);
+    if(!modal) return;
+    modal.classList.remove("show");
+    modal.style.cssText = "display:none !important;";
+    modal.setAttribute("hidden","");
+    modal.setAttribute("aria-hidden","true");
+  }
+  window.__gueOpenAdminProfile = function(){ openOverlay("adminProfileModal"); };
+  window.__gueOpenKanitProfile = function(){ openOverlay("kanitProfileModal"); };
+  window.__gueCloseProfiles = function(){
+    closeOverlay("adminProfileModal");
+    closeOverlay("kanitProfileModal");
+  };
+  document.addEventListener("click", function(e){
+    var t = e.target;
+    if(!t) return;
+    // open admin
+    if(t.closest && t.closest("#adminProfileBtn")){
+      e.preventDefault();
+      e.stopPropagation();
+      try{ if(typeof loadAdminProfile==="function") loadAdminProfile(); }catch(err){}
+      openOverlay("adminProfileModal");
+      return;
+    }
+    if(t.closest && t.closest("#kanitProfileBtn")){
+      e.preventDefault();
+      e.stopPropagation();
+      openOverlay("kanitProfileModal");
+      return;
+    }
+    // close buttons
+    if(t.closest && (t.closest("#adminProfileClose") || t.closest("#kanitProfileClose"))){
+      window.__gueCloseProfiles();
+      return;
+    }
+    // click backdrop
+    if(t.id === "adminProfileModal" || t.id === "kanitProfileModal"){
+      window.__gueCloseProfiles();
+      return;
+    }
+    // logout from profile
+    if(t.closest && t.closest("#adminProfileLogout")){
+      e.preventDefault();
+      window.__gueCloseProfiles();
+      var a = document.getElementById("logoutFromAdmin");
+      if(a) a.click();
+      else {
+        try{ sessionStorage.clear(); localStorage.removeItem("gueSession"); }catch(err){}
+        location.reload();
+      }
+      return;
+    }
+    if(t.closest && t.closest("#kanitProfileLogout")){
+      e.preventDefault();
+      window.__gueCloseProfiles();
+      var b = document.getElementById("logoutFromForm") || document.getElementById("logoutFromKanit");
+      if(b) b.click();
+      else {
+        try{ sessionStorage.clear(); }catch(err){}
+        location.reload();
+      }
+      return;
+    }
+  }, true); // capture phase — menang sebelum handler lain menelan event
+})();
+</script>
+
 </body>
 </html>
