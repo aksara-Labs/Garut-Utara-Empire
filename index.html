@@ -5,16 +5,13 @@
   2. Deploy → Manage deployments → Edit → New version → Deploy
   3. Di HP/PC: hard refresh (Ctrl+Shift+R) atau clear cache site
   4. Login ulang (session token baru)
-  5. Cek console: harus ada [MyDashboard] build F4-20260921
--->
-
-<html data-theme="dark">
+  5. Cek console: harus ada [MyDashboard] build SPEED-UI-20260922"dark">
 <head>
 <title>MyDashboard — Garut Utara Empire</title>
 <base target="_top">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="app-build" content="F4-20260921">
+<meta name="app-build" content="SPEED-UI-20260922">
   <meta name="theme-color" content="#0B0D10">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.json">
@@ -5115,6 +5112,476 @@ input:focus-visible{
   outline-offset: 2px;
 }
 
+
+/* ===== Cash Opname — restyle charcoal + gold (rapih) ===== */
+#tab-cashopname{
+  --co-bg: rgba(255,255,255,0.03);
+  --co-bg-2: rgba(18,21,26,0.92);
+  --co-border: rgba(255,255,255,0.08);
+  --co-border-gold: rgba(212,137,74,0.35);
+  --co-text: #F3F4F6;
+  --co-muted: #9CA3AF;
+  --co-gold: #E0A06A;
+  --co-input-bg: rgba(0,0,0,0.28);
+}
+#tab-cashopname .co-layout{
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) !important;
+  gap: 16px !important;
+  align-items: start !important;
+}
+#tab-cashopname .co-zone{
+  background: var(--co-bg-2) !important;
+  border: 1px solid var(--co-border) !important;
+  border-radius: 16px !important;
+  padding: 0 !important;
+  margin-bottom: 14px !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
+}
+#tab-cashopname .co-zone-head{
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 12px 14px !important;
+  background: rgba(212,137,74,0.08) !important;
+  border-bottom: 1px solid var(--co-border) !important;
+  color: var(--co-text) !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.02em !important;
+}
+#tab-cashopname .co-zone-head .zn{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 8px !important;
+  background: rgba(212,137,74,0.25) !important;
+  color: var(--co-gold) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+#tab-cashopname .co-zone-body{
+  padding: 14px !important;
+}
+#tab-cashopname .co-card{
+  background: var(--co-bg) !important;
+  border: 1px solid var(--co-border) !important;
+  border-radius: 14px !important;
+  padding: 12px 14px !important;
+  margin-bottom: 12px !important;
+  box-shadow: none !important;
+}
+#tab-cashopname .co-card h4,
+#tab-cashopname h4{
+  margin: 0 0 10px 0 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: var(--co-gold) !important;
+  letter-spacing: 0.02em !important;
+}
+#tab-cashopname label,
+#tab-cashopname .lab,
+#tab-cashopname .co-line{
+  color: var(--co-muted) !important;
+  -webkit-text-fill-color: var(--co-muted) !important;
+  font-size: 12px !important;
+}
+#tab-cashopname input[type="text"],
+#tab-cashopname input[type="number"],
+#tab-cashopname input[type="date"],
+#tab-cashopname input.co-qty,
+#tab-cashopname select,
+#tab-cashopname textarea{
+  background: var(--co-input-bg) !important;
+  border: 1px solid var(--co-border) !important;
+  border-radius: 10px !important;
+  color: var(--co-text) !important;
+  -webkit-text-fill-color: var(--co-text) !important;
+  font-weight: 600 !important;
+  padding: 8px 10px !important;
+}
+#tab-cashopname input:focus,
+#tab-cashopname select:focus,
+#tab-cashopname textarea:focus,
+#tab-cashopname input.co-qty:focus{
+  border-color: var(--co-border-gold) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(212,137,74,0.15) !important;
+}
+/* Denom boxes Laci / Brankas */
+#tab-cashopname .co-denom-grid{
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+#tab-cashopname .co-denom-box{
+  background: rgba(0,0,0,0.2) !important;
+  border: 1px solid var(--co-border) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+#tab-cashopname .co-denom-head,
+#tab-cashopname .co-denom-foot{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px 12px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border-color: var(--co-border) !important;
+  color: var(--co-text) !important;
+  -webkit-text-fill-color: var(--co-text) !important;
+  font-weight: 700 !important;
+  font-size: 12.5px !important;
+}
+#tab-cashopname .co-denom-head span:last-child,
+#tab-cashopname .co-denom-foot span:last-child,
+#tab-cashopname #coTotalLaci,
+#tab-cashopname #coTotalBrankas,
+#tab-cashopname #coTotalLaciLbl,
+#tab-cashopname #coTotalBrankasLbl{
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  color: var(--co-gold) !important;
+  -webkit-text-fill-color: var(--co-gold) !important;
+  font-weight: 700 !important;
+}
+#tab-cashopname .co-denom-table{
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+#tab-cashopname .co-denom-table th{
+  background: transparent !important;
+  color: var(--co-muted) !important;
+  -webkit-text-fill-color: var(--co-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  padding: 8px 10px !important;
+  border-bottom: 1px solid var(--co-border) !important;
+}
+#tab-cashopname .co-denom-table td{
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  padding: 6px 10px !important;
+  color: var(--co-text) !important;
+  -webkit-text-fill-color: var(--co-text) !important;
+  font-size: 12.5px !important;
+  background: transparent !important;
+}
+#tab-cashopname .co-denom-table td:first-child{
+  color: var(--co-muted) !important;
+  -webkit-text-fill-color: var(--co-muted) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 12px !important;
+}
+#tab-cashopname .co-denom-table td:last-child,
+#tab-cashopname .co-line{
+  font-family: 'JetBrains Mono', monospace !important;
+  color: var(--co-text) !important;
+  -webkit-text-fill-color: var(--co-text) !important;
+  font-weight: 600 !important;
+}
+/* Result side */
+#tab-cashopname .co-result-big,
+#tab-cashopname #coSideProgram,
+#tab-cashopname #coSideFisik,
+#tab-cashopname #coSelisihVal{
+  color: var(--co-text) !important;
+  -webkit-text-fill-color: var(--co-text) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-weight: 700 !important;
+}
+#tab-cashopname #coSelisihVal.is-plus,
+#tab-cashopname .co-selisih-ok{
+  color: #4ADE80 !important;
+  -webkit-text-fill-color: #4ADE80 !important;
+}
+#tab-cashopname #coSelisihVal.is-minus,
+#tab-cashopname .co-selisih-bad{
+  color: #F87171 !important;
+  -webkit-text-fill-color: #F87171 !important;
+}
+#tab-cashopname .co-sign{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+  margin-top: 10px !important;
+}
+#tab-cashopname .co-sign .col{
+  background: var(--co-bg) !important;
+  border: 1px solid var(--co-border) !important;
+  border-radius: 12px !important;
+  padding: 10px !important;
+  text-align: center !important;
+}
+#tab-cashopname .co-sign .lab{ color: var(--co-muted) !important; font-size: 11px !important; }
+#tab-cashopname .co-sign .name{ color: var(--co-text) !important; font-weight: 600 !important; font-size: 13px !important; }
+#tab-cashopname .co-history-item{
+  background: var(--co-bg) !important;
+  border: 1px solid var(--co-border) !important;
+  border-radius: 12px !important;
+  padding: 10px 12px !important;
+  margin-bottom: 8px !important;
+}
+#tab-cashopname .co-history-item .top{
+  color: var(--co-text) !important;
+  font-weight: 600 !important;
+}
+#tab-cashopname .co-history-item .meta{
+  color: var(--co-muted) !important;
+  font-size: 12px !important;
+}
+#tab-cashopname #coSaveBtn{
+  background: linear-gradient(135deg, #D4894A, #B87333) !important;
+  border: none !important;
+  color: #0B0D10 !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  padding: 10px 18px !important;
+}
+@media (max-width: 1100px){
+  #tab-cashopname .co-layout{
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+@media (max-width: 700px){
+  #tab-cashopname .co-denom-grid{
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  #tab-cashopname .co-sign{
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+
+/* Scrollbar abu (bukan putih) */
+*{
+  scrollbar-width: thin;
+  scrollbar-color: #4B5563 #1A1F28;
+}
+*::-webkit-scrollbar{
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track{
+  background: #1A1F28;
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb{
+  background: #4B5563;
+  border-radius: 8px;
+  border: 2px solid #1A1F28;
+}
+*::-webkit-scrollbar-thumb:hover{
+  background: #6B7280;
+}
+*::-webkit-scrollbar-corner{
+  background: #1A1F28;
+}
+
+
+
+/* ===== Audit detail table — dark theme (force, match rejected) ===== */
+#tab-audit .audit-table-wrap,
+.audit-table-wrap{
+  background: #12151A !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 14px !important;
+  overflow: auto !important;
+}
+#tab-audit .audit-table,
+.audit-table{
+  width: 100% !important;
+  border-collapse: collapse !important;
+  background: #12151A !important;
+  color: #F3F4F6 !important;
+}
+#tab-audit .audit-table thead th,
+.audit-table thead th,
+#tab-audit .audit-table th,
+.audit-table th{
+  background: #1A1F28 !important;
+  color: #E0A06A !important;
+  -webkit-text-fill-color: #E0A06A !important;
+  border-bottom: 1px solid rgba(212,137,74,0.3) !important;
+  padding: 10px 12px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+#tab-audit .audit-table tbody td,
+.audit-table tbody td,
+#tab-audit .audit-table td,
+.audit-table td{
+  background: #12151A !important;
+  color: #E5E7EB !important;
+  -webkit-text-fill-color: #E5E7EB !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+  padding: 9px 12px !important;
+  font-size: 12.5px !important;
+}
+#tab-audit .audit-table tbody tr:nth-child(even) td,
+.audit-table tbody tr:nth-child(even) td{
+  background: #161A22 !important;
+}
+#tab-audit .audit-table tbody tr:hover td,
+.audit-table tbody tr:hover td{
+  background: rgba(212,137,74,0.08) !important;
+}
+
+/* Rejected detail table — same dark gold header */
+#rejectedDetailWrap table thead th,
+#rejectedAnalysisWrap table thead th,
+#kanitRejectedWrap table thead th,
+.rejected-table th{
+  background: #1A1F28 !important;
+  color: #E0A06A !important;
+  border-bottom: 1px solid rgba(212,137,74,0.3) !important;
+}
+#rejectedDetailWrap table tbody td,
+#rejectedAnalysisWrap table tbody td,
+#kanitRejectedWrap table tbody td{
+  background: #12151A !important;
+  color: #E5E7EB !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+}
+#rejectedDetailWrap table tbody tr:nth-child(even) td,
+#rejectedAnalysisWrap table tbody tr:nth-child(even) td{
+  background: #161A22 !important;
+}
+
+
+/* Powered by AksaraLab — footer sidebar (embedded) */
+.admin-sidebar,
+.kanit-sidebar,
+aside.admin-sidebar{
+  display: flex !important;
+  flex-direction: column !important;
+}
+.sidebar-powered{
+  margin-top: auto !important;
+  padding: 14px 12px 16px !important;
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-shrink: 0 !important;
+}
+.sidebar-powered-label{
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: rgba(156,163,175,0.9) !important;
+}
+.sidebar-powered-logo{
+  height: 22px !important;
+  width: auto !important;
+  max-width: 150px !important;
+  opacity: 0.92 !important;
+  object-fit: contain !important;
+  filter: none !important;
+}
+
+
+/* ===== UI-1: design system cards/tables/filters ===== */
+.app-card{
+  background: rgba(18,21,26,0.92) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  padding: 14px 16px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18) !important;
+}
+.app-filter, .filter-row-compact{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+}
+.app-filter .field, .filter-row-compact .field{
+  margin: 0 !important;
+  min-width: 120px !important;
+}
+.app-filter label, .filter-row-compact label{
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #9CA3AF !important;
+  letter-spacing: 0.02em !important;
+}
+.app-table-wrap, .gue-table-wrap, .audit-table-wrap, .libur-table-wrap, .karyawan-table-wrap{
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  overflow: auto !important;
+  background: #12151A !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+table.app-table, table.gue-table, table.audit-table, table.karyawan-table, table.log-table{
+  width: 100% !important;
+  border-collapse: collapse !important;
+  background: #12151A !important;
+  color: #E5E7EB !important;
+  font-size: 12.5px !important;
+}
+table.app-table thead th, table.gue-table thead th, table.audit-table thead th,
+table.karyawan-table thead th, table.log-table thead th{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+  background: #1A1F28 !important;
+  color: #E0A06A !important;
+  -webkit-text-fill-color: #E0A06A !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  padding: 10px 12px !important;
+  border-bottom: 1px solid rgba(212,137,74,0.28) !important;
+  text-align: left !important;
+}
+table.app-table tbody td, table.gue-table tbody td, table.audit-table tbody td,
+table.karyawan-table tbody td, table.log-table tbody td{
+  background: #12151A !important;
+  color: #E5E7EB !important;
+  -webkit-text-fill-color: #E5E7EB !important;
+  padding: 9px 12px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+table.app-table tbody tr:nth-child(even) td,
+table.gue-table tbody tr:nth-child(even) td,
+table.audit-table tbody tr:nth-child(even) td,
+table.karyawan-table tbody tr:nth-child(even) td{
+  background: #161A22 !important;
+}
+table.app-table tbody tr:hover td,
+table.gue-table tbody tr:hover td,
+table.audit-table tbody tr:hover td{
+  background: rgba(212,137,74,0.07) !important;
+}
+.btn-primary, button.btn-primary, .btn-gold{
+  background: linear-gradient(135deg, #D4894A, #B87333) !important;
+  color: #0B0D10 !important;
+  border: none !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  padding: 8px 14px !important;
+}
+.skeleton-row{
+  height: 14px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+  background-size: 200% 100%;
+  animation: skShine 1.2s ease-in-out infinite;
+  margin: 8px 0;
+}
+@keyframes skShine{
+  0%{ background-position: 200% 0; }
+  100%{ background-position: -200% 0; }
+}
+
 </style>
 </head>
 <body>
@@ -5335,7 +5802,11 @@ input:focus-visible{
           <button class="tab-btn admin-nav-btn" data-tab="kanitaudit"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a1 1 0 0 1 1-1h9l6 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></span><span class="admin-nav-label">Dashboard Audit</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="dokumen"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span><span class="admin-nav-label">Pembuatan Dokumen</span></button>
         </nav>
-      </aside>
+              <div class="sidebar-powered" aria-label="Powered by AksaraLab">
+          <span class="sidebar-powered-label">Powered by</span>
+          <img src="data:image/png;base64,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" alt="AksaraLab" class="sidebar-powered-logo" width="177" height="24">
+        </div>
+</aside>
       <div class="admin-main">
         <div class="admin-topbar">
           <button class="admin-hamburger" id="kanitHamburgerBtn" type="button" aria-label="Menu">
@@ -5521,7 +5992,7 @@ input:focus-visible{
         <div class="audit-card"><h4>Distribusi TW</h4><div id="kanitAuditTw"></div></div>
       </div>
       <div class="rejected-top3-title">Detail temuan cabang</div>
-      <div class="audit-table-wrap"><table class="audit-table"><thead><tr><th>Bulan</th><th>TW</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="kanitAuditDetailBody"></tbody></table></div>
+      <div class="audit-table-wrap"><table class="audit-table app-table"><thead><tr><th>Bulan</th><th>TW</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="kanitAuditDetailBody"></tbody></table></div>
     </div>
 
     <!-- Halaman form Report Audit (Kanit) — panel terpisah -->
@@ -5624,6 +6095,10 @@ input:focus-visible{
         </nav>
 
         <!-- logout di profil/topbar -->
+        <div class="sidebar-powered" aria-label="Powered by AksaraLab">
+          <span class="sidebar-powered-label">Powered by</span>
+          <img src="data:image/png;base64,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" alt="AksaraLab" class="sidebar-powered-logo" width="177" height="24">
+        </div>
         <button class="back-link admin-sidebar-logout" id="logoutFromAdmin" style="display:none;"></button>
       </aside>
 
@@ -6169,7 +6644,7 @@ input:focus-visible{
         <div class="audit-card"><h4>Distribusi TW</h4><div id="auditTw"></div></div>
       </div>
       <div class="rejected-top3-title">Detail temuan</div>
-      <div class="audit-table-wrap"><table class="audit-table"><thead><tr><th>Cabang</th><th>Bulan</th><th>TW</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="auditDetailBody"></tbody></table></div>
+      <div class="audit-table-wrap"><table class="audit-table app-table"><thead><tr><th>Cabang</th><th>Bulan</th><th>TW</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="auditDetailBody"></tbody></table></div>
       </div><!-- /auditMainView -->
 
       <div id="auditApprovalView" style="display:none;">
@@ -6662,6 +7137,29 @@ input:focus-visible{
   }
 
   /** Paket 1 A2: skeleton loading */
+  
+  /** Speed-1: stale-while-revalidate — tampil cache dulu, fetch di belakang */
+  function loadSWR(opts){
+    // opts: { key, maxAge, force, render, fetch, onError, skeletonEl, skeletonRows }
+    var key = opts.key;
+    var force = !!opts.force;
+    var maxAge = opts.maxAge || CACHE_TTL_MS;
+    var cached = force ? null : cGet(key, maxAge);
+    if(cached != null){
+      try{ opts.render(cached, true); }catch(e){}
+    } else if(opts.skeletonEl){
+      try{ showSkeleton(opts.skeletonEl, opts.skeletonRows || 3); }catch(e){}
+    }
+    opts.fetch(function(data){
+      if(data != null){
+        try{ cSet(key, data); }catch(e){}
+        try{ opts.render(data, false); }catch(e){}
+      }
+    }, function(err){
+      if(cached == null && opts.onError) try{ opts.onError(err); }catch(e){}
+    });
+  }
+
   function showSkeleton(el, rows){
     if(!el) return;
     rows = rows || 4;
@@ -7156,12 +7654,7 @@ input:focus-visible{
             showMsg(msgEl, (r && r.reason) || "Login gagal.", "err");
             return;
           }
-          if(r.mustChangePin){
-            pendingLogin = { nik: r.nik, pin: pin, role: r.role, cabang: r.cabang, nama: r.nama, jabatan: r.jabatan };
-            showChangePinUI(true);
-            showMsg(msgEl, "Buat PIN baru untuk keamanan akun.", "ok");
-            return;
-          }
+          // PIN default 123456 — tidak dipaksa ganti; user bisa ubah dari profil kapan saja
           enterApp(r, pin);
           if(pinEl) pinEl.value = "";
         })
@@ -7287,6 +7780,8 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
   document.getElementById("logoutFromForm").addEventListener("click", function(){
     session.cabang = null;
     session.cabangPin = null;
+    session.sessionToken = null;
+    try{ closeAllProfileModals(); }catch(e){}
     showScreen("screen-landing");
   });
 
@@ -7605,6 +8100,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     session.sessionToken = null;
     try{ stopAdminNotifPoll(); }catch(e){}
     try{ adminHomeBundleAt = 0; adminSummaryLoaded = false; }catch(e){}
+    try{ closeAllProfileModals(); }catch(e){}
     showScreen("screen-landing");
   });
 
@@ -8132,7 +8628,10 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       return 99;
     }
     var AV_COLORS = ["#D4894A","#8B5CF6","#10B981","#F59E0B","#F43F5E","#06B6D4","#6366F1"];
-    var sortedKar = data.karyawan.slice().sort(function(a,b){
+    var sortedKar = data.karyawan.slice().filter(function(k){
+      var jab = String(k.jabatan||"").toLowerCase();
+      return jab.indexOf("kepala cabang") < 0;
+    }).sort(function(a,b){
       var ra = jabRank(a.jabatan), rb = jabRank(b.jabatan);
       if(ra !== rb) return ra - rb;
       return String(a.nama||"").localeCompare(String(b.nama||""));
@@ -8795,6 +9294,17 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
   }
 
   // ---------------- Sidebar admin (mobile: off-canvas + overlay) ----------------
+  
+  function closeAllProfileModals(){
+    ["adminProfileModal","kanitProfileModal"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      el.style.display = "none";
+      el.classList.remove("open","show","active");
+      try{ el.setAttribute("aria-hidden","true"); }catch(e){}
+    });
+  }
+
   function openAdminSidebar(){
     var s = document.getElementById("adminSidebar");
     var o = document.getElementById("adminSidebarOverlay");
@@ -8920,20 +9430,18 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var total = Number(r.totalCabang)||0;
     var belum = Math.max(0, total - sudah);
     var briefBits = [];
-    briefBits.push('<span class="dash-brief-item">Input hari ini: <strong>'+sudah+'/'+total+'</strong></span>');
-    if(belum > 0){
-      briefBits.push('<span class="dash-brief-item">Belum input: <strong style="color:#F87171">'+belum+' cabang</strong></span>');
-    } else if(total > 0){
-      briefBits.push('<span class="dash-brief-item">Semua cabang sudah input ✓</span>');
-    }
+    // Status input hanya di kartu KPI 0/4 — brief hanya alert pending
     if(r.pendingCuti){
-      briefBits.push('<span class="dash-brief-item">Cuti pending: <strong>'+r.pendingCuti+'</strong></span>');
+      briefBits.push('<span class="dash-brief-item">Cuti pending: <strong>'+escHtml(String(r.pendingCuti))+'</strong></span>');
     }
     if(r.pendingAudit){
-      briefBits.push('<span class="dash-brief-item">Audit approval: <strong>'+r.pendingAudit+'</strong></span>');
+      briefBits.push('<span class="dash-brief-item">Audit approval: <strong>'+escHtml(String(r.pendingAudit))+'</strong></span>');
     }
+    var briefHtml = briefBits.length
+      ? ('<div class="dash-brief"><span class="dash-brief-title">Perlu tindakan</span>'+briefBits.join('<span style="opacity:0.35">·</span>')+'</div>')
+      : '';
     wrap.innerHTML =
-      '<div class="dash-brief"><span class="dash-brief-title">Hari ini</span>'+briefBits.join('<span style="opacity:0.35">·</span>')+'</div>'+
+      briefHtml +
       '<div class="dash-kpi-grid">'+
         '<div class="admin-stat-card"><div class="admin-stat-value">'+sudah+'/'+total+'</div><div class="admin-stat-label">Cabang sudah input</div></div>'+
         '<div class="admin-stat-card"><div class="admin-stat-value">'+pencapaianLabel+'</div><div class="admin-stat-label">Pencapaian target bulan</div><div class="admin-stat-trend"><span class="muted">Gadai, semua cabang</span></div></div>'+
@@ -13096,7 +13604,7 @@ function loadAdminBertugas(){
 <div id="pwaOfflineToast" class="pwa-offline-toast" role="status">Anda offline — menampilkan cache terakhir bila ada.</div>
 <script>
 (function(){
-  try{ console.info("[MyDashboard] build F4-20260921"); }catch(e){}
+  try{ console.info("[MyDashboard] build SPEED-UI-20260922"); }catch(e){}
   // Fase E: PWA service worker
   if("serviceWorker" in navigator){
     window.addEventListener("load", function(){
