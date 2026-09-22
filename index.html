@@ -5590,6 +5590,79 @@ table.audit-table tbody tr:hover td{
   100%{ background-position: -200% 0; }
 }
 
+
+/* ===== FULL WIDTH layout — konten penuh layar ===== */
+html, body{
+  width: 100% !important;
+  max-width: none !important;
+  overflow-x: hidden !important;
+}
+#screen-admin-dashboard.screen.active,
+#screen-omset-form.screen.active,
+.screen.admin-layout.active{
+  display: flex !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+.admin-shell{
+  display: flex !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+  flex: 1 1 auto !important;
+  box-sizing: border-box !important;
+}
+.admin-main{
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: calc(100% - 252px) !important;
+  margin-left: 252px !important;
+  box-sizing: border-box !important;
+}
+.admin-content,
+.admin-content > .tab-panel,
+.admin-content > .subpanel,
+.admin-content [id^="tab-"]{
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+.admin-content{
+  padding: 20px 24px 48px !important;
+}
+/* Kartu & grid isi full */
+.dash-kpi-grid,
+.admin-stats-grid,
+.bertugas-grid,
+.co-layout,
+.harian-wrap,
+#adminSummaryWrap,
+#adminBertugasWrap{
+  width: 100% !important;
+  max-width: none !important;
+}
+.dash-kpi-grid{
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+@media (max-width: 1100px){
+  .dash-kpi-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 900px){
+  .admin-main{
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  .dash-kpi-grid{ grid-template-columns: 1fr !important; }
+}
+
 </style>
 </head>
 <body>
