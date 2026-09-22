@@ -6,14 +6,14 @@
   2. Deploy New version (Apps Script) atau push (GitHub Pages)
   3. Hard refresh Ctrl+Shift+R
   4. Login NIK + PIN 123456
-  5. Console: [MyDashboard] build SPEED-UI-20260922
+  5. Console: [MyDashboard] build FULLW-20260922
 -->
 <head>
 <title>MyDashboard — Garut Utara Empire</title>
 <base target="_top">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="app-build" content="SPEED-UI-20260922">
+<meta name="app-build" content="FULLW-20260922">
   <meta name="theme-color" content="#0B0D10">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.json">
@@ -5591,18 +5591,28 @@ table.audit-table tbody tr:hover td{
 }
 
 
-/* ===== FULL WIDTH layout — konten penuh layar ===== */
+
+/* ===== FULL WIDTH layout — konten penuh layar (v2) ===== */
 html, body{
   width: 100% !important;
   max-width: none !important;
+  min-width: 0 !important;
   overflow-x: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#screen-admin-dashboard,
+#screen-omset-form,
+.screen.admin-layout{
+  width: 100vw !important;
+  max-width: none !important;
 }
 #screen-admin-dashboard.screen.active,
 #screen-omset-form.screen.active,
 .screen.admin-layout.active{
   display: flex !important;
   position: fixed !important;
-  inset: 0 !important;
+  top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important;
   width: 100vw !important;
   max-width: none !important;
   height: 100vh !important;
@@ -5613,56 +5623,93 @@ html, body{
 }
 .admin-shell{
   display: flex !important;
+  flex-direction: row !important;
   width: 100% !important;
   max-width: none !important;
   height: 100% !important;
-  flex: 1 1 auto !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
   box-sizing: border-box !important;
+  position: relative !important;
 }
-.admin-main{
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
+/* Sidebar fixed kiri */
+@media (min-width: 880px){
+  .admin-sidebar,
+  #adminSidebar,
+  #kanitSidebar{
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 252px !important;
+    max-width: 252px !important;
+    margin: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    z-index: 400 !important;
+  }
+  .admin-main{
+    display: flex !important;
+    flex-direction: column !important;
+    margin-left: 252px !important;
+    width: calc(100vw - 252px) !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    box-sizing: border-box !important;
+  }
+}
+.admin-content{
+  width: 100% !important;
   max-width: none !important;
-  width: calc(100% - 252px) !important;
-  margin-left: 252px !important;
+  flex: 1 1 auto !important;
   box-sizing: border-box !important;
+  padding: 20px 28px 48px !important;
 }
-.admin-content,
-.admin-content > .tab-panel,
-.admin-content > .subpanel,
+.admin-content .tab-panel,
+.admin-content .subpanel,
+.admin-content .panel,
 .admin-content [id^="tab-"]{
   width: 100% !important;
   max-width: none !important;
   box-sizing: border-box !important;
 }
-.admin-content{
-  padding: 20px 24px 48px !important;
-}
-/* Kartu & grid isi full */
+/* Dashboard cards full */
+.admin-hero,
+#adminSummaryWrap,
+#adminBertugasWrap,
 .dash-kpi-grid,
-.admin-stats-grid,
 .bertugas-grid,
 .co-layout,
-.harian-wrap,
-#adminSummaryWrap,
-#adminBertugasWrap{
+.filter-row-compact{
   width: 100% !important;
   max-width: none !important;
 }
 .dash-kpi-grid{
+  display: grid !important;
   grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+.bertugas-grid{
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+  gap: 12px !important;
 }
 @media (max-width: 1100px){
   .dash-kpi-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 }
-@media (max-width: 900px){
+@media (max-width: 879px){
   .admin-main{
     margin-left: 0 !important;
-    width: 100% !important;
+    width: 100vw !important;
   }
   .dash-kpi-grid{ grid-template-columns: 1fr !important; }
 }
-
 </style>
 </head>
 <body>
@@ -13708,7 +13755,7 @@ function loadAdminBertugas(){
 <div id="pwaOfflineToast" class="pwa-offline-toast" role="status">Anda offline — menampilkan cache terakhir bila ada.</div>
 <script>
 (function(){
-  try{ console.info("[MyDashboard] build SPEED-UI-20260922"); }catch(e){}
+  try{ console.info("[MyDashboard] build FULLW-20260922"); }catch(e){}
   // Fase E: PWA service worker
   if("serviceWorker" in navigator){
     window.addEventListener("load", function(){
