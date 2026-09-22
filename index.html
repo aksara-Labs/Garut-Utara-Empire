@@ -22,18 +22,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
-
-  /* CRITICAL boot */
-  html, body { background:#0B0D10 !important; color:#E5E7EB !important; margin:0; }
-  .screen { display:none !important; }
-  .screen.active { display:block !important; }
-  .screen.admin-layout.active,
-  .screen.dashboard-layout.active { display:flex !important; }
-  .profile-modal-overlay { display:none !important; }
-  .profile-modal-overlay.show { display:flex !important; }
-
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
   :root{
     --navy-950:#0B0D10;
@@ -317,13 +306,10 @@
   .karyawan-aksi-menu button.danger{ color:var(--err); }
   .karyawan-aksi-menu button.danger:hover{ border-color:var(--err); }
   .profile-modal-overlay{
-    position:fixed; inset:0; z-index:9990; background:rgba(0,0,0,0.65);
-    display:none !important; align-items:center; justify-content:center; padding:16px;
+    position:fixed; inset:0; z-index:900; background:rgba(0,0,0,0.55);
+    display:none; align-items:center; justify-content:center; padding:16px;
   }
-  .profile-modal-overlay.show{
-    display:flex !important;
-  }
-  .profile-modal-overlay.show{ display:flex !important; }
+  .profile-modal-overlay.show{ display:flex; }
   .profile-modal{
     width:100%; max-width:360px; background:var(--navy-800);
     border:1px solid var(--steel); border-radius:14px; padding:18px 18px 16px;
@@ -5610,7 +5596,7 @@ table.audit-table tbody tr:hover td{
 
 
 <!-- Modal Profil Admin -->
-<div class="profile-modal-overlay" id="adminProfileModal" style="display:none !important;" hidden>
+<div class="profile-modal-overlay" id="adminProfileModal">
   <div class="profile-modal">
     <h3>Profil Admin</h3>
     <div class="sub">Nama, jabatan &amp; foto</div>
@@ -5658,7 +5644,7 @@ table.audit-table tbody tr:hover td{
 </div>
 
 <!-- Modal Profil Kanit -->
-<div class="profile-modal-overlay" id="kanitProfileModal" style="display:none !important;" hidden>
+<div class="profile-modal-overlay" id="kanitProfileModal">
   <div class="profile-modal">
     <h3>Profil Kepala Unit</h3>
     <div class="sub" id="kanitProfileSub">Data dari karyawan cabang</div>
@@ -7668,7 +7654,12 @@ table.audit-table tbody tr:hover td{
             showMsg(msgEl, (r && r.reason) || "Login gagal.", "err");
             return;
           }
-          // PIN default 123456 — tidak dipaksa ganti; user bisa ubah dari profil kapan saja
+          if(r.mustChangePin){
+            pendingLogin = { nik: r.nik, pin: pin, role: r.role, cabang: r.cabang, nama: r.nama, jabatan: r.jabatan };
+            showChangePinUI(true);
+            showMsg(msgEl, "Buat PIN baru untuk keamanan akun.", "ok");
+            return;
+          }
           enterApp(r, pin);
           if(pinEl) pinEl.value = "";
         })
@@ -9313,27 +9304,11 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     ["adminProfileModal","kanitProfileModal"].forEach(function(id){
       var el = document.getElementById(id);
       if(!el) return;
-      el.style.setProperty("display", "none", "important");
+      el.style.display = "none";
       el.classList.remove("open","show","active");
-      el.setAttribute("hidden", "");
       try{ el.setAttribute("aria-hidden","true"); }catch(e){}
     });
   }
-  function openProfileModal(id){
-    closeAllProfileModals();
-    var el = document.getElementById(id);
-    if(!el) return;
-    el.removeAttribute("hidden");
-    el.classList.add("show");
-    el.style.setProperty("display", "flex", "important");
-    try{ el.setAttribute("aria-hidden","false"); }catch(e){}
-  }
-
-  
-  try{ closeAllProfileModals(); }catch(e){}
-  document.addEventListener("DOMContentLoaded", function(){
-    try{ closeAllProfileModals(); }catch(e){}
-  });
 
   function openAdminSidebar(){
     var s = document.getElementById("adminSidebar");
@@ -11635,16 +11610,10 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       setProfilePhotoEl(document.getElementById("kanitProfilePhoto"), p, (kanitProfileCache.nama||"K").charAt(0));
       document.getElementById("kanitProfilePinBox").classList.remove("show");
       clearMsg(document.getElementById("kanitProfileMsg"));
-      modal.removeAttribute("hidden");
       modal.classList.add("show");
-      modal.style.setProperty("display", "flex", "important");
       loadKanitProfileFromServer();
     }
-    function closeModal(){
-      modal.classList.remove("show");
-      modal.style.setProperty("display", "none", "important");
-      modal.setAttribute("hidden", "");
-    }
+    function closeModal(){ modal.classList.remove("show"); }
     btn.addEventListener("click", openModal);
     document.getElementById("kanitProfileClose").addEventListener("click", closeModal);
     modal.addEventListener("click", function(e){ if(e.target === modal) closeModal(); });
