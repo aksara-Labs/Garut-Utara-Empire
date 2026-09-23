@@ -5609,7 +5609,7 @@ input:focus-visible{
   background: transparent !important;
   box-shadow: none !important;
 }
-#tab-cashopname tr.co-row-active td{
+#tab-cashopname .co-row.co-row-active td{
   background: rgba(212,137,74,0.06) !important;
 }
 #tab-cashopname .co-denom-table input.co-qty::placeholder{
@@ -6015,7 +6015,7 @@ input:focus-visible{
 }
 
 /* ===== Cash Opname CO-2 — input focus + feedback ===== */
-#tab-cashopname tr.co-row-active td{
+#tab-cashopname .co-row.co-row-active td{
   background: rgba(212,137,74,0.1) !important;
 }
 #tab-cashopname input.co-qty:focus{
@@ -6520,17 +6520,14 @@ button.admin-topbar-avatar:hover,
 
 
 
-/* ===== CO FIX v6 — Laci|Brankas 2 kolom, Materai bawah Laci, Catatan bawah Brankas ===== */
-#tab-cashopname{
-  max-width: none !important;
-  width: 100% !important;
-  padding: 8px 12px 12px !important;
-  margin: 0 !important;
-  box-sizing: border-box !important;
-  font-size: 12px !important;
-}
-#tab-cashopname .co-wrap{ width: 100% !important; max-width: none !important; }
 
+/* ===== CO FIX v7 — Laci | Brankas | KasKecil, Materai bawah Laci, Catatan bawah Brankas ===== */
+#tab-cashopname{
+  width: 100% !important; max-width: none !important;
+  padding: 8px 12px 12px !important; margin: 0 !important;
+  box-sizing: border-box !important; font-size: 12px !important;
+}
+#tab-cashopname .co-wrap{ width: 100% !important; }
 #tab-cashopname .co-toolbar{
   display: flex !important; flex-wrap: wrap !important; align-items: flex-end !important;
   gap: 6px !important; margin-bottom: 8px !important;
@@ -6540,7 +6537,7 @@ button.admin-topbar-avatar:hover,
 #tab-cashopname .co-toolbar input,
 #tab-cashopname .co-toolbar select{
   height: 30px !important; padding: 4px 8px !important; font-size: 12px !important;
-  min-width: 110px !important; max-width: 160px !important; width: auto !important;
+  min-width: 110px !important; max-width: 150px !important; width: auto !important;
   border-radius: 7px !important; box-sizing: border-box !important;
 }
 #tab-cashopname #coStartBtn{
@@ -6552,10 +6549,7 @@ button.admin-topbar-avatar:hover,
 #tab-cashopname #coStartBtn:disabled{ opacity: 0.4 !important; }
 #tab-cashopname #coStartBtn.is-on{ background: linear-gradient(135deg,#34D399,#059669) !important; color:#042f1a !important; }
 
-#tab-cashopname .co-summary{
-  display: flex !important; flex-wrap: wrap !important; gap: 6px !important;
-  margin: 0 0 8px !important;
-}
+#tab-cashopname .co-summary{ display: flex !important; flex-wrap: wrap !important; gap: 6px !important; margin: 0 0 8px !important; }
 #tab-cashopname .co-sum-item{
   flex: 0 1 auto !important; padding: 5px 10px !important; border-radius: 8px !important;
   background: rgba(0,0,0,0.28) !important; border: 1px solid rgba(255,255,255,0.08) !important;
@@ -6570,20 +6564,18 @@ button.admin-topbar-avatar:hover,
   font-size: 9px !important; font-weight: 800 !important; background: rgba(74,222,128,0.18) !important; color: #4ADE80 !important;
 }
 
-/* 2 kolom full width */
-#tab-cashopname .co-grid2{
+/* 3 kolom: Laci | Brankas | Kas Kecil */
+#tab-cashopname .co-main3{
   display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
   gap: 8px !important;
   align-items: start !important;
   width: 100% !important;
-  margin-bottom: 8px !important;
 }
 #tab-cashopname .co-col{
   display: flex !important; flex-direction: column !important; gap: 8px !important;
   min-width: 0 !important;
 }
-
 #tab-cashopname .co-box{
   background: rgba(0,0,0,0.25) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
@@ -6605,43 +6597,33 @@ button.admin-topbar-avatar:hover,
   font-size: 11px !important; color: #E0A06A !important;
 }
 
-/* Baris pecahan: RATA KIRI, tidak meregang — pakai flex di tiap baris via table compact */
-#tab-cashopname .co-tbl{
-  width: auto !important;
-  min-width: 200px !important;
-  max-width: 100% !important;
-  border-collapse: collapse !important;
-  table-layout: auto !important;
-}
-#tab-cashopname .co-box-b{
+/* FLEX ROW — tidak meregang */
+#tab-cashopname .co-rows{
   padding: 4px 8px 6px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
 }
-#tab-cashopname .co-tbl td{
-  padding: 2px 6px 2px 0 !important;
-  border: none !important;
+#tab-cashopname .co-row{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 3px 0 !important;
   border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+  width: 100% !important;
+}
+#tab-cashopname .co-row:last-child{ border-bottom: none !important; }
+#tab-cashopname .co-row.co-row-active{ background: rgba(212,137,74,0.08) !important; border-radius: 4px !important; }
+#tab-cashopname .co-d{
+  flex: 0 0 64px !important;
+  font-family: 'JetBrains Mono', monospace !important;
   font-size: 11px !important;
   color: #A1A1AA !important;
-  vertical-align: middle !important;
-  white-space: nowrap !important;
-}
-#tab-cashopname .co-tbl td:first-child{
-  width: 1% !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  padding-right: 10px !important;
-}
-#tab-cashopname .co-tbl td:nth-child(2){
-  width: 1% !important;
-  padding-right: 10px !important;
-}
-#tab-cashopname .co-tbl td:last-child{
-  width: 1% !important;
   text-align: right !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  color: #71717A !important;
-  padding-left: 4px !important;
 }
 #tab-cashopname input.co-qty{
+  flex: 0 0 56px !important;
   width: 56px !important;
   max-width: 56px !important;
   height: 24px !important;
@@ -6654,11 +6636,20 @@ button.admin-topbar-avatar:hover,
   color: #F3F4F6 !important;
   font-family: 'JetBrains Mono', monospace !important;
   box-sizing: border-box !important;
+  margin: 0 !important;
 }
 #tab-cashopname input.co-qty:focus{ border-color: #D4894A !important; outline: none !important; }
+#tab-cashopname .co-line{
+  flex: 0 0 auto !important;
+  min-width: 48px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  color: #71717A !important;
+  text-align: left !important;
+}
 
 #tab-cashopname .co-fields3{
-  display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; gap: 6px !important;
+  display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; gap: 4px !important;
   padding: 6px 8px !important;
 }
 #tab-cashopname .co-fields3 .field{ margin: 0 !important; }
@@ -6667,14 +6658,9 @@ button.admin-topbar-avatar:hover,
   height: 26px !important; padding: 2px 6px !important; font-size: 11px !important;
   border-radius: 5px !important; width: 100% !important; box-sizing: border-box !important; margin-top: 0 !important;
 }
-#tab-cashopname .co-kk-scroll{
-  max-height: 180px !important; overflow-y: auto !important;
-  padding: 0 8px 6px !important;
-  border-top: 1px solid rgba(255,255,255,0.05) !important;
-}
+#tab-cashopname .co-kk-rows{ max-height: 200px !important; overflow-y: auto !important; }
 #tab-cashopname .co-sign{
-  display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 6px !important;
-  margin-bottom: 8px !important;
+  display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 6px !important; margin-bottom: 8px !important;
 }
 #tab-cashopname .co-sign .col{
   text-align: center !important; padding: 6px !important; border-radius: 6px !important;
@@ -6691,11 +6677,15 @@ button.admin-topbar-avatar:hover,
 #tab-cashopname button{ margin-top: 0 !important; }
 #tab-cashopname .co-mono{ font-family: 'JetBrains Mono', monospace !important; font-size: 11px !important; }
 #tab-cashopname .co-hint{ font-size: 9px !important; color: #6B7280 !important; }
-#tab-cashopname.co-locked .co-grid2,
+#tab-cashopname.co-locked .co-main3,
 #tab-cashopname.co-locked .co-summary{ opacity: 0.4; pointer-events: none; user-select: none; }
 
-@media (max-width: 700px){
-  #tab-cashopname .co-grid2{ grid-template-columns: 1fr !important; }
+@media (max-width: 900px){
+  #tab-cashopname .co-main3{ grid-template-columns: 1fr 1fr !important; }
+  #tab-cashopname .co-main3 > .co-col:last-child{ grid-column: 1 / -1 !important; }
+}
+@media (max-width: 600px){
+  #tab-cashopname .co-main3{ grid-template-columns: 1fr !important; }
 }
 </style>
 </head>
@@ -7663,65 +7653,60 @@ button.admin-topbar-avatar:hover,
           </div>
         </div>
 
-        <!-- 2 kolom: Laci+Materai | Brankas+Catatan -->
-        <div class="co-grid2">
+        <div class="co-main3">
           <div class="co-col">
             <div class="co-box">
               <div class="co-box-h"><span>Laci</span><span id="coTotalLaci">Rp 0</span></div>
-              <div class="co-box-b"><table class="co-tbl"><tbody id="coLaciBody"></tbody></table></div>
+              <div class="co-rows" id="coLaciBody"></div>
               <span id="coTotalLaciLbl" hidden>Rp 0</span>
             </div>
-            <div class="co-box co-under">
+            <div class="co-box">
               <div class="co-box-h">Materai</div>
-              <div class="co-box-b co-fields3">
+              <div class="co-fields3">
                 <div class="field"><label>Terpakai</label><input type="text" inputmode="decimal" id="coMateraiPakai" value="" placeholder="—" autocomplete="off"></div>
                 <div class="field"><label>Nilai</label><div id="coMateraiNilai" class="co-mono">Rp 0</div></div>
                 <div class="field"><label>Sisa</label><input type="text" id="coMateraiSisa" value="25" readonly></div>
               </div>
             </div>
           </div>
+
           <div class="co-col">
             <div class="co-box">
               <div class="co-box-h"><span>Brankas</span><span id="coTotalBrankas">Rp 0</span></div>
-              <div class="co-box-b"><table class="co-tbl"><tbody id="coBrankasBody"></tbody></table></div>
+              <div class="co-rows" id="coBrankasBody"></div>
               <span id="coTotalBrankasLbl" hidden>Rp 0</span>
             </div>
-            <div class="co-box co-under">
+            <div class="co-box">
               <div class="co-box-h">Catatan</div>
-              <div class="co-box-b" style="padding:6px 8px">
-                <textarea id="coCatatan" rows="2" placeholder="Temuan..." style="width:100%;min-height:48px;resize:vertical;box-sizing:border-box"></textarea>
+              <div style="padding:6px 8px">
+                <textarea id="coCatatan" rows="2" placeholder="Temuan..." style="width:100%;min-height:44px;resize:vertical;box-sizing:border-box"></textarea>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Bawah: Kas Kecil | TTD+Simpan -->
-        <div class="co-grid2 co-grid2-bot">
-          <div class="co-box">
-            <div class="co-box-h"><span>Kas Kecil</span><span id="coTotalKk">Rp 0</span></div>
-            <div class="co-box-b">
+          <div class="co-col">
+            <div class="co-box">
+              <div class="co-box-h"><span>Kas Kecil</span><span id="coTotalKk">Rp 0</span></div>
               <div class="co-fields3">
                 <div class="field"><label>Awal</label><input type="text" id="coKkAwal" value="0" readonly><div id="coKkAwalHint" class="co-hint"></div></div>
                 <div class="field"><label>Pakai</label><input type="text" id="coKkPakai" value="0" readonly></div>
                 <div class="field"><label>Sisa</label><div id="coKkSisa" class="co-mono">Rp 0</div></div>
               </div>
-              <div class="co-kk-scroll"><table class="co-tbl"><tbody id="coKkBody"></tbody></table></div>
+              <div class="co-rows co-kk-rows" id="coKkBody"></div>
               <span id="coTotalKkFoot" hidden>Rp 0</span>
             </div>
-          </div>
-          <div class="co-box">
-            <div class="co-box-h">Tanda tangan</div>
-            <div class="co-box-b" style="padding:8px">
-              <div class="co-sign">
-                <div class="col"><div class="lab">Kasir</div><div class="name" id="coSignKasir">—</div></div>
-                <div class="col"><div class="lab">KC</div><div class="name" id="coSignKc">Syahrul Zuniardin</div></div>
+            <div class="co-box">
+              <div class="co-box-h">Simpan</div>
+              <div style="padding:8px">
+                <div class="co-sign">
+                  <div class="col"><div class="lab">Kasir</div><div class="name" id="coSignKasir">—</div></div>
+                  <div class="col"><div class="lab">KC</div><div class="name" id="coSignKc">Syahrul Zuniardin</div></div>
+                </div>
+                <button type="button" id="coSaveBtn" class="co-save-btn">Simpan</button>
+                <div class="msg" id="coMsg"></div>
+                <div style="margin-top:6px"><button type="button" id="coShowHistBtn" class="btn-xs secondary">Riwayat</button></div>
+                <div id="coHistory" style="display:none"></div>
               </div>
-              <button type="button" id="coSaveBtn" class="co-save-btn">Simpan</button>
-              <div class="msg" id="coMsg"></div>
-              <div class="co-hist-row" style="margin-top:6px">
-                <button type="button" id="coShowHistBtn" class="btn-xs secondary">Riwayat</button>
-              </div>
-              <div id="coHistory" style="display:none"></div>
             </div>
           </div>
         </div>
@@ -14313,11 +14298,11 @@ function loadAdminBertugas(){
   function coBuildDenomTables(){
     function rows(prefix){
       return CO_DENOMS.map(function(d){
-        return '<tr>'+
-          '<td style="font-family:JetBrains Mono,monospace;">'+d.toLocaleString("id-ID")+'</td>'+
-          '<td><input type="text" inputmode="decimal" value="" class="co-qty" placeholder="—" data-side="'+prefix+'" data-denom="'+d+'" autocomplete="off"></td>'+
-          '<td class="co-line" data-side="'+prefix+'" data-denom="'+d+'" style="font-family:JetBrains Mono,monospace;text-align:right;">—</td>'+
-        '</tr>';
+        return '<div class="co-row">'+
+          '<span class="co-d">'+d.toLocaleString("id-ID")+'</span>'+
+          '<input type="text" inputmode="decimal" value="" class="co-qty" placeholder="—" data-side="'+prefix+'" data-denom="'+d+'" autocomplete="off">'+
+          '<span class="co-line" data-side="'+prefix+'" data-denom="'+d+'">—</span>'+
+        '</div>';
       }).join("");
     }
     var lb = document.getElementById("coLaciBody");
@@ -14329,12 +14314,12 @@ function loadAdminBertugas(){
     // co-qty-enter-bind: Enter = hitung rumus + pindah kolom
     document.querySelectorAll("#tab-cashopname input.co-qty").forEach(function(inp){
       inp.addEventListener("focus", function(){
-        var tr = inp.closest("tr");
-        document.querySelectorAll("#tab-cashopname tr.co-row-active").forEach(function(r){ r.classList.remove("co-row-active"); });
+        var tr = inp.closest(".co-row, tr");
+        document.querySelectorAll("#tab-cashopname .co-row.co-row-active").forEach(function(r){ r.classList.remove("co-row-active"); });
         if(tr) tr.classList.add("co-row-active");
       });
       inp.addEventListener("blur", function(){
-        var tr = inp.closest("tr");
+        var tr = inp.closest(".co-row, tr");
         if(tr) tr.classList.remove("co-row-active");
       });
       inp.addEventListener("keydown", function(e){
