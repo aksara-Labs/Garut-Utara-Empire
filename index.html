@@ -30,6 +30,154 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
 .screen.admin-layout.active,.screen.dashboard-layout.active{display:flex!important}
 .profile-modal-overlay{display:none!important;position:fixed;inset:0;z-index:9990}
 .profile-modal-overlay.show{display:flex!important;align-items:center;justify-content:center}
+
+
+/* ===== CO NO-BOX — prioritas akhir, paksa tanpa kotak ===== */
+#tab-cashopname.subpanel.active .co-sign .col,
+#tab-cashopname .co-sign .col,
+#tab-cashopname .co-sign .col *{
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-width: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 0 !important;
+}
+#tab-cashopname .co-sign .col{
+  padding: 2px 0 !important;
+  text-align: left !important;
+}
+#tab-cashopname .co-sign .lab{
+  color: #78716C !important;
+  font-size: 9px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+#tab-cashopname .co-sign .name{
+  color: #F5F5F4 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+/* Field KK / Materai: garis bawah saja, bukan kotak */
+#tab-cashopname.subpanel.active .co-fields3 input,
+#tab-cashopname .co-fields3 input,
+#tab-cashopname #coKkAwal,
+#tab-cashopname #coKkPakai,
+#tab-cashopname #coMateraiPakai,
+#tab-cashopname #coMateraiSisa{
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.18) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  height: 26px !important;
+  padding: 0 2px !important;
+  font-size: 12px !important;
+  color: #F5F5F4 !important;
+}
+#tab-cashopname .co-fields3 input:focus,
+#tab-cashopname #coKkAwal:focus,
+#tab-cashopname #coKkPakai:focus,
+#tab-cashopname #coMateraiPakai:focus{
+  border-bottom-color: #D4894A !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+#tab-cashopname #coKkSisa,
+#tab-cashopname #coMateraiNilai{
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid transparent !important;
+  border-radius: 0 !important;
+  padding: 0 2px !important;
+  font-size: 12px !important;
+  color: #F5F5F4 !important;
+}
+
+
+
+/* CO TTD/Simpan area — POLONG total tanpa kotak */
+#tab-cashopname .co-box.co-box-flat,
+#tab-cashopname .co-box-flat{
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+#tab-cashopname .co-box-h-flat,
+#tab-cashopname .co-box-flat .co-box-h{
+  background: transparent !important;
+  border: none !important;
+  border-bottom: none !important;
+  padding: 4px 0 8px !important;
+  color: #A8A29E !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+}
+#tab-cashopname .co-flat-body{
+  padding: 0 !important;
+}
+#tab-cashopname .co-box-flat .co-sign,
+#tab-cashopname .co-box-flat .co-sign .col,
+#tab-cashopname .co-box-flat .co-sign .col *{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+#tab-cashopname .co-box-flat .co-sign{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 16px !important;
+  margin-bottom: 12px !important;
+}
+#tab-cashopname .co-box-flat .co-sign .lab{
+  color: #78716C !important;
+  font-size: 9px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+#tab-cashopname .co-box-flat .co-sign .name{
+  color: #F5F5F4 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  margin-top: 2px !important;
+}
+#tab-cashopname .co-box-flat #coSaveBtn{
+  margin-top: 4px !important;
+}
+
+
+
+#tab-cashopname .co-box:has(.co-sign){
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+#tab-cashopname .co-box:has(.co-sign) > .co-box-h{
+  background: transparent !important;
+  border: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  color: #A8A29E !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+}
+#tab-cashopname .co-box:has(.co-sign) .co-sign .col{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 </style>
 
 <style>
@@ -1003,8 +1151,8 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
   .co-denom-table td{ padding:5px 10px; border-bottom:1px solid rgba(255,255,255,0.04); }
   .co-denom-table input{
     width:100%; max-width:90px; padding:5px 8px; text-align:right;
-    background:var(--navy-950); border:1px solid var(--navy-700); border-radius:6px;
-    color:var(--ink); font-family:'JetBrains Mono',monospace; font-size:12px;
+    background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.12); border-radius:6px;
+    color:#FAFAF9; font-family:'JetBrains Mono',monospace; font-size:12px;
   }
   .co-denom-foot{
     display:flex; justify-content:space-between; padding:8px 12px;
@@ -6564,6 +6712,239 @@ button.admin-topbar-avatar:hover,
 }
 
 
+
+
+
+/* CO force netral — Materai, Catatan, Kasir/KC (anti navy solid) */
+#tab-cashopname .co-fields3 input,
+#tab-cashopname .co-fields3 .co-mono,
+#tab-cashopname #coMateraiPakai,
+#tab-cashopname #coMateraiSisa,
+#tab-cashopname #coMateraiNilai,
+#tab-cashopname #coCatatan,
+#tab-cashopname textarea#coCatatan,
+#tab-cashopname .co-box textarea,
+#tab-cashopname .co-sign .col,
+#tab-cashopname .co-sign .col .name,
+#tab-cashopname .co-sign .col .lab{
+  background: rgba(0,0,0,0.28) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: #F5F5F4 !important;
+  box-shadow: none !important;
+}
+#tab-cashopname #coMateraiNilai,
+#tab-cashopname .co-fields3 .co-mono{
+  background: transparent !important;
+  border: none !important;
+  padding: 6px 0 !important;
+  color: #E7E5E4 !important;
+}
+#tab-cashopname .co-sign .col{
+  background: rgba(0,0,0,0.25) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 10px !important;
+}
+#tab-cashopname .co-sign .lab{
+  background: transparent !important;
+  border: none !important;
+  color: #A8A29E !important;
+}
+#tab-cashopname .co-sign .name{
+  background: transparent !important;
+  border: none !important;
+  color: #F5F5F4 !important;
+}
+#tab-cashopname textarea,
+#tab-cashopname #coCatatan{
+  background: rgba(0,0,0,0.28) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: #F5F5F4 !important;
+  border-radius: 8px !important;
+}
+
+/* override global .admin-content input navy */
+#tab-cashopname.subpanel.active input,
+#tab-cashopname.subpanel.active select,
+#tab-cashopname.subpanel.active textarea,
+.admin-content #tab-cashopname input,
+.admin-content #tab-cashopname select,
+.admin-content #tab-cashopname textarea{
+  background: rgba(0,0,0,0.28) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+  color: #F5F5F4 !important;
+}
+
+/* CO anti-navy: latar gelap netral (bukan biru navy) */
+#tab-cashopname,
+#tab-cashopname.active,
+#tab-cashopname.subpanel.active{
+  background: transparent !important;
+}
+#tab-cashopname .co-box,
+#tab-cashopname .co-box *{
+  /* jangan warisi navy dari parent global */
+}
+#tab-cashopname .co-box{
+  background: rgba(18,18,18,0.55) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25) !important;
+  backdrop-filter: blur(12px) !important;
+}
+#tab-cashopname .co-box-h{
+  background: rgba(255,255,255,0.04) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  color: #F5F5F4 !important;
+}
+#tab-cashopname .co-rows,
+#tab-cashopname .co-row{
+  background: transparent !important;
+}
+#tab-cashopname .co-row:hover{
+  background: rgba(255,255,255,0.04) !important;
+}
+#tab-cashopname .co-row.co-row-active{
+  background: rgba(212,137,74,0.1) !important;
+}
+
+/* Input: hitam transparan, BUKAN navy */
+#tab-cashopname input,
+#tab-cashopname select,
+#tab-cashopname textarea,
+#tab-cashopname input.co-qty,
+#tab-cashopname .co-fields3 input,
+#tab-cashopname .co-toolbar input,
+#tab-cashopname .co-toolbar select,
+#tab-cashopname #coKkAwal,
+#tab-cashopname #coKkPakai,
+#tab-cashopname #coMateraiPakai,
+#tab-cashopname #coMateraiSisa,
+#tab-cashopname #coDataProgram,
+#tab-cashopname #coTanggal,
+#tab-cashopname #coCabang{
+  background: rgba(0,0,0,0.35) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: #FAFAF9 !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+#tab-cashopname input:focus,
+#tab-cashopname select:focus,
+#tab-cashopname textarea:focus,
+#tab-cashopname input.co-qty:focus{
+  background: rgba(0,0,0,0.45) !important;
+  border-color: rgba(212,137,74,0.55) !important;
+  box-shadow: 0 0 0 2px rgba(212,137,74,0.15) !important;
+}
+
+/* Override sisa var(--navy-*) di dalam CO */
+#tab-cashopname .co-denom-box,
+#tab-cashopname .co-panel,
+#tab-cashopname .co-card,
+#tab-cashopname .co-mini-block{
+  background: rgba(18,18,18,0.55) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+#tab-cashopname .co-sign .col{
+  background: rgba(0,0,0,0.3) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* Nominal — netral stone, bukan hijau */
+#tab-cashopname .co-line,
+#tab-cashopname span.co-line{
+  color: #A8A29E !important;
+  -webkit-text-fill-color: #A8A29E !important;
+}
+#tab-cashopname .co-d{ color: #A8A29E !important; }
+
+/* Summary chips netral */
+#tab-cashopname .co-sum-item{
+  background: rgba(18,18,18,0.5) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+#tab-cashopname .co-toolbar{
+  background: rgba(18,18,18,0.4) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* CO input transparan + nominal netral (anti hijau/navy polos) */
+#tab-cashopname input,
+#tab-cashopname select,
+#tab-cashopname textarea,
+#tab-cashopname input.co-qty,
+#tab-cashopname .co-fields3 input,
+#tab-cashopname .co-toolbar input,
+#tab-cashopname .co-toolbar select{
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: #F5F5F4 !important;
+  box-shadow: none !important;
+}
+#tab-cashopname input:focus,
+#tab-cashopname select:focus,
+#tab-cashopname textarea:focus,
+#tab-cashopname input.co-qty:focus{
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(212,137,74,0.45) !important;
+  box-shadow: 0 0 0 2px rgba(212,137,74,0.12) !important;
+  outline: none !important;
+}
+#tab-cashopname input[readonly],
+#tab-cashopname #coKkAwal,
+#tab-cashopname #coKkPakai,
+#tab-cashopname #coMateraiSisa{
+  background: rgba(255,255,255,0.03) !important;
+  color: #E7E5E4 !important;
+  opacity: 1 !important;
+}
+#tab-cashopname .co-mono,
+#tab-cashopname #coMateraiNilai,
+#tab-cashopname #coKkSisa{
+  background: transparent !important;
+  border: none !important;
+  color: #E7E5E4 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-weight: 600 !important;
+  padding: 6px 0 !important;
+}
+#tab-cashopname .co-line,
+#tab-cashopname span.co-line,
+#tab-cashopname .co-rows .co-line{
+  color: #A8A29E !important;
+  background: transparent !important;
+  border: none !important;
+  -webkit-text-fill-color: #A8A29E !important;
+}
+#tab-cashopname .co-d{
+  color: #A8A29E !important;
+  -webkit-text-fill-color: #A8A29E !important;
+}
+/* jangan hijau dari rule lama */
+#tab-cashopname .co-row .co-line,
+#tab-cashopname [class*="co-line"]{
+  color: #A8A29E !important;
+}
+#tab-cashopname .co-fields3{
+  gap: 8px !important;
+}
+#tab-cashopname .co-fields3 .field{
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+#tab-cashopname .co-fields3 input{
+  width: 100% !important;
+  min-width: 0 !important;
+  font-size: 11.5px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+#tab-cashopname .co-hint{
+  font-size: 9px !important;
+  color: #78716C !important;
+  line-height: 1.25 !important;
+  margin-top: 3px !important;
+  word-break: break-word !important;
+}
+
 /* CO summary spread + warna netral (tanpa hijau) */
 #tab-cashopname .co-summary{
   display: flex !important;
@@ -7117,6 +7498,165 @@ button.admin-topbar-avatar:hover,
   overflow: visible !important;
   pointer-events: auto !important;
   opacity: 1 !important;
+}
+
+
+
+/* CO polish final: no-box TTD, KK rapi, toolbar sejajar */
+#tab-cashopname .co-sign{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  margin-bottom: 10px !important;
+  padding: 0 !important;
+}
+#tab-cashopname .co-sign .col{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px 0 !important;
+  text-align: left !important;
+  border-radius: 0 !important;
+}
+#tab-cashopname .co-sign .lab{
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #78716C !important;
+  background: transparent !important;
+  border: none !important;
+}
+#tab-cashopname .co-sign .name{
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #F5F5F4 !important;
+  margin-top: 2px !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Kas Kecil fields: kecil, full terlihat, tidak kotak tebal */
+#tab-cashopname .co-fields3{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
+  gap: 6px !important;
+  padding: 8px 10px !important;
+  align-items: start !important;
+}
+#tab-cashopname .co-fields3 .field{
+  margin: 0 !important;
+  min-width: 0 !important;
+}
+#tab-cashopname .co-fields3 label{
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  color: #78716C !important;
+  margin: 0 0 2px !important;
+  display: block !important;
+}
+#tab-cashopname .co-fields3 input,
+#tab-cashopname #coKkAwal,
+#tab-cashopname #coKkPakai,
+#tab-cashopname #coMateraiPakai,
+#tab-cashopname #coMateraiSisa{
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 0 6px !important;
+  font-size: 11px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  color: #E7E5E4 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+#tab-cashopname #coKkSisa,
+#tab-cashopname #coMateraiNilai,
+#tab-cashopname .co-fields3 .co-mono{
+  height: auto !important;
+  min-height: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 2px !important;
+  font-size: 11px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  background: transparent !important;
+  border: none !important;
+  color: #E7E5E4 !important;
+}
+#tab-cashopname .co-hint{
+  font-size: 8.5px !important;
+  line-height: 1.2 !important;
+  color: #57534E !important;
+  margin-top: 2px !important;
+  max-height: 2.4em !important;
+  overflow: hidden !important;
+}
+
+/* Toolbar: tinggi & gaya sama */
+#tab-cashopname .co-toolbar{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
+  gap: 10px !important;
+}
+#tab-cashopname .co-toolbar .field{
+  margin: 0 !important;
+  flex: 0 0 auto !important;
+}
+#tab-cashopname .co-toolbar label{
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #78716C !important;
+  margin-bottom: 4px !important;
+  height: 12px !important;
+  line-height: 12px !important;
+}
+#tab-cashopname .co-toolbar input,
+#tab-cashopname .co-toolbar select,
+#tab-cashopname #coTanggal,
+#tab-cashopname #coCabang,
+#tab-cashopname #coDataProgram{
+  height: 34px !important;
+  min-height: 34px !important;
+  max-height: 34px !important;
+  padding: 0 10px !important;
+  font-size: 12px !important;
+  line-height: 34px !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: #F5F5F4 !important;
+  vertical-align: middle !important;
+}
+#tab-cashopname #coTanggal{
+  min-width: 140px !important;
+  max-width: 150px !important;
+  color-scheme: dark !important;
+}
+#tab-cashopname #coCabang{
+  min-width: 120px !important;
+  max-width: 140px !important;
+}
+#tab-cashopname #coDataProgram{
+  min-width: 100px !important;
+  max-width: 120px !important;
+}
+#tab-cashopname #coStartBtn{
+  height: 34px !important;
+  min-height: 34px !important;
+  align-self: flex-end !important;
 }
 
 </style>
@@ -8128,9 +8668,9 @@ button.admin-topbar-avatar:hover,
               <div class="co-rows co-kk-rows" id="coKkBody"></div>
               <span id="coTotalKkFoot" hidden>Rp 0</span>
             </div>
-            <div class="co-box">
-              <div class="co-box-h">Simpan</div>
-              <div style="padding:8px">
+            <div class="co-box co-box-flat">
+              <div class="co-box-h co-box-h-flat">Simpan</div>
+              <div class="co-flat-body" style="padding:4px 0">
                 <div class="co-sign">
                   <div class="col"><div class="lab">Kasir</div><div class="name" id="coSignKasir">—</div></div>
                   <div class="col"><div class="lab">KC</div><div class="name" id="coSignKc">Syahrul Zuniardin</div></div>
@@ -14852,7 +15392,10 @@ function loadAdminBertugas(){
         var line = d * q;
         t += line;
         var cell = document.querySelector('.co-line[data-side="'+side+'"][data-denom="'+d+'"]');
-        if(cell) cell.textContent = q ? line.toLocaleString("id-ID") : "—";
+        if(cell){
+          cell.textContent = q ? line.toLocaleString("id-ID") : "—";
+          cell.style.color = q ? "#D6D3D1" : "#78716C";
+        }
       });
       return t;
     }
@@ -14884,7 +15427,7 @@ function loadAdminBertugas(){
     var kkFisik = total("kk");
     var kkA = coParseExpr((el("coKkAwal")||{}).value);
     var kkP = Math.max(0, kkA - kkFisik);
-    if(el("coKkPakai")) el("coKkPakai").value = kkP ? String(kkP) : "0";
+    if(el("coKkPakai")) el("coKkPakai").value = kkP ? kkP.toLocaleString("id-ID") : "0";
     if(el("coKkSisa")) el("coKkSisa").textContent = coFmt(kkFisik);
     if(el("coTotalKk")) el("coTotalKk").textContent = coFmt(kkFisik);
     if(el("coTotalKkFoot")) el("coTotalKkFoot").textContent = coFmt(kkFisik);
@@ -15001,7 +15544,7 @@ function loadAdminBertugas(){
     var info = coCabangInfo[cabang] || { kelas:1, kcu:false };
     var awal = coKasKecilFromInfo(info);
     var el = document.getElementById("coKkAwal");
-    if(el) el.value = "Rp " + coFormatIdNum(awal);
+    if(el) el.value = coFormatIdNum(awal);
     var hint = document.getElementById("coKkAwalHint");
     if(hint){
       hint.textContent = info.kcu
