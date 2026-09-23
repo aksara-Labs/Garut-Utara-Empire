@@ -6518,18 +6518,24 @@ button.admin-topbar-avatar:hover,
 
 
 
-/* ===== CO FIX v4 — Laci | Brankas | Kanan sejajar RAPAT ===== */
+
+/* ===== CO FIX v5 — full width konten + baris pecahan rapat ===== */
 #tab-cashopname{
-  max-width: 1080px !important;
-  padding: 8px 10px !important;
+  max-width: none !important;
+  width: 100% !important;
+  padding: 8px 12px 12px !important;
   margin: 0 !important;
   height: auto !important;
   max-height: none !important;
   overflow: visible !important;
   display: block !important;
   font-size: 12px !important;
+  box-sizing: border-box !important;
 }
-#tab-cashopname .co-wrap{ max-width: 1080px !important; }
+#tab-cashopname .co-wrap{
+  max-width: none !important;
+  width: 100% !important;
+}
 
 #tab-cashopname .co-toolbar{
   display: flex !important;
@@ -6545,7 +6551,7 @@ button.admin-topbar-avatar:hover,
 #tab-cashopname .co-toolbar input,
 #tab-cashopname .co-toolbar select{
   height: 30px !important; padding: 4px 8px !important; font-size: 12px !important;
-  min-width: 110px !important; max-width: 150px !important; width: auto !important;
+  min-width: 110px !important; max-width: 160px !important; width: auto !important;
   border-radius: 7px !important; box-sizing: border-box !important;
 }
 #tab-cashopname #coStartBtn,
@@ -6573,8 +6579,6 @@ button.admin-topbar-avatar:hover,
   border: 1px solid rgba(255,255,255,0.08) !important;
   display: flex !important; flex-direction: column !important; gap: 1px !important;
 }
-#tab-cashopname .co-sum-item input,
-#tab-cashopname .co-sum-item .field{ display: none !important; }
 #tab-cashopname .co-sum-lab{ font-size: 9px !important; color: #9CA3AF !important; font-weight: 700 !important; text-transform: uppercase !important; }
 #tab-cashopname .co-sum-val{
   font-size: 13px !important; font-weight: 700 !important;
@@ -6588,12 +6592,13 @@ button.admin-topbar-avatar:hover,
   background: rgba(74,222,128,0.18) !important; color: #4ADE80 !important;
 }
 
-/* GRID 3 KOLOM — inti layout */
+/* FULL width 3 kolom: Laci | Brankas flex, kanan fixed */
 #tab-cashopname .co-grid3{
   display: grid !important;
-  grid-template-columns: 1fr 1fr 240px !important;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) 260px !important;
   gap: 8px !important;
   align-items: start !important;
+  width: 100% !important;
 }
 
 #tab-cashopname .co-box{
@@ -6603,6 +6608,7 @@ button.admin-topbar-avatar:hover,
   overflow: hidden !important;
   display: flex !important; flex-direction: column !important;
   min-width: 0 !important;
+  width: 100% !important;
 }
 #tab-cashopname .co-box-h{
   display: flex !important; justify-content: space-between !important; align-items: center !important;
@@ -6618,34 +6624,56 @@ button.admin-topbar-avatar:hover,
   font-family: 'JetBrains Mono', monospace !important;
   font-size: 11px !important; color: #E0A06A !important; font-weight: 700 !important;
 }
-#tab-cashopname .co-box-b{ padding: 4px 0 !important; }
-#tab-cashopname .co-box-sm{ margin-bottom: 0 !important; }
+#tab-cashopname .co-box-b{ padding: 2px 0 !important; }
 
 #tab-cashopname .co-side{
   display: flex !important; flex-direction: column !important; gap: 6px !important;
-  min-width: 0 !important;
+  min-width: 0 !important; width: 100% !important;
 }
 
-#tab-cashopname .co-tbl{ width: 100% !important; border-collapse: collapse !important; table-layout: fixed !important; }
+/* Baris pecahan RAPAT — 3 kolom padat */
+#tab-cashopname .co-tbl{
+  width: 100% !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;
+}
 #tab-cashopname .co-tbl td{
-  padding: 2px 8px !important; border: none !important;
+  padding: 2px 6px !important;
+  border: none !important;
   border-bottom: 1px solid rgba(255,255,255,0.04) !important;
-  font-size: 11px !important; color: #9CA3AF !important; vertical-align: middle !important;
+  font-size: 11px !important;
+  color: #9CA3AF !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
 }
 #tab-cashopname .co-tbl td:first-child{
-  width: 42% !important; font-family: 'JetBrains Mono', monospace !important;
+  width: 72px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  color: #A1A1AA !important;
 }
-#tab-cashopname .co-tbl td:nth-child(2){ width: 28% !important; }
+#tab-cashopname .co-tbl td:nth-child(2){
+  width: 72px !important;
+}
 #tab-cashopname .co-tbl td:last-child{
-  width: 30% !important; text-align: right !important;
-  font-family: 'JetBrains Mono', monospace !important; color: #6B7280 !important;
+  width: auto !important;
+  text-align: right !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  color: #71717A !important;
+  padding-right: 10px !important;
 }
 #tab-cashopname input.co-qty{
-  width: 100% !important; max-width: 64px !important; height: 24px !important;
-  padding: 1px 4px !important; font-size: 11px !important; text-align: right !important;
-  background: rgba(0,0,0,0.35) !important; border: 1px solid rgba(255,255,255,0.1) !important;
-  border-radius: 4px !important; color: #F3F4F6 !important;
-  font-family: 'JetBrains Mono', monospace !important; box-sizing: border-box !important;
+  width: 64px !important;
+  max-width: 64px !important;
+  height: 24px !important;
+  padding: 1px 4px !important;
+  font-size: 11px !important;
+  text-align: right !important;
+  background: rgba(0,0,0,0.35) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 4px !important;
+  color: #F3F4F6 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  box-sizing: border-box !important;
 }
 #tab-cashopname input.co-qty:focus{ border-color: #D4894A !important; outline: none !important; }
 
@@ -6661,7 +6689,7 @@ button.admin-topbar-avatar:hover,
   margin-top: 0 !important;
 }
 #tab-cashopname .co-kk-scroll{
-  max-height: 150px !important; overflow-y: auto !important;
+  max-height: 160px !important; overflow-y: auto !important;
   border-top: 1px solid rgba(255,255,255,0.05) !important;
 }
 #tab-cashopname .co-sign{
@@ -6703,7 +6731,6 @@ button.admin-topbar-avatar:hover,
 @media (max-width: 640px){
   #tab-cashopname .co-grid3{ grid-template-columns: 1fr !important; }
 }
-
 </style>
 </head>
 <body>
