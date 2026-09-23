@@ -5129,16 +5129,33 @@ input:focus-visible{
 #tab-cashopname.panel,
 #tab-cashopname.subpanel,
 #tab-cashopname{
-  max-width: 1120px !important;
+  max-width: none !important;
   width: 100% !important;
-  margin: 0 auto 0 0 !important;
+  margin: 0 !important;
   padding: 8px 10px 12px !important;
   box-sizing: border-box !important;
   font-size: 12px !important;
   height: auto !important;
   max-height: none !important;
   overflow: visible !important;
+  /* JANGAN display:block di sini — biar .subpanel {display:none} jalan */
+}
+#tab-cashopname.subpanel:not(.active){
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#tab-cashopname.subpanel.active,
+#tab-cashopname.active{
   display: block !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  height: auto !important;
+  overflow: visible !important;
 }
 
 /* Toolbar: sejajar rapat, Start kecil */
@@ -5687,7 +5704,7 @@ input:focus-visible{
   background: rgba(212,137,74,0.08) !important;
 }
 #tab-cashopname .co-sum-selisih.is-ok .co-sum-val,
-#tab-cashopname .co-sum-selisih.ok .co-sum-val{ color: #4ADE80 !important; }
+#tab-cashopname .co-sum-selisih.ok .co-sum-val{ color: #E8A86A !important; }
 #tab-cashopname .co-sum-selisih.is-bad .co-sum-val,
 #tab-cashopname .co-sum-selisih.bad .co-sum-val,
 #tab-cashopname .co-sum-selisih.err .co-sum-val{ color: #F87171 !important; }
@@ -5979,8 +5996,8 @@ input:focus-visible{
   letter-spacing: 0.03em;
 }
 #tab-cashopname .co-hist-card .st.ok{
-  background: rgba(74,222,128,0.15);
-  color: #4ADE80;
+  background: rgba(212,137,74,0.15);
+  color: #E8A86A;
 }
 #tab-cashopname .co-hist-card .st.bad{
   background: rgba(248,113,113,0.15);
@@ -6027,12 +6044,12 @@ input:focus-visible{
   cursor: wait !important;
 }
 #tab-cashopname .co-save-btn.co-save-ok{
-  background: linear-gradient(135deg, #34D399, #059669) !important;
-  color: #042f1a !important;
+  background: linear-gradient(135deg, #F0C48A, #D4894A) !important;
+  color: #1a1208 !important;
 }
 #tab-cashopname #coMsg.ok,
 #tab-cashopname .msg.ok{
-  color: #4ADE80 !important;
+  color: #E8A86A !important;
   font-weight: 600 !important;
 }
 #tab-cashopname #coMsg.err,
@@ -6521,85 +6538,356 @@ button.admin-topbar-avatar:hover,
 
 
 
-/* ===== CO FIX v7 — Laci | Brankas | KasKecil, Materai bawah Laci, Catatan bawah Brankas ===== */
-#tab-cashopname{
-  width: 100% !important; max-width: none !important;
-  padding: 8px 12px 12px !important; margin: 0 !important;
-  box-sizing: border-box !important; font-size: 12px !important;
+
+
+/* Total header: teks saja, tanpa kotak */
+#tab-cashopname #coTotalLaci,
+#tab-cashopname #coTotalBrankas,
+#tab-cashopname #coTotalKk,
+#tab-cashopname .co-box-h span:last-child{
+  display: inline !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #E8A86A !important;
+  line-height: 1.2 !important;
 }
+#tab-cashopname .co-box-h{
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+
+/* CO summary spread + warna netral (tanpa hijau) */
+#tab-cashopname .co-summary{
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  margin: 0 0 12px !important;
+  width: 100% !important;
+}
+#tab-cashopname .co-sum-item{
+  flex: 1 1 0 !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+#tab-cashopname .co-sum-lab{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 6px !important;
+  line-height: 1.3 !important;
+}
+#tab-cashopname .co-sum-sub{
+  display: block !important;
+  width: 100% !important;
+  margin-top: 2px !important;
+  font-size: 9px !important;
+  color: #78716C !important;
+  font-weight: 500 !important;
+}
+
+/* Nominal per lembar: netral, bukan hijau */
+#tab-cashopname .co-line,
+#tab-cashopname span.co-line{
+  color: #A8A29E !important;
+  background: none !important;
+  border: none !important;
+}
+#tab-cashopname .co-row:has(input.co-qty:not(:placeholder-shown)) .co-line{
+  color: #E7E5E4 !important;
+}
+#tab-cashopname .co-d{
+  color: #A8A29E !important;
+}
+
+/* Badge: gold (SESUAI) / amber-red (LEBIH/KURANG) — tanpa hijau */
+#tab-cashopname .co-badge{
+  background: rgba(212,137,74,0.2) !important;
+  color: #E8A86A !important;
+  border: 1px solid rgba(212,137,74,0.35) !important;
+}
+#tab-cashopname .co-sum-selisih.is-ok .co-badge,
+#tab-cashopname .co-sum-selisih.ok .co-badge{
+  background: rgba(212,137,74,0.2) !important;
+  color: #E8A86A !important;
+  border-color: rgba(212,137,74,0.35) !important;
+}
+#tab-cashopname .co-sum-selisih.is-bad .co-badge,
+#tab-cashopname .co-sum-selisih.lebih .co-badge,
+#tab-cashopname .co-sum-selisih.kurang .co-badge,
+#tab-cashopname .co-sum-selisih.err .co-badge{
+  background: rgba(248,113,113,0.15) !important;
+  color: #FCA5A5 !important;
+  border-color: rgba(248,113,113,0.3) !important;
+}
+#tab-cashopname .co-sum-selisih.is-ok .co-sum-val,
+#tab-cashopname .co-sum-selisih.ok .co-sum-val{
+  color: #E8A86A !important;
+}
+#tab-cashopname .co-sum-selisih.is-bad .co-sum-val,
+#tab-cashopname .co-sum-selisih.lebih .co-sum-val,
+#tab-cashopname .co-sum-selisih.kurang .co-sum-val{
+  color: #FCA5A5 !important;
+}
+
+/* Hilangkan sisa hijau di CO */
+#tab-cashopname .co-hist-card .st.ok{
+  background: rgba(212,137,74,0.15) !important;
+  color: #E8A86A !important;
+}
+#tab-cashopname #coMsg.ok,
+#tab-cashopname .msg.ok{
+  color: #E8A86A !important;
+}
+
+/* ===== CO WOW polish v8 — mewah, glass, gold ===== */
+#tab-cashopname.subpanel:not(.active),
+.panel.subpanel#tab-cashopname:not(.active){
+  display: none !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  width: 0 !important; height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+#tab-cashopname.subpanel.active,
+.panel.subpanel#tab-cashopname.active{
+  display: block !important;
+  visibility: visible !important;
+  position: relative !important;
+  left: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
+#tab-cashopname.active{
+  width: 100% !important;
+  max-width: none !important;
+  padding: 10px 14px 16px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  font-size: 12.5px !important;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(212,137,74,0.07), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(91,154,232,0.05), transparent 45%) !important;
+}
+
 #tab-cashopname .co-wrap{ width: 100% !important; }
+
+/* Toolbar premium */
 #tab-cashopname .co-toolbar{
-  display: flex !important; flex-wrap: wrap !important; align-items: flex-end !important;
-  gap: 6px !important; margin-bottom: 8px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
+  gap: 8px !important;
+  margin-bottom: 12px !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  backdrop-filter: blur(12px) !important;
 }
 #tab-cashopname .co-toolbar .field{ margin: 0 !important; }
-#tab-cashopname .co-toolbar label{ display:block; font-size:10px; color:#9CA3AF; margin-bottom:2px; font-weight:600; }
+#tab-cashopname .co-toolbar label{
+  display: block !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #94A3B8 !important;
+  margin-bottom: 4px !important;
+}
 #tab-cashopname .co-toolbar input,
 #tab-cashopname .co-toolbar select{
-  height: 30px !important; padding: 4px 8px !important; font-size: 12px !important;
-  min-width: 110px !important; max-width: 150px !important; width: auto !important;
-  border-radius: 7px !important; box-sizing: border-box !important;
+  height: 34px !important;
+  padding: 0 10px !important;
+  font-size: 12.5px !important;
+  min-width: 118px !important;
+  max-width: 160px !important;
+  width: auto !important;
+  border-radius: 10px !important;
+  box-sizing: border-box !important;
+  background: rgba(0,0,0,0.35) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: #F1F5F9 !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+}
+#tab-cashopname .co-toolbar input:focus,
+#tab-cashopname .co-toolbar select:focus{
+  border-color: rgba(212,137,74,0.55) !important;
+  box-shadow: 0 0 0 3px rgba(212,137,74,0.12) !important;
+  outline: none !important;
 }
 #tab-cashopname #coStartBtn{
-  height: 30px !important; width: auto !important; min-width: 64px !important;
-  margin: 0 !important; margin-top: 0 !important; padding: 0 12px !important;
-  font-size: 12px !important; font-weight: 700 !important; border: none !important; border-radius: 7px !important;
-  background: linear-gradient(135deg,#D4894A,#B87333) !important; color: #0B0D10 !important; cursor: pointer !important;
+  height: 34px !important;
+  width: auto !important;
+  min-width: 72px !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 16px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  border: none !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, #E8A86A 0%, #C47A3A 50%, #A8652E 100%) !important;
+  color: #0B0D10 !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 14px rgba(196,122,58,0.35) !important;
+  transition: transform 0.12s, box-shadow 0.12s, filter 0.12s !important;
 }
-#tab-cashopname #coStartBtn:disabled{ opacity: 0.4 !important; }
-#tab-cashopname #coStartBtn.is-on{ background: linear-gradient(135deg,#34D399,#059669) !important; color:#042f1a !important; }
+#tab-cashopname #coStartBtn:hover:not(:disabled){
+  filter: brightness(1.06) !important;
+  box-shadow: 0 6px 18px rgba(196,122,58,0.45) !important;
+}
+#tab-cashopname #coStartBtn:disabled{
+  opacity: 0.38 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+#tab-cashopname #coStartBtn.is-on{
+  background: linear-gradient(135deg, #F0C48A, #D4894A) !important;
+  color: #1a1208 !important;
+  box-shadow: 0 4px 14px rgba(212,137,74,0.4) !important;
+}
 
-#tab-cashopname .co-summary{ display: flex !important; flex-wrap: wrap !important; gap: 6px !important; margin: 0 0 8px !important; }
+/* Summary chips */
+#tab-cashopname .co-summary{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin: 0 0 12px !important;
+}
 #tab-cashopname .co-sum-item{
-  flex: 0 1 auto !important; padding: 5px 10px !important; border-radius: 8px !important;
-  background: rgba(0,0,0,0.28) !important; border: 1px solid rgba(255,255,255,0.08) !important;
-  display: flex !important; flex-direction: column !important; gap: 1px !important;
+  flex: 1 1 120px !important;
+  max-width: 200px !important;
+  padding: 10px 14px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(0,0,0,0.2)) !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  backdrop-filter: blur(8px) !important;
 }
-#tab-cashopname .co-sum-lab{ font-size: 9px !important; color: #9CA3AF !important; font-weight: 700 !important; text-transform: uppercase !important; }
-#tab-cashopname .co-sum-val{ font-size: 13px !important; font-weight: 700 !important; font-family: 'JetBrains Mono',monospace !important; color: #F3F4F6 !important; }
-#tab-cashopname .co-sum-sub{ font-size: 9px !important; color: #6B7280 !important; text-transform: none !important; }
-#tab-cashopname .co-sum-selisih{ border-color: rgba(212,137,74,0.35) !important; background: rgba(212,137,74,0.08) !important; }
+#tab-cashopname .co-sum-lab{
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #94A3B8 !important;
+}
+#tab-cashopname .co-sum-val{
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  color: #F8FAFC !important;
+  letter-spacing: -0.02em !important;
+}
+#tab-cashopname .co-sum-sub{
+  font-size: 9.5px !important;
+  color: #64748B !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 500 !important;
+}
+#tab-cashopname .co-sum-selisih{
+  border-color: rgba(212,137,74,0.4) !important;
+  background: linear-gradient(160deg, rgba(212,137,74,0.14), rgba(0,0,0,0.22)) !important;
+  box-shadow: 0 4px 16px rgba(212,137,74,0.12) !important;
+}
+#tab-cashopname .co-sum-selisih.is-ok .co-sum-val,
+#tab-cashopname .co-sum-selisih.ok .co-sum-val{ color: #E8A86A !important; }
+#tab-cashopname .co-sum-selisih.is-bad .co-sum-val,
+#tab-cashopname .co-sum-selisih.lebih .co-sum-val,
+#tab-cashopname .co-sum-selisih.kurang .co-sum-val{ color: #F87171 !important; }
 #tab-cashopname .co-badge{
-  display: inline-block !important; padding: 1px 5px !important; border-radius: 99px !important;
-  font-size: 9px !important; font-weight: 800 !important; background: rgba(74,222,128,0.18) !important; color: #4ADE80 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 2px 7px !important;
+  border-radius: 99px !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  background: rgba(212,137,74,0.18) !important;
+  color: #E8A86A !important;
+  border: 1px solid rgba(212,137,74,0.3) !important;
+}
+#tab-cashopname .co-sum-selisih.is-bad .co-badge,
+#tab-cashopname .co-sum-selisih.lebih .co-badge,
+#tab-cashopname .co-sum-selisih.kurang .co-badge{
+  background: rgba(248,113,113,0.18) !important;
+  color: #F87171 !important;
+  border-color: rgba(248,113,113,0.25) !important;
 }
 
-/* 3 kolom: Laci | Brankas | Kas Kecil */
+/* 3 kolom utama */
 #tab-cashopname .co-main3{
   display: grid !important;
   grid-template-columns: 1fr 1fr 1fr !important;
-  gap: 8px !important;
+  gap: 10px !important;
   align-items: start !important;
   width: 100% !important;
 }
 #tab-cashopname .co-col{
-  display: flex !important; flex-direction: column !important; gap: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
   min-width: 0 !important;
 }
+
+/* Cards glass */
 #tab-cashopname .co-box{
-  background: rgba(0,0,0,0.25) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  border-radius: 10px !important;
+  background: linear-gradient(165deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.28) 100%) !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  border-radius: 14px !important;
   overflow: hidden !important;
   width: 100% !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.04) inset,
+    0 8px 24px rgba(0,0,0,0.2) !important;
+  backdrop-filter: blur(10px) !important;
 }
 #tab-cashopname .co-box-h{
-  display: flex !important; justify-content: space-between !important; align-items: center !important;
-  gap: 8px !important; padding: 6px 10px !important;
-  font-size: 12px !important; font-weight: 700 !important; color: #E5E7EB !important;
-  background: rgba(255,255,255,0.04) !important;
-  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 9px 12px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: #F1F5F9 !important;
+  letter-spacing: 0.02em !important;
+  background: linear-gradient(90deg, rgba(212,137,74,0.12), rgba(255,255,255,0.03)) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
 }
 #tab-cashopname #coTotalLaci,
 #tab-cashopname #coTotalBrankas,
 #tab-cashopname #coTotalKk{
   font-family: 'JetBrains Mono', monospace !important;
-  font-size: 11px !important; color: #E0A06A !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #E8A86A !important;
+  text-shadow: 0 0 20px rgba(232,168,106,0.25) !important;
 }
 
-/* FLEX ROW — tidak meregang */
+/* Rows premium */
 #tab-cashopname .co-rows{
-  padding: 4px 8px 6px !important;
+  padding: 6px 10px 8px !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 0 !important;
@@ -6608,77 +6896,195 @@ button.admin-topbar-avatar:hover,
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  gap: 8px !important;
-  padding: 3px 0 !important;
-  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
-  width: 100% !important;
+  gap: 10px !important;
+  padding: 5px 6px !important;
+  border-radius: 8px !important;
+  border-bottom: none !important;
+  transition: background 0.12s !important;
 }
-#tab-cashopname .co-row:last-child{ border-bottom: none !important; }
-#tab-cashopname .co-row.co-row-active{ background: rgba(212,137,74,0.08) !important; border-radius: 4px !important; }
+#tab-cashopname .co-row:hover{
+  background: rgba(255,255,255,0.04) !important;
+}
+#tab-cashopname .co-row.co-row-active{
+  background: rgba(212,137,74,0.12) !important;
+  box-shadow: inset 0 0 0 1px rgba(212,137,74,0.25) !important;
+}
 #tab-cashopname .co-d{
-  flex: 0 0 64px !important;
+  flex: 0 0 68px !important;
   font-family: 'JetBrains Mono', monospace !important;
-  font-size: 11px !important;
-  color: #A1A1AA !important;
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  color: #94A3B8 !important;
   text-align: right !important;
 }
 #tab-cashopname input.co-qty{
-  flex: 0 0 56px !important;
-  width: 56px !important;
-  max-width: 56px !important;
-  height: 24px !important;
-  padding: 1px 4px !important;
-  font-size: 11px !important;
+  flex: 0 0 60px !important;
+  width: 60px !important;
+  max-width: 60px !important;
+  height: 28px !important;
+  padding: 0 6px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
   text-align: right !important;
-  background: rgba(0,0,0,0.35) !important;
+  background: rgba(0,0,0,0.4) !important;
   border: 1px solid rgba(255,255,255,0.1) !important;
-  border-radius: 4px !important;
-  color: #F3F4F6 !important;
+  border-radius: 8px !important;
+  color: #F8FAFC !important;
   font-family: 'JetBrains Mono', monospace !important;
   box-sizing: border-box !important;
   margin: 0 !important;
+  transition: border-color 0.12s, box-shadow 0.12s !important;
 }
-#tab-cashopname input.co-qty:focus{ border-color: #D4894A !important; outline: none !important; }
+#tab-cashopname input.co-qty:focus{
+  border-color: rgba(212,137,74,0.6) !important;
+  box-shadow: 0 0 0 3px rgba(212,137,74,0.15) !important;
+  outline: none !important;
+}
 #tab-cashopname .co-line{
   flex: 0 0 auto !important;
-  min-width: 48px !important;
+  min-width: 52px !important;
   font-family: 'JetBrains Mono', monospace !important;
-  font-size: 11px !important;
-  color: #71717A !important;
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  color: #64748B !important;
   text-align: left !important;
+}
+#tab-cashopname .co-row:has(input.co-qty:not(:placeholder-shown)) .co-line{
+  color: #CBD5E1 !important;
 }
 
 #tab-cashopname .co-fields3{
-  display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; gap: 4px !important;
-  padding: 6px 8px !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
+  gap: 6px !important;
+  padding: 8px 10px 10px !important;
 }
 #tab-cashopname .co-fields3 .field{ margin: 0 !important; }
-#tab-cashopname .co-fields3 label{ font-size: 9px !important; color: #9CA3AF !important; margin: 0 !important; }
-#tab-cashopname .co-fields3 input{
-  height: 26px !important; padding: 2px 6px !important; font-size: 11px !important;
-  border-radius: 5px !important; width: 100% !important; box-sizing: border-box !important; margin-top: 0 !important;
+#tab-cashopname .co-fields3 label{
+  font-size: 9.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: #94A3B8 !important;
+  margin: 0 0 3px !important;
+  display: block !important;
 }
-#tab-cashopname .co-kk-rows{ max-height: 200px !important; overflow-y: auto !important; }
+#tab-cashopname .co-fields3 input{
+  height: 28px !important;
+  padding: 0 8px !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin-top: 0 !important;
+  background: rgba(0,0,0,0.35) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: #F1F5F9 !important;
+}
+#tab-cashopname .co-fields3 input:focus{
+  border-color: rgba(212,137,74,0.5) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(212,137,74,0.12) !important;
+}
+#tab-cashopname textarea{
+  background: rgba(0,0,0,0.35) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 8px !important;
+  color: #F1F5F9 !important;
+  font-size: 12px !important;
+  padding: 8px !important;
+}
+#tab-cashopname textarea:focus{
+  border-color: rgba(212,137,74,0.5) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(212,137,74,0.12) !important;
+}
+#tab-cashopname .co-kk-rows{
+  max-height: 220px !important;
+  overflow-y: auto !important;
+  border-top: 1px solid rgba(255,255,255,0.05) !important;
+}
+#tab-cashopname .co-kk-rows::-webkit-scrollbar{ width: 5px !important; }
+#tab-cashopname .co-kk-rows::-webkit-scrollbar-thumb{
+  background: #3A4150 !important; border-radius: 99px !important;
+}
+
 #tab-cashopname .co-sign{
-  display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 6px !important; margin-bottom: 8px !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  margin-bottom: 10px !important;
 }
 #tab-cashopname .co-sign .col{
-  text-align: center !important; padding: 6px !important; border-radius: 6px !important;
-  background: rgba(0,0,0,0.2) !important; border: 1px solid rgba(255,255,255,0.06) !important;
+  text-align: center !important;
+  padding: 10px 8px !important;
+  border-radius: 10px !important;
+  background: rgba(0,0,0,0.25) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
 }
-#tab-cashopname .co-sign .lab{ font-size: 9px !important; color: #9CA3AF !important; }
-#tab-cashopname .co-sign .name{ font-size: 11px !important; font-weight: 600 !important; color: #E5E7EB !important; }
+#tab-cashopname .co-sign .lab{
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #94A3B8 !important;
+}
+#tab-cashopname .co-sign .name{
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #F1F5F9 !important;
+  margin-top: 4px !important;
+}
 #tab-cashopname #coSaveBtn{
-  display: block !important; width: 100% !important; height: 32px !important;
-  margin: 0 !important; margin-top: 0 !important; padding: 0 !important;
-  font-size: 12px !important; font-weight: 700 !important; border: none !important; border-radius: 7px !important;
-  background: linear-gradient(135deg,#D4894A,#B87333) !important; color: #0B0D10 !important; cursor: pointer !important;
+  display: block !important;
+  width: 100% !important;
+  height: 36px !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  border: none !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, #E8A86A 0%, #C47A3A 50%, #A8652E 100%) !important;
+  color: #0B0D10 !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 16px rgba(196,122,58,0.35) !important;
+  transition: filter 0.12s, box-shadow 0.12s !important;
+}
+#tab-cashopname #coSaveBtn:hover{
+  filter: brightness(1.07) !important;
+  box-shadow: 0 6px 20px rgba(196,122,58,0.45) !important;
+}
+#tab-cashopname #coSaveBtn.co-save-ok{
+  background: linear-gradient(135deg, #F0C48A, #D4894A) !important;
+  color: #1a1208 !important;
 }
 #tab-cashopname button{ margin-top: 0 !important; }
-#tab-cashopname .co-mono{ font-family: 'JetBrains Mono', monospace !important; font-size: 11px !important; }
-#tab-cashopname .co-hint{ font-size: 9px !important; color: #6B7280 !important; }
+#tab-cashopname .btn-xs.secondary{
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: #CBD5E1 !important;
+  border-radius: 8px !important;
+  padding: 5px 10px !important;
+  font-size: 11px !important;
+}
+#tab-cashopname .co-mono{
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #E2E8F0 !important;
+}
+#tab-cashopname .co-hint{ font-size: 9px !important; color: #64748B !important; margin-top: 2px !important; }
+#tab-cashopname #coMsg{ font-size: 11.5px !important; margin-top: 6px !important; }
 #tab-cashopname.co-locked .co-main3,
-#tab-cashopname.co-locked .co-summary{ opacity: 0.4; pointer-events: none; user-select: none; }
+#tab-cashopname.co-locked .co-summary{
+  opacity: 0.42 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  filter: saturate(0.7) !important;
+}
 
 @media (max-width: 900px){
   #tab-cashopname .co-main3{ grid-template-columns: 1fr 1fr !important; }
@@ -6687,6 +7093,32 @@ button.admin-topbar-avatar:hover,
 @media (max-width: 600px){
   #tab-cashopname .co-main3{ grid-template-columns: 1fr !important; }
 }
+/* ===== CO panel visibility — anti nyangkut ===== */
+#tab-cashopname.subpanel:not(.active),
+.panel.subpanel#tab-cashopname:not(.active){
+  display: none !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+#tab-cashopname.subpanel.active,
+.panel.subpanel#tab-cashopname.active{
+  display: block !important;
+  visibility: visible !important;
+  position: relative !important;
+  left: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
 </style>
 </head>
 <body>
@@ -7627,7 +8059,7 @@ button.admin-topbar-avatar:hover,
     
 
     <!-- Cash Opname (KC) -->
-    <div class="panel subpanel" id="tab-cashopname" class="co-locked">
+    <div class="panel subpanel co-locked" id="tab-cashopname">
       <div class="co-wrap">
         <div class="co-toolbar">
           <div class="field"><label>Tanggal</label><input type="date" id="coTanggal"></div>
@@ -7643,8 +8075,9 @@ button.admin-topbar-avatar:hover,
             <span class="co-sum-val" id="coSideProgram">Rp 0</span>
           </div>
           <div class="co-sum-item">
-            <span class="co-sum-lab">Fisik <span class="co-sum-sub">Laci <span id="coSideLaci">0</span> · Brankas <span id="coSideBrankas">0</span></span></span>
+            <span class="co-sum-lab">Fisik</span>
             <span class="co-sum-val" id="coSideFisik">Rp 0</span>
+            <span class="co-sum-sub">Laci <span id="coSideLaci">0</span> · Brankas <span id="coSideBrankas">0</span></span>
           </div>
           <div class="co-sum-item co-sum-selisih" id="coStatusBox">
             <span class="co-sum-lab"><span class="co-badge" id="coStatusBadge">SESUAI</span> Selisih</span>
