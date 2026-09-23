@@ -5122,6 +5122,340 @@ input:focus-visible{
 
 
 
+
+
+/* ===== Cash Opname Layout A — satu layar, rapat ===== */
+#tab-cashopname{
+  font-size: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: calc(100vh - 64px) !important;
+  max-height: calc(100dvh - 64px) !important;
+  overflow: hidden !important;
+  padding-bottom: 0 !important;
+}
+#tab-cashopname .co-toolbar{
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-end !important;
+  gap: 8px !important;
+  margin: 0 0 6px !important;
+  flex-shrink: 0 !important;
+}
+#tab-cashopname .co-toolbar .field{ margin: 0 !important; min-width: 0 !important; }
+#tab-cashopname .co-toolbar label{
+  font-size: 10px !important;
+  margin-bottom: 2px !important;
+  color: #9CA3AF !important;
+}
+#tab-cashopname .co-toolbar input,
+#tab-cashopname .co-toolbar select{
+  padding: 6px 8px !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+  min-height: 32px !important;
+}
+#tab-cashopname .co-field-program-tb{ flex: 1 1 120px !important; max-width: 180px !important; }
+#tab-cashopname .co-start-btn{
+  flex: 0 0 auto !important;
+  height: 32px !important;
+  min-width: 72px !important;
+  max-width: 88px !important;
+  padding: 0 12px !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+}
+#tab-cashopname .co-summary{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+  gap: 6px !important;
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+  background: transparent !important;
+}
+#tab-cashopname .co-sum-item{
+  padding: 6px 10px !important;
+  border-radius: 10px !important;
+  gap: 2px !important;
+}
+#tab-cashopname .co-sum-lab{ font-size: 9px !important; }
+#tab-cashopname .co-sum-val{ font-size: 14px !important; }
+#tab-cashopname .co-sum-sub{ font-size: 10px !important; }
+#tab-cashopname .co-badge{ font-size: 9px !important; padding: 1px 6px !important; }
+
+#tab-cashopname .co-layout-a{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr minmax(260px, 0.95fr) !important;
+  gap: 8px !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
+}
+#tab-cashopname .co-col{
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+#tab-cashopname .co-col .co-denom-box{
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0 !important;
+  border-radius: 10px !important;
+}
+#tab-cashopname .co-denom-scroll{
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+#tab-cashopname .co-denom-head{
+  padding: 6px 10px !important;
+  font-size: 12px !important;
+  flex-shrink: 0 !important;
+}
+#tab-cashopname .co-denom-table td{
+  padding: 3px 8px !important;
+  font-size: 11.5px !important;
+}
+#tab-cashopname .co-denom-table input.co-qty{
+  padding: 2px 2px !important;
+  font-size: 12px !important;
+}
+#tab-cashopname .co-side-stack{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+}
+#tab-cashopname .co-mini-block{
+  background: rgba(18,21,26,0.9) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 10px !important;
+  padding: 6px 8px !important;
+  flex-shrink: 0 !important;
+}
+#tab-cashopname .co-mini-title{
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #E0A06A !important;
+  margin-bottom: 4px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+#tab-cashopname .co-mini-row{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+  gap: 6px !important;
+}
+#tab-cashopname .co-mini-block .field{ margin: 0 !important; }
+#tab-cashopname .co-mini-block label{ font-size: 9px !important; margin-bottom: 1px !important; }
+#tab-cashopname .co-mini-block input,
+#tab-cashopname .co-mini-block textarea{
+  padding: 4px 6px !important;
+  font-size: 11.5px !important;
+  border-radius: 6px !important;
+  min-height: 28px !important;
+}
+#tab-cashopname .co-kk-scroll{
+  max-height: 140px !important;
+  margin-top: 4px !important;
+  border-top: 1px solid rgba(255,255,255,0.06) !important;
+}
+#tab-cashopname .co-sign{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 6px !important;
+  margin-bottom: 6px !important;
+}
+#tab-cashopname .co-sign .col{ padding: 6px !important; border-radius: 8px !important; }
+#tab-cashopname .co-sign .lab{ font-size: 9px !important; }
+#tab-cashopname .co-sign .name{ font-size: 11px !important; margin-top: 2px !important; }
+#tab-cashopname .co-save-btn{
+  width: 100% !important;
+  height: 32px !important;
+  padding: 0 10px !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+}
+#tab-cashopname .co-hist-head{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #9CA3AF !important;
+  margin-bottom: 4px !important;
+}
+#tab-cashopname .co-hist-head .btn-xs{
+  padding: 4px 8px !important;
+  font-size: 10px !important;
+  border-radius: 6px !important;
+}
+#tab-cashopname .co-mono{ font-size: 12px !important; }
+#tab-cashopname .co-mono-inline{ font-size: 11px !important; color: #E0A06A !important; }
+#tab-cashopname .co-hint{ font-size: 9px !important; }
+#tab-cashopname .msg{ font-size: 11px !important; margin-top: 4px !important; }
+
+@media (max-width: 1100px){
+  #tab-cashopname{
+    height: auto !important;
+    max-height: none !important;
+    overflow: auto !important;
+  }
+  #tab-cashopname .co-layout-a{
+    grid-template-columns: 1fr 1fr !important;
+    overflow: visible !important;
+  }
+  #tab-cashopname .co-col-side{ grid-column: 1 / -1 !important; }
+  #tab-cashopname .co-kk-scroll{ max-height: 180px !important; }
+}
+@media (max-width: 720px){
+  #tab-cashopname .co-layout-a{ grid-template-columns: 1fr !important; }
+  #tab-cashopname .co-toolbar{ flex-wrap: wrap !important; }
+  #tab-cashopname .co-summary{ grid-template-columns: 1fr !important; }
+}
+
+/* ===== Cash Opname — tabel pecahan clean (bukan kotak-kotak) ===== */
+#tab-cashopname .co-toolbar{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
+  gap: 10px !important;
+}
+#tab-cashopname .co-toolbar .field{
+  margin: 0 !important;
+  flex: 0 1 auto !important;
+}
+#tab-cashopname .co-field-program-tb{
+  flex: 1 1 140px !important;
+  max-width: 220px !important;
+}
+#tab-cashopname .co-start-btn{
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 96px !important;
+  max-width: 140px !important;
+  height: 40px !important;
+  padding: 0 18px !important;
+  align-self: flex-end !important;
+}
+#tab-cashopname .co-denom-grid{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 14px !important;
+}
+#tab-cashopname .co-denom-box{
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+}
+#tab-cashopname .co-denom-head{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px 12px 8px !important;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #E5E7EB !important;
+}
+#tab-cashopname .co-denom-foot{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 8px 12px 10px !important;
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+  background: transparent !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #D1D5DB !important;
+}
+#tab-cashopname .co-denom-table{
+  width: 100% !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;
+}
+#tab-cashopname .co-denom-table thead{ display: none !important; } /* hilangkan header PECANAN LEMBAR JUMLAH — hemat ruang */
+#tab-cashopname .co-denom-table tbody tr{
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+}
+#tab-cashopname .co-denom-table tbody tr:last-child{
+  border-bottom: none !important;
+}
+#tab-cashopname .co-denom-table td{
+  padding: 5px 10px !important;
+  border: none !important;
+  background: transparent !important;
+  vertical-align: middle !important;
+  color: #9CA3AF !important;
+  font-size: 12px !important;
+}
+#tab-cashopname .co-denom-table td:first-child{
+  width: 38% !important;
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  font-size: 12px !important;
+  color: #9CA3AF !important;
+  font-weight: 500 !important;
+}
+#tab-cashopname .co-denom-table td:nth-child(2){
+  width: 32% !important;
+}
+#tab-cashopname .co-denom-table td:last-child{
+  width: 30% !important;
+  text-align: right !important;
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  color: #6B7280 !important;
+  font-size: 11.5px !important;
+}
+/* Input lembar: garis bawah saja, bukan kotak */
+#tab-cashopname .co-denom-table input.co-qty,
+#tab-cashopname input.co-qty{
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.14) !important;
+  border-radius: 0 !important;
+  padding: 4px 2px !important;
+  text-align: right !important;
+  color: #F3F4F6 !important;
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+#tab-cashopname .co-denom-table input.co-qty:focus{
+  border-bottom-color: #D4894A !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#tab-cashopname tr.co-row-active td{
+  background: rgba(212,137,74,0.06) !important;
+}
+#tab-cashopname .co-denom-table input.co-qty::placeholder{
+  color: #4B5563 !important;
+  font-weight: 500 !important;
+}
+/* placeholder 0 jangan kelihatan sebagai nilai — kosong default lebih bersih */
+@media (max-width: 900px){
+  #tab-cashopname .co-denom-grid{ grid-template-columns: 1fr !important; }
+}
+
 /* ===== Cash Opname CO-1 — hierarchy + sticky summary ===== */
 #tab-cashopname{
   --co-bg: rgba(255,255,255,0.03);
@@ -6984,82 +7318,71 @@ button.admin-topbar-avatar:hover,
         </div>
       </div>
 
-      <div class="co-layout">
-        <div class="co-col-input">
-          <div class="co-panel">
-            <div class="co-panel-head">Hitung fisik</div>
-            <div class="co-panel-body">
-              <div class="co-denom-grid">
-                <div class="co-denom-box">
-                  <div class="co-denom-head"><span>Laci</span></div>
-                  <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
-                  <tbody id="coLaciBody"></tbody></table>
-                  <div class="co-denom-foot"><span>Total Laci</span><span id="coTotalLaci">Rp 0</span></div><span id="coTotalLaciLbl" style="display:none">Rp 0</span>
-                </div>
-                <div class="co-denom-box">
-                  <div class="co-denom-head"><span>Brankas</span></div>
-                  <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
-                  <tbody id="coBrankasBody"></tbody></table>
-                  <div class="co-denom-foot"><span>Total Brankas</span><span id="coTotalBrankas">Rp 0</span></div><span id="coTotalBrankasLbl" style="display:none">Rp 0</span>
-                </div>
-              </div>
+      <div class="co-layout co-layout-a">
+        <!-- COL 1: Laci -->
+        <div class="co-col co-col-laci">
+          <div class="co-denom-box">
+            <div class="co-denom-head"><span>Laci</span><span id="coTotalLaci">Rp 0</span></div>
+            <div class="co-denom-scroll">
+              <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
+              <tbody id="coLaciBody"></tbody></table>
             </div>
-          </div>
-
-          <div class="co-side-grid">
-            <div class="co-panel">
-              <div class="co-panel-head">Uang materai</div>
-              <div class="co-panel-body co-compact">
-                <div class="field"><label>Terpakai (lembar)</label><input type="text" inputmode="decimal" id="coMateraiPakai" value="" placeholder="—" autocomplete="off"></div>
-                <div class="field"><label>Nilai terpakai</label><div id="coMateraiNilai" class="co-mono">Rp 0</div></div>
-                <div class="field"><label>Sisa (lembar)</label><input type="text" inputmode="decimal" id="coMateraiSisa" value="25" autocomplete="off" readonly title="Otomatis: 25 − terpakai"></div>
-              </div>
-            </div>
-            <div class="co-panel co-panel-kk">
-              <div class="co-panel-head">Kas kecil</div>
-              <div class="co-panel-body">
-                <div class="co-kk-meta">
-                  <div class="field"><label>Saldo awal</label><input type="text" id="coKkAwal" value="0" readonly><div id="coKkAwalHint" class="co-hint"></div></div>
-                  <div class="field"><label>Pemakaian (otomatis)</label><input type="text" id="coKkPakai" value="0" readonly title="Saldo awal − total fisik"><div class="co-hint">Awal − hitungan lembar</div></div>
-                  <div class="field"><label>Sisa (fisik)</label><div id="coKkSisa" class="co-mono">Rp 0</div></div>
-                </div>
-                <div class="co-denom-box" style="margin-top:10px;">
-                  <div class="co-denom-head"><span>Hitung sisa kas kecil</span><span id="coTotalKk">Rp 0</span></div>
-                  <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
-                  <tbody id="coKkBody"></tbody></table>
-                  <div class="co-denom-foot"><span>Total fisik KK</span><span id="coTotalKkFoot">Rp 0</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="co-panel">
-            <div class="co-panel-head">Catatan</div>
-            <div class="co-panel-body">
-              <div class="field"><textarea id="coCatatan" rows="2" placeholder="Temuan, selisih, keterangan..." style="width:100%;min-height:56px;resize:vertical;"></textarea></div>
-            </div>
+            <span id="coTotalLaciLbl" style="display:none">Rp 0</span>
           </div>
         </div>
-
-        <div class="co-col-result">
-          <div class="co-panel">
-            <div class="co-panel-head">Tanda tangan &amp; simpan</div>
-            <div class="co-panel-body">
+        <!-- COL 2: Brankas -->
+        <div class="co-col co-col-brankas">
+          <div class="co-denom-box">
+            <div class="co-denom-head"><span>Brankas</span><span id="coTotalBrankas">Rp 0</span></div>
+            <div class="co-denom-scroll">
+              <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
+              <tbody id="coBrankasBody"></tbody></table>
+            </div>
+            <span id="coTotalBrankasLbl" style="display:none">Rp 0</span>
+          </div>
+        </div>
+        <!-- COL 3: Materai, KK, TTD, Simpan -->
+        <div class="co-col co-col-side">
+          <div class="co-side-stack">
+            <div class="co-mini-block">
+              <div class="co-mini-title">Materai</div>
+              <div class="co-mini-row">
+                <div class="field"><label>Terpakai</label><input type="text" inputmode="decimal" id="coMateraiPakai" value="" placeholder="—" autocomplete="off"></div>
+                <div class="field"><label>Nilai</label><div id="coMateraiNilai" class="co-mono">Rp 0</div></div>
+                <div class="field"><label>Sisa</label><input type="text" id="coMateraiSisa" value="25" readonly></div>
+              </div>
+            </div>
+            <div class="co-mini-block">
+              <div class="co-mini-title">Kas kecil <span id="coTotalKk" class="co-mono-inline">Rp 0</span></div>
+              <div class="co-mini-row">
+                <div class="field"><label>Awal</label><input type="text" id="coKkAwal" value="0" readonly><div id="coKkAwalHint" class="co-hint"></div></div>
+                <div class="field"><label>Pakai</label><input type="text" id="coKkPakai" value="0" readonly title="Awal − fisik"></div>
+                <div class="field"><label>Sisa</label><div id="coKkSisa" class="co-mono">Rp 0</div></div>
+              </div>
+              <div class="co-denom-scroll co-kk-scroll">
+                <table class="co-denom-table"><thead><tr><th>Pecahan</th><th>Lembar</th><th>Jumlah</th></tr></thead>
+                <tbody id="coKkBody"></tbody></table>
+              </div>
+              <span id="coTotalKkFoot" style="display:none">Rp 0</span>
+            </div>
+            <div class="co-mini-block">
+              <div class="field" style="margin:0;"><label>Catatan</label>
+                <textarea id="coCatatan" rows="1" placeholder="Temuan..." style="width:100%;min-height:32px;max-height:48px;resize:vertical;"></textarea>
+              </div>
+            </div>
+            <div class="co-mini-block co-sign-block">
               <div class="co-sign">
                 <div class="col"><div class="lab">Kasir</div><div class="name" id="coSignKasir">—</div></div>
-                <div class="col"><div class="lab">Kepala Cabang</div><div class="name" id="coSignKc">Syahrul Zuniardin</div></div>
+                <div class="col"><div class="lab">KC</div><div class="name" id="coSignKc">Syahrul Zuniardin</div></div>
               </div>
-              <button type="button" id="coSaveBtn" class="co-save-btn">Simpan Cash Opname</button>
+              <button type="button" id="coSaveBtn" class="co-save-btn">Simpan</button>
               <div class="msg" id="coMsg"></div>
             </div>
-          </div>
-
-          <div class="co-panel">
-            <div class="co-panel-head co-hist-head">
-              <span>Riwayat kunjungan</span>
-              <button type="button" id="coShowHistBtn" class="btn-xs secondary">Tampilkan</button>
-            </div>
-            <div class="co-panel-body">
+            <div class="co-mini-block co-hist-block">
+              <div class="co-hist-head">
+                <span>Riwayat</span>
+                <button type="button" id="coShowHistBtn" class="btn-xs secondary">Tampilkan</button>
+              </div>
               <div id="coHistory" style="display:none;"></div>
             </div>
           </div>
@@ -13654,7 +13977,7 @@ function loadAdminBertugas(){
       return CO_DENOMS.map(function(d){
         return '<tr>'+
           '<td style="font-family:JetBrains Mono,monospace;">'+d.toLocaleString("id-ID")+'</td>'+
-          '<td><input type="text" inputmode="decimal" value="" class="co-qty" placeholder="0" data-side="'+prefix+'" data-denom="'+d+'" autocomplete="off"></td>'+
+          '<td><input type="text" inputmode="decimal" value="" class="co-qty" placeholder="—" data-side="'+prefix+'" data-denom="'+d+'" autocomplete="off"></td>'+
           '<td class="co-line" data-side="'+prefix+'" data-denom="'+d+'" style="font-family:JetBrains Mono,monospace;text-align:right;">—</td>'+
         '</tr>';
       }).join("");
