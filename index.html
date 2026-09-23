@@ -5124,207 +5124,372 @@ input:focus-visible{
 
 
 
-/* ===== Cash Opname Layout A — satu layar, rapat ===== */
+
+/* ===== Cash Opname RAPAT v3 — max-width + gap kecil ===== */
+#tab-cashopname.panel,
+#tab-cashopname.subpanel,
 #tab-cashopname{
+  max-width: 1120px !important;
+  width: 100% !important;
+  margin: 0 auto 0 0 !important;
+  padding: 8px 10px 12px !important;
+  box-sizing: border-box !important;
   font-size: 12px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  height: calc(100vh - 64px) !important;
-  max-height: calc(100dvh - 64px) !important;
-  overflow: hidden !important;
-  padding-bottom: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  display: block !important;
 }
+
+/* Toolbar: sejajar rapat, Start kecil */
 #tab-cashopname .co-toolbar{
   display: flex !important;
-  flex-wrap: nowrap !important;
+  flex-wrap: wrap !important;
   align-items: flex-end !important;
-  gap: 8px !important;
-  margin: 0 0 6px !important;
-  flex-shrink: 0 !important;
+  gap: 6px 8px !important;
+  margin: 0 0 8px !important;
+  padding: 0 !important;
 }
-#tab-cashopname .co-toolbar .field{ margin: 0 !important; min-width: 0 !important; }
+#tab-cashopname .co-toolbar .field{
+  margin: 0 !important;
+  flex: 0 0 auto !important;
+  min-width: 0 !important;
+}
 #tab-cashopname .co-toolbar label{
+  display: block !important;
   font-size: 10px !important;
-  margin-bottom: 2px !important;
+  font-weight: 600 !important;
   color: #9CA3AF !important;
+  margin: 0 0 2px !important;
+  letter-spacing: 0.02em !important;
 }
 #tab-cashopname .co-toolbar input,
 #tab-cashopname .co-toolbar select{
-  padding: 6px 8px !important;
-  font-size: 12px !important;
-  border-radius: 8px !important;
-  min-height: 32px !important;
-}
-#tab-cashopname .co-field-program-tb{ flex: 1 1 120px !important; max-width: 180px !important; }
-#tab-cashopname .co-start-btn{
-  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 120px !important;
+  max-width: 160px !important;
   height: 32px !important;
-  min-width: 72px !important;
-  max-width: 88px !important;
-  padding: 0 12px !important;
+  padding: 4px 8px !important;
   font-size: 12px !important;
   border-radius: 8px !important;
-  font-weight: 700 !important;
+  box-sizing: border-box !important;
 }
+#tab-cashopname .co-field-program-tb input{
+  min-width: 140px !important;
+  max-width: 180px !important;
+}
+#tab-cashopname .co-start-btn,
+#tab-cashopname button#coStartBtn{
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 70px !important;
+  max-width: 90px !important;
+  height: 32px !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 14px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  background: linear-gradient(135deg, #D4894A, #B87333) !important;
+  color: #0B0D10 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+}
+#tab-cashopname .co-start-btn:disabled{
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+}
+#tab-cashopname .co-start-btn.is-on{
+  background: linear-gradient(135deg, #34D399, #059669) !important;
+  color: #042f1a !important;
+}
+
+/* Summary: chip rapat, tanpa garis biru di dalam */
 #tab-cashopname .co-summary{
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
   gap: 6px !important;
   margin: 0 0 8px !important;
   padding: 0 !important;
-  position: relative !important;
-  flex-shrink: 0 !important;
   background: transparent !important;
+  position: static !important;
 }
 #tab-cashopname .co-sum-item{
+  flex: 1 1 140px !important;
+  min-width: 120px !important;
+  max-width: 220px !important;
   padding: 6px 10px !important;
-  border-radius: 10px !important;
+  border-radius: 8px !important;
+  background: rgba(0,0,0,0.28) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: none !important;
+  display: flex !important;
+  flex-direction: column !important;
   gap: 2px !important;
 }
-#tab-cashopname .co-sum-lab{ font-size: 9px !important; }
-#tab-cashopname .co-sum-val{ font-size: 14px !important; }
-#tab-cashopname .co-sum-sub{ font-size: 10px !important; }
-#tab-cashopname .co-badge{ font-size: 9px !important; padding: 1px 6px !important; }
+#tab-cashopname .co-sum-item *{
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+#tab-cashopname .co-sum-lab{
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: #9CA3AF !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+#tab-cashopname .co-sum-val{
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  color: #F3F4F6 !important;
+  line-height: 1.2 !important;
+}
+#tab-cashopname .co-sum-sub{
+  font-size: 10px !important;
+  color: #6B7280 !important;
+}
+#tab-cashopname .co-sum-selisih{
+  border-color: rgba(212,137,74,0.3) !important;
+  background: rgba(212,137,74,0.08) !important;
+}
+#tab-cashopname .co-badge{
+  display: inline-flex !important;
+  padding: 1px 6px !important;
+  border-radius: 99px !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  background: rgba(74,222,128,0.18) !important;
+  color: #4ADE80 !important;
+}
 
+/* Layout 3 kolom RAPAT */
+#tab-cashopname .co-layout,
 #tab-cashopname .co-layout-a{
   display: grid !important;
-  grid-template-columns: 1fr 1fr minmax(260px, 0.95fr) !important;
+  grid-template-columns: 1fr 1fr minmax(220px, 260px) !important;
   gap: 8px !important;
-  flex: 1 1 auto !important;
-  min-height: 0 !important;
-  align-items: stretch !important;
-  overflow: hidden !important;
+  align-items: start !important;
+  max-width: 100% !important;
 }
+
 #tab-cashopname .co-col{
-  min-height: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
+  min-width: 0 !important;
 }
-#tab-cashopname .co-col .co-denom-box{
-  flex: 1 1 auto !important;
-  min-height: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  margin: 0 !important;
+
+/* Denom boxes */
+#tab-cashopname .co-denom-box{
+  background: rgba(0,0,0,0.22) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
   border-radius: 10px !important;
-}
-#tab-cashopname .co-denom-scroll{
-  flex: 1 1 auto !important;
-  min-height: 0 !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: min(420px, calc(100vh - 220px)) !important;
 }
 #tab-cashopname .co-denom-head{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
   padding: 6px 10px !important;
   font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #E5E7EB !important;
+  background: rgba(255,255,255,0.04) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
   flex-shrink: 0 !important;
 }
+#tab-cashopname .co-denom-head span:last-child{
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11.5px !important;
+  color: #E0A06A !important;
+}
+#tab-cashopname .co-denom-scroll{
+  overflow-y: auto !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+#tab-cashopname .co-denom-foot{
+  display: flex !important;
+  justify-content: space-between !important;
+  padding: 6px 10px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  border-top: 1px solid rgba(255,255,255,0.06) !important;
+  flex-shrink: 0 !important;
+}
+#tab-cashopname .co-denom-table{
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+#tab-cashopname .co-denom-table thead{ display: none !important; }
 #tab-cashopname .co-denom-table td{
   padding: 3px 8px !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
   font-size: 11.5px !important;
+  color: #9CA3AF !important;
+  background: transparent !important;
 }
-#tab-cashopname .co-denom-table input.co-qty{
-  padding: 2px 2px !important;
+#tab-cashopname .co-denom-table td:first-child{
+  font-family: 'JetBrains Mono', monospace !important;
+  width: 36% !important;
+}
+#tab-cashopname .co-denom-table td:nth-child(2){ width: 32% !important; }
+#tab-cashopname .co-denom-table td:last-child{
+  text-align: right !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  color: #6B7280 !important;
+  width: 32% !important;
+}
+#tab-cashopname input.co-qty{
+  width: 100% !important;
+  max-width: 72px !important;
+  height: 26px !important;
+  padding: 2px 6px !important;
   font-size: 12px !important;
+  text-align: right !important;
+  background: rgba(0,0,0,0.3) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 5px !important;
+  color: #F3F4F6 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  box-sizing: border-box !important;
 }
+#tab-cashopname input.co-qty:focus{
+  border-color: #D4894A !important;
+  outline: none !important;
+}
+
+/* Side stack rapat */
 #tab-cashopname .co-side-stack{
   display: flex !important;
   flex-direction: column !important;
   gap: 6px !important;
-  min-height: 0 !important;
-  height: 100% !important;
-  overflow-y: auto !important;
 }
 #tab-cashopname .co-mini-block{
-  background: rgba(18,21,26,0.9) !important;
+  background: rgba(0,0,0,0.22) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
   border-radius: 10px !important;
   padding: 6px 8px !important;
-  flex-shrink: 0 !important;
 }
 #tab-cashopname .co-mini-title{
   font-size: 11px !important;
   font-weight: 700 !important;
   color: #E0A06A !important;
-  margin-bottom: 4px !important;
+  margin: 0 0 4px !important;
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
 }
 #tab-cashopname .co-mini-row{
   display: grid !important;
-  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
-  gap: 6px !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
+  gap: 4px !important;
 }
 #tab-cashopname .co-mini-block .field{ margin: 0 !important; }
-#tab-cashopname .co-mini-block label{ font-size: 9px !important; margin-bottom: 1px !important; }
+#tab-cashopname .co-mini-block label{
+  font-size: 9px !important;
+  margin: 0 0 1px !important;
+  color: #9CA3AF !important;
+}
 #tab-cashopname .co-mini-block input,
 #tab-cashopname .co-mini-block textarea{
-  padding: 4px 6px !important;
+  height: 26px !important;
+  min-height: 26px !important;
+  padding: 2px 6px !important;
   font-size: 11.5px !important;
-  border-radius: 6px !important;
-  min-height: 28px !important;
+  border-radius: 5px !important;
+  margin-top: 0 !important;
 }
 #tab-cashopname .co-kk-scroll{
-  max-height: 140px !important;
+  max-height: 160px !important;
+  overflow-y: auto !important;
   margin-top: 4px !important;
   border-top: 1px solid rgba(255,255,255,0.06) !important;
 }
 #tab-cashopname .co-sign{
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
-  gap: 6px !important;
-  margin-bottom: 6px !important;
+  gap: 4px !important;
+  margin: 0 0 6px !important;
 }
-#tab-cashopname .co-sign .col{ padding: 6px !important; border-radius: 8px !important; }
-#tab-cashopname .co-sign .lab{ font-size: 9px !important; }
-#tab-cashopname .co-sign .name{ font-size: 11px !important; margin-top: 2px !important; }
-#tab-cashopname .co-save-btn{
+#tab-cashopname .co-sign .col{
+  padding: 5px 6px !important;
+  border-radius: 6px !important;
+  background: rgba(0,0,0,0.2) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  text-align: center !important;
+}
+#tab-cashopname .co-sign .lab{ font-size: 9px !important; color: #9CA3AF !important; }
+#tab-cashopname .co-sign .name{ font-size: 11px !important; font-weight: 600 !important; color: #E5E7EB !important; margin-top: 2px !important; }
+#tab-cashopname .co-save-btn,
+#tab-cashopname button#coSaveBtn{
   width: 100% !important;
   height: 32px !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
   padding: 0 10px !important;
   font-size: 12px !important;
-  border-radius: 8px !important;
   font-weight: 700 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  background: linear-gradient(135deg, #D4894A, #B87333) !important;
+  color: #0B0D10 !important;
+  cursor: pointer !important;
 }
 #tab-cashopname .co-hist-head{
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
   font-size: 11px !important;
-  font-weight: 600 !important;
   color: #9CA3AF !important;
   margin-bottom: 4px !important;
 }
 #tab-cashopname .co-hist-head .btn-xs{
-  padding: 4px 8px !important;
+  padding: 3px 8px !important;
   font-size: 10px !important;
-  border-radius: 6px !important;
+  height: auto !important;
+  margin: 0 !important;
+  width: auto !important;
 }
-#tab-cashopname .co-mono{ font-size: 12px !important; }
-#tab-cashopname .co-mono-inline{ font-size: 11px !important; color: #E0A06A !important; }
-#tab-cashopname .co-hint{ font-size: 9px !important; }
+#tab-cashopname .co-mono{ font-size: 11.5px !important; font-family: 'JetBrains Mono', monospace !important; }
+#tab-cashopname .co-hint{ font-size: 9px !important; color: #6B7280 !important; }
 #tab-cashopname .msg{ font-size: 11px !important; margin-top: 4px !important; }
 
-@media (max-width: 1100px){
-  #tab-cashopname{
-    height: auto !important;
-    max-height: none !important;
-    overflow: auto !important;
-  }
-  #tab-cashopname .co-layout-a{
-    grid-template-columns: 1fr 1fr !important;
-    overflow: visible !important;
-  }
-  #tab-cashopname .co-col-side{ grid-column: 1 / -1 !important; }
-  #tab-cashopname .co-kk-scroll{ max-height: 180px !important; }
+/* Override global button{width:100%; margin-top:22px} di dalam CO */
+#tab-cashopname button{
+  margin-top: 0 !important;
 }
-@media (max-width: 720px){
-  #tab-cashopname .co-layout-a{ grid-template-columns: 1fr !important; }
-  #tab-cashopname .co-toolbar{ flex-wrap: wrap !important; }
-  #tab-cashopname .co-summary{ grid-template-columns: 1fr !important; }
+#tab-cashopname button#coStartBtn{
+  width: auto !important;
 }
 
+@media (max-width: 1000px){
+  #tab-cashopname .co-layout,
+  #tab-cashopname .co-layout-a{
+    grid-template-columns: 1fr 1fr !important;
+  }
+  #tab-cashopname .co-col-side{
+    grid-column: 1 / -1 !important;
+  }
+}
+@media (max-width: 700px){
+  #tab-cashopname .co-layout,
+  #tab-cashopname .co-layout-a{
+    grid-template-columns: 1fr !important;
+  }
+  #tab-cashopname .co-denom-box{
+    max-height: 280px !important;
+  }
+}
 /* ===== Cash Opname — tabel pecahan clean (bukan kotak-kotak) ===== */
 #tab-cashopname .co-toolbar{
   display: flex !important;
