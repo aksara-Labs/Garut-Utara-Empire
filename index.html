@@ -178,6 +178,69 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
   box-shadow: none !important;
 }
 
+
+
+/* Karyawan Bertugas — kartu lebih kecil & sejajar */
+.bertugas-grid{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  margin-top: 8px !important;
+  align-items: stretch !important;
+}
+.bertugas-card{
+  padding: 8px 10px 8px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  height: 100% !important;
+}
+.bertugas-card .bc-head{
+  margin-bottom: 6px !important;
+  padding-bottom: 6px !important;
+  gap: 6px !important;
+}
+.bertugas-card .bc-code{
+  font-size: 12px !important;
+}
+.bertugas-card .bc-badge{
+  font-size: 9px !important;
+  padding: 2px 6px !important;
+}
+.bertugas-card .bc-person{
+  gap: 8px !important;
+  padding: 4px 0 !important;
+}
+.bertugas-card .bc-av{
+  width: 22px !important;
+  height: 22px !important;
+  font-size: 9px !important;
+}
+.bertugas-card .bc-name{
+  font-size: 11.5px !important;
+  line-height: 1.2 !important;
+}
+.bertugas-card .bc-role{
+  font-size: 10px !important;
+  margin-top: 0 !important;
+}
+.bertugas-card .bc-off{
+  margin-top: 4px !important;
+  padding-top: 4px !important;
+  font-size: 10px !important;
+}
+.bertugas-card .bc-empty{
+  font-size: 11px !important;
+  padding: 2px 0 !important;
+}
+@media (max-width: 1100px){
+  .bertugas-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 600px){
+  .bertugas-grid{ grid-template-columns: 1fr !important; }
+}
+
 </style>
 
 <style>
