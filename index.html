@@ -5901,6 +5901,122 @@ button.admin-topbar-avatar{
 }
 .admin-topbar, .admin-topbar-right{ z-index: 240 !important; pointer-events: auto !important; }
 
+
+/* ===== Profil chip + scrollbar stabil (jangan diutak-atik) ===== */
+html, body, .admin-main, .admin-content, .admin-sidebar,
+.screen, * {
+  scrollbar-width: thin;
+  scrollbar-color: #3A4150 #1A1F28;
+}
+*::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+*::-webkit-scrollbar-track {
+  background: #1A1F28 !important;
+  border-radius: 8px !important;
+}
+*::-webkit-scrollbar-thumb {
+  background: #3A4150 !important;
+  border-radius: 8px !important;
+  border: 2px solid #1A1F28 !important;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #5A6270 !important;
+}
+
+.topbar-user-group {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 4px 6px 4px 4px !important;
+  height: auto !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  border-radius: 999px !important;
+  background: rgba(0,0,0,0.35) !important;
+  box-shadow: none !important;
+}
+button.admin-topbar-avatar,
+#adminProfileBtn.admin-topbar-avatar,
+.admin-topbar-avatar {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  padding: 4px 10px 4px 4px !important;
+  border: none !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: #E5E7EB !important;
+  font: inherit !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+button.admin-topbar-avatar:hover,
+#adminProfileBtn:hover {
+  background: rgba(255,255,255,0.06) !important;
+}
+.admin-avatar-circle,
+#adminAvatarInitial {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  background: #2A3140 !important;
+  color: #E0A06A !important;
+  border: 1px solid rgba(224,160,106,0.35) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  flex-shrink: 0 !important;
+}
+.admin-avatar-text {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 0 !important;
+  line-height: 1.2 !important;
+}
+.admin-avatar-name,
+#adminAvatarName {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #F3F4F6 !important;
+}
+.admin-avatar-role {
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  color: #9CA3AF !important;
+}
+.kanit-profile-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #E5E7EB !important;
+  cursor: pointer !important;
+  padding: 4px 8px 4px 4px !important;
+  border-radius: 999px !important;
+  -webkit-appearance: none !important;
+}
+.kanit-profile-btn .mini-av {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  background: #2A3140 !important;
+  color: #E0A06A !important;
+  border: 1px solid rgba(224,160,106,0.35) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+}
+
 </style>
 </head>
 <body>
