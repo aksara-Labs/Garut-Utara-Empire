@@ -349,6 +349,285 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
   margin-bottom: 8px !important;
 }
 
+
+
+/* Dashboard KPI cards — padat atas-bawah */
+#tab-dashboard .admin-stats-grid,
+.admin-content #tab-dashboard .admin-stats-grid,
+#tab-dashboard .dash-kpi-grid{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  margin: 0 0 6px !important;
+}
+#tab-dashboard .admin-stat-card,
+#tab-dashboard .dash-kpi-card{
+  padding: 6px 10px !important;
+  border-radius: 10px !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 0 !important;
+}
+#tab-dashboard .admin-stat-value{
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  margin: 0 !important;
+}
+#tab-dashboard .admin-stat-value.stat-sm{
+  font-size: 13px !important;
+}
+#tab-dashboard .admin-stat-label{
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  margin: 1px 0 0 !important;
+  opacity: 0.85 !important;
+}
+#tab-dashboard .admin-stat-trend{
+  font-size: 9.5px !important;
+  line-height: 1.2 !important;
+  margin-top: 1px !important;
+  opacity: 0.7 !important;
+}
+#tab-dashboard .admin-stat-trend .muted{
+  font-size: 9.5px !important;
+}
+@media (max-width: 800px){
+  #tab-dashboard .admin-stats-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+
+
+/* Dashboard Harian — padat + 4 badge benchmark sejajar */
+#tab-kinerjaharian .kinerja-badges, #tab-kanitkinerjaharian .kinerja-badges, #tab-kinerja .kinerja-badges,
+.kinerja-badges{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  margin: 6px 0 8px !important;
+  flex-wrap: nowrap !important;
+}
+#tab-kinerjaharian .kinerja-badge,
+.kinerja-badge{
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 5px 8px !important;
+  font-size: 10.5px !important;
+  line-height: 1.25 !important;
+  border-radius: 8px !important;
+  white-space: normal !important;
+  text-align: center !important;
+  margin: 0 !important;
+}
+#tab-kinerjaharian .kinerja-badge b,
+.kinerja-badge b{
+  font-size: 11px !important;
+}
+
+/* KPI top row padat */
+#tab-kinerjaharian .kinerja-kpi-row,
+#tab-kinerjaharian .kinerja-top-stats,
+.kinerja-stats-row{
+  gap: 6px !important;
+  margin-bottom: 6px !important;
+}
+#tab-kinerjaharian .kinerja-kpi-card,
+.kinerja-kpi-card{
+  padding: 8px 10px !important;
+  border-radius: 10px !important;
+  min-height: 0 !important;
+}
+#tab-kinerjaharian .kinerja-kpi-card .lab,
+.kinerja-kpi-card .kpi-lab,
+.kinerja-kpi-card .label{
+  font-size: 9.5px !important;
+  margin-bottom: 2px !important;
+}
+#tab-kinerjaharian .kinerja-kpi-card .val,
+.kinerja-kpi-card .kpi-val,
+.kinerja-kpi-card .value{
+  font-size: 18px !important;
+  line-height: 1.15 !important;
+}
+
+/* Grid 4 kartu GADAI PP NASABAH GAOL */
+#tab-kinerjaharian .kinerja-kpi-grid,
+.kinerja-kpi-grid{
+  gap: 8px !important;
+  margin-top: 6px !important;
+}
+#tab-kinerjaharian .kinerja-kpi-grid .kinerja-kpi-card,
+.kinerja-kpi-grid > *{
+  padding: 10px 12px !important;
+}
+
+/* Header title row */
+#tab-kinerjaharian .kinerja-header,
+#tab-kinerjaharian h2{
+  margin: 0 0 6px !important;
+  font-size: 14px !important;
+}
+#tab-kinerja{
+  padding-top: 4px !important;
+}
+
+@media (max-width: 900px){
+  #tab-kinerjaharian .kinerja-badges, #tab-kanitkinerjaharian .kinerja-badges, #tab-kinerja .kinerja-badges,
+  .kinerja-badges{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 520px){
+  #tab-kinerjaharian .kinerja-badges, #tab-kanitkinerjaharian .kinerja-badges, #tab-kinerja .kinerja-badges,
+  .kinerja-badges{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+#tab-kinerjaharian .kinerja-badges,
+#tab-kanitkinerjaharian .kinerja-badges{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  margin: 6px 0 8px !important;
+}
+#tab-kinerjaharian .kinerja-badge,
+#tab-kanitkinerjaharian .kinerja-badge{
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 5px 8px !important;
+  font-size: 10.5px !important;
+  line-height: 1.25 !important;
+  border-radius: 8px !important;
+  white-space: normal !important;
+  text-align: center !important;
+  margin: 0 !important;
+}
+#tab-kinerjaharian .kinerja-kpi-card,
+#tab-kanitkinerjaharian .kinerja-kpi-card{
+  padding: 8px 10px !important;
+  min-height: 0 !important;
+}
+#tab-kinerjaharian .kinerja-kpi-grid,
+#tab-kanitkinerjaharian .kinerja-kpi-grid{
+  gap: 8px !important;
+}
+
+
+
+/* Omset Harian — tabel lebih kecil + bandingkan dual-bar */
+.harian-table-wrap,
+.cmp-table-wrap{
+  overflow-x: auto !important;
+  max-width: 100% !important;
+}
+.harian-table,
+.harian-table-synced,
+.cmp-table{
+  font-size: 10.5px !important;
+  border-collapse: collapse !important;
+  width: max-content !important;
+  min-width: 100% !important;
+}
+.harian-table th,
+.harian-table td,
+.cmp-table th,
+.cmp-table td{
+  padding: 3px 4px !important;
+  min-width: 28px !important;
+  max-width: 48px !important;
+  text-align: center !important;
+  vertical-align: bottom !important;
+}
+.harian-table .label-col,
+.cmp-table .label-col{
+  min-width: 52px !important;
+  max-width: 64px !important;
+  text-align: left !important;
+  font-weight: 600 !important;
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 1 !important;
+  background: rgba(18,18,18,0.95) !important;
+}
+.harian-table .total-col,
+.cmp-table .total-col{
+  min-width: 48px !important;
+  font-weight: 700 !important;
+}
+.harian-chart-bar,
+.harian-table .chart-bar{
+  max-width: 14px !important;
+  margin: 0 auto !important;
+  border-radius: 3px 3px 0 0 !important;
+}
+.harian-chart-day{ font-size: 9px !important; color: #78716C !important; }
+
+/* Dual compare bars */
+.cmp-day-cell{ vertical-align: bottom !important; padding: 2px 2px !important; }
+.cmp-bars{
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  height: 72px !important;
+  min-width: 28px !important;
+}
+.cmp-bar-wrap{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 1px !important;
+  height: 100% !important;
+}
+.cmp-bar{
+  width: 10px !important;
+  min-height: 2px !important;
+  border-radius: 3px 3px 0 0 !important;
+}
+.cmp-bar-a{ background: linear-gradient(180deg, #60A5FA, #2563EB) !important; }
+.cmp-bar-b{ background: linear-gradient(180deg, #F0C48A, #D4894A) !important; }
+.cmp-n{
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+.cmp-n-a{ color: #93C5FD !important; }
+.cmp-n-b{ color: #E8A86A !important; }
+.cmp-day-lbl{ font-size: 9px !important; color: #A8A29E !important; margin-top: 2px !important; }
+.cmp-legend{
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 11px !important;
+  color: #A8A29E !important;
+  margin: 8px 0 4px !important;
+}
+.cmp-leg{
+  display: inline-block !important;
+  width: 12px !important;
+  height: 10px !important;
+  border-radius: 2px !important;
+  margin-right: 2px !important;
+}
+.cmp-leg-a{ background: #2563EB !important; }
+.cmp-leg-b{ background: #D4894A !important; }
+.cmp-row-a td{ color: #93C5FD !important; }
+.cmp-row-b td{ color: #E8A86A !important; }
+.cmp-up{ color: #86EFAC !important; }
+.cmp-down{ color: #FCA5A5 !important; }
+.cmp-sum{ margin-bottom: 4px !important; }
+
 </style>
 
 <style>
@@ -1937,7 +2216,7 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
     font-family:'Inter', system-ui, sans-serif; font-size:17px; font-weight:700; color:var(--gold); margin-top:4px;
   }
 
-  .kinerja-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; }
+  .kinerja-badges{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
   .kinerja-badge{
     font-family:'JetBrains Mono', monospace; font-size:10.5px; padding:7px 13px;
     border:1px solid var(--gold-dim); border-radius:14px; color:var(--ink-soft);
@@ -10718,6 +10997,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var bulanA = wrap.querySelector(".cmp-bulan-a").value;
     var bulanB = wrap.querySelector(".cmp-bulan-b").value;
     var until = parseInt(wrap.querySelector(".cmp-until").value, 10) || 13;
+    until = Math.max(1, Math.min(31, until));
     var out = wrap.querySelector(".cmp-result");
     out.innerHTML = '<div class="empty-log">Membandingkan...</div>';
     var isKanit = wrapId === "kanitMenuHarianWrap";
@@ -10727,11 +11007,21 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
           .withFailureHandler(function(){ cb(null); })
           .getHarianGridKanit(session.cabang, session.cabangPin, label);
       } else {
-        var cabang = document.getElementById("menuHarianCabang").value || "TOTAL_AREA";
+        var cabang = (document.getElementById("menuHarianCabang")||{}).value || "TOTAL_AREA";
         google.script.run.withSuccessHandler(function(r){ cb(r && r.status==="OK" ? r.data : null); })
           .withFailureHandler(function(){ cb(null); })
           .getHarianGridAdmin(session.adminPin, cabang, label);
       }
+    }
+    function dayMap(days){
+      var m = {};
+      (days||[]).forEach(function(d){ m[d.day] = d; });
+      return m;
+    }
+    function shortLabel(lab){
+      if(!lab) return "";
+      var p = String(lab).split(" ");
+      return p[0] ? p[0].slice(0, 3) : lab;
     }
     fetchMonth(bulanA, function(dataA){
       fetchMonth(bulanB, function(dataB){
@@ -10739,11 +11029,56 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         var a = sumDaysUntil_(dataA.days, until);
         var b = sumDaysUntil_(dataB.days, until);
         function delta(x,y){ var d=x-y; return (d>=0?"+":"")+fmt(d); }
+        var mapA = dayMap(dataA.days);
+        var mapB = dayMap(dataB.days);
+        var maxVal = 1;
+        var rows = [];
+        for(var d=1; d<=until; d++){
+          var ta = (mapA[d] && mapA[d].total) || 0;
+          var tb = (mapB[d] && mapB[d].total) || 0;
+          if(ta > maxVal) maxVal = ta;
+          if(tb > maxVal) maxVal = tb;
+          rows.push({ day:d, a:ta, b:tb, geA:(mapA[d]&&mapA[d].ge)||0, geB:(mapB[d]&&mapB[d].ge)||0,
+            gbA:(mapA[d]&&mapA[d].gb)||0, gbB:(mapB[d]&&mapB[d].gb)||0,
+            ggA:(mapA[d]&&mapA[d].gg)||0, ggB:(mapB[d]&&mapB[d].gg)||0 });
+        }
+        var la = shortLabel(bulanA), lb = shortLabel(bulanB);
+        var chartCells = rows.map(function(r){
+          var hA = Math.max(2, Math.round((r.a / maxVal) * 56));
+          var hB = Math.max(2, Math.round((r.b / maxVal) * 56));
+          var numA = r.a ? (r.a >= 1000 ? (r.a/1000).toFixed(r.a>=10000?0:1)+"k" : String(r.a)) : "";
+          var numB = r.b ? (r.b >= 1000 ? (r.b/1000).toFixed(r.b>=10000?0:1)+"k" : String(r.b)) : "";
+          return '<td class="cmp-day-cell">'+
+            '<div class="cmp-bars" title="Tgl '+r.day+': '+la+' '+fmt(r.a)+' · '+lb+' '+fmt(r.b)+'">'+
+              '<div class="cmp-bar-wrap"><div class="cmp-bar cmp-bar-a" style="height:'+hA+'px"></div>'+(numA?'<span class="cmp-n cmp-n-a">'+numA+'</span>':'')+'</div>'+
+              '<div class="cmp-bar-wrap"><div class="cmp-bar cmp-bar-b" style="height:'+hB+'px"></div>'+(numB?'<span class="cmp-n cmp-n-b">'+numB+'</span>':'')+'</div>'+
+            '</div>'+
+            '<div class="cmp-day-lbl">'+r.day+'</div>'+
+          '</td>';
+        }).join("");
+        var rowTotalA = rows.map(function(r){ return '<td class="num">'+(r.a?fmt(r.a):"—")+'</td>'; }).join("");
+        var rowTotalB = rows.map(function(r){ return '<td class="num">'+(r.b?fmt(r.b):"—")+'</td>'; }).join("");
+        var rowDelta = rows.map(function(r){
+          var d = r.a - r.b;
+          var cls = d>0?"cmp-up":(d<0?"cmp-down":"");
+          return '<td class="num '+cls+'">'+(r.a||r.b?delta(r.a,r.b):"—")+'</td>';
+        }).join("");
         out.innerHTML =
-          '<div class="ob-summary">'+
+          '<div class="ob-summary cmp-sum">'+
             '<div class="ob-summary-card"><div class="k">'+bulanA+' (1–'+until+')</div><div class="v">'+fmt(a.total)+'</div><div class="k">GE '+fmt(a.ge)+' · GB '+fmt(a.gb)+' · GG '+fmt(a.gg)+'</div></div>'+
             '<div class="ob-summary-card"><div class="k">'+bulanB+' (1–'+until+')</div><div class="v">'+fmt(b.total)+'</div><div class="k">GE '+fmt(b.ge)+' · GB '+fmt(b.gb)+' · GG '+fmt(b.gg)+'</div></div>'+
-            '<div class="ob-summary-card ach"><div class="k">Selisih Total (A−B)</div><div class="v">'+delta(a.total,b.total)+'</div><div class="k">GE '+delta(a.ge,b.ge)+' · GB '+delta(a.gb,b.gb)+' · GG '+delta(a.gg,b.gg)+'</div></div>'+
+            '<div class="ob-summary-card ach"><div class="k">Selisih (A−B)</div><div class="v">'+delta(a.total,b.total)+'</div><div class="k">GE '+delta(a.ge,b.ge)+' · GB '+delta(a.gb,b.gb)+' · GG '+delta(a.gg,b.gg)+'</div></div>'+
+          '</div>'+
+          '<div class="cmp-legend"><span class="cmp-leg cmp-leg-a"></span> '+bulanA+' <span class="cmp-leg cmp-leg-b"></span> '+bulanB+'</div>'+
+          '<div class="harian-table-wrap cmp-table-wrap">'+
+            '<table class="harian-table harian-table-synced cmp-table"><thead><tr>'+
+              '<th class="label-col">Tgl</th>'+rows.map(function(r){ return '<th>'+r.day+'</th>'; }).join("")+'<th class="total-col">Σ</th>'+
+            '</tr></thead><tbody>'+
+              '<tr class="chart-row"><td class="label-col">Grafik</td>'+chartCells+'<td class="total-col"></td></tr>'+
+              '<tr class="cmp-row-a"><td class="label-col">'+la+'</td>'+rowTotalA+'<td class="total-col">'+fmt(a.total)+'</td></tr>'+
+              '<tr class="cmp-row-b"><td class="label-col">'+lb+'</td>'+rowTotalB+'<td class="total-col">'+fmt(b.total)+'</td></tr>'+
+              '<tr class="cmp-row-d"><td class="label-col">Δ</td>'+rowDelta+'<td class="total-col">'+delta(a.total,b.total)+'</td></tr>'+
+            '</tbody></table>'+
           '</div>';
       });
     });
