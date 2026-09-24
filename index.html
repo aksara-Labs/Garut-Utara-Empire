@@ -524,143 +524,64 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
 
 
 
-/* Omset Harian — SUPER compact biar minim scroll horizontal */
-#tab-menuharian .harian-table-wrap,
-#tab-kanitmenuharian .harian-table-wrap,
-.harian-sync-wrap .harian-table-wrap,
-.harian-table-wrap{
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-  max-width: 100% !important;
-  width: 100% !important;
-}
-#tab-menuharian .harian-table,
-#tab-kanitmenuharian .harian-table,
-.harian-table.harian-table-synced,
-.harian-table{
-  table-layout: fixed !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  font-size: 9px !important;
-  border-collapse: collapse !important;
-}
-.harian-table th,
-.harian-table td{
-  padding: 2px 1px !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  width: auto !important;
-  text-align: center !important;
-  vertical-align: middle !important;
-  font-size: 9px !important;
-  line-height: 1.15 !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-}
-.harian-table thead th{
-  font-size: 8.5px !important;
-  padding: 3px 1px !important;
-  font-weight: 600 !important;
-}
-.harian-table .label-col,
-.harian-table th.label-col,
-.harian-table td.label-col{
-  width: 42px !important;
-  min-width: 42px !important;
-  max-width: 48px !important;
-  text-align: left !important;
-  padding-left: 4px !important;
-  position: sticky !important;
-  left: 0 !important;
-  z-index: 2 !important;
-  background: rgba(12,12,14,0.98) !important;
-  font-size: 9px !important;
-}
-.harian-table .total-col,
-.harian-table th.total-col,
-.harian-table td.total-col{
-  width: 36px !important;
-  min-width: 32px !important;
-  font-weight: 700 !important;
-  font-size: 9px !important;
-}
-/* Chart bars tipis */
-.harian-table .chart-row td{
-  vertical-align: bottom !important;
-  padding: 2px 0 !important;
-}
-.harian-table .harian-chart-bar,
-.harian-table [class*="chart-bar"],
-.harian-table .chart-row div[style*="height"]{
-  max-width: 8px !important;
-  width: 8px !important;
-  margin: 0 auto !important;
-  border-radius: 2px 2px 0 0 !important;
-}
-.harian-chart-day,
-.harian-table .harian-chart-day{
-  font-size: 7.5px !important;
-  color: #78716C !important;
-  line-height: 1 !important;
-  margin-top: 1px !important;
-}
-/* Angka di atas bar */
-.harian-table .chart-row span,
-.harian-table .chart-val{
-  font-size: 7.5px !important;
-  display: block !important;
-  line-height: 1 !important;
-}
 
-/* Omset Harian — tabel lebih kecil + bandingkan dual-bar */
-.harian-table-wrap,
-.cmp-table-wrap{
-  overflow-x: auto !important;
-  max-width: 100% !important;
-}
-.harian-table,
-.harian-table-synced,
-.cmp-table{
-  font-size: 10.5px !important;
-  border-collapse: collapse !important;
-  width: max-content !important;
-  min-width: 100% !important;
-}
-.harian-table th,
-.harian-table td,
-.cmp-table th,
-.cmp-table td{
-  padding: 3px 4px !important;
+/* Omset Harian bandingkan dual-bar (tabel normal tetap default) */
+.cmp-day-cell{ vertical-align: bottom !important; padding: 2px 2px !important; }
+.cmp-bars{
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  height: 72px !important;
   min-width: 28px !important;
-  max-width: 48px !important;
-  text-align: center !important;
-  vertical-align: bottom !important;
 }
-.harian-table .label-col,
-.cmp-table .label-col{
-  min-width: 52px !important;
-  max-width: 64px !important;
-  text-align: left !important;
-  font-weight: 600 !important;
-  position: sticky !important;
-  left: 0 !important;
-  z-index: 1 !important;
-  background: rgba(18,18,18,0.95) !important;
+.cmp-bar-wrap{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 1px !important;
+  height: 100% !important;
 }
-.harian-table .total-col,
-.cmp-table .total-col{
-  min-width: 48px !important;
-  font-weight: 700 !important;
-}
-.harian-chart-bar,
-.harian-table .chart-bar{
-  max-width: 14px !important;
-  margin: 0 auto !important;
+.cmp-bar{
+  width: 10px !important;
+  min-height: 2px !important;
   border-radius: 3px 3px 0 0 !important;
 }
-.harian-chart-day{ font-size: 9px !important; color: #78716C !important; }
+.cmp-bar-a{ background: linear-gradient(180deg, #60A5FA, #2563EB) !important; }
+.cmp-bar-b{ background: linear-gradient(180deg, #F0C48A, #D4894A) !important; }
+.cmp-n{
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+.cmp-n-a{ color: #93C5FD !important; }
+.cmp-n-b{ color: #E8A86A !important; }
+.cmp-day-lbl{ font-size: 9px !important; color: #A8A29E !important; margin-top: 2px !important; }
+.cmp-legend{
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 11px !important;
+  color: #A8A29E !important;
+  margin: 8px 0 4px !important;
+}
+.cmp-leg{
+  display: inline-block !important;
+  width: 12px !important;
+  height: 10px !important;
+  border-radius: 2px !important;
+  margin-right: 2px !important;
+}
+.cmp-leg-a{ background: #2563EB !important; }
+.cmp-leg-b{ background: #D4894A !important; }
+.cmp-row-a td{ color: #93C5FD !important; }
+.cmp-row-b td{ color: #E8A86A !important; }
+.cmp-up{ color: #86EFAC !important; }
+.cmp-down{ color: #FCA5A5 !important; }
+.cmp-sum{ margin-bottom: 4px !important; }
+.cmp-table-wrap{ overflow-x: auto !important; }
 
 /* Dual compare bars */
 .cmp-day-cell{ vertical-align: bottom !important; padding: 2px 2px !important; }
@@ -719,51 +640,6 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
 .cmp-down{ color: #FCA5A5 !important; }
 .cmp-sum{ margin-bottom: 4px !important; }
 
-
-/* Harian table fit full width — no forced 42px cols */
-.harian-sync-wrap .harian-table,
-.harian-table.harian-table-synced,
-table.harian-table{
-  table-layout: fixed !important;
-  width: 100% !important;
-  min-width: 0 !important;
-}
-.harian-sync-wrap .harian-table th,
-.harian-sync-wrap .harian-table td,
-.harian-table th,
-.harian-table td{
-  width: auto !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  padding: 2px 0 !important;
-  font-size: 8.5px !important;
-  box-sizing: border-box !important;
-}
-.harian-table .label-col{
-  width: 40px !important;
-  min-width: 40px !important;
-  max-width: 44px !important;
-  padding-left: 3px !important;
-}
-.harian-table .total-col{
-  width: 34px !important;
-  min-width: 30px !important;
-}
-.harian-table .harian-chart-bar{
-  width: 6px !important;
-  max-width: 8px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-.harian-table .harian-chart-val{
-  font-size: 7px !important;
-  max-width: 100% !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-}
-.harian-table .harian-chart-day{
-  font-size: 7px !important;
-}
 
 </style>
 
@@ -1143,7 +1019,8 @@ table.harian-table{
   }
   .harian-sync-wrap .harian-table th,
   .harian-sync-wrap .harian-table td{
-    width:auto; min-width:0; max-width:none; padding:2px 1px;
+    width:42px; min-width:42px; max-width:42px; box-sizing:border-box;
+    padding:6px 2px;
   }
   .harian-sync-wrap .harian-table th.label-col,
   .harian-sync-wrap .harian-table td.label-col{
@@ -5284,8 +5161,8 @@ h1, h2, h3, h4, .admin-topbar-title, .auth-brand h1, .auth-card-head h1 {
 }
 .harian-chart-col {
   flex: 1 1 0 !important;
-  min-width: 0 !important;
-  max-width: none;
+  min-width: 28px !important;
+  max-width: 48px;
 }
 .harian-chart-bar {
   width: 70% !important;
@@ -11042,7 +10919,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       '</div>';
 
     // Chart + data dalam 1 tabel yang sama → kolom tanggal pasti sejajar.
-    var CHART_H = 36;
+    var CHART_H = 100;
     var DOW = ["Min","Sen","Sel","Rab","Kam","Jum","Sab"];
     function dayDow_(dayNum){
       // data.year/month dari server; fallback parse monthLabel "September 2026"
@@ -12170,8 +12047,154 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         '<div class="admin-stat-card"><div class="admin-stat-value">'+pencapaianLabel+'</div><div class="admin-stat-label">Pencapaian target bulan</div><div class="admin-stat-trend"><span class="muted">Gadai, semua cabang</span></div></div>'+
         '<div class="admin-stat-card"><div class="admin-stat-value'+(String(omsetLabel).length>10?' stat-sm':'')+'">'+omsetLabel+'</div><div class="admin-stat-label">Omset hari kemarin</div><div class="admin-stat-trend"><span class="muted">GE + GB + GG</span></div></div>'+
         '<div class="admin-stat-card"><div class="admin-stat-value'+(String(vsValue).length>8?' stat-sm':'')+'" style="'+vsColor+'">'+vsValue+(vsPct?('<div style="font-size:13px;margin-top:2px;opacity:0.9">'+vsPct+'</div>'):'')+'</div><div class="admin-stat-label">Vs periode sama</div><div class="admin-stat-trend"><span class="muted">'+vsSub+'</span></div></div>'+
+        '<div class="admin-stat-card" id="dashSelisihCard"><div class="admin-stat-value" id="dashSelisihVal">…</div><div class="admin-stat-label">Cek Selisih</div><div class="admin-stat-trend"><span class="muted" id="dashSelisihSub">Kanit vs Program</span></div></div>'+
       '</div>';
+    try{ loadDashSelisih(); }catch(e){}
   }
+
+  function loadDashSelisih(){
+    var valEl = document.getElementById("dashSelisihVal");
+    var subEl = document.getElementById("dashSelisihSub");
+    var card = document.getElementById("dashSelisihCard");
+    if(!valEl || !session.adminPin) return;
+    valEl.textContent = "…";
+    if(subEl) subEl.textContent = "Memuat…";
+    if(card){ card.classList.remove("selisih-sama","selisih-beda"); }
+    google.script.run
+      .withSuccessHandler(function(r){
+        if(!document.getElementById("dashSelisihVal")) return;
+        if(!r || r.status !== "OK" || !r.results){
+          document.getElementById("dashSelisihVal").textContent = "–";
+          if(subEl) subEl.textContent = "Gagal cek";
+          return;
+        }
+        var sama = 0, beda = 0, gagal = 0;
+        (r.results||[]).forEach(function(row){
+          if(row.selisih === null || row.selisih === undefined) gagal++;
+          else if(Number(row.selisih) === 0) sama++;
+          else beda++;
+        });
+        var el = document.getElementById("dashSelisihVal");
+        var sub = document.getElementById("dashSelisihSub");
+        var c = document.getElementById("dashSelisihCard");
+        if(beda === 0 && gagal === 0){
+          el.textContent = "Sama";
+          if(sub) sub.textContent = sama + " cabang cocok";
+          if(c) c.classList.add("selisih-sama");
+        } else if(beda > 0){
+          el.textContent = "Beda " + beda;
+          if(sub) sub.textContent = sama + " sama · " + beda + " beda" + (gagal?(" · "+gagal+" gagal"):"");
+          if(c) c.classList.add("selisih-beda");
+        } else {
+          el.textContent = "–";
+          if(sub) sub.textContent = gagal + " gagal cek";
+        }
+      })
+      .withFailureHandler(function(){
+        var el = document.getElementById("dashSelisihVal");
+        if(el) el.textContent = "–";
+        var sub = document.getElementById("dashSelisihSub");
+        if(sub) sub.textContent = "Gagal koneksi";
+      })
+      .getSelisihOmset(session.adminPin);
+  }
+  window.loadDashSelisih = loadDashSelisih;
+
+  // ---------------- To-do list (local) ----------------
+  var TODO_KEY = "gue_todo_v1";
+  function todoLoad(){
+    try{ return JSON.parse(localStorage.getItem(TODO_KEY)||"[]")||[]; }catch(e){ return []; }
+  }
+  function todoSave(list){
+    try{ localStorage.setItem(TODO_KEY, JSON.stringify(list||[])); }catch(e){}
+    todoUpdateBadge();
+  }
+  function todoUpdateBadge(){
+    var list = todoLoad();
+    var n = list.filter(function(x){ return !x.done; }).length;
+    var b = document.getElementById("adminTodoBadge");
+    if(!b) return;
+    if(n > 0){ b.hidden = false; b.textContent = String(n); }
+    else { b.hidden = true; }
+  }
+  function todoRender(){
+    var box = document.getElementById("todoList");
+    if(!box) return;
+    var list = todoLoad();
+    if(!list.length){
+      box.innerHTML = '<div class="empty-log" style="padding:12px 4px;">Belum ada tugas. Tambah di atas.</div>';
+      return;
+    }
+    box.innerHTML = list.map(function(item, i){
+      return '<div class="todo-item'+(item.done?" done":"")+'" data-i="'+i+'">'+
+        '<input type="checkbox" '+(item.done?"checked":"")+' data-todo-check="'+i+'">'+
+        '<span class="todo-text">'+escHtml(item.text||"")+'</span>'+
+        '<button type="button" class="todo-del" data-todo-del="'+i+'" title="Hapus">×</button>'+
+      '</div>';
+    }).join("");
+  }
+  function openTodoModal(){
+    var m = document.getElementById("todoModal");
+    if(!m) return;
+    m.hidden = false;
+    m.style.cssText = "display:flex !important;";
+    todoRender();
+    var inp = document.getElementById("todoInput");
+    if(inp) setTimeout(function(){ inp.focus(); }, 50);
+  }
+  function closeTodoModal(){
+    var m = document.getElementById("todoModal");
+    if(!m) return;
+    m.hidden = true;
+    m.style.cssText = "display:none !important;";
+  }
+  (function initTodo(){
+    var btn = document.getElementById("adminTodoBtn");
+    if(btn) btn.addEventListener("click", function(e){ e.stopPropagation(); openTodoModal(); });
+    var closeBtn = document.getElementById("todoCloseBtn");
+    if(closeBtn) closeBtn.addEventListener("click", closeTodoModal);
+    var modal = document.getElementById("todoModal");
+    if(modal) modal.addEventListener("click", function(e){ if(e.target === modal) closeTodoModal(); });
+    var form = document.getElementById("todoAddForm");
+    if(form) form.addEventListener("submit", function(e){
+      e.preventDefault();
+      var inp = document.getElementById("todoInput");
+      var text = (inp && inp.value || "").trim();
+      if(!text) return;
+      var list = todoLoad();
+      list.unshift({ text: text, done: false, at: Date.now() });
+      todoSave(list);
+      if(inp) inp.value = "";
+      todoRender();
+    });
+    var listEl = document.getElementById("todoList");
+    if(listEl) listEl.addEventListener("click", function(e){
+      var del = e.target.closest("[data-todo-del]");
+      if(del){
+        var i = parseInt(del.getAttribute("data-todo-del"), 10);
+        var list = todoLoad();
+        list.splice(i, 1);
+        todoSave(list);
+        todoRender();
+        return;
+      }
+      var chk = e.target.closest("[data-todo-check]");
+      if(chk){
+        var i = parseInt(chk.getAttribute("data-todo-check"), 10);
+        var list = todoLoad();
+        if(list[i]) list[i].done = !!chk.checked;
+        todoSave(list);
+        todoRender();
+      }
+    });
+    var clearBtn = document.getElementById("todoClearDone");
+    if(clearBtn) clearBtn.addEventListener("click", function(){
+      todoSave(todoLoad().filter(function(x){ return !x.done; }));
+      todoRender();
+    });
+    todoUpdateBadge();
+  })();
+
 
   function loadAdminSummary(force){
     var wrap = document.getElementById("adminSummaryWrap");
@@ -12504,7 +12527,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       return;
     }
 
-    var CHART_H = 36, LABEL_PAD = 22;
+    var CHART_H = 200, LABEL_PAD = 22;
     var maxVal = Math.max.apply(null, data.perBulan.map(function(r){ return r.total; }).concat([1]));
 
     var barsHtml = data.perBulan.map(function(r){
@@ -12569,7 +12592,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       return;
     }
 
-    var CHART_H = 36, LABEL_PAD = 22;
+    var CHART_H = 200, LABEL_PAD = 22;
     var maxVal = Math.max.apply(null, data.perBulan.map(function(r){ return r.total; }).concat([1]));
 
     var barsHtml = data.perBulan.map(function(r){
@@ -12632,7 +12655,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       return;
     }
     var maxVal = Math.max.apply(null, results.map(function(r){ return r.totalRows; }).concat([1]));
-    var CHART_H = 36, LABEL_PAD = 22; // keep label space INSIDE the box, no reliance on overflow
+    var CHART_H = 200, LABEL_PAD = 22; // keep label space INSIDE the box, no reliance on overflow
 
     var barsHtml = results.map(function(r){
       var h = Math.round((r.totalRows / maxVal) * (CHART_H - LABEL_PAD));
@@ -13245,6 +13268,8 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         document.getElementById("omsetImportText").value = "";
         if(r.history) renderImportHistoryList(document.getElementById("omsetImportHistory"), r.history);
         else loadUpdateDataMeta();
+        try{ if(typeof loadDashSelisih === "function") loadDashSelisih(); }catch(e){}
+        try{ if(typeof loadAdminSummary === "function") loadAdminSummary(true); }catch(e){}
       })
       .withFailureHandler(function(err){
         progress.stop();
@@ -13279,7 +13304,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       {key:"nasabah", label:"Nasabah", icon:"👥"},
       {key:"gaol", label:"Gaol", icon:"🏅"}
     ];
-    var CHART_H = 36, LABEL_PAD = 22;
+    var CHART_H = 200, LABEL_PAD = 22;
     var totalBobot = 0, totalNilaiKpi = 0;
 
     // Kartu ringkasan atas (gaya Dashboard Harian) — paling atas
@@ -13429,7 +13454,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       '</div>';
 
     var barsHtml = results.map(function(r){
-      var CHART_H = 36, LABEL_PAD = 22; // keep label space INSIDE the box, no reliance on overflow
+      var CHART_H = 200, LABEL_PAD = 22; // keep label space INSIDE the box, no reliance on overflow
       var tH = Math.round((r.target / maxVal) * (CHART_H - LABEL_PAD));
       var aH = Math.round((r.aktual / maxVal) * (CHART_H - LABEL_PAD));
       return '<div class="ob-group"><div class="ob-bars">'+
