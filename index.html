@@ -523,6 +523,97 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
 
 
 
+
+/* Omset Harian — SUPER compact biar minim scroll horizontal */
+#tab-menuharian .harian-table-wrap,
+#tab-kanitmenuharian .harian-table-wrap,
+.harian-sync-wrap .harian-table-wrap,
+.harian-table-wrap{
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+#tab-menuharian .harian-table,
+#tab-kanitmenuharian .harian-table,
+.harian-table.harian-table-synced,
+.harian-table{
+  table-layout: fixed !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  font-size: 9px !important;
+  border-collapse: collapse !important;
+}
+.harian-table th,
+.harian-table td{
+  padding: 2px 1px !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: auto !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-size: 9px !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.harian-table thead th{
+  font-size: 8.5px !important;
+  padding: 3px 1px !important;
+  font-weight: 600 !important;
+}
+.harian-table .label-col,
+.harian-table th.label-col,
+.harian-table td.label-col{
+  width: 42px !important;
+  min-width: 42px !important;
+  max-width: 48px !important;
+  text-align: left !important;
+  padding-left: 4px !important;
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 2 !important;
+  background: rgba(12,12,14,0.98) !important;
+  font-size: 9px !important;
+}
+.harian-table .total-col,
+.harian-table th.total-col,
+.harian-table td.total-col{
+  width: 36px !important;
+  min-width: 32px !important;
+  font-weight: 700 !important;
+  font-size: 9px !important;
+}
+/* Chart bars tipis */
+.harian-table .chart-row td{
+  vertical-align: bottom !important;
+  padding: 2px 0 !important;
+}
+.harian-table .harian-chart-bar,
+.harian-table [class*="chart-bar"],
+.harian-table .chart-row div[style*="height"]{
+  max-width: 8px !important;
+  width: 8px !important;
+  margin: 0 auto !important;
+  border-radius: 2px 2px 0 0 !important;
+}
+.harian-chart-day,
+.harian-table .harian-chart-day{
+  font-size: 7.5px !important;
+  color: #78716C !important;
+  line-height: 1 !important;
+  margin-top: 1px !important;
+}
+/* Angka di atas bar */
+.harian-table .chart-row span,
+.harian-table .chart-val{
+  font-size: 7.5px !important;
+  display: block !important;
+  line-height: 1 !important;
+}
+
 /* Omset Harian — tabel lebih kecil + bandingkan dual-bar */
 .harian-table-wrap,
 .cmp-table-wrap{
@@ -627,6 +718,52 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
 .cmp-up{ color: #86EFAC !important; }
 .cmp-down{ color: #FCA5A5 !important; }
 .cmp-sum{ margin-bottom: 4px !important; }
+
+
+/* Harian table fit full width — no forced 42px cols */
+.harian-sync-wrap .harian-table,
+.harian-table.harian-table-synced,
+table.harian-table{
+  table-layout: fixed !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+.harian-sync-wrap .harian-table th,
+.harian-sync-wrap .harian-table td,
+.harian-table th,
+.harian-table td{
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  padding: 2px 0 !important;
+  font-size: 8.5px !important;
+  box-sizing: border-box !important;
+}
+.harian-table .label-col{
+  width: 40px !important;
+  min-width: 40px !important;
+  max-width: 44px !important;
+  padding-left: 3px !important;
+}
+.harian-table .total-col{
+  width: 34px !important;
+  min-width: 30px !important;
+}
+.harian-table .harian-chart-bar{
+  width: 6px !important;
+  max-width: 8px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.harian-table .harian-chart-val{
+  font-size: 7px !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.harian-table .harian-chart-day{
+  font-size: 7px !important;
+}
 
 </style>
 
@@ -1006,8 +1143,7 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
   }
   .harian-sync-wrap .harian-table th,
   .harian-sync-wrap .harian-table td{
-    width:42px; min-width:42px; max-width:42px; box-sizing:border-box;
-    padding:6px 2px;
+    width:auto; min-width:0; max-width:none; padding:2px 1px;
   }
   .harian-sync-wrap .harian-table th.label-col,
   .harian-sync-wrap .harian-table td.label-col{
@@ -5148,8 +5284,8 @@ h1, h2, h3, h4, .admin-topbar-title, .auth-brand h1, .auth-card-head h1 {
 }
 .harian-chart-col {
   flex: 1 1 0 !important;
-  min-width: 28px !important;
-  max-width: 48px;
+  min-width: 0 !important;
+  max-width: none;
 }
 .harian-chart-bar {
   width: 70% !important;
@@ -10906,7 +11042,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       '</div>';
 
     // Chart + data dalam 1 tabel yang sama → kolom tanggal pasti sejajar.
-    var CHART_H = 100;
+    var CHART_H = 36;
     var DOW = ["Min","Sen","Sel","Rab","Kam","Jum","Sab"];
     function dayDow_(dayNum){
       // data.year/month dari server; fallback parse monthLabel "September 2026"
@@ -11044,8 +11180,8 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         }
         var la = shortLabel(bulanA), lb = shortLabel(bulanB);
         var chartCells = rows.map(function(r){
-          var hA = Math.max(2, Math.round((r.a / maxVal) * 56));
-          var hB = Math.max(2, Math.round((r.b / maxVal) * 56));
+          var hA = Math.max(2, Math.round((r.a / maxVal) * 32));
+          var hB = Math.max(2, Math.round((r.b / maxVal) * 32));
           var numA = r.a ? (r.a >= 1000 ? (r.a/1000).toFixed(r.a>=10000?0:1)+"k" : String(r.a)) : "";
           var numB = r.b ? (r.b >= 1000 ? (r.b/1000).toFixed(r.b>=10000?0:1)+"k" : String(r.b)) : "";
           return '<td class="cmp-day-cell">'+
@@ -12368,7 +12504,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       return;
     }
 
-    var CHART_H = 200, LABEL_PAD = 22;
+    var CHART_H = 36, LABEL_PAD = 22;
     var maxVal = Math.max.apply(null, data.perBulan.map(function(r){ return r.total; }).concat([1]));
 
     var barsHtml = data.perBulan.map(function(r){
@@ -12433,7 +12569,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       return;
     }
 
-    var CHART_H = 200, LABEL_PAD = 22;
+    var CHART_H = 36, LABEL_PAD = 22;
     var maxVal = Math.max.apply(null, data.perBulan.map(function(r){ return r.total; }).concat([1]));
 
     var barsHtml = data.perBulan.map(function(r){
@@ -12496,7 +12632,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       return;
     }
     var maxVal = Math.max.apply(null, results.map(function(r){ return r.totalRows; }).concat([1]));
-    var CHART_H = 200, LABEL_PAD = 22; // keep label space INSIDE the box, no reliance on overflow
+    var CHART_H = 36, LABEL_PAD = 22; // keep label space INSIDE the box, no reliance on overflow
 
     var barsHtml = results.map(function(r){
       var h = Math.round((r.totalRows / maxVal) * (CHART_H - LABEL_PAD));
@@ -13143,7 +13279,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       {key:"nasabah", label:"Nasabah", icon:"👥"},
       {key:"gaol", label:"Gaol", icon:"🏅"}
     ];
-    var CHART_H = 200, LABEL_PAD = 22;
+    var CHART_H = 36, LABEL_PAD = 22;
     var totalBobot = 0, totalNilaiKpi = 0;
 
     // Kartu ringkasan atas (gaya Dashboard Harian) — paling atas
@@ -13293,7 +13429,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       '</div>';
 
     var barsHtml = results.map(function(r){
-      var CHART_H = 200, LABEL_PAD = 22; // keep label space INSIDE the box, no reliance on overflow
+      var CHART_H = 36, LABEL_PAD = 22; // keep label space INSIDE the box, no reliance on overflow
       var tH = Math.round((r.target / maxVal) * (CHART_H - LABEL_PAD));
       var aH = Math.round((r.aktual / maxVal) * (CHART_H - LABEL_PAD));
       return '<div class="ob-group"><div class="ob-bars">'+
