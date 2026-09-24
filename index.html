@@ -641,6 +641,527 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
 .cmp-sum{ margin-bottom: 4px !important; }
 
 
+
+
+/* Ringkasan 5 kartu sejajar + pin terlihat */
+.admin-topbar-pin{
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: rgba(255,255,255,0.05) !important;
+  color: #E8A86A !important;
+  cursor: pointer !important;
+  margin-right: 6px !important;
+  flex-shrink: 0 !important;
+  z-index: 5 !important;
+}
+.admin-topbar-right{
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+#tab-dashboard .dash-kpi-grid,
+#tab-dashboard .admin-stats-grid,
+#adminSummaryWrap .dash-kpi-grid{
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  margin: 0 0 8px !important;
+  width: 100% !important;
+}
+#tab-dashboard .admin-stat-card,
+#adminSummaryWrap .admin-stat-card{
+  padding: 6px 8px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+#tab-dashboard .admin-stat-value,
+#adminSummaryWrap .admin-stat-value{
+  font-size: 15px !important;
+  line-height: 1.15 !important;
+}
+#tab-dashboard .admin-stat-label,
+#adminSummaryWrap .admin-stat-label{
+  font-size: 9.5px !important;
+}
+#tab-dashboard .admin-stat-trend,
+#adminSummaryWrap .admin-stat-trend{
+  font-size: 9px !important;
+}
+@media (max-width: 900px){
+  #tab-dashboard .dash-kpi-grid,
+  #adminSummaryWrap .dash-kpi-grid{
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 560px){
+  #tab-dashboard .dash-kpi-grid,
+  #adminSummaryWrap .dash-kpi-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+
+
+/* Pemantauan Harian menu dihilangkan */
+button.tab-btn[data-tab="pemantauan"],
+.admin-nav-btn[data-tab="pemantauan"]{
+  display: none !important;
+}
+#tab-pemantauan.subpanel{
+  display: none !important;
+}
+
+
+
+/* Pin = style sama bell, sejajar profil */
+.admin-topbar-right{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-left: auto !important;
+}
+button.admin-topbar-pin.admin-topbar-bell,
+#adminTodoBtn.admin-topbar-bell{
+  position: relative !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: rgba(255,255,255,0.06) !important;
+  color: #CBD5E1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  flex-shrink: 0 !important;
+}
+#adminTodoBtn.admin-topbar-bell:hover{
+  border-color: rgba(212,137,74,0.4) !important;
+  color: #E0A06A !important;
+  background: rgba(255,255,255,0.08) !important;
+}
+#adminTodoBtn svg{
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+  stroke: currentColor !important;
+  fill: none !important;
+}
+#adminTodoBtn .todo-badge{
+  position: absolute !important;
+  top: -2px !important;
+  right: -2px !important;
+  min-width: 16px !important;
+  height: 16px !important;
+  padding: 0 4px !important;
+  border-radius: 99px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  background: #D4894A !important;
+  color: #1a1208 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.admin-topbar-bell-wrap{
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+
+.todo-modal{
+  position: fixed !important; inset: 0 !important; z-index: 10000 !important;
+  background: rgba(0,0,0,0.55) !important;
+  display: none;
+  align-items: flex-start !important; justify-content: flex-end !important;
+  padding: 56px 16px 16px !important;
+}
+.todo-modal-panel{
+  width: min(360px, 100%) !important;
+  max-height: min(70vh, 520px) !important;
+  overflow: auto !important;
+  background: #16181d !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.45) !important;
+  padding: 12px 14px 14px !important;
+}
+.todo-modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.todo-modal-head h3{ margin:0; font-size:15px; color:#F5F5F4; }
+.todo-close{ background:transparent; border:none; color:#A8A29E; font-size:22px; cursor:pointer; }
+.todo-add{ display:flex; gap:6px; margin-bottom:10px; }
+.todo-add input{
+  flex:1; height:34px; border-radius:8px; border:1px solid rgba(255,255,255,0.12);
+  background:rgba(0,0,0,0.35); color:#F5F5F4; padding:0 10px; font-size:13px;
+}
+.todo-list{ display:flex; flex-direction:column; gap:4px; }
+.todo-item{
+  display:flex; align-items:flex-start; gap:8px;
+  padding:8px; border-radius:8px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+}
+.todo-item input[type=checkbox]{ margin-top:3px; accent-color:#D4894A; width:16px; height:16px; }
+.todo-item .todo-text{ flex:1; font-size:13px; color:#E7E5E4; }
+.todo-item.done .todo-text{ text-decoration:line-through; color:#78716C; }
+.todo-item .todo-del{ background:transparent; border:none; color:#78716C; cursor:pointer; font-size:14px; }
+.todo-foot{ margin-top:10px; }
+
+
+
+/* Topbar: pin + notif + profil satu baris, warna netral (bukan orange solid) */
+.admin-topbar{
+  display: flex !important;
+  align-items: center !important;
+}
+.admin-topbar-right{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-left: auto !important;
+  height: 40px !important;
+}
+.admin-topbar-bell-wrap{
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 36px !important;
+  position: relative !important;
+}
+/* Pin & Notif: sama persis */
+#adminTodoBtn,
+#adminNotifBtn,
+button.admin-topbar-bell,
+button.admin-topbar-pin{
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  background: rgba(255,255,255,0.06) !important;
+  background-image: none !important;
+  color: #E2E8F0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  vertical-align: middle !important;
+  flex-shrink: 0 !important;
+}
+#adminTodoBtn:hover,
+#adminNotifBtn:hover,
+button.admin-topbar-bell:hover{
+  background: rgba(255,255,255,0.1) !important;
+  border-color: rgba(255,255,255,0.22) !important;
+  color: #F8FAFC !important;
+}
+#adminTodoBtn svg,
+#adminNotifBtn svg{
+  width: 18px !important;
+  height: 18px !important;
+  stroke: currentColor !important;
+  fill: none !important;
+  display: block !important;
+}
+/* Badge notif & todo */
+#adminNotifBadge,
+#adminTodoBadge,
+.notif-badge,
+.todo-badge{
+  position: absolute !important;
+  top: -3px !important;
+  right: -3px !important;
+  min-width: 16px !important;
+  height: 16px !important;
+  padding: 0 4px !important;
+  border-radius: 99px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  background: #EF4444 !important;
+  color: #fff !important;
+  border: 2px solid #0B0D10 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  z-index: 2 !important;
+}
+/* Profil sejajar */
+.admin-topbar-right .topbar-user-group{
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 36px !important;
+  margin: 0 !important;
+  vertical-align: middle !important;
+}
+.admin-topbar-right .admin-topbar-avatar{
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 36px !important;
+  gap: 8px !important;
+}
+
+
+
+/* ===== To-do modal — layout & fungsi ===== */
+#todoModal.todo-modal,
+.todo-modal#todoModal{
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 10050 !important;
+  background: rgba(0,0,0,0.6) !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+  padding: 52px 18px 18px !important;
+  box-sizing: border-box !important;
+}
+#todoModal .todo-modal-panel{
+  width: min(340px, calc(100vw - 24px)) !important;
+  max-height: min(70vh, 480px) !important;
+  overflow: auto !important;
+  background: #1a1d24 !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5) !important;
+  padding: 14px 14px 12px !important;
+  box-sizing: border-box !important;
+}
+#todoModal .todo-modal-head{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  margin-bottom: 12px !important;
+}
+#todoModal .todo-modal-head h3{
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #F5F5F4 !important;
+  flex: 1 !important;
+  width: auto !important;
+}
+#todoModal .todo-close,
+#todoModal button.todo-close{
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  background: rgba(255,255,255,0.06) !important;
+  color: #E2E8F0 !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  box-shadow: none !important;
+}
+#todoModal .todo-close:hover{
+  background: rgba(255,255,255,0.12) !important;
+}
+#todoModal .todo-add,
+#todoModal form.todo-add{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 0 0 12px !important;
+  width: 100% !important;
+}
+#todoModal .todo-add input,
+#todoModal #todoInput{
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: 36px !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  background: rgba(0,0,0,0.35) !important;
+  color: #F5F5F4 !important;
+  font-size: 13px !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+#todoModal .todo-add button[type="submit"],
+#todoModal .todo-add .btn-xs{
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 72px !important;
+  max-width: 90px !important;
+  height: 36px !important;
+  margin: 0 !important;
+  padding: 0 12px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  background: rgba(255,255,255,0.1) !important;
+  color: #F5F5F4 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+}
+#todoModal .todo-list{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  min-height: 40px !important;
+}
+#todoModal .todo-item{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  padding: 8px 10px !important;
+  border-radius: 8px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+#todoModal .todo-item input[type="checkbox"]{
+  width: 16px !important;
+  height: 16px !important;
+  margin: 2px 0 0 !important;
+  flex-shrink: 0 !important;
+  accent-color: #D4894A !important;
+  cursor: pointer !important;
+}
+#todoModal .todo-item .todo-text{
+  flex: 1 !important;
+  font-size: 13px !important;
+  color: #E7E5E4 !important;
+  line-height: 1.35 !important;
+  word-break: break-word !important;
+}
+#todoModal .todo-item.done .todo-text{
+  text-decoration: line-through !important;
+  color: #78716C !important;
+}
+#todoModal .todo-item .todo-del{
+  width: 28px !important;
+  min-width: 28px !important;
+  height: 28px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  color: #78716C !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+}
+#todoModal .todo-foot{
+  margin-top: 12px !important;
+}
+#todoModal .todo-foot button,
+#todoModal #todoClearDone{
+  width: 100% !important;
+  height: 34px !important;
+  margin: 0 !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  background: rgba(255,255,255,0.04) !important;
+  color: #A8A29E !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+}
+#todoModal .empty-log{
+  padding: 12px 4px !important;
+  font-size: 12px !important;
+  color: #78716C !important;
+  text-align: center !important;
+}
+
+
+#todoModal #todoAddBtn{
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 78px !important;
+  height: 36px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 8px !important;
+  background: #2A3140 !important;
+  color: #F5F5F4 !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+#todoModal #todoInput{
+  pointer-events: auto !important;
+  z-index: 2 !important;
+  position: relative !important;
+}
+#todoModal .todo-add{
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+
+/* Todo 2 kolom: pending / done */
+#todoModal .todo-section{ margin-bottom: 12px !important; }
+#todoModal .todo-sec-title{
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #78716C !important;
+  margin: 0 0 6px !important;
+}
+#todoModal .todo-list{ min-height: 8px !important; }
+#todoModal .todo-item{
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  padding: 8px 10px !important;
+  margin-bottom: 4px !important;
+  border-radius: 8px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+#todoModal .todo-item.done{
+  opacity: 0.75 !important;
+  background: rgba(255,255,255,0.02) !important;
+}
+#todoModal .todo-item.done .todo-text{
+  text-decoration: line-through !important;
+  color: #78716C !important;
+}
+#todoModal .todo-empty{
+  font-size: 12px !important;
+  color: #57534E !important;
+  padding: 6px 2px !important;
+}
+
 </style>
 
 <style>
@@ -8622,8 +9143,7 @@ button.admin-topbar-avatar:hover,
           <div class="admin-sidebar-section">Omset & Kinerja</div>
           <button class="tab-btn admin-nav-btn" data-tab="kinerjaharian"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><span class="admin-nav-label">Dashboard Harian</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="menuharian"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M12 19V5M20 19v-7"/></svg></span><span class="admin-nav-label">Omset Harian</span></button>
-          <button class="tab-btn admin-nav-btn" data-tab="pemantauan"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M12 19V5M20 19v-7"/></svg></span><span class="admin-nav-label">Pemantauan Harian</span></button>
-          <button class="tab-btn admin-nav-btn" data-tab="omsetbulanan"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="admin-nav-label">Omset Bulanan</span></button>
+<button class="tab-btn admin-nav-btn" data-tab="omsetbulanan"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="admin-nav-label">Omset Bulanan</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kpibisnis"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="admin-nav-label">KPI Bisnis</span></button>
           <div class="admin-sidebar-section">Operasional</div>
           <button class="tab-btn admin-nav-btn" data-tab="rejected"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg></span><span class="admin-nav-label">Rejected</span></button>
@@ -8650,6 +9170,13 @@ button.admin-topbar-avatar:hover,
           </button>
           <div class="admin-topbar-title" id="adminTopbarTitle">Dashboard</div>
           <div class="admin-topbar-right">
+            <button type="button" class="admin-topbar-bell admin-topbar-pin" id="adminTodoBtn" aria-label="To-do list" title="To-do list">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/>
+                <circle cx="12" cy="11" r="2.2"/>
+              </svg>
+              <span class="todo-badge" id="adminTodoBadge" hidden>0</span>
+            </button>
             <div class="admin-topbar-bell-wrap">
               <button type="button" class="admin-topbar-bell" id="adminNotifBtn" aria-label="Notifikasi" aria-haspopup="true" title="Notifikasi">
                 <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
@@ -12100,103 +12627,8 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
   }
   window.loadDashSelisih = loadDashSelisih;
 
-  // ---------------- To-do list (local) ----------------
-  var TODO_KEY = "gue_todo_v1";
-  function todoLoad(){
-    try{ return JSON.parse(localStorage.getItem(TODO_KEY)||"[]")||[]; }catch(e){ return []; }
-  }
-  function todoSave(list){
-    try{ localStorage.setItem(TODO_KEY, JSON.stringify(list||[])); }catch(e){}
-    todoUpdateBadge();
-  }
-  function todoUpdateBadge(){
-    var list = todoLoad();
-    var n = list.filter(function(x){ return !x.done; }).length;
-    var b = document.getElementById("adminTodoBadge");
-    if(!b) return;
-    if(n > 0){ b.hidden = false; b.textContent = String(n); }
-    else { b.hidden = true; }
-  }
-  function todoRender(){
-    var box = document.getElementById("todoList");
-    if(!box) return;
-    var list = todoLoad();
-    if(!list.length){
-      box.innerHTML = '<div class="empty-log" style="padding:12px 4px;">Belum ada tugas. Tambah di atas.</div>';
-      return;
-    }
-    box.innerHTML = list.map(function(item, i){
-      return '<div class="todo-item'+(item.done?" done":"")+'" data-i="'+i+'">'+
-        '<input type="checkbox" '+(item.done?"checked":"")+' data-todo-check="'+i+'">'+
-        '<span class="todo-text">'+escHtml(item.text||"")+'</span>'+
-        '<button type="button" class="todo-del" data-todo-del="'+i+'" title="Hapus">×</button>'+
-      '</div>';
-    }).join("");
-  }
-  function openTodoModal(){
-    var m = document.getElementById("todoModal");
-    if(!m) return;
-    m.hidden = false;
-    m.style.cssText = "display:flex !important;";
-    todoRender();
-    var inp = document.getElementById("todoInput");
-    if(inp) setTimeout(function(){ inp.focus(); }, 50);
-  }
-  function closeTodoModal(){
-    var m = document.getElementById("todoModal");
-    if(!m) return;
-    m.hidden = true;
-    m.style.cssText = "display:none !important;";
-  }
-  (function initTodo(){
-    var btn = document.getElementById("adminTodoBtn");
-    if(btn) btn.addEventListener("click", function(e){ e.stopPropagation(); openTodoModal(); });
-    var closeBtn = document.getElementById("todoCloseBtn");
-    if(closeBtn) closeBtn.addEventListener("click", closeTodoModal);
-    var modal = document.getElementById("todoModal");
-    if(modal) modal.addEventListener("click", function(e){ if(e.target === modal) closeTodoModal(); });
-    var form = document.getElementById("todoAddForm");
-    if(form) form.addEventListener("submit", function(e){
-      e.preventDefault();
-      var inp = document.getElementById("todoInput");
-      var text = (inp && inp.value || "").trim();
-      if(!text) return;
-      var list = todoLoad();
-      list.unshift({ text: text, done: false, at: Date.now() });
-      todoSave(list);
-      if(inp) inp.value = "";
-      todoRender();
-    });
-    var listEl = document.getElementById("todoList");
-    if(listEl) listEl.addEventListener("click", function(e){
-      var del = e.target.closest("[data-todo-del]");
-      if(del){
-        var i = parseInt(del.getAttribute("data-todo-del"), 10);
-        var list = todoLoad();
-        list.splice(i, 1);
-        todoSave(list);
-        todoRender();
-        return;
-      }
-      var chk = e.target.closest("[data-todo-check]");
-      if(chk){
-        var i = parseInt(chk.getAttribute("data-todo-check"), 10);
-        var list = todoLoad();
-        if(list[i]) list[i].done = !!chk.checked;
-        todoSave(list);
-        todoRender();
-      }
-    });
-    var clearBtn = document.getElementById("todoClearDone");
-    if(clearBtn) clearBtn.addEventListener("click", function(){
-      todoSave(todoLoad().filter(function(x){ return !x.done; }));
-      todoRender();
-    });
-    todoUpdateBadge();
-  })();
-
-
-  function loadAdminSummary(force){
+  
+function loadAdminSummary(force){
     var wrap = document.getElementById("adminSummaryWrap");
     if(!wrap) return;
     if(!session.adminPin){
@@ -16595,6 +17027,150 @@ function loadAdminBertugas(){
       return;
     }
   }, true); // capture phase — menang sebelum handler lain menelan event
+})();
+
+
+  
+
+
+</script>
+
+  <div id="todoModal" class="todo-modal" hidden style="display:none !important;">
+    <div class="todo-modal-panel" id="todoModalPanel" onclick="event.stopPropagation()">
+      <div class="todo-modal-head">
+        <h3>To-do List</h3>
+        <button type="button" class="todo-close" id="todoCloseBtn" onclick="window.__todoClose&&window.__todoClose()">×</button>
+      </div>
+      <div class="todo-add">
+        <input type="text" id="todoInput" placeholder="Tambah tugas..." maxlength="160" autocomplete="off"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();window.__todoAdd&&window.__todoAdd();}">
+        <button type="button" id="todoAddBtn" onclick="window.__todoAdd&&window.__todoAdd()">Tambah</button>
+      </div>
+      <div class="todo-section">
+        <div class="todo-sec-title">Belum selesai</div>
+        <div class="todo-list" id="todoListPending"></div>
+      </div>
+      <div class="todo-section">
+        <div class="todo-sec-title">Sudah selesai</div>
+        <div class="todo-list" id="todoListDone"></div>
+      </div>
+      <div class="todo-foot">
+        <button type="button" id="todoClearDone" onclick="window.__todoClearDone&&window.__todoClearDone()">Hapus yang selesai</button>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+/* TODO SYSTEM FINAL — standalone */
+(function(){
+  var KEY = "gue_todo_items_v2";
+  function load(){
+    try {
+      var a = JSON.parse(localStorage.getItem(KEY) || "[]");
+      return Array.isArray(a) ? a : [];
+    } catch (e) { return []; }
+  }
+  function save(list){
+    localStorage.setItem(KEY, JSON.stringify(list));
+    var n = list.filter(function(x){ return !x.done; }).length;
+    var b = document.getElementById("adminTodoBadge");
+    if (b) {
+      if (n > 0) { b.hidden = false; b.style.display = "inline-flex"; b.textContent = String(n); }
+      else { b.hidden = true; b.style.display = "none"; }
+    }
+  }
+  function esc(s){
+    return String(s == null ? "" : s)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function uid(){ return "t" + Date.now() + "_" + Math.floor(Math.random()*1e6); }
+
+  function render(){
+    var list = load();
+    var pending = list.filter(function(x){ return !x.done; });
+    var done = list.filter(function(x){ return !!x.done; });
+    var pb = document.getElementById("todoListPending");
+    var db = document.getElementById("todoListDone");
+    function row(item){
+      return '<div class="todo-item'+(item.done?" done":"")+'">'+
+        '<input type="checkbox" '+(item.done?"checked":"")+' onchange="window.__todoToggle(\''+item.id+'\', this.checked)">'+
+        '<span class="todo-text">'+esc(item.text)+'</span>'+
+        '<button type="button" onclick="window.__todoDelete(\''+item.id+'\')">×</button>'+
+      '</div>';
+    }
+    if (pb) pb.innerHTML = pending.length ? pending.map(row).join("") : '<div class="todo-empty">Tidak ada tugas aktif.</div>';
+    if (db) db.innerHTML = done.length ? done.map(row).join("") : '<div class="todo-empty">Belum ada yang selesai.</div>';
+  }
+
+  function add(){
+    var inp = document.getElementById("todoInput");
+    if (!inp) return;
+    var text = String(inp.value || "").trim();
+    if (!text) { inp.focus(); return; }
+    var list = load();
+    list.unshift({ id: uid(), text: text, done: false, at: Date.now() });
+    save(list);
+    inp.value = "";
+    render();
+  }
+  function toggle(id, checked){
+    var list = load();
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === id) { list[i].done = !!checked; break; }
+    }
+    save(list);
+    render();
+  }
+  function del(id){
+    save(load().filter(function(x){ return x.id !== id; }));
+    render();
+  }
+  function clearDone(){
+    save(load().filter(function(x){ return !x.done; }));
+    render();
+  }
+  function open(){
+    var m = document.getElementById("todoModal");
+    if (!m) return;
+    m.hidden = false;
+    m.style.setProperty("display", "flex", "important");
+    render();
+    var inp = document.getElementById("todoInput");
+    if (inp) setTimeout(function(){ inp.focus(); }, 30);
+  }
+  function close(){
+    var m = document.getElementById("todoModal");
+    if (!m) return;
+    m.hidden = true;
+    m.style.setProperty("display", "none", "important");
+  }
+
+  window.__todoAdd = add;
+  window.__todoToggle = toggle;
+  window.__todoDelete = del;
+  window.__todoClearDone = clearDone;
+  window.__todoClose = close;
+  window.__todoOpen = open;
+  window.openTodoModal = open;
+  window.closeTodoModal = close;
+
+  function wirePin(){
+    var pin = document.getElementById("adminTodoBtn");
+    if (pin) {
+      pin.setAttribute("onclick", "window.__todoOpen&&window.__todoOpen()");
+      pin.onclick = function(e){ e.preventDefault(); e.stopPropagation(); open(); };
+    }
+    var modal = document.getElementById("todoModal");
+    if (modal) {
+      modal.addEventListener("click", function(e){ if (e.target === modal) close(); });
+    }
+    save(load());
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wirePin);
+  else wirePin();
+  setTimeout(wirePin, 500);
 })();
 </script>
 
