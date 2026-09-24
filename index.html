@@ -1162,6 +1162,95 @@ button.admin-topbar-bell:hover{
   padding: 6px 2px !important;
 }
 
+
+
+/* ===== TODO item layout FINAL — horizontal, tombol kecil ===== */
+#todoModal .todo-item,
+#todoModal .todo-list .todo-item{
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 8px 10px !important;
+  margin: 0 0 6px !important;
+  border-radius: 8px !important;
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  writing-mode: horizontal-tb !important;
+}
+#todoModal .todo-item input[type="checkbox"]{
+  flex: 0 0 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  accent-color: #D4894A !important;
+  cursor: pointer !important;
+}
+#todoModal .todo-item .todo-text,
+#todoModal .todo-item span.todo-text{
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  display: block !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  color: #F5F5F4 !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+  letter-spacing: normal !important;
+}
+#todoModal .todo-item.done .todo-text{
+  text-decoration: line-through !important;
+  color: #78716C !important;
+}
+#todoModal .todo-item button,
+#todoModal .todo-item button[type="button"]{
+  flex: 0 0 28px !important;
+  width: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: rgba(255,255,255,0.06) !important;
+  background-image: none !important;
+  color: #A8A29E !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+#todoModal .todo-item button:hover{
+  background: rgba(248,113,113,0.2) !important;
+  color: #FCA5A5 !important;
+  border-color: rgba(248,113,113,0.3) !important;
+}
+#todoModal .todo-list{
+  display: block !important;
+  width: 100% !important;
+}
+#todoModal .todo-section{
+  width: 100% !important;
+}
+#todoModal .todo-modal-panel{
+  overflow-x: hidden !important;
+}
+
 </style>
 
 <style>
@@ -17094,10 +17183,10 @@ function loadAdminBertugas(){
     var pb = document.getElementById("todoListPending");
     var db = document.getElementById("todoListDone");
     function row(item){
-      return '<div class="todo-item'+(item.done?" done":"")+'">'+
-        '<input type="checkbox" '+(item.done?"checked":"")+' onchange="window.__todoToggle(\''+item.id+'\', this.checked)">'+
-        '<span class="todo-text">'+esc(item.text)+'</span>'+
-        '<button type="button" onclick="window.__todoDelete(\''+item.id+'\')">×</button>'+
+      return '<div class="todo-item'+(item.done?" done":"")+' style="display:flex;flex-direction:row;align-items:center;gap:10px;width:100%;box-sizing:border-box;padding:8px 10px;">'+
+        '<input type="checkbox" '+(item.done?"checked":"")+' onchange="window.__todoToggle(\''+item.id+'\', this.checked)" style="flex:0 0 16px;width:16px;height:16px;margin:0;">'+
+        '<span class="todo-text" style="flex:1 1 auto;min-width:0;font-size:13px;line-height:1.4;color:#F5F5F4;white-space:normal;word-break:break-word;">'+esc(item.text)+'</span>'+
+        '<button type="button" class="todo-del-btn" onclick="window.__todoDelete(\''+item.id+'\')" style="flex:0 0 28px;width:28px;height:28px;min-width:28px;max-width:28px;padding:0;margin:0;border-radius:6px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.08);color:#A8A29E;font-size:16px;line-height:28px;text-align:center;cursor:pointer;">×</button>'+
       '</div>';
     }
     if (pb) pb.innerHTML = pending.length ? pending.map(row).join("") : '<div class="todo-empty">Tidak ada tugas aktif.</div>';
