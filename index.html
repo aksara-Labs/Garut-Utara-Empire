@@ -2151,6 +2151,133 @@ button.kanit-profile-btn{
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 }
+
+
+/* Modal hasil omset — padat & muat layar */
+#resultOverlay .result-modal-card,
+.result-modal-card{
+  background: #161a22 !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 14px !important;
+  color: #E5E7EB !important;
+  max-height: min(88vh, 720px) !important;
+  overflow-y: auto !important;
+  padding: 14px 16px 12px !important;
+  width: min(360px, calc(100vw - 24px)) !important;
+  box-sizing: border-box !important;
+}
+#resultOverlay .stamp,
+#resultOverlay .result .stamp{
+  color: var(--gold-dim, #E0A06A) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+  margin: 0 0 4px !important;
+  line-height: 1.3 !important;
+}
+#resultOverlay .stamp b,
+#resultOverlay .result .stamp strong{
+  font-size: 13px !important;
+  display: block !important;
+  margin-top: 2px !important;
+}
+#resultOverlay .thanks{
+  color: #F8FAFC !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.35 !important;
+  margin: 8px 0 4px !important;
+}
+#resultOverlay .detail{
+  color: #94A3B8 !important;
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+  margin: 0 0 8px !important;
+}
+#resultOverlay .recap{
+  margin-top: 6px !important;
+  padding-top: 6px !important;
+  border-top: 1px dashed rgba(255,255,255,0.12) !important;
+}
+#resultOverlay .recap-row{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  padding: 5px 0 !important;
+  margin: 0 !important;
+  border-bottom: 1px dotted rgba(255,255,255,0.08) !important;
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+}
+#resultOverlay .recap-row .k{
+  color: #94A3B8 !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+#resultOverlay .recap-row .v{
+  color: #F1F5F9 !important;
+  font-weight: 600 !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+}
+#resultOverlay .recap-row.total .k,
+#resultOverlay .recap-row.total .v{
+  color: var(--gold, #D4894A) !important;
+  font-weight: 700 !important;
+  font-size: 12.5px !important;
+}
+#resultOverlay .recap-row.diff .v.pos{ color: #F87171 !important; }
+#resultOverlay .recap-row.diff .v.neg{ color: #34D399 !important; }
+#resultOverlay .recap-toggle{
+  display: block !important;
+  width: 100% !important;
+  margin: 8px 0 0 !important;
+  padding: 8px !important;
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 8px !important;
+  color: #CBD5E1 !important;
+  font-size: 11px !important;
+  cursor: pointer !important;
+}
+/* Detail default TERTUTUP — hemat tinggi */
+#resultOverlay .recap-extra{
+  display: none !important;
+}
+#resultOverlay.expanded .recap-extra{
+  display: block !important;
+  margin-top: 4px !important;
+  padding-top: 4px !important;
+  border-top: 1px dashed rgba(255,255,255,0.1) !important;
+}
+#resultOverlay .result-close{
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 14px !important;
+}
+#resultOverlay .result-actions{
+  margin-top: 10px !important;
+  gap: 8px !important;
+}
+#resultOverlay .result-actions button,
+#resultDownloadBtn{
+  min-height: 36px !important;
+  padding: 0 12px !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+}
+#resultDownloadBtn{
+  background: linear-gradient(135deg, #E8A86A, #C47A3A) !important;
+  color: #0B0D10 !important;
+  border: none !important;
+  font-weight: 700 !important;
+}
+#resultOverlay .ss-reminder{
+  font-size: 11px !important;
+  margin-top: 6px !important;
+  padding: 6px 8px !important;
+}
+
 </style>
 
 <style>
@@ -11910,18 +12037,18 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     recapEl.style.display = "block";
     // Ringkas: total hari ini (all) + proyeksi; detail di-expand
     recapEl.innerHTML =
-      '<div class="recap-row total"><span class="k">Total All Gadai bulan ini</span><span class="v">'+fmt(r.bulan_ini_total)+'</span></div>'+
-      '<div class="recap-row total"><span class="k">Proyeksi akhir bulan</span><span class="v">'+fmt(r.proyeksi_all_gadai)+'</span></div>'+
+      '<div class="recap-row total"><span class="k">Total bulan ini</span><span class="v">'+fmt(r.bulan_ini_total)+'</span></div>'+
+      '<div class="recap-row total"><span class="k">Proyeksi akhir bln</span><span class="v">'+fmt(r.proyeksi_all_gadai)+'</span></div>'+
       '<div class="recap-row"><span class="k">Rejected hari ini</span><span class="v">'+fmt(r.rejected)+'</span></div>'+
-      '<div class="recap-row diff"><span class="k">Selisih vs target</span><span class="v '+selisihClass+'">'+fmt(Math.abs(selisih))+' ('+selisihLabel+')</span></div>'+
+      '<div class="recap-row diff"><span class="k">Selisih target</span><span class="v '+selisihClass+'">'+fmt(Math.abs(selisih))+' ('+selisihLabel+')</span></div>'+
       '<button type="button" class="recap-toggle" id="recapToggleBtn">Lihat detail ▾</button>'+
       '<div class="recap-extra" id="recapExtra">'+
         '<div class="recap-row"><span class="k">Pencapaian GE</span><span class="v">'+fmt(r.ge_total)+'</span></div>'+
         '<div class="recap-row"><span class="k">Pencapaian GB</span><span class="v">'+fmt(r.gb_total)+'</span></div>'+
         '<div class="recap-row"><span class="k">Pencapaian GG</span><span class="v">'+fmt(r.gg_total)+'</span></div>'+
-        '<div class="recap-row"><span class="k">Target All Gadai ('+cabang+', '+r.monthLabel+')</span><span class="v">'+fmt(r.target_bulan_ini)+'</span></div>'+
-        '<div class="recap-row"><span class="k">Bulan kemarin'+(r.bulan_kemarin_label ? " (" + r.bulan_kemarin_label + ")" : "")+'</span><span class="v">'+(r.bulan_kemarin_total === null ? "belum ada data" : fmt(r.bulan_kemarin_total))+'</span></div>'+
-        '<div class="recap-row diff"><span class="k">Target harian</span><span class="v '+targetHarianClass+'">'+targetHarianValue+'</span></div>'+
+        '<div class="recap-row"><span class="k">Target ('+cabang+', '+r.monthLabel+')</span><span class="v">'+fmt(r.target_bulan_ini)+'</span></div>'+
+        '<div class="recap-row"><span class="k">Bln kemarin'+(r.bulan_kemarin_label ? " (" + r.bulan_kemarin_label + ")" : "")+'</span><span class="v">'+(r.bulan_kemarin_total === null ? "belum ada data" : fmt(r.bulan_kemarin_total))+'</span></div>'+
+        '<div class="recap-row diff"><span class="k">Target/hari</span><span class="v '+targetHarianClass+'">'+targetHarianValue+'</span></div>'+
       '</div>';
 
     var tog = document.getElementById("recapToggleBtn");
@@ -11955,7 +12082,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
   var resultActions = document.getElementById("resultActions");
   var resultModalCard = document.querySelector(".result-modal-card");
 
-  function openResultModal(){ resultBox.classList.add("show"); resultOverlay.classList.add("show"); }
+  function openResultModal(){ resultBox.classList.add("show"); resultOverlay.classList.add("show"); resultOverlay.classList.remove("expanded"); var tg=document.getElementById("recapToggleBtn"); if(tg) tg.textContent="Lihat detail ▾"; }
   function closeResultModal(){ resultOverlay.classList.remove("show"); resultBox.classList.remove("show","ok","err"); }
   resultClose.addEventListener("click", closeResultModal);
   resultCloseBtn.addEventListener("click", closeResultModal);
@@ -12068,7 +12195,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
             '<span class="lh-eyebrow">Laporan Transaksi Gadai</span>'+
             '<span class="lh-line">Tanggal: '+formatTanggalDisplay(tanggal)+'</span>'+
             '<span class="lh-line">Cabang: '+r.cabang+'</span>';
-          thanksEl.textContent = "Terima kasih! Data omset sudah tersimpan.";
+          thanksEl.textContent = "Terima kasih! Data omset tersimpan.";
           detailEl.textContent = r.cabang+" · "+r.monthLabel+", tgl "+String(r.day).padStart(2,"0")+" (GE "+ge+" / GB "+gb+" / GG "+gg+" / Rejected "+rejected+").";
           renderRecap(r, r.cabang);
           ssReminderEl.style.display = "block";
