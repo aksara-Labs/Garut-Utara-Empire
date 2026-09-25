@@ -12320,12 +12320,25 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       openCabangGate(session.cabang);
       return;
     }
-    var tanggal = document.getElementById("tanggal").value;
-    var ge = document.getElementById("ge").value;
-    var gb = document.getElementById("gb").value;
-    var gg = document.getElementById("gg").value;
-    var rejected = document.getElementById("rejected").value;
-    if(!tanggal || ge === "" || gb === "" || gg === "" || rejected === ""){ return; }
+    var tanggalEl = document.getElementById("tanggal");
+    var geEl = document.getElementById("ge");
+    var gbEl = document.getElementById("gb");
+    var ggEl = document.getElementById("gg");
+    var rejEl = document.getElementById("rejected");
+    var tanggal = tanggalEl ? tanggalEl.value : "";
+    var ge = geEl ? geEl.value : "";
+    var gb = gbEl ? gbEl.value : "";
+    var gg = ggEl ? ggEl.value : "";
+    var rejected = rejEl ? rejEl.value : "";
+    [tanggalEl, geEl, gbEl, ggEl, rejEl].forEach(function(el){ if(el) el.classList.remove("is-invalid"); });
+    var missing = false;
+    // Kosong ≠ 0 — wajib ketik angka (boleh 0)
+    if(!tanggal){ if(tanggalEl){ tanggalEl.classList.add("is-invalid"); tanggalEl.focus(); } missing = true; }
+    if(ge === ""){ if(geEl){ geEl.classList.add("is-invalid"); if(!missing) geEl.focus(); } missing = true; }
+    if(gb === ""){ if(gbEl){ gbEl.classList.add("is-invalid"); if(!missing) gbEl.focus(); } missing = true; }
+    if(gg === ""){ if(ggEl){ ggEl.classList.add("is-invalid"); if(!missing) ggEl.focus(); } missing = true; }
+    if(rejected === ""){ if(rejEl){ rejEl.classList.add("is-invalid"); if(!missing) rejEl.focus(); } missing = true; }
+    if(missing) return;
 
     pendingData = { cabang: session.cabang, tanggal: tanggal, ge: ge, gb: gb, gg: gg, rejected: rejected };
 
@@ -16769,15 +16782,25 @@ function validateKanitAuditForm1_(showAlert){
     }
     need("kanitAuditTanggal");
     need("kanitAuditSummaryFile");
-    // nPel/nSup: kosong = 0 (boleh)
+    // nPel/nSup: wajib diisi (kosong ≠ 0 — harus ketik angka, termasuk 0)
     var nPelEl = document.getElementById("kanitAuditNPel");
     var nSupEl = document.getElementById("kanitAuditNSup");
-    if(nPelEl){ nPelEl.classList.remove("is-invalid"); if(nPelEl.value === "") nPelEl.value = "0"; }
-    if(nSupEl){ nSupEl.classList.remove("is-invalid"); if(nSupEl.value === "") nSupEl.value = "0"; }
+    if(nPelEl){
+      nPelEl.classList.remove("is-invalid");
+      if(nPelEl.value === "" || nPelEl.value == null){
+        nPelEl.classList.add("is-invalid"); ok = false; if(!firstBad) firstBad = nPelEl;
+      }
+    }
+    if(nSupEl){
+      nSupEl.classList.remove("is-invalid");
+      if(nSupEl.value === "" || nSupEl.value == null){
+        nSupEl.classList.add("is-invalid"); ok = false; if(!firstBad) firstBad = nSupEl;
+      }
+    }
     if(!ok && firstBad){ try{ firstBad.focus(); }catch(e){} }
     if(!ok && showAlert){
       var msg = document.getElementById("kanitAuditMsg");
-      if(msg && typeof showMsg === "function") showMsg(msg, "Lengkapi data utama dulu, lalu Next.", "err");
+      if(msg && typeof showMsg === "function") showMsg(msg, "Isi semua field angka dulu (kosong tidak dihitung 0).", "err");
       else alert("Lengkapi Form 1: tanggal, upload Audit Summary, dan jumlah temuan.");
     }
     return ok;
