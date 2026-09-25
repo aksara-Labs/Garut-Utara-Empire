@@ -1880,6 +1880,148 @@ button.kanit-profile-btn{
 #kanitAuditItemsPel:empty,
 #kanitAuditItemsSup:empty{ display: none !important; }
 
+
+/* Input Omset — bersih mobile */
+#tab-kanitinput .hint{ display: none !important; }
+#screen-omset-form #tab-kanitinput,
+#tab-kanitinput{
+  max-width: 480px !important;
+}
+#tab-kanitinput label{
+  color: #94A3B8 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+#tab-kanitinput input{
+  min-height: 44px !important;
+  font-size: 16px !important;
+  color: #F8FAFC !important;
+}
+#tab-kanitinput #submitBtn{
+  width: 100% !important;
+  min-height: 46px !important;
+  margin-top: 8px !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+}
+@media (max-width: 560px){
+  #tab-kanitinput .triple{
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+}
+
+
+/* ===== Input Omset polish ===== */
+#tab-kanitinput .field{ margin-bottom: 10px !important; }
+#tab-kanitinput label{
+  font-size: 11px !important;
+  margin-bottom: 4px !important;
+  color: #94A3B8 !important;
+}
+#tab-kanitinput label .no,
+#tab-kanitinput label .tag{
+  font-size: 10px !important;
+  padding: 2px 6px !important;
+}
+#tab-kanitinput input{
+  min-height: 42px !important;
+  padding: 8px 12px !important;
+  font-size: 15px !important;
+}
+#tab-kanitinput .triple{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+#tab-kanitinput #submitBtn{
+  width: 100% !important;
+  min-height: 46px !important;
+  margin-top: 6px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+#tab-kanitinput input.is-invalid{
+  border-color: #EF4444 !important;
+  box-shadow: 0 0 0 2px rgba(239,68,68,0.25) !important;
+}
+#tab-kanitinput .field-error{
+  display: none;
+  font-size: 11px !important;
+  color: #FCA5A5 !important;
+  margin-top: 4px !important;
+}
+#tab-kanitinput .field-error.show{ display: block !important; }
+
+/* Modal: Batal netral, Kirim orange */
+#modalOverlay .modal-btn.cancel,
+.modal-btn.cancel{
+  background: transparent !important;
+  background-image: none !important;
+  border: 1px solid rgba(255,255,255,0.18) !important;
+  color: #CBD5E1 !important;
+  box-shadow: none !important;
+}
+#modalOverlay .modal-btn.cancel:hover{
+  background: rgba(255,255,255,0.06) !important;
+  color: #F8FAFC !important;
+  border-color: rgba(255,255,255,0.28) !important;
+}
+#modalOverlay .modal-btn.confirm,
+.modal-btn.confirm{
+  background: linear-gradient(135deg, #E8A86A, #C47A3A) !important;
+  color: #0B0D10 !important;
+  border: none !important;
+  font-weight: 700 !important;
+}
+
+/* Result modal ringkas */
+#resultOverlay .result-modal-card{
+  max-height: min(85vh, 640px) !important;
+  overflow: auto !important;
+}
+#resultOverlay .recap-extra{
+  display: none !important;
+}
+#resultOverlay.expanded .recap-extra{
+  display: block !important;
+}
+#resultOverlay .recap-toggle{
+  display: block !important;
+  width: 100% !important;
+  margin-top: 10px !important;
+  padding: 8px !important;
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 8px !important;
+  color: #CBD5E1 !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+}
+
+@media (max-width: 560px){
+  #tab-kanitinput .triple{
+    grid-template-columns: 1fr !important;
+  }
+  /* Profil HP: avatar saja */
+  #screen-omset-form .topbar-user-group .meta,
+  #screen-omset-form .admin-avatar-text,
+  #screen-kanit .topbar-user-group .meta,
+  #screen-kanit #kanitMiniName,
+  #screen-kanit #kanitMiniRole{
+    display: none !important;
+  }
+  #screen-omset-form .topbar-user-group,
+  #screen-kanit .topbar-user-group{
+    padding: 2px !important;
+  }
+}
+@media (min-width: 561px) and (max-width: 900px){
+  #tab-kanitinput .triple{
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
 </style>
 
 <style>
@@ -9634,14 +9776,7 @@ button.admin-topbar-avatar:hover,
           <input type="number" id="rejected" min="0" step="1" placeholder="0" required>
         </div>
 
-        <div class="hint">
-          Data akan ditulis langsung ke tab cabang di Google Sheets, pada sel harian
-          sesuai tanggal yang dipilih. Total mingguan/bulanan akan terhitung otomatis
-          lewat rumus yang sudah ada. <b>Pastikan tanggal &amp; cabang benar</b> — data
-          lama pada tanggal yang sama akan tertimpa.
-        </div>
-
-        <button type="submit" id="submitBtn">Kirim ke Google Sheets</button>
+        <button type="submit" id="submitBtn">Kirim</button>
       </form>
 
       <div style="text-align:center; margin-top:16px;">
@@ -10663,8 +10798,8 @@ button.admin-topbar-avatar:hover,
       </label>
     </div>
     <div class="modal-actions">
-      <button type="button" class="modal-btn cancel" id="modalCancel">Batal, cek lagi</button>
-      <button type="button" class="modal-btn confirm" id="modalConfirm">Ya, Kirim ke Sheets</button>
+      <button type="button" class="modal-btn cancel" id="modalCancel">Batal</button>
+      <button type="button" class="modal-btn confirm" id="modalConfirm">Ya, Kirim</button>
     </div>
   </div>
 </div>
@@ -11633,28 +11768,43 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
 
     var targetHarianValue, targetHarianClass;
     if(r.target_harian_status === "TERCAPAI"){
-      targetHarianValue = "Target sudah tercapai 🎉";
-      targetHarianClass = "neg"; // .neg = hijau/ok di skema warna recap-row.diff yang sudah ada
+      targetHarianValue = "Target sudah tercapai";
+      targetHarianClass = "neg";
     } else if(r.target_harian_status === "HABIS_HARI"){
-      targetHarianValue = "Belum tercapai bulan ini, semangat untuk bulan depan! 💪";
-      targetHarianClass = "pos"; // .pos = merah/err di skema warna recap-row.diff yang sudah ada
+      targetHarianValue = "Belum tercapai bulan ini";
+      targetHarianClass = "pos";
     } else {
-      targetHarianValue = fmt(r.target_harian_angka) + " / hari (" + r.sisa_hari_kerja + " hari kerja tersisa)";
+      targetHarianValue = fmt(r.target_harian_angka) + " / hari (" + r.sisa_hari_kerja + " hari kerja)";
       targetHarianClass = "";
     }
 
     recapEl.style.display = "block";
+    // Ringkas: total hari ini (all) + proyeksi; detail di-expand
     recapEl.innerHTML =
-      '<div class="recap-row"><span class="k">Pencapaian GE</span><span class="v">'+fmt(r.ge_total)+'</span></div>'+
-      '<div class="recap-row"><span class="k">Pencapaian GB</span><span class="v">'+fmt(r.gb_total)+'</span></div>'+
-      '<div class="recap-row"><span class="k">Pencapaian GG</span><span class="v">'+fmt(r.gg_total)+'</span></div>'+
-      '<div class="recap-row total"><span class="k">Pencapaian All Gadai (GE+GB+GG)</span><span class="v">'+fmt(r.bulan_ini_total)+'</span></div>'+
+      '<div class="recap-row total"><span class="k">Total All Gadai bulan ini</span><span class="v">'+fmt(r.bulan_ini_total)+'</span></div>'+
+      '<div class="recap-row total"><span class="k">Proyeksi akhir bulan</span><span class="v">'+fmt(r.proyeksi_all_gadai)+'</span></div>'+
       '<div class="recap-row"><span class="k">Rejected hari ini</span><span class="v">'+fmt(r.rejected)+'</span></div>'+
-      '<div class="recap-row"><span class="k">Target All Gadai ('+cabang+', '+r.monthLabel+')</span><span class="v">'+fmt(r.target_bulan_ini)+'</span></div>'+
-      '<div class="recap-row diff"><span class="k">Selisih Target Bulan Ini</span><span class="v '+selisihClass+'">'+fmt(Math.abs(selisih))+' ('+selisihLabel+')</span></div>'+
-      '<div class="recap-row"><span class="k">Pencapaian bulan kemarin'+(r.bulan_kemarin_label ? " (" + r.bulan_kemarin_label + ")" : "")+'</span><span class="v">'+(r.bulan_kemarin_total === null ? "belum ada data" : fmt(r.bulan_kemarin_total))+'</span></div>'+
-      '<div class="recap-row total"><span class="k">Proyeksi All Gadai (estimasi akhir bulan)</span><span class="v">'+fmt(r.proyeksi_all_gadai)+'</span></div>'+
-      '<div class="recap-row diff"><span class="k">Target Harian (supaya kejar target bulanan)</span><span class="v '+targetHarianClass+'">'+targetHarianValue+'</span></div>';
+      '<div class="recap-row diff"><span class="k">Selisih vs target</span><span class="v '+selisihClass+'">'+fmt(Math.abs(selisih))+' ('+selisihLabel+')</span></div>'+
+      '<button type="button" class="recap-toggle" id="recapToggleBtn">Lihat detail ▾</button>'+
+      '<div class="recap-extra" id="recapExtra">'+
+        '<div class="recap-row"><span class="k">Pencapaian GE</span><span class="v">'+fmt(r.ge_total)+'</span></div>'+
+        '<div class="recap-row"><span class="k">Pencapaian GB</span><span class="v">'+fmt(r.gb_total)+'</span></div>'+
+        '<div class="recap-row"><span class="k">Pencapaian GG</span><span class="v">'+fmt(r.gg_total)+'</span></div>'+
+        '<div class="recap-row"><span class="k">Target All Gadai ('+cabang+', '+r.monthLabel+')</span><span class="v">'+fmt(r.target_bulan_ini)+'</span></div>'+
+        '<div class="recap-row"><span class="k">Bulan kemarin'+(r.bulan_kemarin_label ? " (" + r.bulan_kemarin_label + ")" : "")+'</span><span class="v">'+(r.bulan_kemarin_total === null ? "belum ada data" : fmt(r.bulan_kemarin_total))+'</span></div>'+
+        '<div class="recap-row diff"><span class="k">Target harian</span><span class="v '+targetHarianClass+'">'+targetHarianValue+'</span></div>'+
+      '</div>';
+
+    var tog = document.getElementById("recapToggleBtn");
+    var overlay = document.getElementById("resultOverlay");
+    if(overlay) overlay.classList.remove("expanded");
+    if(tog){
+      tog.onclick = function(){
+        if(!overlay) return;
+        var on = overlay.classList.toggle("expanded");
+        tog.textContent = on ? "Sembunyikan detail ▴" : "Lihat detail ▾";
+      };
+    }
   }
 
   var modalOverlay = document.getElementById("modalOverlay");
