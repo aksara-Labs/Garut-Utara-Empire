@@ -1617,6 +1617,269 @@ button.kanit-profile-btn{
   }
 }
 
+
+
+/* ============================================================
+   MOBILE UX GLOBAL — seluruh menu KC + Kanit
+   ============================================================ */
+@media (max-width: 880px){
+  /* Layout shell */
+  .admin-content,
+  #screen-admin-dashboard .admin-content,
+  #screen-kanit .admin-content,
+  #screen-omset-form .admin-content{
+    padding: 10px 10px 24px !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  .admin-topbar{
+    padding: 8px 10px !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+  }
+  .admin-topbar-title{
+    font-size: 14px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 42vw !important;
+  }
+  .admin-topbar-right{
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+  .admin-topbar-right .topbar-user-group .admin-avatar-text,
+  .admin-topbar-right .topbar-user-group .meta{
+    max-width: 72px !important;
+  }
+  .admin-avatar-name, #kanitMiniName, #adminAvatarName{
+    font-size: 11px !important;
+  }
+  .admin-avatar-role, #kanitMiniRole{
+    font-size: 9px !important;
+  }
+
+  /* Teks global terbaca */
+  body, .admin-content, .panel, .subpanel{
+    color: #E8EDF5 !important;
+  }
+  label, .field label, .sub, .muted, .hint, .center-note{
+    color: #94A3B8 !important;
+  }
+  h1,h2,h3,h4, .rejected-top3-title, .section-title{
+    color: #F8FAFC !important;
+  }
+
+  /* Filter rows: stack rapih, jangan numpuk */
+  .filter-row-compact,
+  .inline-row,
+  .rejected-filter-compact{
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    align-items: flex-end !important;
+  }
+  .filter-row-compact .field,
+  .inline-row .field,
+  .rejected-filter-compact .field{
+    flex: 1 1 calc(50% - 8px) !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  .filter-row-compact input,
+  .filter-row-compact select,
+  .inline-row input,
+  .inline-row select,
+  .admin-content input[type="text"],
+  .admin-content input[type="date"],
+  .admin-content input[type="number"],
+  .admin-content input[type="password"],
+  .admin-content select,
+  .admin-content textarea{
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 40px !important;
+    font-size: 14px !important;
+    color: #F8FAFC !important;
+    background: rgba(0,0,0,0.35) !important;
+    border: 1px solid rgba(255,255,255,0.14) !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+  .filter-row-compact button,
+  .inline-row button,
+  .btn-xs,
+  .auth-primary-btn{
+    width: auto !important;
+    min-width: 88px !important;
+    min-height: 40px !important;
+    padding: 0 14px !important;
+    font-size: 13px !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* Dashboard KPI — jangan 5 kolom sempit */
+  #tab-dashboard .dash-kpi-grid,
+  #adminSummaryWrap .dash-kpi-grid,
+  #tab-dashboard .admin-stats-grid,
+  .dash-kpi-grid,
+  .admin-stats-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  #tab-dashboard .admin-stat-card,
+  .admin-stat-card{
+    min-width: 0 !important;
+    padding: 10px !important;
+  }
+  .admin-stat-value{ font-size: 16px !important; color: #F8FAFC !important; }
+  .admin-stat-label{ font-size: 10px !important; color: #94A3B8 !important; }
+  .admin-stat-trend{ font-size: 9px !important; color: #78716C !important; }
+
+  /* Karyawan bertugas */
+  .bertugas-grid,
+  #tab-dashboard .bertugas-grid{
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  .bertugas-card{
+    min-width: 0 !important;
+    padding: 8px !important;
+  }
+
+  /* Dashboard Harian / KPI cards */
+  .kinerja-kpi-grid,
+  .kinerja-badges,
+  .audit-kpi-grid,
+  .audit-charts,
+  .audit-charts-3,
+  .audit-charts-full{
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  .kinerja-badges{
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .kinerja-badge{
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+  }
+
+  /* Tables: scroll horizontal, teks jelas */
+  .harian-table-wrap,
+  .rejected-detail-table-wrap,
+  .cmp-table-wrap,
+  .table-wrap,
+  .jadwal-table-wrap,
+  [class*="table-wrap"]{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-width: 100% !important;
+  }
+  table{
+    color: #E2E8F0 !important;
+  }
+  th{
+    color: #F8FAFC !important;
+    font-size: 11px !important;
+  }
+  td{
+    color: #E2E8F0 !important;
+    font-size: 12px !important;
+  }
+
+  /* Cards / panels */
+  .panel, .subpanel, .audit-card, .ob-summary-card, .admin-menu-card{
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .ob-summary{
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* Cash opname */
+  .co-layout,
+  #tab-cashopname .co-layout{
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Sidebar overlay mobile sudah ada — pastikan content full width */
+  .admin-shell, .admin-main, .admin-body{
+    max-width: 100vw !important;
+  }
+
+  /* Hero dashboard */
+  #tab-dashboard .admin-hero{
+    max-height: none !important;
+    padding: 10px 12px !important;
+  }
+  #tab-dashboard .admin-hero-text .greeting{
+    font-size: 14px !important;
+  }
+
+  /* Profil / notif buttons */
+  #adminTodoBtn, #adminNotifBtn, .admin-topbar-bell{
+    width: 36px !important;
+    height: 36px !important;
+  }
+}
+
+@media (max-width: 480px){
+  .admin-content{
+    padding: 8px 8px 20px !important;
+  }
+  /* KPI 2 kolom tetap, bertugas 1 kolom */
+  .bertugas-grid,
+  #tab-dashboard .bertugas-grid{
+    grid-template-columns: 1fr !important;
+  }
+  .kinerja-badges{
+    grid-template-columns: 1fr !important;
+  }
+  #tab-dashboard .dash-kpi-grid,
+  #adminSummaryWrap .dash-kpi-grid{
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .filter-row-compact .field,
+  .rejected-filter-compact .field{
+    flex: 1 1 100% !important;
+  }
+  .admin-topbar-right .topbar-user-group .admin-avatar-text,
+  .admin-topbar-right .topbar-user-group .meta{
+    display: none !important; /* avatar only di HP sangat sempit */
+  }
+  .admin-topbar-title{
+    max-width: 36vw !important;
+    font-size: 13px !important;
+  }
+}
+
+
+/* Audit wizard = ganti halaman */
+#kanitAuditFormMain[style*="display: none"],
+#kanitAuditFormMain[hidden]{ display: none !important; }
+#kanitAuditWizard .audit-wiz-page{
+  min-height: 280px !important;
+}
+#kanitAuditWizard .audit-wiz-nav{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+  padding-bottom: 10px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+#kanitAuditWizCardHost .audit-item-card{
+  display: block !important;
+  margin: 0 !important;
+}
+#kanitAuditItemsPel:empty,
+#kanitAuditItemsSup:empty{ display: none !important; }
+
 </style>
 
 <style>
@@ -9523,6 +9786,7 @@ button.admin-topbar-avatar:hover,
         <div class="rejected-top3-title" style="margin:0;">Form Report Audit</div>
       </div>
       <div class="audit-input-box" id="kanitAuditFormBox">
+        <div id="kanitAuditFormMain">
         <p class="center-note" style="text-align:left;margin:0 0 10px;">Upload dokumen dalam bentuk <b>PDF atau foto hasil scan</b>. Semua field wajib diisi sesuai ketentuan.</p>
         <div class="filter-row-compact">
           <div class="field"><label>Tanggal Audit *</label><input type="date" id="kanitAuditTanggal" required></div>
@@ -9537,6 +9801,7 @@ button.admin-topbar-avatar:hover,
           <div class="field"><label>Total Temuan Pelanggaran *</label><input type="number" id="kanitAuditNPel" min="0" value="0"></div>
           <div class="field"><label>Total Temuan Support *</label><input type="number" id="kanitAuditNSup" min="0" value="0"></div>
         </div>
+        </div><!-- /kanitAuditFormMain -->
         <div id="kanitAuditItemsPel"></div>
         <div id="kanitAuditItemsSup"></div>
         <button type="button" id="kanitAuditSubmitBtn" class="btn-xs" style="margin-top:10px;">Kirim pengajuan</button>
@@ -13382,8 +13647,9 @@ function loadAdminSummary(force){
   function collectRejectedAlasan_(rows){
     var set = {};
     (rows||[]).forEach(function(r){
-      var a = (r.alasan || "").trim();
-      if(a) set[a] = true;
+      if(!r) return;
+      var a = (r.alasan || r.alasanReject || r.Alasan || r.reason || r.rejectReason || "").toString().trim();
+      if(a && a !== "-" && a.toLowerCase() !== "null") set[a] = true;
     });
     return Object.keys(set).sort(function(a,b){ return a.localeCompare(b, "id"); });
   }
@@ -13392,11 +13658,20 @@ function loadAdminSummary(force){
     if(!sel) return;
     var prev = keepValue != null ? keepValue : sel.value;
     var list = collectRejectedAlasan_(rows);
+    // fallback: ambil dari badge di tabel yang sudah ter-render
+    if(!list.length){
+      document.querySelectorAll(".reject-alasan-badge").forEach(function(el){
+        var a = (el.textContent || "").trim();
+        if(a && a !== "-") list.push(a);
+      });
+      list = list.filter(function(v,i,arr){ return arr.indexOf(v)===i; }).sort(function(a,b){ return a.localeCompare(b,"id"); });
+    }
     sel.innerHTML = '<option value="">Semua alasan</option>' + list.map(function(a){
-      return '<option value="'+String(a).replace(/"/g,"&quot;")+'">'+String(a).replace(/</g,"&lt;")+'</option>';
+      return '<option value="'+String(a).replace(/&/g,"&amp;").replace(/"/g,"&quot;")+'">'+String(a).replace(/&/g,"&amp;").replace(/</g,"&lt;")+'</option>';
     }).join("");
     if(prev && list.indexOf(prev) >= 0) sel.value = prev;
     else sel.value = "";
+    try{ console.log("[rejected] alasan options", list.length, list.slice(0,8)); }catch(e){}
   }
   function filterRejectedRowsByAlasan_(rows, alasan){
     if(!alasan) return rows || [];
@@ -13429,6 +13704,12 @@ function loadAdminSummary(force){
     var k = document.getElementById("kanitRejectedAlasan");
     if(k && !k._wiredAlasan){ k._wiredAlasan = true; k.addEventListener("change", function(){ applyRejectedAlasanFilter_("kanit"); }); }
   })();
+
+  document.addEventListener("change", function(e){
+    if(!e.target) return;
+    if(e.target.id === "rejectedAnalysisAlasan") applyRejectedAlasanFilter_("admin");
+    if(e.target.id === "kanitRejectedAlasan") applyRejectedAlasanFilter_("kanit");
+  });
 
   function rejectedDetailTransaksiTableHtml_(rows){
     if(!rows.length) return '<div class="empty-log">Tidak ada data reject di rentang ini.</div>';
@@ -13669,9 +13950,10 @@ function loadAdminSummary(force){
         }
         pendingRejectedMain = r;
         clearMsg(msgEl);
-        // Detail Transaksi langsung tampil di sini -- sisanya (kartu
-        // ringkasan, top3, grafik bulanan) nunggu klik "Analisa".
-        renderRejectedDetailTable(r.data, "rejectedDetailWrap", cabangLabelForEmpty);
+        // Detail + isi dropdown alasan
+        window.__rejectedCache.admin = { data: r.data, label: cabangLabelForEmpty };
+        fillRejectedAlasanSelect_("rejectedAnalysisAlasan", (r.data && r.data.allDetail) || []);
+        applyRejectedAlasanFilter_("admin");
         document.getElementById("rejectedAnalisaBtn").style.display = "inline-block";
       })
       .withFailureHandler(function(err){
@@ -15777,55 +16059,101 @@ function loadAdminSummary(force){
   function renderKanitAuditWizard(){
     var shell = document.getElementById("kanitAuditWizard");
     var submitBtn = document.getElementById("kanitAuditSubmitBtn");
+    var main = document.getElementById("kanitAuditFormMain");
     var st = window.__kanitAuditWiz || { total:0, step:0, nPel:0, nSup:0 };
-    // hide all cards
-    document.querySelectorAll("#kanitAuditItemsPel .audit-item-card, #kanitAuditItemsSup .audit-item-card").forEach(function(c){
-      c.style.display = "none";
-    });
+    var allCards = document.querySelectorAll("#kanitAuditItemsPel .audit-item-card, #kanitAuditItemsSup .audit-item-card");
+    allCards.forEach(function(c){ c.style.display = "none"; });
+
+    function showMain(yes){
+      if(main) main.style.display = yes ? "" : "none";
+    }
+    function pageTop(){
+      try{ var p = document.getElementById("tab-kanitauditreport"); if(p) p.scrollIntoView({behavior:"smooth", block:"start"}); else window.scrollTo(0,0); }catch(e){}
+    }
+
     if(!shell) return;
+
+    // 0 temuan → main + kirim
     if(st.total <= 0){
-      shell.innerHTML = '<div class="audit-wiz-note">Tidak ada temuan pelanggaran/support. Langsung kirim report.</div>';
+      showMain(true);
+      shell.innerHTML = '<div class="audit-wiz-note">Tidak ada temuan. Silakan kirim report.</div>';
       if(submitBtn){ submitBtn.style.display = ""; submitBtn.textContent = "Kirim Report"; }
       return;
     }
-    // step 0 = intro before details
+
+    // step 0: hanya form utama + tombol Next
     if(st.step <= 0){
+      showMain(true);
+      // kembalikan kartu ke container semula
+      var pel = document.getElementById("kanitAuditItemsPel");
+      var sup = document.getElementById("kanitAuditItemsSup");
+      allCards.forEach(function(c){
+        c.style.display = "none";
+        if(c.getAttribute("data-tipe")==="Support" && sup) sup.appendChild(c);
+        else if(pel) pel.appendChild(c);
+      });
       shell.innerHTML =
         '<div class="audit-wiz-intro">'+
-          '<div class="audit-wiz-note">Ada <b>'+st.nPel+'</b> pelanggaran dan <b>'+st.nSup+'</b> support. Isi detail per halaman.</div>'+
-          '<button type="button" class="btn-xs" id="kanitAuditWizStart">Next — isi detail temuan</button>'+
+          '<div class="audit-wiz-note">Ada <b>'+st.nPel+'</b> pelanggaran &amp; <b>'+st.nSup+'</b> support.<br>Klik Next untuk isi detail (1 halaman per temuan).</div>'+
+          '<button type="button" class="btn-xs" id="kanitAuditWizStart">Next — halaman detail</button>'+
         '</div>';
       if(submitBtn) submitBtn.style.display = "none";
       var start = document.getElementById("kanitAuditWizStart");
       if(start) start.onclick = function(){ st.step = 1; window.__kanitAuditWiz = st; renderKanitAuditWizard(); };
       return;
     }
-    // steps 1..total show one card
+
+    // step > total: halaman terakhir kirim
     if(st.step > st.total){
-      shell.innerHTML = '<div class="audit-wiz-note">Semua detail temuan sudah dilewati. Periksa lalu kirim.</div>';
+      showMain(false);
+      shell.innerHTML =
+        '<div class="audit-wiz-page">'+
+          '<div class="audit-wiz-progress">Selesai — semua temuan terisi</div>'+
+          '<div class="audit-wiz-note">Periksa kembali, lalu kirim report.</div>'+
+          '<div class="audit-wiz-btns">'+
+            '<button type="button" class="btn-xs secondary" id="kanitAuditWizPrev">← Kembali ke temuan</button>'+
+          '</div>'+
+        '</div>';
       if(submitBtn){ submitBtn.style.display = ""; submitBtn.textContent = "Kirim Report"; }
+      var prev0 = document.getElementById("kanitAuditWizPrev");
+      if(prev0) prev0.onclick = function(){ st.step = st.total; window.__kanitAuditWiz = st; renderKanitAuditWizard(); };
+      pageTop();
       return;
     }
-    // map step to card
-    var cards = Array.prototype.slice.call(document.querySelectorAll("#kanitAuditItemsPel .audit-item-card, #kanitAuditItemsSup .audit-item-card"));
+
+    // step 1..total: HALAMAN PENUH hanya 1 temuan (sembunyikan form utama)
+    showMain(false);
+    if(submitBtn) submitBtn.style.display = "none";
+    var cards = Array.prototype.slice.call(allCards);
     var card = cards[st.step - 1];
-    if(card) card.style.display = "block";
     var tipe = card ? (card.getAttribute("data-tipe")||"") : "";
-    var idx = card ? (card.getAttribute("data-idx")||"") : "";
+    var cidx = card ? (card.getAttribute("data-idx")||"") : "";
+
+    // pindahkan tampilan card ke dalam shell (clone visual via show in place under nav)
     shell.innerHTML =
-      '<div class="audit-wiz-nav">'+
-        '<span class="audit-wiz-progress">Langkah '+st.step+' / '+st.total+' — '+tipe+' #'+idx+'</span>'+
-        '<div class="audit-wiz-btns">'+
-          (st.step > 1 ? '<button type="button" class="btn-xs secondary" id="kanitAuditWizPrev">← Sebelumnya</button>' : '')+
-          '<button type="button" class="btn-xs" id="kanitAuditWizNext">'+(st.step < st.total ? 'Lanjut →' : 'Selesai isi detail')+'</button>'+
+      '<div class="audit-wiz-page">'+
+        '<div class="audit-wiz-nav">'+
+          '<span class="audit-wiz-progress">Halaman '+st.step+' / '+st.total+' — '+tipe+' #'+cidx+'</span>'+
+          '<div class="audit-wiz-btns">'+
+            (st.step > 1 ? '<button type="button" class="btn-xs secondary" id="kanitAuditWizPrev">← Sebelumnya</button>' : '<button type="button" class="btn-xs secondary" id="kanitAuditWizBackMain">← Form utama</button>')+
+            '<button type="button" class="btn-xs" id="kanitAuditWizNext">'+(st.step < st.total ? 'Lanjut →' : 'Selesai →')+'</button>'+
+          '</div>'+
         '</div>'+
+        '<div id="kanitAuditWizCardHost"></div>'+
       '</div>';
-    if(submitBtn) submitBtn.style.display = st.step >= st.total ? "" : "none";
+
+    var host = document.getElementById("kanitAuditWizCardHost");
+    if(card && host){
+      card.style.display = "block";
+      host.appendChild(card); // pindah ke halaman wizard (bukan numpuk di bawah)
+    }
+
     var prev = document.getElementById("kanitAuditWizPrev");
+    var backMain = document.getElementById("kanitAuditWizBackMain");
     var next = document.getElementById("kanitAuditWizNext");
     if(prev) prev.onclick = function(){ st.step = Math.max(1, st.step - 1); window.__kanitAuditWiz = st; renderKanitAuditWizard(); };
+    if(backMain) backMain.onclick = function(){ st.step = 0; window.__kanitAuditWiz = st; renderKanitAuditWizard(); };
     if(next) next.onclick = function(){
-      // basic validate current card
       if(card){
         var jenisSel = card.querySelector(".ai-jenis-select");
         var jenisLain = card.querySelector(".ai-jenis-lain");
@@ -15844,13 +16172,9 @@ function loadAdminSummary(force){
       window.__kanitAuditWiz = st;
       renderKanitAuditWizard();
     };
+    pageTop();
   }
 
-["kanitAuditNPel","kanitAuditNSup"].forEach(function(id){
-    var el = document.getElementById(id);
-    if(el) el.addEventListener("change", rebuildKanitAuditItems);
-    if(el) el.addEventListener("input", rebuildKanitAuditItems);
-  });
 
   function readItemCards(selector){
     var cards = document.querySelectorAll(selector + " .audit-item-card");
