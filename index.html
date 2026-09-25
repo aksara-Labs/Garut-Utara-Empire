@@ -1401,6 +1401,222 @@ button.kanit-profile-btn{
   max-width: none !important;
 }
 
+
+/* Jadwal libur popup — tidak padat */
+.libur-action-popup{
+  min-width: 168px !important;
+  padding: 8px !important;
+  border-radius: 12px !important;
+  background: #1a1d24 !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.45) !important;
+}
+.libur-action-popup .pap-title{
+  padding: 4px 8px 8px !important;
+  font-size: 10px !important;
+  color: #94A3B8 !important;
+  letter-spacing: 0.06em !important;
+}
+.libur-action-popup button{
+  display: block !important;
+  width: 100% !important;
+  margin: 0 0 6px !important;
+  padding: 8px 12px !important;
+  text-align: left !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  background: rgba(255,255,255,0.04) !important;
+  color: #E2E8F0 !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  box-shadow: none !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+.libur-action-popup button:last-child{ margin-bottom: 0 !important; }
+.libur-action-popup button:hover{
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(212,137,74,0.35) !important;
+  color: #F8FAFC !important;
+}
+.libur-action-popup button.danger{
+  color: #FCA5A5 !important;
+  border-color: rgba(248,113,113,0.25) !important;
+}
+
+
+/* Audit report wizard KU */
+#kanitAuditWizard{
+  margin: 12px 0 !important;
+  padding: 12px !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+#kanitAuditWizard .audit-wiz-note{
+  font-size: 13px !important;
+  color: #CBD5E1 !important;
+  margin-bottom: 10px !important;
+  line-height: 1.4 !important;
+}
+#kanitAuditWizard .audit-wiz-nav{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  margin-bottom: 10px !important;
+}
+#kanitAuditWizard .audit-wiz-progress{
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #E8A86A !important;
+}
+#kanitAuditWizard .audit-wiz-btns{
+  display: flex !important;
+  gap: 8px !important;
+}
+#kanitAuditWizard .btn-xs,
+#kanitAuditWizard button{
+  width: auto !important;
+  min-width: 0 !important;
+  height: 34px !important;
+  padding: 0 14px !important;
+}
+#kanitAuditItemsPel .audit-item-card,
+#kanitAuditItemsSup .audit-item-card{
+  margin-top: 8px !important;
+  padding: 12px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  background: rgba(0,0,0,0.2) !important;
+}
+
+
+
+/* Rejected + mobile readability */
+.rejected-filter-compact{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  align-items: flex-end !important;
+}
+.rejected-filter-compact .field label,
+#tab-rejected label,
+#tab-kanitrejected label{
+  color: #94A3B8 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+.rejected-filter-compact select,
+.rejected-filter-compact input,
+#tab-rejected select,
+#tab-rejected input,
+#tab-kanitrejected select,
+#tab-kanitrejected input{
+  color: #F1F5F9 !important;
+  background: rgba(0,0,0,0.35) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  min-height: 36px !important;
+}
+.rejected-detail-table-wrap{
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  max-width: 100% !important;
+}
+.rejected-detail-table{
+  width: 100% !important;
+  min-width: 720px !important;
+  border-collapse: collapse !important;
+  font-size: 12px !important;
+  color: #E2E8F0 !important;
+}
+.rejected-detail-table th{
+  background: rgba(255,255,255,0.06) !important;
+  color: #F8FAFC !important;
+  font-size: 11px !important;
+  padding: 8px 6px !important;
+  white-space: nowrap !important;
+  border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+.rejected-detail-table td{
+  padding: 8px 6px !important;
+  color: #E2E8F0 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  vertical-align: top !important;
+}
+.rejected-detail-table .sub{
+  display: block !important;
+  font-size: 10px !important;
+  color: #94A3B8 !important;
+}
+.reject-alasan-badge{
+  display: inline-block !important;
+  padding: 2px 8px !important;
+  border-radius: 6px !important;
+  background: rgba(212,137,74,0.15) !important;
+  color: #F0C48A !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+.reject-status-badge{
+  color: #FCA5A5 !important;
+  font-size: 11px !important;
+}
+.reject-status-badge.sudah{
+  color: #86EFAC !important;
+}
+
+/* Mobile general readability */
+@media (max-width: 768px){
+  .admin-content, .admin-content .panel, .admin-content .subpanel{
+    color: #E2E8F0 !important;
+  }
+  .admin-content label,
+  .admin-content .field label{
+    color: #94A3B8 !important;
+    font-size: 11px !important;
+  }
+  .admin-content input,
+  .admin-content select,
+  .admin-content textarea{
+    color: #F8FAFC !important;
+    font-size: 14px !important;
+    min-height: 40px !important;
+  }
+  .admin-content th{
+    color: #F8FAFC !important;
+    font-size: 11px !important;
+  }
+  .admin-content td{
+    color: #E2E8F0 !important;
+    font-size: 12px !important;
+  }
+  .admin-stat-label, .admin-stat-trend, .muted{
+    color: #94A3B8 !important;
+  }
+  .admin-stat-value{
+    color: #F8FAFC !important;
+  }
+  .rejected-filter-compact .field{
+    flex: 1 1 140px !important;
+    min-width: 0 !important;
+  }
+  .rejected-detail-table{
+    font-size: 11px !important;
+    min-width: 640px !important;
+  }
+  .btn-xs, .auth-primary-btn{
+    min-height: 40px !important;
+    font-size: 13px !important;
+  }
+  .libur-action-popup button{
+    min-height: 40px !important;
+    font-size: 13px !important;
+  }
+}
+
 </style>
 
 <style>
@@ -9231,14 +9447,18 @@ button.admin-topbar-avatar:hover,
 
     <!-- Tab: Rejected (analisis detail, khusus cabang sendiri) -->
     <div class="panel subpanel" id="tab-kanitrejected">
-      <div class="filter-row-compact" style="margin-top:8px;align-items:flex-end;flex-wrap:wrap;gap:10px;">
-        <div class="field" style="min-width:130px;">
+      <div class="filter-row-compact rejected-filter-compact" style="margin-top:8px;align-items:flex-end;flex-wrap:wrap;gap:10px;">
+        <div class="field" style="min-width:130px;flex:0 1 150px;">
           <label>Dari</label>
           <input type="date" id="kanitRejectedStart" lang="id" data-placeholder="dd/mm/yyyy" min="2026-01-01">
         </div>
-        <div class="field" style="min-width:130px;">
-          <label>Sampai (opsional, kosong = 1 tanggal)</label>
+        <div class="field" style="min-width:130px;flex:0 1 150px;">
+          <label>Sampai <span style="opacity:.6;font-weight:400;">(opsional)</span></label>
           <input type="date" id="kanitRejectedEnd" lang="id" data-placeholder="dd/mm/yyyy">
+        </div>
+        <div class="field" style="min-width:140px;flex:0 1 180px;">
+          <label>Alasan</label>
+          <select id="kanitRejectedAlasan"><option value="">Semua alasan</option></select>
         </div>
         <button type="button" id="kanitRejectedLoadBtn" class="auth-primary-btn" style="width:auto;padding:10px 16px;">Tampilkan</button>
         <input type="hidden" id="kanitRejectedSingleDate">
@@ -9592,8 +9812,12 @@ button.admin-topbar-avatar:hover,
           <input type="date" id="rejectedAnalysisStart" lang="id" data-placeholder="dd/mm/yyyy" min="2026-01-01">
         </div>
         <div class="field" style="min-width:130px;flex:0 1 150px;">
-          <label>Sampai <span style="opacity:.6;font-weight:400;">(opsional, kosong = 1 tanggal)</span></label>
+          <label>Sampai <span style="opacity:.6;font-weight:400;">(opsional)</span></label>
           <input type="date" id="rejectedAnalysisEnd" lang="id" data-placeholder="dd/mm/yyyy">
+        </div>
+        <div class="field" style="min-width:140px;flex:0 1 180px;">
+          <label>Alasan</label>
+          <select id="rejectedAnalysisAlasan"><option value="">Semua alasan</option></select>
         </div>
         <button type="button" id="rejectedAnalysisLoadBtn" class="auth-primary-btn" style="width:auto;padding:10px 16px;margin:0;">Tampilkan</button>
         <input type="hidden" id="rejectedAnalysisSingleDate">
@@ -13152,6 +13376,60 @@ function loadAdminSummary(force){
       '</tbody></table></div>';
   }
 
+  
+  // ---- Rejected: filter alasan (KC + Kanit) ----
+  window.__rejectedCache = window.__rejectedCache || {};
+  function collectRejectedAlasan_(rows){
+    var set = {};
+    (rows||[]).forEach(function(r){
+      var a = (r.alasan || "").trim();
+      if(a) set[a] = true;
+    });
+    return Object.keys(set).sort(function(a,b){ return a.localeCompare(b, "id"); });
+  }
+  function fillRejectedAlasanSelect_(selId, rows, keepValue){
+    var sel = document.getElementById(selId);
+    if(!sel) return;
+    var prev = keepValue != null ? keepValue : sel.value;
+    var list = collectRejectedAlasan_(rows);
+    sel.innerHTML = '<option value="">Semua alasan</option>' + list.map(function(a){
+      return '<option value="'+String(a).replace(/"/g,"&quot;")+'">'+String(a).replace(/</g,"&lt;")+'</option>';
+    }).join("");
+    if(prev && list.indexOf(prev) >= 0) sel.value = prev;
+    else sel.value = "";
+  }
+  function filterRejectedRowsByAlasan_(rows, alasan){
+    if(!alasan) return rows || [];
+    var a = String(alasan).trim().toLowerCase();
+    return (rows||[]).filter(function(r){ return String(r.alasan||"").trim().toLowerCase() === a; });
+  }
+  function applyRejectedAlasanFilter_(which){
+    var cache = window.__rejectedCache[which];
+    if(!cache || !cache.data) return;
+    var alasan = "";
+    if(which === "admin"){
+      var s = document.getElementById("rejectedAnalysisAlasan");
+      alasan = s ? s.value : "";
+      var rows = filterRejectedRowsByAlasan_(cache.data.allDetail, alasan);
+      var data2 = Object.assign({}, cache.data, { allDetail: rows });
+      renderRejectedDetailTable(data2, "rejectedDetailWrap", cache.label);
+    } else {
+      var s2 = document.getElementById("kanitRejectedAlasan");
+      alasan = s2 ? s2.value : "";
+      var rows2 = filterRejectedRowsByAlasan_(cache.data.allDetail, alasan);
+      var data3 = Object.assign({}, cache.data, { allDetail: rows2 });
+      renderRejectedDetailTable(data3, "kanitRejectedWrap", cache.label);
+    }
+  }
+
+
+  (function wireRejectedAlasanFilters(){
+    var a = document.getElementById("rejectedAnalysisAlasan");
+    if(a && !a._wiredAlasan){ a._wiredAlasan = true; a.addEventListener("change", function(){ applyRejectedAlasanFilter_("admin"); }); }
+    var k = document.getElementById("kanitRejectedAlasan");
+    if(k && !k._wiredAlasan){ k._wiredAlasan = true; k.addEventListener("change", function(){ applyRejectedAlasanFilter_("kanit"); }); }
+  })();
+
   function rejectedDetailTransaksiTableHtml_(rows){
     if(!rows.length) return '<div class="empty-log">Tidak ada data reject di rentang ini.</div>';
     return '<div class="rejected-detail-table-wrap"><table class="rejected-detail-table"><thead><tr>'+
@@ -14276,7 +14554,10 @@ function loadAdminSummary(force){
           showMsg(msgEl, (r && r.reason) || "Gagal memuat data.", "err");
           return;
         }
-        renderRejectedAnalysis(r.data, session.cabang, "kanitRejectedWrap");
+        window.__rejectedCache.kanit = { data: r.data, label: session.cabang };
+        fillRejectedAlasanSelect_("kanitRejectedAlasan", (r.data && r.data.allDetail) || []);
+        // Sama dengan KC: detail transaksi langsung + filter alasan
+        applyRejectedAlasanFilter_("kanit");
       })
       .withFailureHandler(function(err){
         self.dataset.busy = "0"; self.disabled = false;
@@ -15446,48 +15727,126 @@ function loadAdminSummary(force){
     var optTemuan = (kanitAuditTemuanOptions || []).filter(Boolean).map(function(n){
       return '<option value="'+String(n).replace(/"/g,'&quot;')+'">'+n+'</option>';
     }).join("");
-    function cards(n, tipe){
-      if(n <= 0) return "";
-      var html = '<div class="rejected-top3-title" style="margin-top:12px;">Detail '+tipe+' ('+n+')</div>';
-      for(var i=1;i<=n;i++){
-        html += '<div class="audit-item-card" data-tipe="'+tipe+'" data-idx="'+i+'">'+
-          '<h5>'+tipe+' #'+i+'</h5>'+
-          '<div class="field"><label>Jenis Temuan *</label>'+
-            '<select class="ai-jenis-select">'+
-              '<option value="">— pilih jenis temuan —</option>'+
-              optTemuan+
-              '<option value="__LAINNYA__">Lainnya (input manual)</option>'+
-            '</select>'+
-            '<input type="text" class="ai-jenis-lain" placeholder="Tulis jenis temuan baru..." style="display:none;margin-top:8px;">'+
-          '</div>'+
-          '<div class="field"><label>Petugas * (data karyawan)</label><select class="ai-petugas"><option value="">— pilih —</option>'+optKary+'</select></div>'+
-          '<div class="field"><label>No Faktur *</label><input type="text" class="ai-faktur" required></div>'+
-          '<div class="field"><label>Keterangan *</label><input type="text" class="ai-ket" required></div>'+
-          '<div class="field"><label>Upload Surat Pernyataan '+tipe+' * (PDF / foto scan)</label><input type="file" class="ai-file" accept=".pdf,image/*,.jpg,.jpeg,.png"></div>'+
-        '</div>';
-      }
-      return html;
+    function cardHtml(tipe, i){
+      return '<div class="audit-item-card audit-wiz-card" data-tipe="'+tipe+'" data-idx="'+i+'" data-wiz-step="'+tipe+'-'+i+'" style="display:none;">'+
+        '<h5>'+tipe+' #'+i+'</h5>'+
+        '<div class="field"><label>Jenis Temuan *</label>'+
+          '<select class="ai-jenis-select">'+
+            '<option value="">— pilih jenis temuan —</option>'+
+            optTemuan+
+            '<option value="__LAINNYA__">Lainnya (input manual)</option>'+
+          '</select>'+
+          '<input type="text" class="ai-jenis-lain" placeholder="Tulis jenis temuan baru..." style="display:none;margin-top:8px;">'+
+        '</div>'+
+        '<div class="field"><label>Petugas * (data karyawan)</label><select class="ai-petugas"><option value="">— pilih —</option>'+optKary+'</select></div>'+
+        '<div class="field"><label>No Faktur *</label><input type="text" class="ai-faktur"></div>'+
+        '<div class="field"><label>Keterangan *</label><input type="text" class="ai-ket"></div>'+
+        '<div class="field"><label>Upload Surat Pernyataan '+tipe+' * (PDF / foto scan)</label><input type="file" class="ai-file" accept=".pdf,image/*,.jpg,.jpeg,.png"></div>'+
+      '</div>';
     }
-    if(pelWrap) pelWrap.innerHTML = cards(nPel, "Pelanggaran");
-    if(supWrap) supWrap.innerHTML = cards(nSup, "Support");
-    // toggle input Lainnya
+    var pelHtml = "", supHtml = "";
+    for(var i=1;i<=nPel;i++) pelHtml += cardHtml("Pelanggaran", i);
+    for(var j=1;j<=nSup;j++) supHtml += cardHtml("Support", j);
+    if(pelWrap) pelWrap.innerHTML = pelHtml;
+    if(supWrap) supWrap.innerHTML = supHtml;
+
+    // Wizard shell
+    var shell = document.getElementById("kanitAuditWizard");
+    if(!shell){
+      shell = document.createElement("div");
+      shell.id = "kanitAuditWizard";
+      shell.className = "audit-wizard";
+      var formBox = document.getElementById("kanitAuditFormBox");
+      var submitBtn = document.getElementById("kanitAuditSubmitBtn");
+      if(formBox && submitBtn) formBox.insertBefore(shell, submitBtn);
+      else if(formBox) formBox.appendChild(shell);
+    }
+    var total = nPel + nSup;
+    window.__kanitAuditWiz = { nPel:nPel, nSup:nSup, step:0, total:total };
+    renderKanitAuditWizard();
+
     document.querySelectorAll(".ai-jenis-select").forEach(function(sel){
       sel.addEventListener("change", function(){
         var lain = sel.parentNode.querySelector(".ai-jenis-lain");
         if(!lain) return;
-        if(sel.value === "__LAINNYA__"){
-          lain.style.display = "";
-          lain.required = true;
-          lain.focus();
-        } else {
-          lain.style.display = "none";
-          lain.required = false;
-          lain.value = "";
-        }
+        if(sel.value === "__LAINNYA__"){ lain.style.display = ""; lain.focus(); }
+        else { lain.style.display = "none"; lain.value = ""; }
       });
     });
   }
-  ["kanitAuditNPel","kanitAuditNSup"].forEach(function(id){
+  function renderKanitAuditWizard(){
+    var shell = document.getElementById("kanitAuditWizard");
+    var submitBtn = document.getElementById("kanitAuditSubmitBtn");
+    var st = window.__kanitAuditWiz || { total:0, step:0, nPel:0, nSup:0 };
+    // hide all cards
+    document.querySelectorAll("#kanitAuditItemsPel .audit-item-card, #kanitAuditItemsSup .audit-item-card").forEach(function(c){
+      c.style.display = "none";
+    });
+    if(!shell) return;
+    if(st.total <= 0){
+      shell.innerHTML = '<div class="audit-wiz-note">Tidak ada temuan pelanggaran/support. Langsung kirim report.</div>';
+      if(submitBtn){ submitBtn.style.display = ""; submitBtn.textContent = "Kirim Report"; }
+      return;
+    }
+    // step 0 = intro before details
+    if(st.step <= 0){
+      shell.innerHTML =
+        '<div class="audit-wiz-intro">'+
+          '<div class="audit-wiz-note">Ada <b>'+st.nPel+'</b> pelanggaran dan <b>'+st.nSup+'</b> support. Isi detail per halaman.</div>'+
+          '<button type="button" class="btn-xs" id="kanitAuditWizStart">Next — isi detail temuan</button>'+
+        '</div>';
+      if(submitBtn) submitBtn.style.display = "none";
+      var start = document.getElementById("kanitAuditWizStart");
+      if(start) start.onclick = function(){ st.step = 1; window.__kanitAuditWiz = st; renderKanitAuditWizard(); };
+      return;
+    }
+    // steps 1..total show one card
+    if(st.step > st.total){
+      shell.innerHTML = '<div class="audit-wiz-note">Semua detail temuan sudah dilewati. Periksa lalu kirim.</div>';
+      if(submitBtn){ submitBtn.style.display = ""; submitBtn.textContent = "Kirim Report"; }
+      return;
+    }
+    // map step to card
+    var cards = Array.prototype.slice.call(document.querySelectorAll("#kanitAuditItemsPel .audit-item-card, #kanitAuditItemsSup .audit-item-card"));
+    var card = cards[st.step - 1];
+    if(card) card.style.display = "block";
+    var tipe = card ? (card.getAttribute("data-tipe")||"") : "";
+    var idx = card ? (card.getAttribute("data-idx")||"") : "";
+    shell.innerHTML =
+      '<div class="audit-wiz-nav">'+
+        '<span class="audit-wiz-progress">Langkah '+st.step+' / '+st.total+' — '+tipe+' #'+idx+'</span>'+
+        '<div class="audit-wiz-btns">'+
+          (st.step > 1 ? '<button type="button" class="btn-xs secondary" id="kanitAuditWizPrev">← Sebelumnya</button>' : '')+
+          '<button type="button" class="btn-xs" id="kanitAuditWizNext">'+(st.step < st.total ? 'Lanjut →' : 'Selesai isi detail')+'</button>'+
+        '</div>'+
+      '</div>';
+    if(submitBtn) submitBtn.style.display = st.step >= st.total ? "" : "none";
+    var prev = document.getElementById("kanitAuditWizPrev");
+    var next = document.getElementById("kanitAuditWizNext");
+    if(prev) prev.onclick = function(){ st.step = Math.max(1, st.step - 1); window.__kanitAuditWiz = st; renderKanitAuditWizard(); };
+    if(next) next.onclick = function(){
+      // basic validate current card
+      if(card){
+        var jenisSel = card.querySelector(".ai-jenis-select");
+        var jenisLain = card.querySelector(".ai-jenis-lain");
+        var jenis = jenisSel && jenisSel.value === "__LAINNYA__" ? (jenisLain && jenisLain.value || "").trim() : (jenisSel && jenisSel.value || "").trim();
+        var petugas = card.querySelector(".ai-petugas");
+        var faktur = card.querySelector(".ai-faktur");
+        var ket = card.querySelector(".ai-ket");
+        var file = card.querySelector(".ai-file");
+        if(!jenis){ alert("Jenis temuan wajib diisi"); return; }
+        if(petugas && !petugas.value){ alert("Petugas wajib dipilih"); return; }
+        if(faktur && !(faktur.value||"").trim()){ alert("No Faktur wajib diisi"); return; }
+        if(ket && !(ket.value||"").trim()){ alert("Keterangan wajib diisi"); return; }
+        if(file && file.files && file.files.length === 0){ alert("Upload surat pernyataan wajib"); return; }
+      }
+      st.step = st.step + 1;
+      window.__kanitAuditWiz = st;
+      renderKanitAuditWizard();
+    };
+  }
+
+["kanitAuditNPel","kanitAuditNSup"].forEach(function(id){
     var el = document.getElementById(id);
     if(el) el.addEventListener("change", rebuildKanitAuditItems);
     if(el) el.addEventListener("input", rebuildKanitAuditItems);
