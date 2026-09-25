@@ -13038,6 +13038,11 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         }
         panel.classList.add("active");
       }
+      // Preload dropdown alasan reject sebelum Tampilkan
+      try{
+        if(btn.dataset.tab === "rejected" && typeof loadRejectedAlasanOptionsAdmin_ === "function") loadRejectedAlasanOptionsAdmin_();
+        if(btn.dataset.tab === "kanitrejected" && typeof loadRejectedAlasanOptionsKanit_ === "function") loadRejectedAlasanOptionsKanit_();
+      }catch(eAlasan){}
       // Auto-load pertama kali tab dibuka BOLEH pakai cache (biar instan) --
       // begitu user klik "Tampilkan" sendiri, itu baru dipaksa baca langsung.
       if(btn.dataset.tab === "kinerjaharian"){
@@ -13678,7 +13683,76 @@ function loadAdminSummary(force){
     var a = String(alasan).trim().toLowerCase();
     return (rows||[]).filter(function(r){ return String(r.alasan||"").trim().toLowerCase() === a; });
   }
-  function applyRejectedAlasanFilter_(which){
+  
+  function loadRejectedAlasanOptionsAdmin_(){
+    if(!session || !session.adminPin) return;
+    var cabangEl = document.getElementById("rejectedAnalysisCabang");
+    var cabang = cabangEl ? (cabangEl.value || "TOTAL_AREA") : "TOTAL_AREA";
+    var startEl = document.getElementById("rejectedAnalysisStart");
+    var endEl = document.getElementById("rejectedAnalysisEnd");
+    var startDate = (startEl && startEl.value) ? startEl.value : "2026-01-01";
+    var endDate = (endEl && endEl.value) ? endEl.value : "";
+    if(!endDate){
+      try{ endDate = new Date().toISOString().slice(0,10); }catch(e){ endDate = startDate; }
+    }
+    if(endDate < startDate) endDate = startDate;
+    var sel = document.getElementById("rejectedAnalysisAlasan");
+    if(sel && sel.options.length <= 1){
+      sel.innerHTML = '<option value="">Memuat alasan...</option>';
+    }
+    google.script.run
+      .withSuccessHandler(function(r){
+        var rows = (r && r.status==="OK" && r.data && r.data.allDetail) ? r.data.allDetail : [];
+        fillRejectedAlasanSelect_("rejectedAnalysisAlasan", rows);
+      })
+      .withFailureHandler(function(){
+        var s = document.getElementById("rejectedAnalysisAlasan");
+        if(s) s.innerHTML = '<option value="">Semua alasan</option>';
+      })
+      .getRejectedAnalysisAdmin(session.adminPin, cabang, startDate, endDate);
+  }
+  function loadRejectedAlasanOptionsKanit_(){
+    if(!session || !session.cabang || !session.cabangPin) return;
+    var startEl = document.getElementById("kanitRejectedStart");
+    var endEl = document.getElementById("kanitRejectedEnd");
+    var startDate = (startEl && startEl.value) ? startEl.value : "2026-01-01";
+    var endDate = (endEl && endEl.value) ? endEl.value : "";
+    if(!endDate){
+      try{ endDate = new Date().toISOString().slice(0,10); }catch(e){ endDate = startDate; }
+    }
+    if(endDate < startDate) endDate = startDate;
+    var sel = document.getElementById("kanitRejectedAlasan");
+    if(sel && sel.options.length <= 1){
+      sel.innerHTML = '<option value="">Memuat alasan...</option>';
+    }
+    google.script.run
+      .withSuccessHandler(function(r){
+        var rows = (r && r.status==="OK" && r.data && r.data.allDetail) ? r.data.allDetail : [];
+        fillRejectedAlasanSelect_("kanitRejectedAlasan", rows);
+      })
+      .withFailureHandler(function(){
+        var s = document.getElementById("kanitRejectedAlasan");
+        if(s) s.innerHTML = '<option value="">Semua alasan</option>';
+      })
+      .getRejectedAnalysisKanit(session.cabang, session.cabangPin, startDate, endDate);
+  }
+  window.loadRejectedAlasanOptionsAdmin_ = loadRejectedAlasanOptionsAdmin_;
+  window.loadRejectedAlasanOptionsKanit_ = loadRejectedAlasanOptionsKanit_;
+
+  // preload saat cabang/tanggal berubah
+  (function(){
+    function bind(id, fn){
+      var el = document.getElementById(id);
+      if(el && !el._preloadAlasan){ el._preloadAlasan = true; el.addEventListener("change", fn); }
+    }
+    bind("rejectedAnalysisCabang", function(){ loadRejectedAlasanOptionsAdmin_(); });
+    bind("rejectedAnalysisStart", function(){ loadRejectedAlasanOptionsAdmin_(); });
+    bind("rejectedAnalysisEnd", function(){ loadRejectedAlasanOptionsAdmin_(); });
+    bind("kanitRejectedStart", function(){ loadRejectedAlasanOptionsKanit_(); });
+    bind("kanitRejectedEnd", function(){ loadRejectedAlasanOptionsKanit_(); });
+  })();
+
+function applyRejectedAlasanFilter_(which){
     var cache = window.__rejectedCache[which];
     if(!cache || !cache.data) return;
     var alasan = "";
@@ -13974,7 +14048,25 @@ function loadAdminSummary(force){
   document.getElementById("rejectedAnalisaBtn").addEventListener("click", function(){
     if(!pendingRejectedMain) return;
     var label = pendingRejectedMain.cabang === "TOTAL_AREA" ? "Total Area (Semua Cabang)" : pendingRejectedMain.cabang;
-    renderRejectedSummary(pendingRejectedMain.data, label, "rejectedAnalysisWrap", "rejectedAnalysisMonthChartWrap");
+    var data = pendingRejectedMain.data || {};
+    var alasanEl = document.getElementById("rejectedAnalysisAlasan");
+    var alasan = alasanEl ? (alasanEl.value || "") : "";
+    if(alasan && data.allDetail){
+      var rows = filterRejectedRowsByAlasan_(data.allDetail, alasan);
+      // rebuild lightweight summary from filtered rows
+      data = Object.assign({}, data, { allDetail: rows, totalRows: rows.length });
+      // perBulan recompute if possible
+      try{
+        var byBulan = {};
+        rows.forEach(function(r){
+          var bl = (r.bulan || (r.tanggal||"").slice(0,7) || "Lainnya");
+          if(!byBulan[bl]) byBulan[bl] = 0;
+          byBulan[bl]++;
+        });
+        data.perBulan = Object.keys(byBulan).sort().map(function(k){ return { bulan: k, total: byBulan[k] }; });
+      }catch(e){}
+    }
+    renderRejectedSummary(data, label + (alasan ? " · "+alasan : ""), "rejectedAnalysisWrap", "rejectedAnalysisMonthChartWrap");
     document.getElementById("rejectedExportRow").style.display = "flex";
 
     document.getElementById("rejectedCompareSection").style.display = "block";
