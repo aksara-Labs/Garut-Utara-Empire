@@ -16148,11 +16148,39 @@ function applyRejectedAlasanFilter_(which){
       });
     });
   }
+
+  // WAJIB: ubah jumlah temuan → rebuild wizard (dulu hilang, total selalu 0)
+  (function bindKanitAuditCountInputs(){
+    function bind(id){
+      var el = document.getElementById(id);
+      if(!el || el._auditCountBound) return;
+      el._auditCountBound = true;
+      ["change","input","blur"].forEach(function(ev){
+        el.addEventListener(ev, function(){
+          try{ rebuildKanitAuditItems(); }catch(e){}
+        });
+      });
+    }
+    bind("kanitAuditNPel");
+    bind("kanitAuditNSup");
+  })();
+
   function renderKanitAuditWizard(){
     var shell = document.getElementById("kanitAuditWizard");
     var submitBtn = document.getElementById("kanitAuditSubmitBtn");
     var main = document.getElementById("kanitAuditFormMain");
     var st = window.__kanitAuditWiz || { total:0, step:0, nPel:0, nSup:0 };
+    // sinkron ulang dari input (jika user ubah jumlah tanpa rebuild)
+    try{
+      var nPelNow = Math.max(0, parseInt(document.getElementById("kanitAuditNPel").value, 10) || 0);
+      var nSupNow = Math.max(0, parseInt(document.getElementById("kanitAuditNSup").value, 10) || 0);
+      if(nPelNow !== st.nPel || nSupNow !== st.nSup){
+        // mismatch → rebuild penuh
+        window.__kanitAuditWiz = { nPel:nPelNow, nSup:nSupNow, step:0, total:nPelNow+nSupNow };
+        rebuildKanitAuditItems();
+        return;
+      }
+    }catch(eSync){}
     var allCards = document.querySelectorAll("#kanitAuditItemsPel .audit-item-card, #kanitAuditItemsSup .audit-item-card");
     allCards.forEach(function(c){ c.style.display = "none"; });
 
@@ -16329,7 +16357,13 @@ function applyRejectedAlasanFilter_(which){
       var summaryInput = document.getElementById("kanitAuditSummaryFile");
       if(!tanggal){ showMsg(msg, "Tanggal audit wajib.", "err"); return; }
       if(!periode){ showMsg(msg, "Periode wajib.", "err"); return; }
-      if(!summaryInput.files || !summaryInput.files[0]){ showMsg(msg, "Upload Audit Summary wajib.", "err"); return; }
+      var summaryFile = summaryInput && summaryInput.files && summaryInput.files[0] ? summaryInput.files[0] : null;
+      if(!summaryFile){
+        // coba cari ulang di form box
+        var alt = document.querySelector("#kanitAuditFormBox input[type=file]#kanitAuditSummaryFile, #kanitAuditFormMain input[type=file], #tab-kanitauditreport input#kanitAuditSummaryFile");
+        if(alt && alt.files && alt.files[0]) summaryFile = alt.files[0];
+      }
+      if(!summaryFile){ showMsg(msg, "Upload Audit Summary wajib.", "err"); return; }
 
       var rawItems = readItemCards("#kanitAuditItemsPel").concat(readItemCards("#kanitAuditItemsSup"));
       for(var i=0;i<rawItems.length;i++){
