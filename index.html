@@ -1912,60 +1912,153 @@ button.kanit-profile-btn{
 }
 
 
-/* ===== Input Omset polish ===== */
-#tab-kanitinput .field{ margin-bottom: 10px !important; }
+
+/* ===== Input Omset — tema glass dark + gold (selaras dashboard) ===== */
+#screen-omset-form,
+#screen-omset-form .admin-content{
+  background: var(--navy-950, #0B0D10) !important;
+}
+#tab-kanitinput.panel,
+#tab-kanitinput{
+  max-width: 480px !important;
+  margin: 0 auto !important;
+  padding: 18px 16px 20px !important;
+  border-radius: 16px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+#tab-kanitinput .hint{ display: none !important; }
+#tab-kanitinput .field{
+  margin-bottom: 12px !important;
+}
 #tab-kanitinput label{
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
   font-size: 11px !important;
-  margin-bottom: 4px !important;
-  color: #94A3B8 !important;
+  font-weight: 600 !important;
+  margin-bottom: 6px !important;
+  color: var(--ink-soft, #9CA3AF) !important;
+  letter-spacing: 0.02em !important;
 }
 #tab-kanitinput label .no,
 #tab-kanitinput label .tag{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 28px !important;
+  height: 22px !important;
+  padding: 0 8px !important;
+  border-radius: 6px !important;
   font-size: 10px !important;
-  padding: 2px 6px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  background: rgba(212,137,74,0.12) !important;
+  border: 1px solid rgba(212,137,74,0.28) !important;
+  color: var(--gold-dim, #E0A06A) !important;
 }
-#tab-kanitinput input{
-  min-height: 42px !important;
-  padding: 8px 12px !important;
+#tab-kanitinput label .tag[style*="err"],
+#tab-kanitinput label .tag-rejected,
+#tab-kanitinput label .tag[style*="--err"]{
+  background: rgba(248,113,113,0.12) !important;
+  border-color: rgba(248,113,113,0.3) !important;
+  color: #FCA5A5 !important;
+}
+#tab-kanitinput input[type="date"],
+#tab-kanitinput input[type="number"],
+#tab-kanitinput input[type="text"]{
+  width: 100% !important;
+  box-sizing: border-box !important;
+  min-height: 44px !important;
+  padding: 10px 14px !important;
   font-size: 15px !important;
+  font-weight: 500 !important;
+  color: var(--ink, #F3F4F6) !important;
+  background: rgba(0,0,0,0.28) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 10px !important;
+  outline: none !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+  -moz-appearance: textfield !important;
+}
+#tab-kanitinput input:focus{
+  border-color: rgba(212,137,74,0.55) !important;
+  box-shadow: 0 0 0 3px rgba(212,137,74,0.15) !important;
+}
+#tab-kanitinput input.is-invalid{
+  border-color: #EF4444 !important;
+  box-shadow: 0 0 0 2px rgba(239,68,68,0.25) !important;
+}
+#tab-kanitinput input::placeholder{
+  color: #6B7280 !important;
 }
 #tab-kanitinput .triple{
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   gap: 10px !important;
 }
-#tab-kanitinput #submitBtn{
+#tab-kanitinput #submitBtn,
+#tab-kanitinput button[type="submit"]{
   width: 100% !important;
-  min-height: 46px !important;
-  margin-top: 6px !important;
+  min-height: 48px !important;
+  margin-top: 8px !important;
+  padding: 0 16px !important;
+  border: none !important;
+  border-radius: 12px !important;
   font-size: 15px !important;
   font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  cursor: pointer !important;
+  color: #0B0D10 !important;
+  background: linear-gradient(135deg, #E8A86A 0%, #D4894A 50%, #C47A3A 100%) !important;
+  box-shadow: 0 4px 16px rgba(212,137,74,0.3) !important;
+  transition: transform 0.12s, box-shadow 0.12s !important;
 }
-#tab-kanitinput input.is-invalid{
-  border-color: #EF4444 !important;
-  box-shadow: 0 0 0 2px rgba(239,68,68,0.25) !important;
+#tab-kanitinput #submitBtn:hover{
+  box-shadow: 0 6px 20px rgba(212,137,74,0.4) !important;
+  transform: translateY(-1px) !important;
 }
-#tab-kanitinput .field-error{
-  display: none;
-  font-size: 11px !important;
-  color: #FCA5A5 !important;
-  margin-top: 4px !important;
+#tab-kanitinput #submitBtn:active{
+  transform: translateY(0) !important;
 }
-#tab-kanitinput .field-error.show{ display: block !important; }
 
-/* Modal: Batal netral, Kirim orange */
+/* Modal konfirmasi — glass */
+#modalOverlay .modal-card,
+.modal-overlay .modal-card{
+  background: #161a22 !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5) !important;
+  color: #E5E7EB !important;
+}
+#modalOverlay .modal-eyebrow{
+  color: var(--gold, #D4894A) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+#modalOverlay .modal-title{
+  color: #F8FAFC !important;
+}
+#modalOverlay .modal-fields .k{
+  color: #94A3B8 !important;
+}
+#modalOverlay .modal-fields .v{
+  color: #F1F5F9 !important;
+}
 #modalOverlay .modal-btn.cancel,
 .modal-btn.cancel{
   background: transparent !important;
-  background-image: none !important;
-  border: 1px solid rgba(255,255,255,0.18) !important;
+  border: 1px solid rgba(255,255,255,0.16) !important;
   color: #CBD5E1 !important;
   box-shadow: none !important;
 }
 #modalOverlay .modal-btn.cancel:hover{
   background: rgba(255,255,255,0.06) !important;
   color: #F8FAFC !important;
-  border-color: rgba(255,255,255,0.28) !important;
 }
 #modalOverlay .modal-btn.confirm,
 .modal-btn.confirm{
@@ -1975,35 +2068,76 @@ button.kanit-profile-btn{
   font-weight: 700 !important;
 }
 
-/* Result modal ringkas */
-#resultOverlay .result-modal-card{
+/* Modal hasil — glass + gold (bukan mint saja) */
+#resultOverlay .result-modal-card,
+.result-modal-card{
+  background: #161a22 !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 16px !important;
+  color: #E5E7EB !important;
   max-height: min(85vh, 640px) !important;
   overflow: auto !important;
 }
-#resultOverlay .recap-extra{
-  display: none !important;
+#resultOverlay .stamp,
+#resultOverlay .result .stamp{
+  color: var(--gold-dim, #E0A06A) !important;
 }
-#resultOverlay.expanded .recap-extra{
-  display: block !important;
+#resultOverlay .thanks{
+  color: #F8FAFC !important;
+}
+#resultOverlay .detail{
+  color: #94A3B8 !important;
+}
+#resultOverlay .recap-row .k{
+  color: #94A3B8 !important;
+}
+#resultOverlay .recap-row .v{
+  color: #F1F5F9 !important;
+}
+#resultOverlay .recap-row.total .k,
+#resultOverlay .recap-row.total .v{
+  color: var(--gold, #D4894A) !important;
+  font-weight: 700 !important;
+}
+#resultOverlay .recap-row.diff .v.pos{
+  color: #F87171 !important;
+}
+#resultOverlay .recap-row.diff .v.neg{
+  color: #34D399 !important;
 }
 #resultOverlay .recap-toggle{
   display: block !important;
   width: 100% !important;
   margin-top: 10px !important;
-  padding: 8px !important;
-  background: rgba(255,255,255,0.06) !important;
+  padding: 10px !important;
+  background: rgba(255,255,255,0.05) !important;
   border: 1px solid rgba(255,255,255,0.1) !important;
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   color: #CBD5E1 !important;
   font-size: 12px !important;
   cursor: pointer !important;
+}
+#resultOverlay .recap-extra{ display: none !important; }
+#resultOverlay.expanded .recap-extra{ display: block !important; }
+#resultOverlay .result-actions button,
+#resultDownloadBtn{
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+#resultDownloadBtn{
+  background: linear-gradient(135deg, #E8A86A, #C47A3A) !important;
+  color: #0B0D10 !important;
+  border: none !important;
 }
 
 @media (max-width: 560px){
   #tab-kanitinput .triple{
     grid-template-columns: 1fr !important;
   }
-  /* Profil HP: avatar saja */
+  #tab-kanitinput{
+    margin: 0 4px !important;
+    padding: 14px 12px 16px !important;
+  }
   #screen-omset-form .topbar-user-group .meta,
   #screen-omset-form .admin-avatar-text,
   #screen-kanit .topbar-user-group .meta,
@@ -2011,17 +2145,12 @@ button.kanit-profile-btn{
   #screen-kanit #kanitMiniRole{
     display: none !important;
   }
-  #screen-omset-form .topbar-user-group,
-  #screen-kanit .topbar-user-group{
-    padding: 2px !important;
-  }
 }
 @media (min-width: 561px) and (max-width: 900px){
   #tab-kanitinput .triple{
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 }
-
 </style>
 
 <style>
@@ -9772,7 +9901,7 @@ button.admin-topbar-avatar:hover,
         </div>
 
         <div class="field" style="margin-top:20px;">
-          <label><span class="tag" style="border-color:var(--err); color:var(--err);">Rejected</span> Jumlah pengajuan ditolak hari ini</label>
+          <label><span class="tag tag-rejected">Rejected</span> Jumlah pengajuan ditolak hari ini</label>
           <input type="number" id="rejected" min="0" step="1" placeholder="0" required>
         </div>
 
@@ -11844,35 +11973,76 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     resultClose.style.visibility = "hidden";
     resultActions.style.visibility = "hidden";
     var ssReminderWasShown = ssReminderEl.style.display !== "none";
-    ssReminderEl.style.display = "none"; // gak usah ikut kefoto, kan udah didownload
+    ssReminderEl.style.display = "none";
 
-    // Modal ini punya max-height:85vh + overflow-y:auto (bisa discroll kalau isinya
-    // panjang). html2canvas cuma motret bagian yang lagi keliatan di layar, jadi
-    // kalau dibiarkan, isi yang perlu discroll ke bawah bakal kepotong di hasil
-    // gambarnya. Lepas dulu batasan itu sementara supaya seluruh isi ke-capture,
-    // baru dikembalikan lagi setelah selesai.
+    // Expand detail penuh agar ikut ter-capture (bukan screenshot ringkas)
+    var overlay = document.getElementById("resultOverlay");
+    var wasExpanded = overlay && overlay.classList.contains("expanded");
+    if(overlay) overlay.classList.add("expanded");
+    var extra = document.getElementById("recapExtra");
+    var prevExtraDisplay = extra ? extra.style.display : "";
+    if(extra){
+      extra.style.setProperty("display", "block", "important");
+      extra.style.setProperty("visibility", "visible", "important");
+      extra.style.setProperty("height", "auto", "important");
+      extra.style.setProperty("max-height", "none", "important");
+      extra.style.setProperty("opacity", "1", "important");
+      extra.style.setProperty("overflow", "visible", "important");
+    }
+    var tog = document.getElementById("recapToggleBtn");
+    var prevTogVis = tog ? tog.style.visibility : "";
+    if(tog) tog.style.visibility = "hidden";
+
     var prevMaxHeight = resultModalCard.style.maxHeight;
     var prevOverflowY = resultModalCard.style.overflowY;
     resultModalCard.style.maxHeight = "none";
     resultModalCard.style.overflowY = "visible";
+    resultModalCard.style.height = "auto";
 
-    html2canvas(resultModalCard, { backgroundColor:"#0D1E36", scale:2 }).then(function(canvas){
-      var link = document.createElement("a");
-      var cabang = lastSubmitInfo ? lastSubmitInfo.cabang : "omset";
-      var tanggal = lastSubmitInfo ? lastSubmitInfo.tanggal : "";
-      link.download = "omset-"+cabang+"-"+tanggal+".png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    }).catch(function(){
-      alert("Gagal membuat gambar. Coba screenshot manual sebagai cadangan.");
-    }).finally(function(){
-      resultModalCard.style.maxHeight = prevMaxHeight;
-      resultModalCard.style.overflowY = prevOverflowY;
-      resultDownloadBtn.disabled = false;
-      resultDownloadBtn.textContent = "⬇ Download Gambar";
-      resultClose.style.visibility = "visible";
-      resultActions.style.visibility = "visible";
-      if(ssReminderWasShown) ssReminderEl.style.display = "block";
+    // tunggu layout settle lalu capture full
+    requestAnimationFrame(function(){
+      setTimeout(function(){
+        html2canvas(resultModalCard, {
+          backgroundColor: "#0D1E36",
+          scale: 2,
+          useCORS: true,
+          scrollY: 0,
+          scrollX: 0,
+          windowWidth: resultModalCard.scrollWidth,
+          windowHeight: resultModalCard.scrollHeight
+        }).then(function(canvas){
+          var link = document.createElement("a");
+          var cabang = lastSubmitInfo ? lastSubmitInfo.cabang : "omset";
+          var tanggal = lastSubmitInfo ? lastSubmitInfo.tanggal : "";
+          link.download = "omset-"+cabang+"-"+tanggal+"-full.png";
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+        }).catch(function(){
+          alert("Gagal membuat gambar. Coba screenshot manual sebagai cadangan.");
+        }).finally(function(){
+          resultModalCard.style.maxHeight = prevMaxHeight;
+          resultModalCard.style.overflowY = prevOverflowY;
+          resultModalCard.style.height = "";
+          if(extra){
+            extra.style.display = prevExtraDisplay;
+            extra.style.removeProperty("visibility");
+            extra.style.removeProperty("height");
+            extra.style.removeProperty("max-height");
+            extra.style.removeProperty("opacity");
+            extra.style.removeProperty("overflow");
+          }
+          if(tog) tog.style.visibility = prevTogVis || "visible";
+          if(overlay){
+            if(wasExpanded) overlay.classList.add("expanded");
+            else overlay.classList.remove("expanded");
+          }
+          resultDownloadBtn.disabled = false;
+          resultDownloadBtn.textContent = "⬇ Download Gambar";
+          resultClose.style.visibility = "visible";
+          resultActions.style.visibility = "visible";
+          if(ssReminderWasShown) ssReminderEl.style.display = "block";
+        });
+      }, 80);
     });
   });
 
