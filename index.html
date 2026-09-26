@@ -9213,6 +9213,40 @@ button.admin-topbar-avatar:hover,
   color: #FCA5A5 !important;
 }
 
+/* ===== Kas Area (KC) ===== */
+#tab-kasarea .ka-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+#tab-kasarea .ka-saldo{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:#E8A86A;background:rgba(212,137,74,.12);border:1px solid rgba(212,137,74,.35);border-radius:10px;padding:6px 14px}
+#tab-kasarea .ka-title{flex:1;font-size:15px;font-weight:700;color:#F1F5F9}
+#tab-kasarea .ka-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.9fr);gap:14px;align-items:start}
+@media(max-width:900px){#tab-kasarea .ka-layout{grid-template-columns:1fr}}
+#tab-kasarea .ka-sec-h{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:8px 12px;border-radius:10px 10px 0 0}
+#tab-kasarea .ka-sec-kredit{background:#166534;color:#ECFDF5}
+#tab-kasarea .ka-sec-debit{background:#991B1B;color:#FEF2F2}
+#tab-kasarea .ka-table-wrap{overflow:auto;max-height:min(62vh,560px);border:1px solid rgba(255,255,255,.1);border-top:0;border-radius:0 0 10px 10px;background:rgba(255,255,255,.03)}
+#tab-kasarea table.ka-table{width:100%;border-collapse:collapse;font-size:11.5px}
+#tab-kasarea table.ka-table th{position:sticky;top:0;z-index:2;background:#1a1f28;color:#E2E8F0;font-weight:700;padding:6px 5px;border-bottom:1px solid rgba(255,255,255,.12);white-space:nowrap}
+#tab-kasarea table.ka-table td{padding:4px 5px;border-bottom:1px solid rgba(255,255,255,.06);color:#E5E7EB;vertical-align:middle}
+#tab-kasarea table.ka-table tr:hover td{background:rgba(255,255,255,.04)}
+#tab-kasarea .ka-cab{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#94A3B8}
+#tab-kasarea .ka-nama{font-weight:600;color:#F8FAFC}
+#tab-kasarea .ka-total{font-family:'JetBrains Mono',monospace;font-weight:700;color:#86EFAC;white-space:nowrap}
+#tab-kasarea .ka-check{width:22px;height:22px;border-radius:5px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:transparent;font-size:12px;font-weight:800}
+#tab-kasarea .ka-check.on{background:#16A34A;border-color:#22C55E;color:#fff}
+#tab-kasarea .ka-check.disabled{opacity:.4;cursor:not-allowed;background:#7F1D1D;border-color:#991B1B}
+#tab-kasarea .ka-red-cell{background:#DC2626 !important;min-width:28px;height:26px;border-radius:3px}
+#tab-kasarea .ka-badge{display:inline-block;font-size:9px;font-weight:800;padding:1px 6px;border-radius:99px;margin-left:4px}
+#tab-kasarea .ka-badge-mutasi{background:rgba(248,113,113,.2);color:#FCA5A5}
+#tab-kasarea .ka-badge-resign{background:rgba(148,163,184,.2);color:#CBD5E1}
+#tab-kasarea .ka-foot{margin-top:8px;padding:8px 12px;border-radius:8px;font-weight:700;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+#tab-kasarea .ka-foot-kredit{background:rgba(22,101,52,.35);color:#BBF7D0}
+#tab-kasarea .ka-foot-debit{background:rgba(153,27,27,.35);color:#FECACA}
+#tab-kasarea .ka-foot span{font-family:'JetBrains Mono',monospace}
+#tab-kasarea .ka-debit-form{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;padding:10px;border:1px solid rgba(255,255,255,.1);border-top:0;background:rgba(0,0,0,.2)}
+#tab-kasarea .ka-debit-form .field{margin:0;min-width:100px;flex:1 1 100px}
+#tab-kasarea .ka-debit-form label{font-size:11px;color:#94A3B8}
+#tab-kasarea .ka-del{border:0;background:rgba(248,113,113,.15);color:#F87171;border-radius:6px;padding:2px 8px;cursor:pointer;font-size:11px}
+#tab-kasarea .ka-status-sel{font-size:10px;padding:2px 4px;border-radius:6px;background:#1a1f28;border:1px solid rgba(255,255,255,.15);color:#E2E8F0}
+
 /* Hilangkan sisa hijau di CO */
 #tab-cashopname .co-hist-card .st.ok{
   background: rgba(212,137,74,0.15) !important;
@@ -10361,6 +10395,7 @@ button.admin-topbar-avatar:hover,
           <button class="tab-btn admin-nav-btn" data-tab="jadwallibur"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><span class="admin-nav-label">Jadwal Libur &amp; Cuti</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="audit"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a1 1 0 0 1 1-1h9l6 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></span><span class="admin-nav-label">Dashboard Audit</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="cashopname"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="admin-nav-label">Cash Opname</span></button>
+          <button class="tab-btn admin-nav-btn" data-tab="kasarea"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5h16v14H4z"/><path d="M4 9h16M9 5v4M15 5v4"/><path d="M8 14h3M13 14h3M8 17h8"/></svg></span><span class="admin-nav-label">Kas Area</span></button>
           <div class="admin-sidebar-section">Pengaturan</div>
           <button class="tab-btn admin-nav-btn" data-tab="updatedata"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L18 10l-4-4L4 16v4z"/><path d="m12 6 4 4"/></svg></span><span class="admin-nav-label">Update Data</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kelolacabang"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h16M6 20V10l6-6 6 6v10"/><path d="M9 20v-6h6v6"/></svg></span><span class="admin-nav-label">Kelola Cabang</span></button>
@@ -10889,6 +10924,35 @@ button.admin-topbar-avatar:hover,
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Kas Area (KC only) -->
+    <div class="panel subpanel" id="tab-kasarea">
+      <div class="ka-head">
+        <div class="ka-saldo" id="kaSaldo">Rp0</div>
+        <div class="ka-title" id="kaTitle">Arus Kas Area KC Syahrul 2026</div>
+        <button type="button" id="kaRefreshBtn" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
+      </div>
+      <div class="hint" style="margin:0 0 12px;">Iuran <b>Rp20.000</b>/bulan. Centang = sudah bayar. Status mutasi/resign = bar merah (tidak ikut). Debit = pengeluaran area.</div>
+      <div class="ka-layout">
+        <div class="ka-kredit">
+          <div class="ka-sec-h ka-sec-kredit">Kredit</div>
+          <div class="ka-table-wrap" id="kaKreditWrap"><div class="empty-log">Memuat...</div></div>
+          <div class="ka-foot ka-foot-kredit">Total Kredit <span id="kaTotalKredit">Rp0</span></div>
+        </div>
+        <div class="ka-debit">
+          <div class="ka-sec-h ka-sec-debit">Debit</div>
+          <div class="ka-debit-form">
+            <div class="field"><label>Tanggal</label><input type="date" id="kaDebitTgl"></div>
+            <div class="field"><label>Item</label><input type="text" id="kaDebitItem" placeholder="Contoh: Makan area"></div>
+            <div class="field"><label>Nominal</label><input type="text" inputmode="decimal" id="kaDebitNom" placeholder="0" autocomplete="off"></div>
+            <button type="button" id="kaDebitAddBtn" class="btn-xs">+ Debit</button>
+          </div>
+          <div class="ka-table-wrap" id="kaDebitWrap"><div class="empty-log">—</div></div>
+          <div class="ka-foot ka-foot-debit">Total Debit <span id="kaTotalDebit">Rp0</span></div>
+        </div>
+      </div>
+      <div class="msg" id="kaMsg"></div>
     </div>
 
     <!-- Dashboard Audit -->
@@ -15986,6 +16050,146 @@ function applyRejectedAlasanFilter_(which){
       }
     }
   });
+
+  // ---------------- Kas Area (KC) ----------------
+  function kaFmtRp_(n){
+    n = Math.round(Number(n) || 0);
+    var neg = n < 0; if(neg) n = -n;
+    var s = String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return (neg ? "-Rp" : "Rp") + s;
+  }
+  function renderKasArea_(data){
+    var wrapK = document.getElementById("kaKreditWrap");
+    var wrapD = document.getElementById("kaDebitWrap");
+    if(!data || data.status !== "OK"){
+      if(wrapK) wrapK.innerHTML = '<div class="empty-log">'+(data && data.reason ? data.reason : "Gagal memuat")+'</div>';
+      return;
+    }
+    var months = data.months || ["Apr","Mei","Jun","Jul","Agt","Sep","Okt","Nov","Des","Jan"];
+    var people = data.people || [];
+    // Input hanya centang (✓). Mutasi/resign → sel merah untuk bulan kosong.
+    var head = '<table class="ka-table"><thead><tr><th>Cabang</th><th>Nama</th>'+
+      months.map(function(m){ return '<th>'+m+'</th>'; }).join("")+
+      '<th>Total</th></tr></thead><tbody>';
+    var body = people.map(function(p){
+      var st = (p.status || "aktif").toLowerCase();
+      var rowCls = st === "mutasi" ? "ka-row-mutasi" : (st === "resign" ? "ka-row-resign" : "");
+      var jab = String(p.jabatan||"").toLowerCase();
+      var cabLabel = jab.indexOf("kepala cabang")>=0 ? "Kepala Cabang" :
+        (st === "mutasi" ? "Mutasi" : (st === "resign" ? "Resign" : (p.cabang || "—")));
+      var cells = months.map(function(m){
+        var on = !!(p.marks && p.marks[m]);
+        if ((st === "mutasi" || st === "resign") && !on) {
+          return '<td class="ka-red-cell" title="Tidak ikut (mutasi/resign)"></td>';
+        }
+        var cls = "ka-check"+(on?" on":"");
+        return '<td style="text-align:center"><button type="button" class="'+cls+'" data-nik="'+escHtml(p.nik)+'" data-month="'+m+'" data-nama="'+escHtml(p.nama)+'" data-cabang="'+escHtml(p.cabang)+'" data-jabatan="'+escHtml(p.jabatan)+'" data-status="'+escHtml(st)+'">✓</button></td>';
+      }).join("");
+      return '<tr class="'+rowCls+'"><td class="ka-cab">'+escHtml(cabLabel)+'</td><td class="ka-nama">'+escHtml(p.nama)+'</td>'+cells+
+        '<td class="ka-total">'+kaFmtRp_(p.total)+'</td></tr>';
+    }).join("");
+    if(wrapK) wrapK.innerHTML = head + body + '</tbody></table>';
+
+    var debits = data.debits || [];
+    if(wrapD){
+      if(!debits.length) wrapD.innerHTML = '<div class="empty-log" style="padding:12px;">Belum ada debit.</div>';
+      else {
+        wrapD.innerHTML = '<table class="ka-table"><thead><tr><th>No</th><th>Tanggal</th><th>Item</th><th>Nominal</th><th></th></tr></thead><tbody>'+
+          debits.map(function(d){
+            return '<tr><td>'+d.no+'</td><td>'+escHtml(d.tanggal)+'</td><td>'+escHtml(d.item)+'</td><td class="ka-total" style="color:#FCA5A5">'+kaFmtRp_(d.nominal)+'</td>'+
+              '<td><button type="button" class="ka-del" data-id="'+escHtml(d.id)+'">Hapus</button></td></tr>';
+          }).join("")+'</tbody></table>';
+      }
+    }
+    var elS = document.getElementById("kaSaldo");
+    var elTK = document.getElementById("kaTotalKredit");
+    var elTD = document.getElementById("kaTotalDebit");
+    var elT = document.getElementById("kaTitle");
+    if(elS) elS.textContent = kaFmtRp_(data.saldo);
+    if(elTK) elTK.textContent = kaFmtRp_(data.totalKredit);
+    if(elTD) elTD.textContent = kaFmtRp_(data.totalDebit);
+    if(elT && data.title) elT.textContent = data.title;
+  }
+  function loadKasArea(){
+    var msg = document.getElementById("kaMsg");
+    if(typeof clearMsg === "function") clearMsg(msg);
+    if(!session.adminPin){
+      if(typeof showMsg === "function") showMsg(msg, "Sesi KC berakhir.", "err");
+      return;
+    }
+    var wrapK = document.getElementById("kaKreditWrap");
+    if(wrapK) wrapK.innerHTML = '<div class="empty-log">Memuat Kas Area...</div>';
+    google.script.run
+      .withSuccessHandler(function(r){ renderKasArea_(r); if(r && r.status!=="OK" && typeof showMsg==="function") showMsg(msg, r.reason||"Gagal", "err"); })
+      .withFailureHandler(function(err){ if(wrapK) wrapK.innerHTML = ""; if(typeof showMsg==="function") showMsg(msg, "Koneksi: "+(err.message||err), "err"); })
+      .getKasAreaData(session.adminPin);
+  }
+  window.loadKasArea = loadKasArea;
+  // Hook tab Kas Area (klik sidebar)
+  document.querySelectorAll('.tab-btn[data-tab="kasarea"]').forEach(function(btn){
+    btn.addEventListener("click", function(){ setTimeout(function(){ try{ loadKasArea(); }catch(e){} }, 30); });
+  });
+  (function wireKasAreaUi_(){
+    var root = document.getElementById("tab-kasarea");
+    if(!root || root._kaWired) return;
+    root._kaWired = true;
+    var ref = document.getElementById("kaRefreshBtn");
+    if(ref) ref.addEventListener("click", loadKasArea);
+    root.addEventListener("click", function(e){
+      var btn = e.target.closest(".ka-check");
+      if(btn && !btn.disabled){
+        var nik = btn.getAttribute("data-nik");
+        var month = btn.getAttribute("data-month");
+        var on = !btn.classList.contains("on");
+        btn.classList.toggle("on", on);
+        google.script.run
+          .withSuccessHandler(function(r){ if(!r||r.status!=="OK"){ btn.classList.toggle("on", !on); alert((r&&r.reason)||"Gagal simpan"); return; } loadKasArea(); })
+          .withFailureHandler(function(){ btn.classList.toggle("on", !on); alert("Gagal simpan centang"); })
+          .setKasAreaKredit(session.adminPin, {
+            nik: nik, month: month, checked: on,
+            nama: btn.getAttribute("data-nama")||"",
+            cabang: btn.getAttribute("data-cabang")||"",
+            jabatan: btn.getAttribute("data-jabatan")||"",
+            status: btn.getAttribute("data-status")||"aktif"
+          });
+        return;
+      }
+      var del = e.target.closest(".ka-del");
+      if(del){
+        var id = del.getAttribute("data-id");
+        if(!id || !confirm("Hapus debit ini?")) return;
+        google.script.run
+          .withSuccessHandler(function(r){ if(!r||r.status!=="OK"){ alert((r&&r.reason)||"Gagal hapus"); return; } loadKasArea(); })
+          .withFailureHandler(function(){ alert("Gagal hapus"); })
+          .deleteKasAreaDebit(session.adminPin, id);
+      }
+    });
+    root.addEventListener("change", function(e){
+      var sel = e.target.closest(".ka-status-sel");
+      if(!sel) return;
+      google.script.run
+        .withSuccessHandler(function(r){ if(!r||r.status!=="OK"){ alert((r&&r.reason)||"Gagal update status"); loadKasArea(); return; } loadKasArea(); })
+        .withFailureHandler(function(){ alert("Gagal update status"); loadKasArea(); })
+        .setKasAreaStatus(session.adminPin, { nik: sel.getAttribute("data-nik"), status: sel.value });
+    });
+    var addBtn = document.getElementById("kaDebitAddBtn");
+    if(addBtn) addBtn.addEventListener("click", function(){
+      var tgl = (document.getElementById("kaDebitTgl")||{}).value || "";
+      var item = ((document.getElementById("kaDebitItem")||{}).value || "").trim();
+      var nomRaw = ((document.getElementById("kaDebitNom")||{}).value || "").replace(/\./g,"").replace(/,/g,"");
+      var nominal = Number(nomRaw) || 0;
+      if(!tgl || !item || nominal <= 0){ alert("Isi tanggal, item, dan nominal (>0)"); return; }
+      google.script.run
+        .withSuccessHandler(function(r){
+          if(!r||r.status!=="OK"){ alert((r&&r.reason)||"Gagal tambah debit"); return; }
+          var it = document.getElementById("kaDebitItem"); if(it) it.value = "";
+          var nm = document.getElementById("kaDebitNom"); if(nm) nm.value = "";
+          loadKasArea();
+        })
+        .withFailureHandler(function(){ alert("Gagal tambah debit"); })
+        .addKasAreaDebit(session.adminPin, { tanggal: tgl, item: item, nominal: nominal });
+    });
+  })();
 
   document.getElementById("karyawanBaruToggleBtn").addEventListener("click", function(){
     var panel = document.getElementById("karyawanBaruPanel");
