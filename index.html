@@ -9213,39 +9213,110 @@ button.admin-topbar-avatar:hover,
   color: #FCA5A5 !important;
 }
 
-/* ===== Kas Area (KC) ===== */
-#tab-kasarea .ka-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
-#tab-kasarea .ka-saldo{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:#E8A86A;background:rgba(212,137,74,.12);border:1px solid rgba(212,137,74,.35);border-radius:10px;padding:6px 14px}
-#tab-kasarea .ka-title{flex:1;font-size:15px;font-weight:700;color:#F1F5F9}
-#tab-kasarea .ka-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.9fr);gap:14px;align-items:start}
+/* ===== Kas Area (KC) — tema glass gold selaras app ===== */
+#tab-kasarea{
+  --ka-glass: rgba(255,255,255,0.04);
+  --ka-border: rgba(255,255,255,0.10);
+  --ka-gold: #E8A86A;
+  --ka-gold-dim: rgba(212,137,74,0.18);
+}
+#tab-kasarea .ka-head{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  margin-bottom:14px;padding:12px 14px;
+  background:var(--ka-glass);border:1px solid var(--ka-border);border-radius:14px;
+  backdrop-filter:blur(10px);
+}
+#tab-kasarea .ka-saldo{
+  font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:800;
+  color:var(--ka-gold);background:var(--ka-gold-dim);
+  border:1px solid rgba(212,137,74,0.35);border-radius:10px;padding:8px 14px;
+}
+#tab-kasarea .ka-title{flex:1;font-size:14.5px;font-weight:700;color:#F1F5F9;letter-spacing:0.01em}
+#tab-kasarea .ka-layout{
+  display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,0.9fr);
+  gap:14px;align-items:start;
+}
 @media(max-width:900px){#tab-kasarea .ka-layout{grid-template-columns:1fr}}
-#tab-kasarea .ka-sec-h{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:8px 12px;border-radius:10px 10px 0 0}
-#tab-kasarea .ka-sec-kredit{background:#166534;color:#ECFDF5}
-#tab-kasarea .ka-sec-debit{background:#991B1B;color:#FEF2F2}
-#tab-kasarea .ka-table-wrap{overflow:auto;max-height:min(62vh,560px);border:1px solid rgba(255,255,255,.1);border-top:0;border-radius:0 0 10px 10px;background:rgba(255,255,255,.03)}
+#tab-kasarea .ka-kredit,#tab-kasarea .ka-debit{
+  background:var(--ka-glass);border:1px solid var(--ka-border);border-radius:14px;
+  overflow:hidden;backdrop-filter:blur(8px);
+}
+#tab-kasarea .ka-sec-h{
+  font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;
+  padding:10px 14px;color:var(--ka-gold);
+  background:rgba(212,137,74,0.08);border-bottom:1px solid var(--ka-border);
+}
+#tab-kasarea .ka-sec-kredit,
+#tab-kasarea .ka-sec-debit{background:rgba(212,137,74,0.08);color:var(--ka-gold)}
+#tab-kasarea .ka-table-wrap{
+  overflow:auto;max-height:min(58vh,520px);
+  border:none;border-radius:0;background:transparent;
+}
 #tab-kasarea table.ka-table{width:100%;border-collapse:collapse;font-size:11.5px}
-#tab-kasarea table.ka-table th{position:sticky;top:0;z-index:2;background:#1a1f28;color:#E2E8F0;font-weight:700;padding:6px 5px;border-bottom:1px solid rgba(255,255,255,.12);white-space:nowrap}
-#tab-kasarea table.ka-table td{padding:4px 5px;border-bottom:1px solid rgba(255,255,255,.06);color:#E5E7EB;vertical-align:middle}
-#tab-kasarea table.ka-table tr:hover td{background:rgba(255,255,255,.04)}
+#tab-kasarea table.ka-table th{
+  position:sticky;top:0;z-index:2;
+  background:#14181f;color:#CBD5E1;font-weight:700;
+  padding:8px 6px;border-bottom:1px solid var(--ka-border);white-space:nowrap;
+  font-size:10.5px;letter-spacing:0.02em;
+}
+#tab-kasarea table.ka-table td{
+  padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.05);
+  color:#E5E7EB;vertical-align:middle;
+}
+#tab-kasarea table.ka-table tr:hover td{background:rgba(255,255,255,0.03)}
 #tab-kasarea .ka-cab{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#94A3B8}
 #tab-kasarea .ka-nama{font-weight:600;color:#F8FAFC}
-#tab-kasarea .ka-total{font-family:'JetBrains Mono',monospace;font-weight:700;color:#86EFAC;white-space:nowrap}
-#tab-kasarea .ka-check{width:22px;height:22px;border-radius:5px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:transparent;font-size:12px;font-weight:800}
-#tab-kasarea .ka-check.on{background:#16A34A;border-color:#22C55E;color:#fff}
-#tab-kasarea .ka-check.disabled{opacity:.4;cursor:not-allowed;background:#7F1D1D;border-color:#991B1B}
-#tab-kasarea .ka-red-cell{background:#DC2626 !important;min-width:28px;height:26px;border-radius:3px}
-#tab-kasarea .ka-badge{display:inline-block;font-size:9px;font-weight:800;padding:1px 6px;border-radius:99px;margin-left:4px}
-#tab-kasarea .ka-badge-mutasi{background:rgba(248,113,113,.2);color:#FCA5A5}
-#tab-kasarea .ka-badge-resign{background:rgba(148,163,184,.2);color:#CBD5E1}
-#tab-kasarea .ka-foot{margin-top:8px;padding:8px 12px;border-radius:8px;font-weight:700;font-size:13px;display:flex;justify-content:space-between;align-items:center}
-#tab-kasarea .ka-foot-kredit{background:rgba(22,101,52,.35);color:#BBF7D0}
-#tab-kasarea .ka-foot-debit{background:rgba(153,27,27,.35);color:#FECACA}
-#tab-kasarea .ka-foot span{font-family:'JetBrains Mono',monospace}
-#tab-kasarea .ka-debit-form{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;padding:10px;border:1px solid rgba(255,255,255,.1);border-top:0;background:rgba(0,0,0,.2)}
+#tab-kasarea .ka-total{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--ka-gold);white-space:nowrap}
+#tab-kasarea .ka-check{
+  width:26px;height:26px;border-radius:6px;
+  border:1.5px solid rgba(255,255,255,0.22);background:rgba(255,255,255,0.06);
+  cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+  color:transparent;font-size:13px;font-weight:800;
+  transition:background .12s,border-color .12s,color .12s,transform .08s;
+  user-select:none;-webkit-user-select:none;
+}
+#tab-kasarea .ka-check:hover{border-color:rgba(232,168,106,0.6);background:rgba(212,137,74,0.14);transform:scale(1.06)}
+#tab-kasarea .ka-check:active{transform:scale(0.94)}
+#tab-kasarea .ka-check.on{
+  background:linear-gradient(145deg,#E8A86A,#C47A3A);border-color:#E8A86A;color:#0B0D10;
+}
+#tab-kasarea .ka-check.ka-busy{opacity:0.6;pointer-events:none}
+#tab-kasarea .ka-check.disabled{opacity:.35;cursor:not-allowed}
+#tab-kasarea .ka-red-cell{
+  background:rgba(248,113,113,0.35)!important;min-width:28px;height:26px;border-radius:4px;
+  border:1px solid rgba(248,113,113,0.4);
+}
+#tab-kasarea .ka-foot{
+  margin:0;padding:10px 14px;border-radius:0;font-weight:700;font-size:12.5px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--ka-border);background:rgba(0,0,0,0.2);color:#E2E8F0;
+}
+#tab-kasarea .ka-foot-kredit,
+#tab-kasarea .ka-foot-debit{background:rgba(0,0,0,0.2);color:#E2E8F0}
+#tab-kasarea .ka-foot span{font-family:'JetBrains Mono',monospace;color:var(--ka-gold)}
+#tab-kasarea .ka-debit-form{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;
+  padding:12px 14px;border:none;border-bottom:1px solid var(--ka-border);
+  background:rgba(0,0,0,0.15);
+}
 #tab-kasarea .ka-debit-form .field{margin:0;min-width:100px;flex:1 1 100px}
-#tab-kasarea .ka-debit-form label{font-size:11px;color:#94A3B8}
-#tab-kasarea .ka-del{border:0;background:rgba(248,113,113,.15);color:#F87171;border-radius:6px;padding:2px 8px;cursor:pointer;font-size:11px}
-#tab-kasarea .ka-status-sel{font-size:10px;padding:2px 4px;border-radius:6px;background:#1a1f28;border:1px solid rgba(255,255,255,.15);color:#E2E8F0}
+#tab-kasarea .ka-debit-form label{font-size:11px;color:#94A3B8;font-weight:600}
+#tab-kasarea .ka-debit-form input{
+  background:rgba(255,255,255,0.06)!important;border:1px solid var(--ka-border)!important;
+  border-radius:8px!important;color:#F1F5F9!important;padding:8px 10px!important;
+}
+#tab-kasarea #kaDebitAddBtn{
+  width:auto!important;padding:8px 14px!important;border-radius:8px!important;
+  background:linear-gradient(135deg,#E8A86A,#C47A3A)!important;color:#0B0D10!important;
+  font-weight:700!important;border:none!important;
+}
+#tab-kasarea .ka-del{
+  border:0;background:rgba(248,113,113,0.12);color:#FCA5A5;
+  border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px;font-weight:600;
+}
+#tab-kasarea .ka-del:hover{background:rgba(248,113,113,0.22)}
+#tab-kasarea .hint{color:#94A3B8!important;font-size:12px!important}
+#tab-kasarea .empty-log{color:#94A3B8!important}
 
 /* Hilangkan sisa hijau di CO */
 #tab-cashopname .co-hist-card .st.ok{
@@ -10933,7 +11004,7 @@ button.admin-topbar-avatar:hover,
         <div class="ka-title" id="kaTitle">Arus Kas Area KC Syahrul 2026</div>
         <button type="button" id="kaRefreshBtn" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
       </div>
-      <div class="hint" style="margin:0 0 12px;">Iuran <b>Rp20.000</b>/bulan. Centang = sudah bayar. Status mutasi/resign = bar merah (tidak ikut). Debit = pengeluaran area.</div>
+      <div class="hint" style="margin:0 0 12px;">Iuran <b>Rp20.000</b>/bulan. <b>✓ tercentang = sudah bayar</b> · kosong = belum bayar · merah = mutasi/resign (tidak ikut). Klik kotak untuk centang/batal.</div>
       <div class="ka-layout">
         <div class="ka-kredit">
           <div class="ka-sec-h ka-sec-kredit">Kredit</div>
@@ -16136,15 +16207,52 @@ function applyRejectedAlasanFilter_(which){
     var ref = document.getElementById("kaRefreshBtn");
     if(ref) ref.addEventListener("click", loadKasArea);
     root.addEventListener("click", function(e){
-      var btn = e.target.closest(".ka-check");
-      if(btn && !btn.disabled){
+      var btn = e.target.closest("button.ka-check");
+      if(btn && !btn.disabled && !btn.classList.contains("ka-busy")){
+        e.preventDefault();
+        e.stopPropagation();
         var nik = btn.getAttribute("data-nik");
         var month = btn.getAttribute("data-month");
-        var on = !btn.classList.contains("on");
+        var wasOn = btn.classList.contains("on");
+        var on = !wasOn; // kosong → ✓ (+20rb), ✓ → kosong (−20rb)
+        var iuran = 20000;
+        function parseRp_(el){
+          if(!el) return 0;
+          return parseInt(String(el.textContent||"0").replace(/[^\d-]/g,""), 10) || 0;
+        }
+        function setRp_(el, n){ if(el) el.textContent = kaFmtRp_(n); }
+        // UI langsung
         btn.classList.toggle("on", on);
+        btn.classList.add("ka-busy");
+        var tr = btn.closest("tr");
+        var totalCell = tr ? tr.querySelector(".ka-total") : null;
+        var delta = on ? iuran : -iuran;
+        if(totalCell) setRp_(totalCell, Math.max(0, parseRp_(totalCell) + delta));
+        var elS = document.getElementById("kaSaldo");
+        var elTK = document.getElementById("kaTotalKredit");
+        setRp_(elTK, Math.max(0, parseRp_(elTK) + delta));
+        setRp_(elS, parseRp_(elS) + delta);
         google.script.run
-          .withSuccessHandler(function(r){ if(!r||r.status!=="OK"){ btn.classList.toggle("on", !on); alert((r&&r.reason)||"Gagal simpan"); return; } loadKasArea(); })
-          .withFailureHandler(function(){ btn.classList.toggle("on", !on); alert("Gagal simpan centang"); })
+          .withSuccessHandler(function(r){
+            btn.classList.remove("ka-busy");
+            if(!r || r.status !== "OK"){
+              btn.classList.toggle("on", wasOn);
+              if(totalCell) setRp_(totalCell, Math.max(0, parseRp_(totalCell) - delta));
+              setRp_(elTK, Math.max(0, parseRp_(elTK) - delta));
+              setRp_(elS, parseRp_(elS) - delta);
+              alert((r && r.reason) || "Gagal simpan centang");
+              return;
+            }
+            loadKasArea();
+          })
+          .withFailureHandler(function(){
+            btn.classList.remove("ka-busy");
+            btn.classList.toggle("on", wasOn);
+            if(totalCell) setRp_(totalCell, Math.max(0, parseRp_(totalCell) - delta));
+            setRp_(elTK, Math.max(0, parseRp_(elTK) - delta));
+            setRp_(elS, parseRp_(elS) - delta);
+            alert("Gagal simpan centang");
+          })
           .setKasAreaKredit(session.adminPin, {
             nik: nik, month: month, checked: on,
             nama: btn.getAttribute("data-nama")||"",
