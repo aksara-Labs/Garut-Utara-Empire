@@ -403,6 +403,44 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
 
 
 
+/* Detail proyeksi per kategori & cabang */
+.kh-detail-wrap{margin-top:18px}
+.kh-detail-title{
+  font-size:13px;font-weight:800;color:#F1F5F9;margin:0 0 12px;
+  letter-spacing:0.02em;
+}
+.kh-detail-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
+}
+@media(max-width:900px){.kh-detail-grid{grid-template-columns:1fr}}
+.kh-detail-card{
+  background:transparent;border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px;overflow:hidden;
+}
+.kh-detail-card-h{
+  padding:9px 12px;font-size:12px;font-weight:800;color:#E8A86A;
+  border-bottom:1px solid rgba(255,255,255,0.08);letter-spacing:0.03em;
+}
+.kh-detail-table-wrap{overflow:auto}
+.kh-detail-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.kh-detail-table th{
+  text-align:left;padding:7px 8px;font-size:10px;font-weight:700;
+  color:#94A3B8;border-bottom:1px solid rgba(255,255,255,0.08);
+  text-transform:uppercase;letter-spacing:0.03em;white-space:nowrap;
+}
+.kh-detail-table td{
+  padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.04);
+  color:#E5E7EB;font-family:'JetBrains Mono',monospace;font-size:11px;
+}
+.kh-detail-table .kh-cab{font-family:inherit;font-weight:600;color:#F8FAFC}
+.kh-detail-table tr:hover td{background:rgba(255,255,255,0.03)}
+.kh-detail-table .kh-total-row td{
+  font-weight:800;border-top:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.03);color:#F1F5F9;
+}
+.kh-gap-neg{color:#FCA5A5!important}
+.kh-gap-pos{color:#86EFAC!important}
+
 /* Dashboard Harian — padat + 4 badge benchmark sejajar */
 #tab-kinerjaharian .kinerja-badges, #tab-kanitkinerjaharian .kinerja-badges, #tab-kinerja .kinerja-badges,
 .kinerja-badges{
@@ -9213,108 +9251,106 @@ button.admin-topbar-avatar:hover,
   color: #FCA5A5 !important;
 }
 
-/* ===== Kas Area (KC) — tema glass gold selaras app ===== */
+/* ===== Kas Area — transparan glass + checkbox native Excel-like ===== */
 #tab-kasarea{
-  --ka-glass: rgba(255,255,255,0.04);
-  --ka-border: rgba(255,255,255,0.10);
+  --ka-glass: rgba(255,255,255,0.03);
+  --ka-border: rgba(255,255,255,0.08);
   --ka-gold: #E8A86A;
-  --ka-gold-dim: rgba(212,137,74,0.18);
 }
 #tab-kasarea .ka-head{
   display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-  margin-bottom:14px;padding:12px 14px;
-  background:var(--ka-glass);border:1px solid var(--ka-border);border-radius:14px;
-  backdrop-filter:blur(10px);
+  margin-bottom:12px;padding:10px 12px;
+  background:transparent;border:1px solid var(--ka-border);border-radius:12px;
 }
 #tab-kasarea .ka-saldo{
-  font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:800;
-  color:var(--ka-gold);background:var(--ka-gold-dim);
-  border:1px solid rgba(212,137,74,0.35);border-radius:10px;padding:8px 14px;
+  font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:800;
+  color:var(--ka-gold);background:transparent;
+  border:1px solid rgba(232,168,106,0.35);border-radius:10px;padding:6px 12px;
 }
-#tab-kasarea .ka-title{flex:1;font-size:14.5px;font-weight:700;color:#F1F5F9;letter-spacing:0.01em}
+#tab-kasarea .ka-title{flex:1;font-size:14px;font-weight:700;color:#F1F5F9}
 #tab-kasarea .ka-layout{
   display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,0.9fr);
-  gap:14px;align-items:start;
+  gap:12px;align-items:start;
 }
 @media(max-width:900px){#tab-kasarea .ka-layout{grid-template-columns:1fr}}
 #tab-kasarea .ka-kredit,#tab-kasarea .ka-debit{
-  background:var(--ka-glass);border:1px solid var(--ka-border);border-radius:14px;
-  overflow:hidden;backdrop-filter:blur(8px);
+  background:transparent;border:1px solid var(--ka-border);border-radius:12px;overflow:hidden;
 }
 #tab-kasarea .ka-sec-h{
-  font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;
-  padding:10px 14px;color:var(--ka-gold);
-  background:rgba(212,137,74,0.08);border-bottom:1px solid var(--ka-border);
+  font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;
+  padding:8px 12px;color:var(--ka-gold);
+  background:transparent;border-bottom:1px solid var(--ka-border);
 }
-#tab-kasarea .ka-sec-kredit,
-#tab-kasarea .ka-sec-debit{background:rgba(212,137,74,0.08);color:var(--ka-gold)}
 #tab-kasarea .ka-table-wrap{
-  overflow:auto;max-height:min(58vh,520px);
-  border:none;border-radius:0;background:transparent;
+  overflow:auto;max-height:min(58vh,520px);background:transparent;
 }
-#tab-kasarea table.ka-table{width:100%;border-collapse:collapse;font-size:11.5px}
+#tab-kasarea table.ka-table{width:100%;border-collapse:collapse;font-size:11.5px;background:transparent}
 #tab-kasarea table.ka-table th{
   position:sticky;top:0;z-index:2;
-  background:#14181f;color:#CBD5E1;font-weight:700;
-  padding:8px 6px;border-bottom:1px solid var(--ka-border);white-space:nowrap;
-  font-size:10.5px;letter-spacing:0.02em;
+  background:rgba(12,14,18,0.85);backdrop-filter:blur(8px);
+  color:#CBD5E1;font-weight:700;padding:7px 5px;
+  border-bottom:1px solid var(--ka-border);white-space:nowrap;font-size:10.5px;
 }
 #tab-kasarea table.ka-table td{
-  padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.05);
-  color:#E5E7EB;vertical-align:middle;
+  padding:4px 5px;border-bottom:1px solid rgba(255,255,255,0.04);
+  color:#E5E7EB;vertical-align:middle;background:transparent;
 }
-#tab-kasarea table.ka-table tr:hover td{background:rgba(255,255,255,0.03)}
+#tab-kasarea table.ka-table tr:hover td{background:rgba(255,255,255,0.025)}
 #tab-kasarea .ka-cab{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#94A3B8}
 #tab-kasarea .ka-nama{font-weight:600;color:#F8FAFC}
 #tab-kasarea .ka-total{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--ka-gold);white-space:nowrap}
-#tab-kasarea .ka-check{
-  width:26px;height:26px;border-radius:6px;
-  border:1.5px solid rgba(255,255,255,0.22);background:rgba(255,255,255,0.06);
-  cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
-  color:transparent;font-size:13px;font-weight:800;
-  transition:background .12s,border-color .12s,color .12s,transform .08s;
-  user-select:none;-webkit-user-select:none;
+/* Checkbox native styled */
+#tab-kasarea .ka-td-check{text-align:center;cursor:pointer}
+#tab-kasarea .ka-check-lab{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;cursor:pointer;position:relative;margin:0;
 }
-#tab-kasarea .ka-check:hover{border-color:rgba(232,168,106,0.6);background:rgba(212,137,74,0.14);transform:scale(1.06)}
-#tab-kasarea .ka-check:active{transform:scale(0.94)}
-#tab-kasarea .ka-check.on{
-  background:linear-gradient(145deg,#E8A86A,#C47A3A);border-color:#E8A86A;color:#0B0D10;
+#tab-kasarea .ka-cb{
+  position:absolute;opacity:0;width:28px;height:28px;margin:0;cursor:pointer;z-index:2;
 }
-#tab-kasarea .ka-check.ka-busy{opacity:0.6;pointer-events:none}
-#tab-kasarea .ka-check.disabled{opacity:.35;cursor:not-allowed}
+#tab-kasarea .ka-cb-ui{
+  width:22px;height:22px;border-radius:5px;
+  border:1.5px solid rgba(255,255,255,0.28);background:transparent;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:border-color .1s,background .1s;
+  pointer-events:none;
+}
+#tab-kasarea .ka-cb-ui::after{
+  content:"✓";font-size:13px;font-weight:800;color:transparent;line-height:1;
+}
+#tab-kasarea .ka-cb:checked + .ka-cb-ui{
+  background:rgba(232,168,106,0.25);border-color:var(--ka-gold);
+}
+#tab-kasarea .ka-cb:checked + .ka-cb-ui::after{color:var(--ka-gold)}
+#tab-kasarea .ka-cb:hover + .ka-cb-ui{border-color:rgba(232,168,106,0.55)}
 #tab-kasarea .ka-red-cell{
-  background:rgba(248,113,113,0.35)!important;min-width:28px;height:26px;border-radius:4px;
-  border:1px solid rgba(248,113,113,0.4);
+  background:rgba(248,113,113,0.28)!important;min-width:28px;height:26px;border-radius:4px;
 }
 #tab-kasarea .ka-foot{
-  margin:0;padding:10px 14px;border-radius:0;font-weight:700;font-size:12.5px;
+  margin:0;padding:8px 12px;font-weight:700;font-size:12.5px;
   display:flex;justify-content:space-between;align-items:center;
-  border-top:1px solid var(--ka-border);background:rgba(0,0,0,0.2);color:#E2E8F0;
+  border-top:1px solid var(--ka-border);background:transparent;color:#E2E8F0;
 }
-#tab-kasarea .ka-foot-kredit,
-#tab-kasarea .ka-foot-debit{background:rgba(0,0,0,0.2);color:#E2E8F0}
 #tab-kasarea .ka-foot span{font-family:'JetBrains Mono',monospace;color:var(--ka-gold)}
 #tab-kasarea .ka-debit-form{
   display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;
-  padding:12px 14px;border:none;border-bottom:1px solid var(--ka-border);
-  background:rgba(0,0,0,0.15);
+  padding:10px 12px;border-bottom:1px solid var(--ka-border);background:transparent;
 }
 #tab-kasarea .ka-debit-form .field{margin:0;min-width:100px;flex:1 1 100px}
 #tab-kasarea .ka-debit-form label{font-size:11px;color:#94A3B8;font-weight:600}
 #tab-kasarea .ka-debit-form input{
-  background:rgba(255,255,255,0.06)!important;border:1px solid var(--ka-border)!important;
+  background:transparent!important;border:1px solid var(--ka-border)!important;
   border-radius:8px!important;color:#F1F5F9!important;padding:8px 10px!important;
 }
 #tab-kasarea #kaDebitAddBtn{
   width:auto!important;padding:8px 14px!important;border-radius:8px!important;
-  background:linear-gradient(135deg,#E8A86A,#C47A3A)!important;color:#0B0D10!important;
-  font-weight:700!important;border:none!important;
+  background:transparent!important;color:var(--ka-gold)!important;
+  font-weight:700!important;border:1px solid rgba(232,168,106,0.45)!important;
 }
 #tab-kasarea .ka-del{
-  border:0;background:rgba(248,113,113,0.12);color:#FCA5A5;
-  border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px;font-weight:600;
+  border:1px solid rgba(248,113,113,0.3);background:transparent;color:#FCA5A5;
+  border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px;
 }
-#tab-kasarea .ka-del:hover{background:rgba(248,113,113,0.22)}
 #tab-kasarea .hint{color:#94A3B8!important;font-size:12px!important}
 #tab-kasarea .empty-log{color:#94A3B8!important}
 
@@ -12748,12 +12784,12 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       '</div>';
     }
 
+    function parseNum(v){
+      if(typeof v === "number") return v;
+      return parseFloat(String(v == null ? "0" : v).replace(/\./g, "").replace(",", ".")) || 0;
+    }
     var kpiHtml = '<div class="kinerja-kpi-grid">' +
       (data.kpiArea || []).map(function(k){
-        function parseNum(v){
-          if(typeof v === "number") return v;
-          return parseFloat(String(v == null ? "0" : v).replace(/\./g, "").replace(",", ".")) || 0;
-        }
         var nAktual = parseNum(k.aktual);
         var nTarget = parseNum(k.target) || 1;
         var nProyeksi = parseNum(k.proyeksi);
@@ -12785,7 +12821,52 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       }).join("") +
     '</div>';
 
-    wrap.innerHTML = header + statStrip + badgesHtml + kpiHtml;
+    // Detail proyeksi per kategori & cabang (selalu tampil)
+    var details = data.detailByKategori;
+    if(!details || !details.length){
+      details = (data.kpiArea || []).map(function(k){
+        return { key: k.key, label: k.label, icon: k.icon, rows: [] };
+      });
+    }
+    var kpiByKey = {};
+    (data.kpiArea || []).forEach(function(k){ kpiByKey[k.key] = k; });
+    var detailHtml = '<div class="kh-detail-wrap">'+
+      '<div class="kh-detail-title">Detail Proyeksi Per Kategori &amp; Cabang</div>'+
+      '<div class="kh-detail-grid">'+
+      details.map(function(cat){
+        var tot = kpiByKey[cat.key] || {};
+        var rows = cat.rows || [];
+        var body = rows.map(function(r){
+          var gapN = parseNum(r.gap);
+          var gapCls = gapN < 0 ? "kh-gap-neg" : (gapN > 0 ? "kh-gap-pos" : "");
+          return '<tr>'+
+            '<td class="kh-cab">'+escHtml(r.cabang)+'</td>'+
+            '<td>'+escHtml(r.target)+'</td>'+
+            '<td>'+escHtml(r.aktual)+'</td>'+
+            '<td>'+escHtml(r.persen)+'</td>'+
+            '<td>'+escHtml(r.proyeksi)+'</td>'+
+            '<td class="'+gapCls+'">'+escHtml(r.gap)+'</td>'+
+          '</tr>';
+        }).join("");
+        var gapTotN = parseNum(tot.gap);
+        var gapTotCls = gapTotN < 0 ? "kh-gap-neg" : (gapTotN > 0 ? "kh-gap-pos" : "");
+        body += '<tr class="kh-total-row">'+
+          '<td class="kh-cab">TOTAL</td>'+
+          '<td>'+escHtml(tot.target||"-")+'</td>'+
+          '<td>'+escHtml(tot.aktual||"-")+'</td>'+
+          '<td>'+escHtml(tot.capaianPersen||"-")+'</td>'+
+          '<td>'+escHtml(tot.proyeksi||"-")+'</td>'+
+          '<td class="'+gapTotCls+'">'+escHtml(tot.gap||"-")+'</td>'+
+        '</tr>';
+        return '<div class="kh-detail-card">'+
+          '<div class="kh-detail-card-h">'+escHtml(cat.icon||"")+' '+escHtml(cat.label||"")+'</div>'+
+          '<div class="kh-detail-table-wrap"><table class="kh-detail-table">'+
+            '<thead><tr><th>Cabang</th><th>Target</th><th>Aktual</th><th>%</th><th>Proyeksi</th><th>Gap</th></tr></thead>'+
+            '<tbody>'+body+'</tbody></table></div></div>';
+      }).join("")+
+      '</div></div>';
+
+    wrap.innerHTML = header + statStrip + badgesHtml + kpiHtml + detailHtml;
   }
 
   function loadKinerjaHarian(forceRefresh){
@@ -16153,11 +16234,17 @@ function applyRejectedAlasanFilter_(which){
         if ((st === "mutasi" || st === "resign") && !on) {
           return '<td class="ka-red-cell" title="Tidak ikut (mutasi/resign)"></td>';
         }
-        var cls = "ka-check"+(on?" on":"");
-        return '<td style="text-align:center"><button type="button" class="'+cls+'" data-nik="'+escHtml(p.nik)+'" data-month="'+m+'" data-nama="'+escHtml(p.nama)+'" data-cabang="'+escHtml(p.cabang)+'" data-jabatan="'+escHtml(p.jabatan)+'" data-status="'+escHtml(st)+'">✓</button></td>';
+        // Checkbox native — klik langsung seperti Excel
+        return '<td class="ka-td-check">'+
+          '<label class="ka-check-lab">'+
+          '<input type="checkbox" class="ka-cb"'+(on?' checked':'')+
+          ' data-nik="'+escHtml(p.nik)+'" data-month="'+m+'" data-nama="'+escHtml(p.nama)+
+          '" data-cabang="'+escHtml(p.cabang)+'" data-jabatan="'+escHtml(p.jabatan)+
+          '" data-status="'+escHtml(st)+'">'+
+          '<span class="ka-cb-ui" aria-hidden="true"></span></label></td>';
       }).join("");
-      return '<tr class="'+rowCls+'"><td class="ka-cab">'+escHtml(cabLabel)+'</td><td class="ka-nama">'+escHtml(p.nama)+'</td>'+cells+
-        '<td class="ka-total">'+kaFmtRp_(p.total)+'</td></tr>';
+      return '<tr class="'+rowCls+'" data-nik="'+escHtml(p.nik)+'"><td class="ka-cab">'+escHtml(cabLabel)+'</td><td class="ka-nama">'+escHtml(p.nama)+'</td>'+cells+
+        '<td class="ka-total" data-total="'+Number(p.total||0)+'">'+kaFmtRp_(p.total)+'</td></tr>';
     }).join("");
     if(wrapK) wrapK.innerHTML = head + body + '</tbody></table>';
 
@@ -16206,62 +16293,58 @@ function applyRejectedAlasanFilter_(which){
     root._kaWired = true;
     var ref = document.getElementById("kaRefreshBtn");
     if(ref) ref.addEventListener("click", loadKasArea);
-    root.addEventListener("click", function(e){
-      var btn = e.target.closest("button.ka-check");
-      if(btn && !btn.disabled && !btn.classList.contains("ka-busy")){
-        e.preventDefault();
-        e.stopPropagation();
-        var nik = btn.getAttribute("data-nik");
-        var month = btn.getAttribute("data-month");
-        var wasOn = btn.classList.contains("on");
-        var on = !wasOn; // kosong → ✓ (+20rb), ✓ → kosong (−20rb)
-        var iuran = 20000;
-        function parseRp_(el){
-          if(!el) return 0;
-          return parseInt(String(el.textContent||"0").replace(/[^\d-]/g,""), 10) || 0;
-        }
-        function setRp_(el, n){ if(el) el.textContent = kaFmtRp_(n); }
-        // UI langsung
-        btn.classList.toggle("on", on);
-        btn.classList.add("ka-busy");
-        var tr = btn.closest("tr");
-        var totalCell = tr ? tr.querySelector(".ka-total") : null;
-        var delta = on ? iuran : -iuran;
-        if(totalCell) setRp_(totalCell, Math.max(0, parseRp_(totalCell) + delta));
-        var elS = document.getElementById("kaSaldo");
-        var elTK = document.getElementById("kaTotalKredit");
-        setRp_(elTK, Math.max(0, parseRp_(elTK) + delta));
-        setRp_(elS, parseRp_(elS) + delta);
+    // Centang native: change = langsung update total (Excel-like), simpan di background
+    root.addEventListener("change", function(e){
+      var cb = e.target.closest("input.ka-cb");
+      if(!cb || cb.disabled) return;
+      var on = !!cb.checked;
+      var iuran = 20000;
+      var delta = on ? iuran : -iuran;
+      function parseRp_(el){
+        if(!el) return 0;
+        return parseInt(String(el.textContent||"0").replace(/[^\d-]/g,""), 10) || 0;
+      }
+      function setRp_(el, n){ if(el) el.textContent = kaFmtRp_(n); }
+      var tr = cb.closest("tr");
+      var totalCell = tr ? tr.querySelector(".ka-total") : null;
+      if(totalCell){
+        var nt = Math.max(0, parseRp_(totalCell) + delta);
+        totalCell.setAttribute("data-total", String(nt));
+        setRp_(totalCell, nt);
+      }
+      setRp_(document.getElementById("kaTotalKredit"), Math.max(0, parseRp_(document.getElementById("kaTotalKredit")) + delta));
+      setRp_(document.getElementById("kaSaldo"), parseRp_(document.getElementById("kaSaldo")) + delta);
+      // Simpan ke server (tidak block UI)
+      try {
         google.script.run
           .withSuccessHandler(function(r){
-            btn.classList.remove("ka-busy");
             if(!r || r.status !== "OK"){
-              btn.classList.toggle("on", wasOn);
-              if(totalCell) setRp_(totalCell, Math.max(0, parseRp_(totalCell) - delta));
-              setRp_(elTK, Math.max(0, parseRp_(elTK) - delta));
-              setRp_(elS, parseRp_(elS) - delta);
+              cb.checked = !on;
+              if(totalCell){ var b = Math.max(0, parseRp_(totalCell) - delta); totalCell.setAttribute("data-total", String(b)); setRp_(totalCell, b); }
+              setRp_(document.getElementById("kaTotalKredit"), Math.max(0, parseRp_(document.getElementById("kaTotalKredit")) - delta));
+              setRp_(document.getElementById("kaSaldo"), parseRp_(document.getElementById("kaSaldo")) - delta);
               alert((r && r.reason) || "Gagal simpan centang");
-              return;
             }
-            loadKasArea();
           })
           .withFailureHandler(function(){
-            btn.classList.remove("ka-busy");
-            btn.classList.toggle("on", wasOn);
-            if(totalCell) setRp_(totalCell, Math.max(0, parseRp_(totalCell) - delta));
-            setRp_(elTK, Math.max(0, parseRp_(elTK) - delta));
-            setRp_(elS, parseRp_(elS) - delta);
+            cb.checked = !on;
+            if(totalCell){ var b2 = Math.max(0, parseRp_(totalCell) - delta); totalCell.setAttribute("data-total", String(b2)); setRp_(totalCell, b2); }
+            setRp_(document.getElementById("kaTotalKredit"), Math.max(0, parseRp_(document.getElementById("kaTotalKredit")) - delta));
+            setRp_(document.getElementById("kaSaldo"), parseRp_(document.getElementById("kaSaldo")) - delta);
             alert("Gagal simpan centang");
           })
           .setKasAreaKredit(session.adminPin, {
-            nik: nik, month: month, checked: on,
-            nama: btn.getAttribute("data-nama")||"",
-            cabang: btn.getAttribute("data-cabang")||"",
-            jabatan: btn.getAttribute("data-jabatan")||"",
-            status: btn.getAttribute("data-status")||"aktif"
+            nik: cb.getAttribute("data-nik"),
+            month: cb.getAttribute("data-month"),
+            checked: on,
+            nama: cb.getAttribute("data-nama")||"",
+            cabang: cb.getAttribute("data-cabang")||"",
+            jabatan: cb.getAttribute("data-jabatan")||"",
+            status: cb.getAttribute("data-status")||"aktif"
           });
-        return;
-      }
+      } catch(err){ alert("Error: "+(err.message||err)); }
+    });
+    root.addEventListener("click", function(e){
       var del = e.target.closest(".ka-del");
       if(del){
         var id = del.getAttribute("data-id");
