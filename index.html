@@ -403,43 +403,121 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
 
 
 
-/* Detail proyeksi per kategori & cabang */
-.kh-detail-wrap{margin-top:18px}
-.kh-detail-title{
-  font-size:13px;font-weight:800;color:#F1F5F9;margin:0 0 12px;
-  letter-spacing:0.02em;
+/* Detail proyeksi — tombol kecil, tabel transparan, header terbaca */
+#tab-kinerjaharian .kh-detail-wrap,
+#tab-kanitkinerjaharian .kh-detail-wrap{margin-top:12px}
+#tab-kinerjaharian .kh-detail-toolbar,
+#tab-kanitkinerjaharian .kh-detail-toolbar{display:flex;justify-content:flex-start;margin-bottom:10px}
+#tab-kinerjaharian .kh-detail-toggle,
+#tab-kanitkinerjaharian .kh-detail-toggle{
+  display:inline-flex!important;align-items:center!important;
+  width:auto!important;min-width:0!important;max-width:fit-content!important;
+  padding:5px 10px!important;border-radius:7px!important;cursor:pointer;
+  font-size:11px!important;font-weight:700!important;line-height:1.2!important;
+  color:#E8A86A!important;background:transparent!important;
+  border:1px solid rgba(232,168,106,0.5)!important;box-shadow:none!important;
 }
-.kh-detail-grid{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
+#tab-kinerjaharian .kh-detail-toggle:hover,
+#tab-kanitkinerjaharian .kh-detail-toggle:hover{background:rgba(232,168,106,0.12)!important}
+#tab-kinerjaharian .kh-detail-toggle.is-open,
+#tab-kanitkinerjaharian .kh-detail-toggle.is-open{
+  background:rgba(232,168,106,0.18)!important;border-color:#E8A86A!important;
 }
-@media(max-width:900px){.kh-detail-grid{grid-template-columns:1fr}}
-.kh-detail-card{
-  background:transparent;border:1px solid rgba(255,255,255,0.1);
-  border-radius:12px;overflow:hidden;
+#tab-kinerjaharian .kh-detail-panel[hidden],
+#tab-kanitkinerjaharian .kh-detail-panel[hidden]{display:none!important}
+#tab-kinerjaharian .kh-detail-title,
+#tab-kanitkinerjaharian .kh-detail-title{font-size:12px;font-weight:800;color:#E2E8F0;margin:0 0 10px}
+#tab-kinerjaharian .kh-detail-grid,
+#tab-kanitkinerjaharian .kh-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:900px){
+  #tab-kinerjaharian .kh-detail-grid,
+  #tab-kanitkinerjaharian .kh-detail-grid{grid-template-columns:1fr}
 }
-.kh-detail-card-h{
-  padding:9px 12px;font-size:12px;font-weight:800;color:#E8A86A;
-  border-bottom:1px solid rgba(255,255,255,0.08);letter-spacing:0.03em;
+#tab-kinerjaharian .kh-detail-card,
+#tab-kanitkinerjaharian .kh-detail-card{
+  background:transparent!important;border:1px solid rgba(255,255,255,0.14)!important;
+  border-radius:12px!important;overflow:hidden;box-shadow:none!important;
 }
-.kh-detail-table-wrap{overflow:auto}
-.kh-detail-table{width:100%;border-collapse:collapse;font-size:11.5px}
-.kh-detail-table th{
-  text-align:left;padding:7px 8px;font-size:10px;font-weight:700;
-  color:#94A3B8;border-bottom:1px solid rgba(255,255,255,0.08);
+#tab-kinerjaharian .kh-detail-card-h,
+#tab-kanitkinerjaharian .kh-detail-card-h{
+  padding:8px 12px!important;font-size:13px!important;font-weight:800!important;
+  color:#FFFFFF!important;letter-spacing:0.03em;
+  border-bottom:1px solid rgba(255,255,255,0.12)!important;
+  background:transparent!important;
+}
+#tab-kinerjaharian .kh-detail-table-wrap,
+#tab-kanitkinerjaharian .kh-detail-table-wrap{overflow:auto;background:transparent!important}
+#tab-kinerjaharian .kh-detail-table,
+#tab-kanitkinerjaharian .kh-detail-table{
+  width:100%!important;border-collapse:collapse!important;
+  font-size:11.5px!important;background:transparent!important;color:#F1F5F9!important;
+}
+#tab-kinerjaharian .kh-detail-table thead,
+#tab-kanitkinerjaharian .kh-detail-table thead,
+#tab-kinerjaharian .kh-detail-table tbody,
+#tab-kanitkinerjaharian .kh-detail-table tbody,
+#tab-kinerjaharian .kh-detail-table tr,
+#tab-kanitkinerjaharian .kh-detail-table tr{background:transparent!important}
+#tab-kinerjaharian .kh-detail-table th,
+#tab-kanitkinerjaharian .kh-detail-table th{
+  text-align:left!important;padding:7px 8px!important;
+  font-size:10px!important;font-weight:700!important;color:#CBD5E1!important;
+  border-bottom:1px solid rgba(255,255,255,0.12)!important;
   text-transform:uppercase;letter-spacing:0.03em;white-space:nowrap;
+  background:transparent!important;
 }
-.kh-detail-table td{
-  padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.04);
-  color:#E5E7EB;font-family:'JetBrains Mono',monospace;font-size:11px;
+#tab-kinerjaharian .kh-detail-table td,
+#tab-kanitkinerjaharian .kh-detail-table td{
+  padding:6px 8px!important;border-bottom:1px solid rgba(255,255,255,0.07)!important;
+  color:#F1F5F9!important;font-family:'JetBrains Mono',monospace!important;font-size:11px!important;
+  background:transparent!important;
 }
-.kh-detail-table .kh-cab{font-family:inherit;font-weight:600;color:#F8FAFC}
-.kh-detail-table tr:hover td{background:rgba(255,255,255,0.03)}
-.kh-detail-table .kh-total-row td{
-  font-weight:800;border-top:1px solid rgba(255,255,255,0.1);
-  background:rgba(255,255,255,0.03);color:#F1F5F9;
+#tab-kinerjaharian .kh-detail-table .kh-cab,
+#tab-kanitkinerjaharian .kh-detail-table .kh-cab{
+  font-family:inherit!important;font-weight:600!important;color:#FFFFFF!important;
 }
-.kh-gap-neg{color:#FCA5A5!important}
-.kh-gap-pos{color:#86EFAC!important}
+#tab-kinerjaharian .kh-detail-table tr:hover td,
+#tab-kanitkinerjaharian .kh-detail-table tr:hover td{background:rgba(255,255,255,0.05)!important}
+#tab-kinerjaharian .kh-detail-table .kh-total-row td,
+#tab-kanitkinerjaharian .kh-detail-table .kh-total-row td{
+  font-weight:800!important;border-top:1px solid rgba(255,255,255,0.14)!important;
+  background:rgba(255,255,255,0.06)!important;color:#FFFFFF!important;
+}
+#tab-kinerjaharian .kh-gap-neg,
+#tab-kanitkinerjaharian .kh-gap-neg{color:#FCA5A5!important}
+#tab-kinerjaharian .kh-gap-pos,
+#tab-kanitkinerjaharian .kh-gap-pos{color:#86EFAC!important}
+
+/* Override panel color:#111827 yang bikin angka gelap */
+.admin-content .kh-detail-wrap,
+.admin-content .kh-detail-wrap *,
+.admin-content .kh-detail-card,
+.admin-content .kh-detail-card-h,
+.admin-content .kh-detail-title,
+.admin-content .kh-detail-table,
+.admin-content .kh-detail-table th,
+.admin-content .kh-detail-table td,
+.admin-content .kh-detail-table .kh-cab,
+.admin-content .kh-detail-table .kh-total-row td{
+  color:#FFFFFF !important;
+}
+.admin-content .kh-detail-table th{color:#CBD5E1 !important}
+.admin-content .kh-detail-table,
+.admin-content .kh-detail-table th,
+.admin-content .kh-detail-table td,
+.admin-content .kh-detail-card,
+.admin-content .kh-detail-table-wrap{
+  background:transparent !important;
+}
+.admin-content .kh-gap-neg{color:#FCA5A5 !important}
+.admin-content .kh-gap-pos{color:#86EFAC !important}
+.admin-content .kh-detail-card-h{
+  display:flex !important;align-items:center !important;gap:8px !important;
+  color:#FFFFFF !important;font-size:13px !important;font-weight:800 !important;
+}
+.admin-content .kh-detail-card-h svg{
+  width:16px;height:16px;stroke:#E8A86A;flex-shrink:0;
+}
 
 /* Dashboard Harian — padat + 4 badge benchmark sejajar */
 #tab-kinerjaharian .kinerja-badges, #tab-kanitkinerjaharian .kinerja-badges, #tab-kinerja .kinerja-badges,
@@ -4609,7 +4687,14 @@ textarea.is-invalid{
   .admin-content .subpanel,
   .admin-main .panel.subpanel.active,
   .admin-main .panel{
-    color:#111827 !important;
+    color:#F1F5F9 !important;
+  }
+  /* Detail tabel: paksa putih, jangan ikut warna panel lama */
+  .admin-content #tab-kinerjaharian .kh-detail-table td,
+  .admin-content #tab-kinerjaharian .kh-detail-table th,
+  .admin-content #tab-kanitkinerjaharian .kh-detail-table td,
+  .admin-content #tab-kanitkinerjaharian .kh-detail-table th{
+    color:#FFFFFF !important;
   }
   .admin-content .panel *:not(button):not(.status-badge):not(.admin-nav-icon):not(svg):not(path),
   .admin-content .subpanel *:not(button):not(.status-badge):not(svg):not(path){
@@ -12788,6 +12873,15 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       if(typeof v === "number") return v;
       return parseFloat(String(v == null ? "0" : v).replace(/\./g, "").replace(",", ".")) || 0;
     }
+    // Ikon stroke (gaya sidebar), bukan emoji
+    function khCatIconSvg_(key){
+      var k = String(key || "").toLowerCase();
+      if (k === "gadai") return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c.5-1 1.5-1.5 2.5-1.5s2 .6 2 1.75c0 2.25-4 1.25-4 3.5 0 1.1.9 1.75 2 1.75s1.9-.5 2.4-1.25"/></svg>';
+      if (k === "pp") return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg>';
+      if (k === "nasabah") return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
+      if (k === "gaol") return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M12 13v8M9 18h6M8.5 10.5 12 8l3.5 2.5"/></svg>';
+      return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/></svg>';
+    }
     var kpiHtml = '<div class="kinerja-kpi-grid">' +
       (data.kpiArea || []).map(function(k){
         var nAktual = parseNum(k.aktual);
@@ -12800,7 +12894,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         var estBadge = (k.estimasiAkhirBulanPersen === null || k.estimasiAkhirBulanPersen === undefined) ? "-" : k.estimasiAkhirBulanPersen + "%";
         return '<div class="kinerja-kpi-card">' +
           '<div class="kinerja-kpi-card-head">'+
-            '<span class="label">' + k.icon + ' ' + k.label + '</span>'+
+            '<span class="label" style="display:inline-flex;align-items:center;gap:7px">'+khCatIconSvg_(k.key)+' '+escHtml(k.label)+'</span>'+
             '<div class="kinerja-kpi-ring" style="--ring-pct:'+ringPct+'%; --ring-color:#E8A598;"><span>'+k.capaianPersen+'</span></div>'+
           '</div>' +
           '<div class="kinerja-kpi-nums">Aktual: <b>' + k.aktual + '</b> &nbsp;|&nbsp; Target: <b>' + k.target + '</b> &nbsp;|&nbsp; Proyeksi: <b>' + k.proyeksi + '</b></div>' +
@@ -12821,7 +12915,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       }).join("") +
     '</div>';
 
-    // Detail proyeksi per kategori & cabang (selalu tampil)
+    // Detail proyeksi — disembunyikan sampai tombol diklik
     var details = data.detailByKategori;
     if(!details || !details.length){
       details = (data.kpiArea || []).map(function(k){
@@ -12830,43 +12924,105 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     }
     var kpiByKey = {};
     (data.kpiArea || []).forEach(function(k){ kpiByKey[k.key] = k; });
-    var detailHtml = '<div class="kh-detail-wrap">'+
-      '<div class="kh-detail-title">Detail Proyeksi Per Kategori &amp; Cabang</div>'+
-      '<div class="kh-detail-grid">'+
-      details.map(function(cat){
-        var tot = kpiByKey[cat.key] || {};
-        var rows = cat.rows || [];
-        var body = rows.map(function(r){
-          var gapN = parseNum(r.gap);
-          var gapCls = gapN < 0 ? "kh-gap-neg" : (gapN > 0 ? "kh-gap-pos" : "");
-          return '<tr>'+
-            '<td class="kh-cab">'+escHtml(r.cabang)+'</td>'+
-            '<td>'+escHtml(r.target)+'</td>'+
-            '<td>'+escHtml(r.aktual)+'</td>'+
-            '<td>'+escHtml(r.persen)+'</td>'+
-            '<td>'+escHtml(r.proyeksi)+'</td>'+
-            '<td class="'+gapCls+'">'+escHtml(r.gap)+'</td>'+
-          '</tr>';
-        }).join("");
-        var gapTotN = parseNum(tot.gap);
-        var gapTotCls = gapTotN < 0 ? "kh-gap-neg" : (gapTotN > 0 ? "kh-gap-pos" : "");
-        body += '<tr class="kh-total-row">'+
-          '<td class="kh-cab">TOTAL</td>'+
-          '<td>'+escHtml(tot.target||"-")+'</td>'+
-          '<td>'+escHtml(tot.aktual||"-")+'</td>'+
-          '<td>'+escHtml(tot.capaianPersen||"-")+'</td>'+
-          '<td>'+escHtml(tot.proyeksi||"-")+'</td>'+
-          '<td class="'+gapTotCls+'">'+escHtml(tot.gap||"-")+'</td>'+
+    var detailBody = details.map(function(cat){
+      var tot = kpiByKey[cat.key] || {};
+      var rows = cat.rows || [];
+      // Inline putih — CSS global panel (#111827 / biru) tidak bisa mengalahkan
+      var st = 'style="color:#FFFFFF !important;background:transparent !important"';
+      var stH = 'style="color:#E2E8F0 !important;background:transparent !important;font-weight:700"';
+      var body = rows.map(function(r){
+        var gapN = parseNum(r.gap);
+        var gapColor = gapN < 0 ? "#FCA5A5" : (gapN > 0 ? "#86EFAC" : "#FFFFFF");
+        return '<tr>'+
+          '<td class="kh-cab" '+st+'>'+escHtml(r.cabang)+'</td>'+
+          '<td '+st+'>'+escHtml(r.target)+'</td>'+
+          '<td '+st+'>'+escHtml(r.aktual)+'</td>'+
+          '<td '+st+'>'+escHtml(r.persen)+'</td>'+
+          '<td '+st+'>'+escHtml(r.proyeksi)+'</td>'+
+          '<td style="color:'+gapColor+' !important;background:transparent !important">'+escHtml(r.gap)+'</td>'+
         '</tr>';
-        return '<div class="kh-detail-card">'+
-          '<div class="kh-detail-card-h">'+escHtml(cat.icon||"")+' '+escHtml(cat.label||"")+'</div>'+
-          '<div class="kh-detail-table-wrap"><table class="kh-detail-table">'+
-            '<thead><tr><th>Cabang</th><th>Target</th><th>Aktual</th><th>%</th><th>Proyeksi</th><th>Gap</th></tr></thead>'+
-            '<tbody>'+body+'</tbody></table></div></div>';
-      }).join("")+
-      '</div></div>';
+      }).join("");
+      var gapTotN = parseNum(tot.gap);
+      var gapTotColor = gapTotN < 0 ? "#FCA5A5" : (gapTotN > 0 ? "#86EFAC" : "#FFFFFF");
+      body += '<tr class="kh-total-row">'+
+        '<td class="kh-cab" '+st+'>TOTAL</td>'+
+        '<td '+st+'>'+escHtml(tot.target||"-")+'</td>'+
+        '<td '+st+'>'+escHtml(tot.aktual||"-")+'</td>'+
+        '<td '+st+'>'+escHtml(tot.capaianPersen||"-")+'</td>'+
+        '<td '+st+'>'+escHtml(tot.proyeksi||"-")+'</td>'+
+        '<td style="color:'+gapTotColor+' !important;background:transparent !important">'+escHtml(tot.gap||"-")+'</td>'+
+      '</tr>';
+      return '<div class="kh-detail-card" style="background:transparent !important;border:1px solid rgba(255,255,255,0.14)">'+
+        '<div class="kh-detail-card-h" style="color:#FFFFFF !important;background:transparent !important">'+khCatIconSvg_(cat.key)+'<span style="color:#FFFFFF !important">'+escHtml(cat.label||"")+'</span></div>'+
+        '<div class="kh-detail-table-wrap" style="background:transparent !important"><table class="kh-detail-table" style="color:#FFFFFF !important;background:transparent !important">'+
+          '<thead><tr>'+
+            '<th '+stH+'>Cabang</th><th '+stH+'>Target</th><th '+stH+'>Aktual</th><th '+stH+'>%</th><th '+stH+'>Proyeksi</th><th '+stH+'>Gap</th>'+
+          '</tr></thead>'+
+          '<tbody>'+body+'</tbody></table></div></div>';
+    }).join("");
+
+    var detailHtml =
+      '<div class="kh-detail-wrap">'+
+        '<div class="kh-detail-toolbar">'+
+          '<button type="button" class="kh-detail-toggle" id="khDetailToggleBtn">Detail</button>'+
+        '</div>'+
+        '<div class="kh-detail-panel" id="khDetailPanel" hidden>'+
+          '<div class="kh-detail-title">Detail Proyeksi Per Kategori &amp; Cabang</div>'+
+          '<div class="kh-detail-grid">'+detailBody+'</div>'+
+        '</div>'+
+      '</div>';
 
     wrap.innerHTML = header + statStrip + badgesHtml + kpiHtml + detailHtml;
+
+    var toggleBtn = document.getElementById("khDetailToggleBtn");
+    var panel = document.getElementById("khDetailPanel");
+    if (toggleBtn && panel) {
+      toggleBtn.addEventListener("click", function () {
+        var open = panel.hasAttribute("hidden");
+        if (!open) {
+          panel.setAttribute("hidden", "");
+          toggleBtn.classList.remove("is-open");
+          toggleBtn.textContent = "Detail";
+          return;
+        }
+        panel.removeAttribute("hidden");
+        toggleBtn.classList.add("is-open");
+        toggleBtn.textContent = "Tutup";
+        // Load detail on-demand (load awal tetap cepat)
+        var hasRows = false;
+        try {
+          var d0 = data && data.detailByKategori && data.detailByKategori[0];
+          hasRows = !!(d0 && d0.rows && d0.rows.length);
+        } catch (e) {}
+        if (hasRows) return;
+        var grid = panel.querySelector(".kh-detail-grid");
+        if (grid) grid.innerHTML = '<div class="empty-log" style="grid-column:1/-1;color:#CBD5E1;padding:16px">Memuat detail cabang...</div>';
+        toggleBtn.disabled = true;
+        var cabSel = document.getElementById("kinerjaHarianCabang");
+        var cabVal = cabSel ? (cabSel.value || "Semua Cabang") : "Semua Cabang";
+        var pin = session.adminPin;
+        var run = google.script.run
+          .withSuccessHandler(function(r){
+            toggleBtn.disabled = false;
+            if (!r || r.status !== "OK") {
+              if (grid) grid.innerHTML = '<div class="empty-log" style="grid-column:1/-1;color:#FCA5A5">'+(r && r.reason ? r.reason : "Gagal memuat detail")+'</div>';
+              return;
+            }
+            data.detailByKategori = r.detailByKategori || [];
+            renderKinerjaHarian(data, wrapId, showBenchmark, isCached);
+            var p2 = document.getElementById("khDetailPanel");
+            var b2 = document.getElementById("khDetailToggleBtn");
+            if (p2) p2.removeAttribute("hidden");
+            if (b2) { b2.classList.add("is-open"); b2.textContent = "Tutup"; b2.disabled = false; }
+          })
+          .withFailureHandler(function(err){
+            toggleBtn.disabled = false;
+            if (grid) grid.innerHTML = '<div class="empty-log" style="grid-column:1/-1;color:#FCA5A5">Koneksi: '+(err.message||err)+'</div>';
+          });
+        if (pin) run.getKinerjaHarianDetail(pin, cabVal);
+        else if (session.cabangPin) run.getKinerjaHarianDetailKanit(session.cabang, session.cabangPin);
+      });
+    }
   }
 
   function loadKinerjaHarian(forceRefresh){
@@ -12876,21 +13032,12 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var cabang = document.getElementById("kinerjaHarianCabang").value || "Semua Cabang";
     var wrap = document.getElementById("kinerjaHarianWrap");
     var btn = document.getElementById("kinerjaHarianLoadBtn");
-    // v3 — cache klien baru (lama tidak punya baris per-cabang)
-    var key = cKey(["kinerja_v3", cabang]);
-    function hasDetailRows_(d){
-      try {
-        var x = d && d.detailByKategori && d.detailByKategori[0];
-        return !!(x && x.rows && x.rows.length);
-      } catch (e) { return false; }
-    }
+    var key = cKey(["kinerja_v4", cabang]);
     var cached = (!forceRefresh) ? cGet(key) : null;
-    if (cached && !hasDetailRows_(cached)) cached = null;
     if (cached) {
       try { renderKinerjaHarian(cached, "kinerjaHarianWrap", true, true); kinerjaHarianLoaded = true; } catch (e) {}
     } else {
-      wrap.innerHTML = '<div class="empty-log">Memuat kinerja harian + detail cabang (' + cabang + ')... 3–5 dtk</div>';
-      forceRefresh = true;
+      wrap.innerHTML = '<div class="empty-log">Memuat kinerja harian (' + cabang + ')...</div>';
     }
     if (!forceRefresh && cached && cIsFresh(key, CACHE_TTL_MS)) return;
     if (btn) btn.disabled = true;
@@ -12909,7 +13056,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         if (btn) btn.disabled = false;
         if (!cached) { wrap.innerHTML = ""; showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err"); }
       })
-      .getKinerjaHarian(session.adminPin, cabang, true);
+      .getKinerjaHarian(session.adminPin, cabang, !!forceRefresh);
   }
 
   document.getElementById("kinerjaHarianLoadBtn").addEventListener("click", function(){
