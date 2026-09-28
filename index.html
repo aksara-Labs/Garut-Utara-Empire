@@ -12876,20 +12876,29 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var cabang = document.getElementById("kinerjaHarianCabang").value || "Semua Cabang";
     var wrap = document.getElementById("kinerjaHarianWrap");
     var btn = document.getElementById("kinerjaHarianLoadBtn");
-    var key = cKey(["kinerja", cabang]);
-    var cached = (!forceRefresh) ? cGet(key) : null;
-    if(cached){
-      try{ renderKinerjaHarian(cached, "kinerjaHarianWrap", true, true); kinerjaHarianLoaded = true; }catch(e){}
-    } else {
-      wrap.innerHTML = '<div class="empty-log">Memuat kinerja harian (' + cabang + ')...</div>';
+    // v3 — cache klien baru (lama tidak punya baris per-cabang)
+    var key = cKey(["kinerja_v3", cabang]);
+    function hasDetailRows_(d){
+      try {
+        var x = d && d.detailByKategori && d.detailByKategori[0];
+        return !!(x && x.rows && x.rows.length);
+      } catch (e) { return false; }
     }
-    if(!forceRefresh && cIsFresh(key, CACHE_TTL_MS)) return;
-    if(btn) btn.disabled = true;
+    var cached = (!forceRefresh) ? cGet(key) : null;
+    if (cached && !hasDetailRows_(cached)) cached = null;
+    if (cached) {
+      try { renderKinerjaHarian(cached, "kinerjaHarianWrap", true, true); kinerjaHarianLoaded = true; } catch (e) {}
+    } else {
+      wrap.innerHTML = '<div class="empty-log">Memuat kinerja harian + detail cabang (' + cabang + ')... 3–5 dtk</div>';
+      forceRefresh = true;
+    }
+    if (!forceRefresh && cached && cIsFresh(key, CACHE_TTL_MS)) return;
+    if (btn) btn.disabled = true;
     google.script.run
       .withSuccessHandler(function(r){
-        if(btn) btn.disabled = false;
-        if(!r || r.status !== "OK"){
-          if(!cached){ wrap.innerHTML = ""; showMsg(msgEl, (r && r.reason) || "Gagal memuat data.", "err"); }
+        if (btn) btn.disabled = false;
+        if (!r || r.status !== "OK") {
+          if (!cached) { wrap.innerHTML = ""; showMsg(msgEl, (r && r.reason) || "Gagal memuat data.", "err"); }
           return;
         }
         kinerjaHarianLoaded = true;
@@ -12897,10 +12906,10 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
         renderKinerjaHarian(r.data, "kinerjaHarianWrap", true, r.cached);
       })
       .withFailureHandler(function(err){
-        if(btn) btn.disabled = false;
-        if(!cached){ wrap.innerHTML = ""; showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err"); }
+        if (btn) btn.disabled = false;
+        if (!cached) { wrap.innerHTML = ""; showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err"); }
       })
-      .getKinerjaHarian(session.adminPin, cabang, !!forceRefresh);
+      .getKinerjaHarian(session.adminPin, cabang, true);
   }
 
   document.getElementById("kinerjaHarianLoadBtn").addEventListener("click", function(){
