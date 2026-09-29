@@ -9474,45 +9474,36 @@ button.admin-topbar-avatar:hover,
 #tab-kanitkasarea .ka-total{font-family:'JetBrains Mono',monospace;font-weight:700;color:#E8A86A !important;white-space:nowrap}
 /* Checkbox native styled */
 #tab-kasarea .ka-td-check,
-#tab-kanitkasarea .ka-td-check{text-align:center;cursor:pointer}
-#tab-kasarea .ka-check-lab,
-#tab-kanitkasarea .ka-check-lab{
+#tab-kanitkasarea .ka-td-check{text-align:center;vertical-align:middle;padding:2px!important}
+/* Tombol mark — BUKAN checkbox native (hindari centang palsu browser) */
+#tab-kasarea button.ka-mark,
+#tab-kanitkasarea button.ka-mark{
   display:inline-flex;align-items:center;justify-content:center;
-  width:28px;height:28px;cursor:pointer;position:relative;margin:0;
+  width:22px;height:22px;min-width:22px;padding:0;margin:0;
+  border-radius:5px;border:1.5px solid transparent;
+  background:transparent;color:transparent;
+  font-size:13px;font-weight:800;line-height:1;
+  cursor:pointer;box-shadow:none;outline:none;
+  -webkit-appearance:none;appearance:none;
 }
-#tab-kasarea .ka-cb,
-#tab-kanitkasarea .ka-cb{
-  position:absolute;opacity:0;width:28px;height:28px;margin:0;cursor:pointer;z-index:2;
+#tab-kasarea button.ka-mark[data-on="1"],
+#tab-kanitkasarea button.ka-mark[data-on="1"]{
+  background:rgba(232,168,106,0.22)!important;
+  border-color:var(--ka-gold)!important;
+  color:var(--ka-gold)!important;
 }
-/* Belum bayar = kosong (tanpa kotak/centang). Sudah bayar = ✓ emas. */
-#tab-kasarea .ka-cb-ui,
-#tab-kanitkasarea .ka-cb-ui{
-  width:22px;height:22px;border-radius:5px;
-  border:1.5px solid transparent;background:transparent;
-  display:inline-flex;align-items:center;justify-content:center;
-  transition:border-color .1s,background .1s;
-  pointer-events:none;
+#tab-kasarea button.ka-mark[data-on="0"],
+#tab-kanitkasarea button.ka-mark[data-on="0"]{
+  background:transparent!important;
+  border-color:transparent!important;
+  color:transparent!important;
 }
-#tab-kasarea .ka-cb-ui::after,
-#tab-kanitkasarea .ka-cb-ui::after{
-  content:"";font-size:13px;font-weight:800;line-height:1;
+#tab-kasarea button.ka-mark[data-on="0"]:not(:disabled):hover,
+#tab-kanitkasarea button.ka-mark[data-on="0"]:not(:disabled):hover{
+  border-color:rgba(255,255,255,0.22)!important;
 }
-#tab-kasarea .ka-cb:checked + .ka-cb-ui,
-#tab-kanitkasarea .ka-cb:checked + .ka-cb-ui{
-  background:rgba(232,168,106,0.22);border-color:var(--ka-gold);
-}
-#tab-kasarea .ka-cb:checked + .ka-cb-ui::after,
-#tab-kanitkasarea .ka-cb:checked + .ka-cb-ui::after{
-  content:"✓";color:var(--ka-gold);
-}
-#tab-kasarea .ka-cb:not(:disabled):hover + .ka-cb-ui,
-#tab-kanitkasarea .ka-cb:not(:disabled):hover + .ka-cb-ui{
-  border-color:rgba(255,255,255,0.22);
-}
-#tab-kasarea .ka-cb:not(:disabled):checked:hover + .ka-cb-ui,
-#tab-kanitkasarea .ka-cb:not(:disabled):checked:hover + .ka-cb-ui{
-  border-color:var(--ka-gold);
-}
+#tab-kasarea button.ka-mark:disabled,
+#tab-kanitkasarea button.ka-mark:disabled{cursor:default;opacity:1}
 #tab-kasarea .ka-red-cell{
   /* Tidak wajib bayar — kotak + X merah */
   background:transparent !important;
@@ -17454,20 +17445,18 @@ function applyRejectedAlasanFilter_(which){
         (st === "mutasi" ? "Mutasi" : (st === "resign" ? "Resign" : (p.cabang || "—")));
       var na = p.naMarks || {};
       var cells = months.map(function(m){
-        var on = !!(p.marks && p.marks[m]);
+        var on = !!(p.marks && p.marks[m] === true);
         if (na[m]) {
           return '<td class="ka-red-cell" title="Tidak wajib bayar"></td>';
         }
-        // Belum bayar: kosong tanpa centang. Sudah bayar: ✓.
+        // Hanya data-on="1" yang tampil ✓. Belum bayar = kosong total.
         var dis = canEdit ? "" : " disabled";
         var title = on ? "Sudah bayar" : (canEdit ? "Belum bayar — klik untuk centang" : "Belum bayar");
         return '<td class="ka-td-check" title="'+title+'">'+
-          '<label class="ka-check-lab">'+
-          '<input type="checkbox" class="ka-cb"'+dis+(on?' checked':'')+
+          '<button type="button" class="ka-mark" data-on="'+(on?"1":"0")+'"'+dis+
           ' data-nik="'+escHtml(p.nik)+'" data-month="'+m+'" data-nama="'+escHtml(p.nama)+
           '" data-cabang="'+escHtml(p.cabang)+'" data-jabatan="'+escHtml(p.jabatan)+
-          '" data-status="'+escHtml(st)+'">'+
-          '<span class="ka-cb-ui" aria-hidden="true"></span></label></td>';
+          '" data-status="'+escHtml(st)+'">'+(on?"✓":"")+'</button></td>';
       }).join("");
       return '<tr class="'+rowCls+'" data-nik="'+escHtml(p.nik)+'">'+
         '<td class="ka-cab">'+escHtml(cabLabel)+'</td>'+
@@ -17588,11 +17577,13 @@ function applyRejectedAlasanFilter_(which){
     function wireRoot(root){
     if(!root || root._kaWired) return;
     root._kaWired = true;
-    root.addEventListener("change", function(e){
-      var cb = e.target.closest("input.ka-cb");
-      if(!cb || cb.disabled) return;
+    root.addEventListener("click", function(e){
+      var btn = e.target.closest("button.ka-mark");
+      if(!btn || btn.disabled) return;
+      e.preventDefault();
       _kaCache = null; _kaCacheAt = 0;
-      var on = !!cb.checked;
+      var wasOn = btn.getAttribute("data-on") === "1";
+      var on = !wasOn;
       var iuran = 20000;
       var delta = on ? iuran : -iuran;
       var ids = kaIds_();
@@ -17601,7 +17592,12 @@ function applyRejectedAlasanFilter_(which){
         return parseInt(String(el.textContent||"0").replace(/[^\d-]/g,""), 10) || 0;
       }
       function setRp_(el, n){ if(el) el.textContent = kaFmtRp_(n); }
-      var tr = cb.closest("tr");
+      function applyMarkUi_(b, isOn){
+        b.setAttribute("data-on", isOn ? "1" : "0");
+        b.textContent = isOn ? "✓" : "";
+      }
+      applyMarkUi_(btn, on);
+      var tr = btn.closest("tr");
       var totalCell = tr ? tr.querySelector(".ka-total") : null;
       if(totalCell){
         var nt = Math.max(0, parseRp_(totalCell) + delta);
@@ -17614,7 +17610,7 @@ function applyRejectedAlasanFilter_(which){
         google.script.run
           .withSuccessHandler(function(r){
             if(!r || r.status !== "OK"){
-              cb.checked = !on;
+              applyMarkUi_(btn, wasOn);
               if(totalCell){ var b = Math.max(0, parseRp_(totalCell) - delta); totalCell.setAttribute("data-total", String(b)); setRp_(totalCell, b); }
               setRp_(document.getElementById(ids.totalK), Math.max(0, parseRp_(document.getElementById(ids.totalK)) - delta));
               setRp_(document.getElementById(ids.saldo), parseRp_(document.getElementById(ids.saldo)) - delta);
@@ -17622,20 +17618,20 @@ function applyRejectedAlasanFilter_(which){
             }
           })
           .withFailureHandler(function(){
-            cb.checked = !on;
+            applyMarkUi_(btn, wasOn);
             if(totalCell){ var b2 = Math.max(0, parseRp_(totalCell) - delta); totalCell.setAttribute("data-total", String(b2)); setRp_(totalCell, b2); }
             setRp_(document.getElementById(ids.totalK), Math.max(0, parseRp_(document.getElementById(ids.totalK)) - delta));
             setRp_(document.getElementById(ids.saldo), parseRp_(document.getElementById(ids.saldo)) - delta);
             alert("Gagal simpan centang");
           })
           .setKasAreaKredit(kaSessionPin_(), {
-            nik: cb.getAttribute("data-nik"),
-            month: cb.getAttribute("data-month"),
+            nik: btn.getAttribute("data-nik"),
+            month: btn.getAttribute("data-month"),
             checked: on,
-            nama: cb.getAttribute("data-nama")||"",
-            cabang: cb.getAttribute("data-cabang")||"",
-            jabatan: cb.getAttribute("data-jabatan")||"",
-            status: cb.getAttribute("data-status")||"aktif"
+            nama: btn.getAttribute("data-nama")||"",
+            cabang: btn.getAttribute("data-cabang")||"",
+            jabatan: btn.getAttribute("data-jabatan")||"",
+            status: btn.getAttribute("data-status")||"aktif"
           });
       } catch(err){ alert("Error: "+(err.message||err)); }
     });
