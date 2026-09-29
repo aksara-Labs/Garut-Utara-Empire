@@ -17355,17 +17355,31 @@ function applyRejectedAlasanFilter_(which){
       hint: k ? "kaHintKanit" : null
     };
   }
-  function renderKasArea_(data){
-    // Paksa teks putih (override CSS lama / cache browser)
-    if(!document.getElementById("ka-force-white")){
-      var st = document.createElement("style");
-      st.id = "ka-force-white";
-      st.textContent = "#tab-kasarea,#tab-kanitkasarea,#tab-kasarea *,#tab-kanitkasarea *{color:#fff!important}"+
-        "#tab-kasarea .ka-total,#tab-kanitkasarea .ka-total,#tab-kasarea .ka-foot span,#tab-kanitkasarea .ka-foot span{color:#E8A86A!important}"+
-        "#tab-kasarea .ka-del,#tab-kanitkasarea .ka-del{color:#FCA5A5!important}"+
-        "#tab-kasarea input,#tab-kanitkasarea input{color:#fff!important;-webkit-text-fill-color:#fff!important}";
-      document.head.appendChild(st);
+  /** Paksa putih di DOM — mengalahkan CSS !important global */
+  function kaPaintWhite_(root){
+    if(!root) return;
+    var nodes = root.querySelectorAll("th,td,span,div,label,p,b,strong,a,button,input,h1,h2,h3,h4");
+    for(var i=0;i<nodes.length;i++){
+      var el = nodes[i];
+      var cls = (typeof el.className === "string") ? el.className : "";
+      if(cls.indexOf("ka-del") >= 0){
+        el.style.setProperty("color","#FCA5A5","important");
+        continue;
+      }
+      if(cls.indexOf("ka-total") >= 0 || cls.indexOf("ka-saldo") >= 0){
+        el.style.setProperty("color","#E8A86A","important");
+        continue;
+      }
+      if(el.tagName === "INPUT"){
+        el.style.setProperty("color","#FFFFFF","important");
+        el.style.setProperty("-webkit-text-fill-color","#FFFFFF","important");
+        continue;
+      }
+      el.style.setProperty("color","#FFFFFF","important");
+      el.style.setProperty("-webkit-text-fill-color","#FFFFFF","important");
     }
+  }
+  function renderKasArea_(data){
     var ids = kaIds_();
     var wrapK = document.getElementById(ids.wrapK);
     var wrapD = document.getElementById(ids.wrapD);
@@ -17376,9 +17390,9 @@ function applyRejectedAlasanFilter_(which){
     var canEdit = !!data.canEdit;
     var months = data.months || ["Apr","Mei","Jun","Jul","Agt","Sep","Okt","Nov","Des"];
     var people = data.people || [];
-    var head = '<table class="ka-table"><thead><tr><th style="color:#fff">Cabang</th><th style="color:#fff">Nama</th>'+
-      months.map(function(m){ return '<th style="color:#fff">'+m+'</th>'; }).join("")+
-      '<th style="color:#fff">Total</th></tr></thead><tbody>';
+    var head = '<table class="ka-table"><thead><tr><th>Cabang</th><th>Nama</th>'+
+      months.map(function(m){ return '<th>'+m+'</th>'; }).join("")+
+      '<th>Total</th></tr></thead><tbody>';
     var body = people.map(function(p){
       var st = (p.status || "aktif").toLowerCase();
       var rowCls = st === "mutasi" ? "ka-row-mutasi" : (st === "resign" ? "ka-row-resign" : "");
@@ -17401,9 +17415,9 @@ function applyRejectedAlasanFilter_(which){
           '<span class="ka-cb-ui" aria-hidden="true"></span></label></td>';
       }).join("");
       return '<tr class="'+rowCls+'" data-nik="'+escHtml(p.nik)+'">'+
-        '<td class="ka-cab" style="color:#ffffff">'+escHtml(cabLabel)+'</td>'+
-        '<td class="ka-nama" style="color:#ffffff;font-weight:600">'+escHtml(p.nama)+'</td>'+cells+
-        '<td class="ka-total" style="color:#E8A86A" data-total="'+Number(p.total||0)+'">'+kaFmtRp_(p.total)+'</td></tr>';
+        '<td class="ka-cab">'+escHtml(cabLabel)+'</td>'+
+        '<td class="ka-nama">'+escHtml(p.nama)+'</td>'+cells+
+        '<td class="ka-total" data-total="'+Number(p.total||0)+'">'+kaFmtRp_(p.total)+'</td></tr>';
     }).join("");
     if(wrapK) wrapK.innerHTML = head + body + '</tbody></table>';
 
@@ -17411,13 +17425,13 @@ function applyRejectedAlasanFilter_(which){
     if(wrapD){
       if(!debits.length) wrapD.innerHTML = '<div class="empty-log" style="padding:12px;">Belum ada debit.</div>';
       else {
-        wrapD.innerHTML = '<table class="ka-table"><thead><tr><th style="color:#fff">No</th><th style="color:#fff">Tanggal</th><th style="color:#fff">Item</th><th style="color:#fff">Nominal</th>'+(canEdit?'<th></th>':'')+'</tr></thead><tbody>'+
+        wrapD.innerHTML = '<table class="ka-table"><thead><tr><th>No</th><th>Tanggal</th><th>Item</th><th>Nominal</th>'+(canEdit?'<th></th>':'')+'</tr></thead><tbody>'+
           debits.map(function(d){
             return '<tr>'+
-              '<td style="color:#ffffff">'+d.no+'</td>'+
-              '<td style="color:#ffffff">'+escHtml(d.tanggal)+'</td>'+
-              '<td style="color:#ffffff;font-weight:600">'+escHtml(d.item)+'</td>'+
-              '<td class="ka-total" style="color:#E8A86A">'+kaFmtRp_(d.nominal)+'</td>'+
+              '<td>'+d.no+'</td>'+
+              '<td>'+escHtml(d.tanggal)+'</td>'+
+              '<td>'+escHtml(d.item)+'</td>'+
+              '<td class="ka-total">'+kaFmtRp_(d.nominal)+'</td>'+
               (canEdit ? '<td><button type="button" class="ka-del" data-id="'+escHtml(d.id)+'">Hapus</button></td>' : '')+'</tr>';
           }).join("")+'</tbody></table>';
       }
@@ -17439,6 +17453,11 @@ function applyRejectedAlasanFilter_(which){
         ? ('Iuran <b>Rp20.000</b>/bulan. Anda bendahara <b>'+escHtml(b)+'</b> — dapat mengubah centang &amp; debit.')
         : ('Iuran <b>Rp20.000</b>/bulan. Mode <b>lihat saja</b>. Kelola: bendahara cabang <b>'+escHtml(b)+'</b>.');
     }
+    // Terapkan putih di seluruh panel Kas Area (setProperty important)
+    kaPaintWhite_(document.getElementById("tab-kasarea"));
+    kaPaintWhite_(document.getElementById("tab-kanitkasarea"));
+    if(wrapK) kaPaintWhite_(wrapK);
+    if(wrapD) kaPaintWhite_(wrapD);
   }
   var _kaCache = null;
   var _kaCacheAt = 0;
