@@ -17444,12 +17444,14 @@ function applyRejectedAlasanFilter_(which){
       var cabLabel = jab.indexOf("kepala cabang")>=0 ? "Kepala Cabang" :
         (st === "mutasi" ? "Mutasi" : (st === "resign" ? "Resign" : (p.cabang || "—")));
       var na = p.naMarks || {};
+      // Total selalu = jumlah ✓ × 20.000 (jangan percaya p.total lama)
+      var hitungCek = 0;
       var cells = months.map(function(m){
         var on = !!(p.marks && p.marks[m] === true);
         if (na[m]) {
           return '<td class="ka-red-cell" title="Tidak wajib bayar"></td>';
         }
-        // Hanya data-on="1" yang tampil ✓. Belum bayar = kosong total.
+        if (on) hitungCek++;
         var dis = canEdit ? "" : " disabled";
         var title = on ? "Sudah bayar" : (canEdit ? "Belum bayar — klik untuk centang" : "Belum bayar");
         return '<td class="ka-td-check" title="'+title+'">'+
@@ -17458,10 +17460,11 @@ function applyRejectedAlasanFilter_(which){
           '" data-cabang="'+escHtml(p.cabang)+'" data-jabatan="'+escHtml(p.jabatan)+
           '" data-status="'+escHtml(st)+'">'+(on?"✓":"")+'</button></td>';
       }).join("");
+      var rowTotal = hitungCek * 20000;
       return '<tr class="'+rowCls+'" data-nik="'+escHtml(p.nik)+'">'+
         '<td class="ka-cab">'+escHtml(cabLabel)+'</td>'+
         '<td class="ka-nama">'+escHtml(p.nama)+'</td>'+cells+
-        '<td class="ka-total" data-total="'+Number(p.total||0)+'">'+kaFmtRp_(p.total)+'</td></tr>';
+        '<td class="ka-total" data-total="'+rowTotal+'">'+kaFmtRp_(rowTotal)+'</td></tr>';
     }).join("");
     if(wrapK) wrapK.innerHTML = head + body + '</tbody></table>';
 
