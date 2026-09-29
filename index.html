@@ -9550,9 +9550,56 @@ button.admin-topbar-avatar:hover,
   border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px;
 }
 #tab-kasarea .hint,
-#tab-kanitkasarea .hint{color:#CBD5E1!important;font-size:12px!important}
+#tab-kanitkasarea .hint{color:#FFFFFF!important;font-size:12px!important}
 #tab-kasarea .empty-log,
-#tab-kanitkasarea .empty-log{color:#CBD5E1!important}
+#tab-kanitkasarea .empty-log{color:#FFFFFF!important}
+
+/* Kas Area — paksa SEMUA teks putih (override --app-text gelap) */
+.admin-content #tab-kasarea,
+.admin-content #tab-kanitkasarea,
+.admin-content #tab-kasarea *,
+.admin-content #tab-kanitkasarea *,
+#tab-kasarea,
+#tab-kanitkasarea,
+#tab-kasarea table,
+#tab-kanitkasarea table,
+#tab-kasarea th,
+#tab-kanitkasarea th,
+#tab-kasarea td,
+#tab-kanitkasarea td,
+#tab-kasarea .ka-nama,
+#tab-kanitkasarea .ka-nama,
+#tab-kasarea .ka-cab,
+#tab-kanitkasarea .ka-cab,
+#tab-kasarea .hint,
+#tab-kanitkasarea .hint,
+#tab-kasarea .ka-foot,
+#tab-kanitkasarea .ka-foot,
+#tab-kasarea .ka-sec-h,
+#tab-kanitkasarea .ka-sec-h,
+#tab-kasarea .ka-title,
+#tab-kanitkasarea .ka-title,
+#tab-kasarea label,
+#tab-kanitkasarea label{
+  color:#FFFFFF !important;
+}
+.admin-content #tab-kasarea .ka-total,
+.admin-content #tab-kanitkasarea .ka-total,
+#tab-kasarea .ka-total,
+#tab-kanitkasarea .ka-total,
+#tab-kasarea .ka-foot span,
+#tab-kanitkasarea .ka-foot span,
+#tab-kasarea .ka-saldo,
+#tab-kanitkasarea .ka-saldo{
+  color:#E8A86A !important;
+}
+#tab-kasarea .ka-del,
+#tab-kanitkasarea .ka-del{ color:#FCA5A5 !important; }
+#tab-kasarea input,
+#tab-kanitkasarea input{
+  color:#FFFFFF !important;
+  -webkit-text-fill-color:#FFFFFF !important;
+}
 
 /* Hilangkan sisa hijau di CO */
 #tab-cashopname .co-hist-card .st.ok{
@@ -10243,7 +10290,6 @@ button.admin-topbar-avatar:hover,
 .admin-content table.karyawan-table,
 .admin-content table.audit-table,
 .admin-content table.rejected-detail-table,
-.admin-content table.ka-table,
 .admin-content .harian-table,
 .admin-content .libur-table,
 .admin-content .log-table,
@@ -10256,6 +10302,17 @@ button.admin-topbar-avatar:hover,
   background:transparent !important;
   color:var(--app-text) !important;
   font-size:12px !important;
+}
+.admin-content table.ka-table{
+  width:100% !important;
+  border-collapse:collapse !important;
+  background:transparent !important;
+  color:#FFFFFF !important;
+  font-size:12px !important;
+}
+.admin-content table.ka-table th,
+.admin-content table.ka-table td{
+  color:#FFFFFF !important;
 }
 .admin-content .harian-table-wrap,
 .admin-content .libur-table-wrap,
@@ -17333,8 +17390,10 @@ function applyRejectedAlasanFilter_(which){
           '" data-status="'+escHtml(st)+'">'+
           '<span class="ka-cb-ui" aria-hidden="true"></span></label></td>';
       }).join("");
-      return '<tr class="'+rowCls+'" data-nik="'+escHtml(p.nik)+'"><td class="ka-cab">'+escHtml(cabLabel)+'</td><td class="ka-nama">'+escHtml(p.nama)+'</td>'+cells+
-        '<td class="ka-total" data-total="'+Number(p.total||0)+'">'+kaFmtRp_(p.total)+'</td></tr>';
+      return '<tr class="'+rowCls+'" data-nik="'+escHtml(p.nik)+'">'+
+        '<td class="ka-cab" style="color:#ffffff">'+escHtml(cabLabel)+'</td>'+
+        '<td class="ka-nama" style="color:#ffffff;font-weight:600">'+escHtml(p.nama)+'</td>'+cells+
+        '<td class="ka-total" style="color:#E8A86A" data-total="'+Number(p.total||0)+'">'+kaFmtRp_(p.total)+'</td></tr>';
     }).join("");
     if(wrapK) wrapK.innerHTML = head + body + '</tbody></table>';
 
@@ -17342,9 +17401,13 @@ function applyRejectedAlasanFilter_(which){
     if(wrapD){
       if(!debits.length) wrapD.innerHTML = '<div class="empty-log" style="padding:12px;">Belum ada debit.</div>';
       else {
-        wrapD.innerHTML = '<table class="ka-table"><thead><tr><th>No</th><th>Tanggal</th><th>Item</th><th>Nominal</th>'+(canEdit?'<th></th>':'')+'</tr></thead><tbody>'+
+        wrapD.innerHTML = '<table class="ka-table"><thead><tr><th style="color:#fff">No</th><th style="color:#fff">Tanggal</th><th style="color:#fff">Item</th><th style="color:#fff">Nominal</th>'+(canEdit?'<th></th>':'')+'</tr></thead><tbody>'+
           debits.map(function(d){
-            return '<tr><td>'+d.no+'</td><td>'+escHtml(d.tanggal)+'</td><td>'+escHtml(d.item)+'</td><td class="ka-total" style="color:#FCA5A5">'+kaFmtRp_(d.nominal)+'</td>'+
+            return '<tr>'+
+              '<td style="color:#ffffff">'+d.no+'</td>'+
+              '<td style="color:#ffffff">'+escHtml(d.tanggal)+'</td>'+
+              '<td style="color:#ffffff;font-weight:600">'+escHtml(d.item)+'</td>'+
+              '<td class="ka-total" style="color:#E8A86A">'+kaFmtRp_(d.nominal)+'</td>'+
               (canEdit ? '<td><button type="button" class="ka-del" data-id="'+escHtml(d.id)+'">Hapus</button></td>' : '')+'</tr>';
           }).join("")+'</tbody></table>';
       }
