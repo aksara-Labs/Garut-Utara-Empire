@@ -17356,6 +17356,16 @@ function applyRejectedAlasanFilter_(which){
     };
   }
   function renderKasArea_(data){
+    // Paksa teks putih (override CSS lama / cache browser)
+    if(!document.getElementById("ka-force-white")){
+      var st = document.createElement("style");
+      st.id = "ka-force-white";
+      st.textContent = "#tab-kasarea,#tab-kanitkasarea,#tab-kasarea *,#tab-kanitkasarea *{color:#fff!important}"+
+        "#tab-kasarea .ka-total,#tab-kanitkasarea .ka-total,#tab-kasarea .ka-foot span,#tab-kanitkasarea .ka-foot span{color:#E8A86A!important}"+
+        "#tab-kasarea .ka-del,#tab-kanitkasarea .ka-del{color:#FCA5A5!important}"+
+        "#tab-kasarea input,#tab-kanitkasarea input{color:#fff!important;-webkit-text-fill-color:#fff!important}";
+      document.head.appendChild(st);
+    }
     var ids = kaIds_();
     var wrapK = document.getElementById(ids.wrapK);
     var wrapD = document.getElementById(ids.wrapD);
@@ -17366,9 +17376,9 @@ function applyRejectedAlasanFilter_(which){
     var canEdit = !!data.canEdit;
     var months = data.months || ["Apr","Mei","Jun","Jul","Agt","Sep","Okt","Nov","Des"];
     var people = data.people || [];
-    var head = '<table class="ka-table"><thead><tr><th>Cabang</th><th>Nama</th>'+
-      months.map(function(m){ return '<th>'+m+'</th>'; }).join("")+
-      '<th>Total</th></tr></thead><tbody>';
+    var head = '<table class="ka-table"><thead><tr><th style="color:#fff">Cabang</th><th style="color:#fff">Nama</th>'+
+      months.map(function(m){ return '<th style="color:#fff">'+m+'</th>'; }).join("")+
+      '<th style="color:#fff">Total</th></tr></thead><tbody>';
     var body = people.map(function(p){
       var st = (p.status || "aktif").toLowerCase();
       var rowCls = st === "mutasi" ? "ka-row-mutasi" : (st === "resign" ? "ka-row-resign" : "");
