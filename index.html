@@ -9487,16 +9487,24 @@ button.admin-topbar-avatar:hover,
 #tab-kasarea .ka-cb:checked + .ka-cb-ui::after{color:var(--ka-gold)}
 #tab-kasarea .ka-cb:hover + .ka-cb-ui{border-color:rgba(232,168,106,0.55)}
 #tab-kasarea .ka-red-cell{
-  /* Tidak wajib bayar — merah soft, bukan error keras */
-  background:rgba(185,28,28,0.35)!important;
-  min-width:28px;height:26px;border-radius:4px;
+  /* Tidak wajib bayar — kotak + X merah */
+  background:transparent !important;
+  min-width:28px;height:28px;
   cursor:default !important;
-  position:relative;
+  text-align:center !important;
+  vertical-align:middle !important;
+  padding:4px !important;
 }
 #tab-kasarea .ka-red-cell::after{
-  content:"";
-  display:block;width:10px;height:10px;margin:8px auto 0;
-  border-radius:2px;background:rgba(248,113,113,0.55);
+  content:"×";
+  display:inline-flex;
+  align-items:center;justify-content:center;
+  width:18px;height:18px;
+  border:1.5px solid #F87171;
+  border-radius:4px;
+  color:#F87171;
+  font-size:14px;font-weight:800;line-height:1;
+  box-sizing:border-box;
 }
 #tab-kasarea .ka-foot{
   margin:0;padding:8px 12px;font-weight:700;font-size:12.5px;
@@ -11008,6 +11016,7 @@ button.admin-topbar-avatar:hover,
           <button class="tab-btn admin-nav-btn" data-tab="kanitrejected"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg></span><span class="admin-nav-label">Rejected</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kanitjadwallibur"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><span class="admin-nav-label">Jadwal Libur &amp; Cuti</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kanitaudit"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a1 1 0 0 1 1-1h9l6 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></span><span class="admin-nav-label">Dashboard Audit</span></button>
+          <button class="tab-btn admin-nav-btn" data-tab="kanitkasarea"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M12 5v14"/></svg></span><span class="admin-nav-label">Kas Area</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="dokumen"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span><span class="admin-nav-label">Pembuatan Dokumen</span></button>
         </nav>
               <div class="sidebar-powered" aria-label="Powered by AksaraLab">
@@ -11536,8 +11545,35 @@ button.admin-topbar-avatar:hover,
       <div id="rejectedAnalysisMonthChartWrap" style="margin-top:20px;"></div>
     </div>
 
-    <!-- KPI Bisnis (Gadai/PP/Nasabah/Gaol, total gabungan cabang Syahrul) -->
-    
+    <!-- Kas Area (Kanit — lihat semua; edit hanya bendahara) -->
+    <div class="panel subpanel" id="tab-kanitkasarea">
+      <div class="ka-head">
+        <div class="ka-saldo" id="kaSaldoKanit">Rp0</div>
+        <div class="ka-title" id="kaTitleKanit">Arus Kas Area KC Syahrul 2026</div>
+        <button type="button" id="kaRefreshBtnKanit" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
+      </div>
+      <div class="hint" id="kaHintKanit" style="margin:0 0 12px;">Iuran <b>Rp20.000</b>/bulan. Hanya <b>bendahara</b> yang dapat mengubah centang &amp; debit.</div>
+      <div class="ka-layout">
+        <div class="ka-kredit">
+          <div class="ka-sec-h ka-sec-kredit">Kredit</div>
+          <div class="ka-table-wrap" id="kaKreditWrapKanit"><div class="empty-log">Memuat...</div></div>
+          <div class="ka-foot ka-foot-kredit">Total Kredit <span id="kaTotalKreditKanit">Rp0</span></div>
+        </div>
+        <div class="ka-debit">
+          <div class="ka-sec-h ka-sec-debit">Debit</div>
+          <div class="ka-debit-form" id="kaDebitFormKanit">
+            <div class="field"><label>Tanggal</label><input type="date" id="kaDebitTglKanit"></div>
+            <div class="field"><label>Item</label><input type="text" id="kaDebitItemKanit" placeholder="Contoh: Makan area"></div>
+            <div class="field"><label>Nominal</label><input type="text" inputmode="decimal" id="kaDebitNomKanit" placeholder="0" autocomplete="off"></div>
+            <button type="button" id="kaDebitAddBtnKanit" class="btn-xs">+ Debit</button>
+          </div>
+          <div class="ka-table-wrap" id="kaDebitWrapKanit"><div class="empty-log">—</div></div>
+          <div class="ka-foot ka-foot-debit">Total Debit <span id="kaTotalDebitKanit">Rp0</span></div>
+        </div>
+      </div>
+      <div class="msg" id="kaMsgKanit"></div>
+    </div>
+
     <!-- Pembuatan Dokumen -->
     <div class="panel subpanel" id="tab-dokumen">
       <!-- Hub pilih jenis -->
@@ -16707,14 +16743,26 @@ function applyRejectedAlasanFilter_(which){
   // ---------------- Kelola Cabang ----------------
   var cabangConfigLoaded = false;
 
-  function renderCabangConfig(config){
+  var _kaBendaharaCabang = "GRT013";
+  function renderCabangConfig(config, bendaharaCabang){
     var wrap = document.getElementById("cabangConfigWrap");
     if(!config || !config.length){
       wrap.innerHTML = '<div class="empty-log">Belum ada cabang.</div>';
       document.getElementById("cabangConfigSaveBtn").style.display = "none";
       return;
     }
-    wrap.innerHTML = '<div class="cabang-cfg-table">'+
+    if(bendaharaCabang) _kaBendaharaCabang = bendaharaCabang;
+    var bendOpts = config.map(function(c){
+      return '<option value="'+escHtml(c.kode)+'"'+(_kaBendaharaCabang===c.kode?' selected':'')+'>'+escHtml(c.kode)+'</option>';
+    }).join("");
+    wrap.innerHTML =
+      '<div class="ka-bendahara-row" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px;padding:12px 14px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;background:rgba(255,255,255,0.03);">'+
+        '<label style="font-size:12px;font-weight:700;color:#E8A86A;">Bendahara Kas Area</label>'+
+        '<select id="kaBendaharaSelect" style="min-width:120px;">'+bendOpts+'</select>'+
+        '<button type="button" class="btn-xs" id="kaBendaharaSaveBtn">Simpan Bendahara</button>'+
+        '<span class="hint" style="margin:0;font-size:11px;">Kanit cabang ini yang boleh centang &amp; input debit. Default GRT013.</span>'+
+      '</div>'+
+      '<div class="cabang-cfg-table">'+
       '<div class="cabang-cfg-head"><span>Cabang</span><span>Kelas</span><span>Status</span><span>Libur Minggu</span><span></span></div>'+
       config.map(function(c){
       var k = Number(c.kelas); if(k!==1 && k!==2 && k!==3) k = 1;
@@ -16758,6 +16806,32 @@ function applyRejectedAlasanFilter_(which){
     });
     document.getElementById("cabangConfigSaveBtn").style.display = "block";
 
+    var bendSave = document.getElementById("kaBendaharaSaveBtn");
+    if(bendSave){
+      bendSave.addEventListener("click", function(){
+        var sel = document.getElementById("kaBendaharaSelect");
+        var kode = sel ? sel.value : "";
+        var msgEl = document.getElementById("cabangConfigMsg");
+        if(!adminSessionGuard(msgEl)) return;
+        bendSave.disabled = true;
+        google.script.run
+          .withSuccessHandler(function(r){
+            bendSave.disabled = false;
+            if(!r || r.status !== "OK"){
+              showMsg(msgEl, (r && r.reason) || "Gagal simpan bendahara.", "err");
+              return;
+            }
+            _kaBendaharaCabang = r.bendaharaCabang || kode;
+            showMsg(msgEl, "Bendahara Kas Area: "+_kaBendaharaCabang, "ok");
+          })
+          .withFailureHandler(function(err){
+            bendSave.disabled = false;
+            showMsg(msgEl, "Koneksi: "+(err.message||err), "err");
+          })
+          .setKasAreaBendahara(session.adminPin, kode);
+      });
+    }
+
     wrap.querySelectorAll(".cabang-reset-pin-btn").forEach(function(btn){
       btn.addEventListener("click", function(){
         var kode = btn.dataset.kode;
@@ -16798,7 +16872,7 @@ function applyRejectedAlasanFilter_(which){
           return;
         }
         cabangConfigLoaded = true;
-        renderCabangConfig(r.cabang);
+        renderCabangConfig(r.cabang, r.bendaharaCabang);
       })
       .withFailureHandler(function(err){
         wrap.innerHTML = "";
@@ -17172,16 +17246,38 @@ function applyRejectedAlasanFilter_(which){
     var s = String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     return (neg ? "-Rp" : "Rp") + s;
   }
+  function kaSessionPin_(){
+    return session.adminPin || session.cabangPin || session.sessionToken || "";
+  }
+  function kaIsKanitTab_(){
+    var t = document.getElementById("tab-kanitkasarea");
+    return !!(t && t.classList.contains("active"));
+  }
+  function kaIds_(){
+    var k = kaIsKanitTab_();
+    return {
+      wrapK: k ? "kaKreditWrapKanit" : "kaKreditWrap",
+      wrapD: k ? "kaDebitWrapKanit" : "kaDebitWrap",
+      saldo: k ? "kaSaldoKanit" : "kaSaldo",
+      title: k ? "kaTitleKanit" : "kaTitle",
+      totalK: k ? "kaTotalKreditKanit" : "kaTotalKredit",
+      totalD: k ? "kaTotalDebitKanit" : "kaTotalDebit",
+      msg: k ? "kaMsgKanit" : "kaMsg",
+      debitForm: k ? "kaDebitFormKanit" : null,
+      hint: k ? "kaHintKanit" : null
+    };
+  }
   function renderKasArea_(data){
-    var wrapK = document.getElementById("kaKreditWrap");
-    var wrapD = document.getElementById("kaDebitWrap");
+    var ids = kaIds_();
+    var wrapK = document.getElementById(ids.wrapK);
+    var wrapD = document.getElementById(ids.wrapD);
     if(!data || data.status !== "OK"){
       if(wrapK) wrapK.innerHTML = '<div class="empty-log">'+(data && data.reason ? data.reason : "Gagal memuat")+'</div>';
       return;
     }
-    var months = data.months || ["Apr","Mei","Jun","Jul","Agt","Sep","Okt","Nov","Des","Jan"];
+    var canEdit = !!data.canEdit;
+    var months = data.months || ["Apr","Mei","Jun","Jul","Agt","Sep","Okt","Nov","Des"];
     var people = data.people || [];
-    // Merah = tidak wajib bayar (bukan error). Rofi/Zidan: merah Apr–Agt, Sep–Jan checkbox kosong.
     var head = '<table class="ka-table"><thead><tr><th>Cabang</th><th>Nama</th>'+
       months.map(function(m){ return '<th>'+m+'</th>'; }).join("")+
       '<th>Total</th></tr></thead><tbody>';
@@ -17194,14 +17290,13 @@ function applyRejectedAlasanFilter_(which){
       var na = p.naMarks || {};
       var cells = months.map(function(m){
         var on = !!(p.marks && p.marks[m]);
-        // Sel merah = tidak wajib bayar bulan itu
         if (na[m]) {
           return '<td class="ka-red-cell" title="Tidak wajib bayar"></td>';
         }
-        // Checkbox kosong / tercentang
+        var dis = canEdit ? "" : " disabled";
         return '<td class="ka-td-check">'+
           '<label class="ka-check-lab">'+
-          '<input type="checkbox" class="ka-cb"'+(on?' checked':'')+
+          '<input type="checkbox" class="ka-cb"'+dis+(on?' checked':'')+
           ' data-nik="'+escHtml(p.nik)+'" data-month="'+m+'" data-nama="'+escHtml(p.nama)+
           '" data-cabang="'+escHtml(p.cabang)+'" data-jabatan="'+escHtml(p.jabatan)+
           '" data-status="'+escHtml(st)+'">'+
@@ -17216,54 +17311,76 @@ function applyRejectedAlasanFilter_(which){
     if(wrapD){
       if(!debits.length) wrapD.innerHTML = '<div class="empty-log" style="padding:12px;">Belum ada debit.</div>';
       else {
-        wrapD.innerHTML = '<table class="ka-table"><thead><tr><th>No</th><th>Tanggal</th><th>Item</th><th>Nominal</th><th></th></tr></thead><tbody>'+
+        wrapD.innerHTML = '<table class="ka-table"><thead><tr><th>No</th><th>Tanggal</th><th>Item</th><th>Nominal</th>'+(canEdit?'<th></th>':'')+'</tr></thead><tbody>'+
           debits.map(function(d){
             return '<tr><td>'+d.no+'</td><td>'+escHtml(d.tanggal)+'</td><td>'+escHtml(d.item)+'</td><td class="ka-total" style="color:#FCA5A5">'+kaFmtRp_(d.nominal)+'</td>'+
-              '<td><button type="button" class="ka-del" data-id="'+escHtml(d.id)+'">Hapus</button></td></tr>';
+              (canEdit ? '<td><button type="button" class="ka-del" data-id="'+escHtml(d.id)+'">Hapus</button></td>' : '')+'</tr>';
           }).join("")+'</tbody></table>';
       }
     }
-    var elS = document.getElementById("kaSaldo");
-    var elTK = document.getElementById("kaTotalKredit");
-    var elTD = document.getElementById("kaTotalDebit");
-    var elT = document.getElementById("kaTitle");
+    var elS = document.getElementById(ids.saldo);
+    var elTK = document.getElementById(ids.totalK);
+    var elTD = document.getElementById(ids.totalD);
+    var elT = document.getElementById(ids.title);
     if(elS) elS.textContent = kaFmtRp_(data.saldo);
     if(elTK) elTK.textContent = kaFmtRp_(data.totalKredit);
     if(elTD) elTD.textContent = kaFmtRp_(data.totalDebit);
     if(elT && data.title) elT.textContent = data.title;
+    var form = ids.debitForm ? document.getElementById(ids.debitForm) : document.querySelector("#tab-kasarea .ka-debit-form");
+    if(form) form.style.display = canEdit ? "" : "none";
+    var hint = ids.hint ? document.getElementById(ids.hint) : null;
+    if(hint){
+      var b = data.bendaharaCabang || "GRT013";
+      hint.innerHTML = canEdit
+        ? ('Iuran <b>Rp20.000</b>/bulan. Anda bendahara <b>'+escHtml(b)+'</b> — dapat mengubah centang &amp; debit.')
+        : ('Iuran <b>Rp20.000</b>/bulan. Mode <b>lihat saja</b>. Kelola: bendahara cabang <b>'+escHtml(b)+'</b>.');
+    }
   }
-  function loadKasArea(){
-    var msg = document.getElementById("kaMsg");
+  var _kaCache = null;
+  var _kaCacheAt = 0;
+  function loadKasArea(force){
+    var ids = kaIds_();
+    var msg = document.getElementById(ids.msg);
     if(typeof clearMsg === "function") clearMsg(msg);
-    if(!session.adminPin){
-      if(typeof showMsg === "function") showMsg(msg, "Sesi KC berakhir.", "err");
+    var pin = kaSessionPin_();
+    if(!pin){
+      if(typeof showMsg === "function") showMsg(msg, "Sesi berakhir.", "err");
       return;
     }
-    var wrapK = document.getElementById("kaKreditWrap");
-    if(wrapK) wrapK.innerHTML = '<div class="empty-log">Memuat Kas Area...</div>';
+    var wrapK = document.getElementById(ids.wrapK);
+    if(!force && _kaCache && (Date.now() - _kaCacheAt) < 30000){
+      renderKasArea_(_kaCache);
+      return;
+    }
+    if(wrapK){
+      try{ showSkeleton(wrapK, 6, "table"); }
+      catch(e){ wrapK.innerHTML = '<div class="empty-log">Memuat...</div>'; }
+    }
     google.script.run
-      .withSuccessHandler(function(r){ renderKasArea_(r); if(r && r.status!=="OK" && typeof showMsg==="function") showMsg(msg, r.reason||"Gagal", "err"); })
+      .withSuccessHandler(function(r){
+        if(r && r.status === "OK"){ _kaCache = r; _kaCacheAt = Date.now(); }
+        renderKasArea_(r);
+        if(r && r.status!=="OK" && typeof showMsg==="function") showMsg(msg, r.reason||"Gagal", "err");
+      })
       .withFailureHandler(function(err){ if(wrapK) wrapK.innerHTML = ""; if(typeof showMsg==="function") showMsg(msg, "Koneksi: "+(err.message||err), "err"); })
-      .getKasAreaData(session.adminPin);
+      .getKasAreaData(pin);
   }
   window.loadKasArea = loadKasArea;
-  // Hook tab Kas Area (klik sidebar)
-  document.querySelectorAll('.tab-btn[data-tab="kasarea"]').forEach(function(btn){
-    btn.addEventListener("click", function(){ setTimeout(function(){ try{ loadKasArea(); }catch(e){} }, 30); });
+  document.querySelectorAll('.tab-btn[data-tab="kasarea"], .tab-btn[data-tab="kanitkasarea"]').forEach(function(btn){
+    btn.addEventListener("click", function(){ setTimeout(function(){ try{ loadKasArea(true); }catch(e){} }, 30); });
   });
   (function wireKasAreaUi_(){
-    var root = document.getElementById("tab-kasarea");
+    function wireRoot(root){
     if(!root || root._kaWired) return;
     root._kaWired = true;
-    var ref = document.getElementById("kaRefreshBtn");
-    if(ref) ref.addEventListener("click", loadKasArea);
-    // Centang native: change = langsung update total (Excel-like), simpan di background
     root.addEventListener("change", function(e){
       var cb = e.target.closest("input.ka-cb");
       if(!cb || cb.disabled) return;
+      _kaCache = null; _kaCacheAt = 0;
       var on = !!cb.checked;
       var iuran = 20000;
       var delta = on ? iuran : -iuran;
+      var ids = kaIds_();
       function parseRp_(el){
         if(!el) return 0;
         return parseInt(String(el.textContent||"0").replace(/[^\d-]/g,""), 10) || 0;
@@ -17276,28 +17393,27 @@ function applyRejectedAlasanFilter_(which){
         totalCell.setAttribute("data-total", String(nt));
         setRp_(totalCell, nt);
       }
-      setRp_(document.getElementById("kaTotalKredit"), Math.max(0, parseRp_(document.getElementById("kaTotalKredit")) + delta));
-      setRp_(document.getElementById("kaSaldo"), parseRp_(document.getElementById("kaSaldo")) + delta);
-      // Simpan ke server (tidak block UI)
+      setRp_(document.getElementById(ids.totalK), Math.max(0, parseRp_(document.getElementById(ids.totalK)) + delta));
+      setRp_(document.getElementById(ids.saldo), parseRp_(document.getElementById(ids.saldo)) + delta);
       try {
         google.script.run
           .withSuccessHandler(function(r){
             if(!r || r.status !== "OK"){
               cb.checked = !on;
               if(totalCell){ var b = Math.max(0, parseRp_(totalCell) - delta); totalCell.setAttribute("data-total", String(b)); setRp_(totalCell, b); }
-              setRp_(document.getElementById("kaTotalKredit"), Math.max(0, parseRp_(document.getElementById("kaTotalKredit")) - delta));
-              setRp_(document.getElementById("kaSaldo"), parseRp_(document.getElementById("kaSaldo")) - delta);
+              setRp_(document.getElementById(ids.totalK), Math.max(0, parseRp_(document.getElementById(ids.totalK)) - delta));
+              setRp_(document.getElementById(ids.saldo), parseRp_(document.getElementById(ids.saldo)) - delta);
               alert((r && r.reason) || "Gagal simpan centang");
             }
           })
           .withFailureHandler(function(){
             cb.checked = !on;
             if(totalCell){ var b2 = Math.max(0, parseRp_(totalCell) - delta); totalCell.setAttribute("data-total", String(b2)); setRp_(totalCell, b2); }
-            setRp_(document.getElementById("kaTotalKredit"), Math.max(0, parseRp_(document.getElementById("kaTotalKredit")) - delta));
-            setRp_(document.getElementById("kaSaldo"), parseRp_(document.getElementById("kaSaldo")) - delta);
+            setRp_(document.getElementById(ids.totalK), Math.max(0, parseRp_(document.getElementById(ids.totalK)) - delta));
+            setRp_(document.getElementById(ids.saldo), parseRp_(document.getElementById(ids.saldo)) - delta);
             alert("Gagal simpan centang");
           })
-          .setKasAreaKredit(session.adminPin, {
+          .setKasAreaKredit(kaSessionPin_(), {
             nik: cb.getAttribute("data-nik"),
             month: cb.getAttribute("data-month"),
             checked: on,
@@ -17314,36 +17430,48 @@ function applyRejectedAlasanFilter_(which){
         var id = del.getAttribute("data-id");
         if(!id || !confirm("Hapus debit ini?")) return;
         google.script.run
-          .withSuccessHandler(function(r){ if(!r||r.status!=="OK"){ alert((r&&r.reason)||"Gagal hapus"); return; } loadKasArea(); })
+          .withSuccessHandler(function(r){ if(!r||r.status!=="OK"){ alert((r&&r.reason)||"Gagal hapus"); return; } loadKasArea(true); })
           .withFailureHandler(function(){ alert("Gagal hapus"); })
-          .deleteKasAreaDebit(session.adminPin, id);
+          .deleteKasAreaDebit(kaSessionPin_(), id);
       }
     });
     root.addEventListener("change", function(e){
       var sel = e.target.closest(".ka-status-sel");
       if(!sel) return;
       google.script.run
-        .withSuccessHandler(function(r){ if(!r||r.status!=="OK"){ alert((r&&r.reason)||"Gagal update status"); loadKasArea(); return; } loadKasArea(); })
-        .withFailureHandler(function(){ alert("Gagal update status"); loadKasArea(); })
-        .setKasAreaStatus(session.adminPin, { nik: sel.getAttribute("data-nik"), status: sel.value });
+        .withSuccessHandler(function(r){ if(!r||r.status!=="OK"){ alert((r&&r.reason)||"Gagal update status"); loadKasArea(true); return; } loadKasArea(true); })
+        .withFailureHandler(function(){ alert("Gagal update status"); loadKasArea(true); })
+        .setKasAreaStatus(kaSessionPin_(), { nik: sel.getAttribute("data-nik"), status: sel.value });
     });
-    var addBtn = document.getElementById("kaDebitAddBtn");
-    if(addBtn) addBtn.addEventListener("click", function(){
-      var tgl = (document.getElementById("kaDebitTgl")||{}).value || "";
-      var item = ((document.getElementById("kaDebitItem")||{}).value || "").trim();
-      var nomRaw = ((document.getElementById("kaDebitNom")||{}).value || "").replace(/\./g,"").replace(/,/g,"");
-      var nominal = Number(nomRaw) || 0;
-      if(!tgl || !item || nominal <= 0){ alert("Isi tanggal, item, dan nominal (>0)"); return; }
-      google.script.run
-        .withSuccessHandler(function(r){
-          if(!r||r.status!=="OK"){ alert((r&&r.reason)||"Gagal tambah debit"); return; }
-          var it = document.getElementById("kaDebitItem"); if(it) it.value = "";
-          var nm = document.getElementById("kaDebitNom"); if(nm) nm.value = "";
-          loadKasArea();
-        })
-        .withFailureHandler(function(){ alert("Gagal tambah debit"); })
-        .addKasAreaDebit(session.adminPin, { tanggal: tgl, item: item, nominal: nominal });
+    } // end wireRoot
+    wireRoot(document.getElementById("tab-kasarea"));
+    wireRoot(document.getElementById("tab-kanitkasarea"));
+    ["kaRefreshBtn","kaRefreshBtnKanit"].forEach(function(id){
+      var ref = document.getElementById(id);
+      if(ref) ref.addEventListener("click", function(){ loadKasArea(true); });
     });
+    function wireDebitAdd(btnId, tglId, itemId, nomId){
+      var addBtn = document.getElementById(btnId);
+      if(!addBtn) return;
+      addBtn.addEventListener("click", function(){
+        var tgl = (document.getElementById(tglId)||{}).value || "";
+        var item = ((document.getElementById(itemId)||{}).value || "").trim();
+        var nomRaw = ((document.getElementById(nomId)||{}).value || "").replace(/\./g,"").replace(/,/g,"");
+        var nominal = Number(nomRaw) || 0;
+        if(!tgl || !item || nominal <= 0){ alert("Isi tanggal, item, dan nominal (>0)"); return; }
+        google.script.run
+          .withSuccessHandler(function(r){
+            if(!r||r.status!=="OK"){ alert((r&&r.reason)||"Gagal tambah debit"); return; }
+            var it = document.getElementById(itemId); if(it) it.value = "";
+            var nm = document.getElementById(nomId); if(nm) nm.value = "";
+            loadKasArea(true);
+          })
+          .withFailureHandler(function(){ alert("Gagal tambah debit"); })
+          .addKasAreaDebit(kaSessionPin_(), { tanggal: tgl, item: item, nominal: nominal });
+      });
+    }
+    wireDebitAdd("kaDebitAddBtn","kaDebitTgl","kaDebitItem","kaDebitNom");
+    wireDebitAdd("kaDebitAddBtnKanit","kaDebitTglKanit","kaDebitItemKanit","kaDebitNomKanit");
   })();
 
   document.getElementById("karyawanBaruToggleBtn").addEventListener("click", function(){
