@@ -9447,21 +9447,31 @@ button.admin-topbar-avatar:hover,
 #tab-kasarea .ka-table-wrap{
   overflow:auto;max-height:min(58vh,520px);background:transparent;
 }
-#tab-kasarea table.ka-table{width:100%;border-collapse:collapse;font-size:11.5px;background:transparent}
-#tab-kasarea table.ka-table th{
+#tab-kasarea table.ka-table,
+#tab-kanitkasarea table.ka-table{
+  width:100%;border-collapse:collapse;font-size:11.5px;background:transparent;
+  color:#F1F5F9 !important;
+}
+#tab-kasarea table.ka-table th,
+#tab-kanitkasarea table.ka-table th{
   position:sticky;top:0;z-index:2;
-  background:rgba(12,14,18,0.85);backdrop-filter:blur(8px);
-  color:#CBD5E1;font-weight:700;padding:7px 5px;
+  background:rgba(12,14,18,0.92)!important;backdrop-filter:blur(8px);
+  color:#E2E8F0 !important;font-weight:700;padding:7px 5px;
   border-bottom:1px solid var(--ka-border);white-space:nowrap;font-size:10.5px;
 }
-#tab-kasarea table.ka-table td{
-  padding:4px 5px;border-bottom:1px solid rgba(255,255,255,0.04);
-  color:#E5E7EB;vertical-align:middle;background:transparent;
+#tab-kasarea table.ka-table td,
+#tab-kanitkasarea table.ka-table td{
+  padding:4px 5px;border-bottom:1px solid rgba(255,255,255,0.06);
+  color:#F1F5F9 !important;vertical-align:middle;background:transparent !important;
 }
-#tab-kasarea table.ka-table tr:hover td{background:rgba(255,255,255,0.025)}
-#tab-kasarea .ka-cab{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#94A3B8}
-#tab-kasarea .ka-nama{font-weight:600;color:#F8FAFC}
-#tab-kasarea .ka-total{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--ka-gold);white-space:nowrap}
+#tab-kasarea table.ka-table tr:hover td,
+#tab-kanitkasarea table.ka-table tr:hover td{background:rgba(255,255,255,0.04)!important}
+#tab-kasarea .ka-cab,
+#tab-kanitkasarea .ka-cab{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#CBD5E1 !important}
+#tab-kasarea .ka-nama,
+#tab-kanitkasarea .ka-nama{font-weight:600;color:#FFFFFF !important}
+#tab-kasarea .ka-total,
+#tab-kanitkasarea .ka-total{font-family:'JetBrains Mono',monospace;font-weight:700;color:#E8A86A !important;white-space:nowrap}
 /* Checkbox native styled */
 #tab-kasarea .ka-td-check{text-align:center;cursor:pointer}
 #tab-kasarea .ka-check-lab{
@@ -9506,33 +9516,43 @@ button.admin-topbar-avatar:hover,
   font-size:14px;font-weight:800;line-height:1;
   box-sizing:border-box;
 }
-#tab-kasarea .ka-foot{
+#tab-kasarea .ka-foot,
+#tab-kanitkasarea .ka-foot{
   margin:0;padding:8px 12px;font-weight:700;font-size:12.5px;
   display:flex;justify-content:space-between;align-items:center;
-  border-top:1px solid var(--ka-border);background:transparent;color:#E2E8F0;
+  border-top:1px solid var(--ka-border);background:transparent;color:#E2E8F0 !important;
 }
-#tab-kasarea .ka-foot span{font-family:'JetBrains Mono',monospace;color:var(--ka-gold)}
-#tab-kasarea .ka-debit-form{
+#tab-kasarea .ka-foot span,
+#tab-kanitkasarea .ka-foot span{font-family:'JetBrains Mono',monospace;color:#E8A86A !important}
+#tab-kasarea .ka-debit-form,
+#tab-kanitkasarea .ka-debit-form{
   display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;
   padding:10px 12px;border-bottom:1px solid var(--ka-border);background:transparent;
 }
-#tab-kasarea .ka-debit-form .field{margin:0;min-width:100px;flex:1 1 100px}
-#tab-kasarea .ka-debit-form label{font-size:11px;color:#94A3B8;font-weight:600}
-#tab-kasarea .ka-debit-form input{
+#tab-kasarea .ka-debit-form .field,
+#tab-kanitkasarea .ka-debit-form .field{margin:0;min-width:100px;flex:1 1 100px}
+#tab-kasarea .ka-debit-form label,
+#tab-kanitkasarea .ka-debit-form label{font-size:11px;color:#CBD5E1!important;font-weight:600}
+#tab-kasarea .ka-debit-form input,
+#tab-kanitkasarea .ka-debit-form input{
   background:transparent!important;border:1px solid var(--ka-border)!important;
   border-radius:8px!important;color:#F1F5F9!important;padding:8px 10px!important;
 }
-#tab-kasarea #kaDebitAddBtn{
+#tab-kasarea #kaDebitAddBtn,
+#tab-kanitkasarea #kaDebitAddBtnKanit{
   width:auto!important;padding:8px 14px!important;border-radius:8px!important;
-  background:transparent!important;color:var(--ka-gold)!important;
+  background:transparent!important;color:#E8A86A!important;
   font-weight:700!important;border:1px solid rgba(232,168,106,0.45)!important;
 }
-#tab-kasarea .ka-del{
+#tab-kasarea .ka-del,
+#tab-kanitkasarea .ka-del{
   border:1px solid rgba(248,113,113,0.3);background:transparent;color:#FCA5A5;
   border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px;
 }
-#tab-kasarea .hint{color:#94A3B8!important;font-size:12px!important}
-#tab-kasarea .empty-log{color:#94A3B8!important}
+#tab-kasarea .hint,
+#tab-kanitkasarea .hint{color:#CBD5E1!important;font-size:12px!important}
+#tab-kasarea .empty-log,
+#tab-kanitkasarea .empty-log{color:#CBD5E1!important}
 
 /* Hilangkan sisa hijau di CO */
 #tab-cashopname .co-hist-card .st.ok{
@@ -10561,29 +10581,38 @@ button.admin-topbar-avatar:hover,
 #tab-cashopname .co-sum-selisih.lebih .co-sum-val,
 #tab-cashopname .co-sum-selisih.kurang .co-sum-val{ color:#FCA5A5 !important; }
 
-/* B5 Kas Area — header sticky + checkbox besar */
+/* B5 Kas Area — header sticky + teks terang (jangan pakai --app-text gelap) */
 #tab-kasarea thead th,
-#tab-kasarea .ka-table thead th{
+#tab-kasarea .ka-table thead th,
+#tab-kanitkasarea thead th,
+#tab-kanitkasarea .ka-table thead th{
   position:sticky !important;
   top:0 !important;
   z-index:3 !important;
   background:rgba(12,14,18,0.95) !important;
   backdrop-filter:blur(8px);
-  color:var(--app-muted) !important;
-  border-bottom:1px solid var(--app-line) !important;
+  color:#E2E8F0 !important;
+  border-bottom:1px solid rgba(255,255,255,0.1) !important;
   font-size:10px !important;
   text-transform:uppercase !important;
   letter-spacing:0.04em !important;
   padding:10px 8px !important;
 }
-#tab-kasarea td{
-  color:var(--app-text) !important;
+#tab-kasarea td,
+#tab-kanitkasarea td{
+  color:#F1F5F9 !important;
   background:transparent !important;
-  border-bottom:1px solid var(--app-line-soft) !important;
+  border-bottom:1px solid rgba(255,255,255,0.06) !important;
   padding:8px !important;
 }
+#tab-kasarea .ka-nama,
+#tab-kanitkasarea .ka-nama{ color:#FFFFFF !important; }
+#tab-kasarea .ka-cab,
+#tab-kanitkasarea .ka-cab{ color:#CBD5E1 !important; }
 #tab-kasarea input[type="checkbox"],
-#tab-kasarea .ka-check{
+#tab-kasarea .ka-check,
+#tab-kanitkasarea input[type="checkbox"],
+#tab-kanitkasarea .ka-check{
   width:18px !important;
   height:18px !important;
   min-width:18px !important;
@@ -10592,7 +10621,9 @@ button.admin-topbar-avatar:hover,
 }
 @media(max-width:700px){
   #tab-kasarea input[type="checkbox"],
-  #tab-kasarea .ka-check{
+  #tab-kasarea .ka-check,
+  #tab-kanitkasarea input[type="checkbox"],
+  #tab-kanitkasarea .ka-check{
     width:22px !important;
     height:22px !important;
     min-width:22px !important;
