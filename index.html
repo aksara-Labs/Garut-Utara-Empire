@@ -12254,6 +12254,14 @@ button.admin-topbar-avatar:hover,
         <div class="field"><label>Bulan mulai</label><select id="auditBulanMulai"></select></div>
         <div class="field"><label>Bulan akhir</label><select id="auditBulanAkhir"></select></div>
         <div class="field"><label>Petugas</label><select id="auditPetugas"><option value="SEMUA">Semua</option></select></div>
+        <div class="field"><label>Tipe temuan</label>
+          <select id="auditTipeFilter">
+            <option value="Pelanggaran" selected>Pelanggaran</option>
+            <option value="Support">Support</option>
+            <option value="Fraud">Fraud</option>
+            <option value="SEMUA">Semua</option>
+          </select>
+        </div>
         <button type="button" id="auditLoadBtn" class="btn-xs">Terapkan</button>
         <button type="button" id="auditRefreshBtn" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
         <button type="button" id="btnOpenApprovalAudit" class="btn-xs" style="margin-left:auto;">Approval Audit</button>
@@ -12269,7 +12277,7 @@ button.admin-topbar-avatar:hover,
         <div class="audit-card"><h4>Distribusi TW</h4><div id="auditTw"></div></div>
       </div>
       <div class="rejected-top3-title">Detail temuan</div>
-      <div class="audit-table-wrap"><table class="audit-table app-table"><thead><tr><th>Cabang</th><th>Bulan</th><th>TW</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="auditDetailBody"></tbody></table></div>
+      <div class="audit-table-wrap"><table class="audit-table app-table"><thead><tr><th>Cabang</th><th>Bulan</th><th>TW</th><th>Tipe</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="auditDetailBody"></tbody></table></div>
       </div><!-- /auditMainView -->
 
       <div id="auditApprovalView" style="display:none;">
@@ -18451,12 +18459,22 @@ function applyRejectedAlasanFilter_(which){
   }
   function renderAuditKpi(el, d){
     if(!el || !d) return;
+    var nPel = d.totalPelanggaran != null ? d.totalPelanggaran : "—";
+    var nSup = d.totalSupport != null ? d.totalSupport : "—";
+    var nFr = d.totalFraud != null ? d.totalFraud : "—";
+    var pet = (d.petugasTerbanyak && d.petugasTerbanyak.key) ? d.petugasTerbanyak : { key: "-", count: 0 };
+    var tipeLabel = "filter aktif";
+    try {
+      var tf = document.getElementById("auditTipeFilter");
+      if (tf && tf.value && tf.value !== "SEMUA") tipeLabel = tf.value;
+      else tipeLabel = "semua tipe";
+    } catch (e) {}
     el.innerHTML =
-      '<div class="audit-kpi"><div class="k">Total temuan</div><div class="v">'+d.total+'</div></div>'+
-      '<div class="audit-kpi"><div class="k">Cabang terbanyak</div><div class="v">'+escHtml(d.cabangTerbanyak.key||"-")+'</div><div class="s">'+(d.cabangTerbanyak.count||0)+' temuan</div></div>'+
-      '<div class="audit-kpi"><div class="k">Puncak bulan</div><div class="v">'+(d.puncakBulan.key||"-")+'</div><div class="s">'+(d.puncakBulan.count||0)+' temuan</div></div>'+
-      '<div class="audit-kpi"><div class="k">Jenis terbanyak</div><div class="v" style="font-size:13px;">'+(d.jenisTerbanyak.key||"-")+'</div><div class="s">'+(d.jenisTerbanyak.count||0)+' temuan</div></div>'+
-      '<div class="audit-kpi"><div class="k">Petugas terbanyak</div><div class="v" style="font-size:13px;">'+escHtml(d.petugasTerbanyak.key||"-")+'</div><div class="s">'+(d.petugasTerbanyak.count||0)+' temuan</div></div>';
+      '<div class="audit-kpi"><div class="k">Total (filter)</div><div class="v">'+d.total+'</div><div class="s">'+escHtml(tipeLabel)+'</div></div>'+
+      '<div class="audit-kpi audit-kpi-pel"><div class="k">Pelanggaran</div><div class="v" style="color:#FCA5A5;">'+nPel+'</div></div>'+
+      '<div class="audit-kpi audit-kpi-sup"><div class="k">Support</div><div class="v" style="color:#93C5FD;">'+nSup+'</div></div>'+
+      '<div class="audit-kpi"><div class="k">Fraud</div><div class="v" style="color:#F0B27A;">'+nFr+'</div></div>'+
+      '<div class="audit-kpi"><div class="k">Petugas terbanyak</div><div class="v" style="font-size:13px;">'+escHtml(pet.key||"-")+'</div><div class="s">'+(pet.count||0)+' · '+escHtml(tipeLabel)+'</div></div>';
   }
   function fillDatalist(id, arr){
     var el = document.getElementById(id);
@@ -18472,12 +18490,22 @@ function applyRejectedAlasanFilter_(which){
     renderHBars(document.getElementById("auditTw"), d.twDist, "");
     var body = document.getElementById("auditDetailBody");
     body.innerHTML = (d.detail||[]).map(function(r){
-      return '<tr><td>'+r.cabang+'</td><td>'+r.bulan+'</td><td>'+r.tw+'</td><td>'+r.temuan+'</td><td>'+escHtml(r.petugas)+'</td><td>'+escHtml(r.noFaktur||"-")+'</td><td>'+escHtml(r.keterangan||"-")+'</td></tr>';
-    }).join("") || '<tr><td colspan="7" class="empty-log">Tidak ada data.</td></tr>';
+      var tp = r.tipe || "—";
+      var badge = tp === "Support"
+        ? '<span class="appr-chip sup" style="padding:2px 8px;font-size:11px;">Support</span>'
+        : (tp === "Fraud"
+          ? '<span class="appr-chip" style="padding:2px 8px;font-size:11px;background:rgba(232,168,106,0.15);border-color:rgba(232,168,106,0.4);color:#F0C090;">Fraud</span>'
+          : (tp === "Pelanggaran"
+            ? '<span class="appr-chip pel" style="padding:2px 8px;font-size:11px;">Pelanggaran</span>'
+            : escHtml(tp)));
+      return '<tr><td>'+escHtml(r.cabang)+'</td><td>'+escHtml(r.bulan)+'</td><td>'+escHtml(r.tw)+'</td><td>'+badge+'</td><td>'+escHtml(r.temuan)+'</td><td>'+escHtml(r.petugas)+'</td><td>'+escHtml(r.noFaktur||"-")+'</td><td>'+escHtml(r.keterangan||"-")+'</td></tr>';
+    }).join("") || '<tr><td colspan="8" class="empty-log">Tidak ada data.</td></tr>';
     var petSel = document.getElementById("auditPetugas");
-    var cur = petSel.value;
-    petSel.innerHTML = '<option value="SEMUA">Semua</option>'+(d.petugasList||[]).map(function(p){ return '<option value="'+p+'">'+p+'</option>'; }).join("");
-    if(cur) petSel.value = cur;
+    if(petSel){
+      var cur = petSel.value;
+      petSel.innerHTML = '<option value="SEMUA">Semua</option>'+(d.petugasList||[]).map(function(p){ return '<option value="'+p+'">'+p+'</option>'; }).join("");
+      if(cur) petSel.value = cur;
+    }
     fillDatalist("auditTemuanList", d.temuanList);
     fillDatalist("auditPetugasList", d.petugasList);
   }
@@ -18501,14 +18529,16 @@ function applyRejectedAlasanFilter_(which){
   function loadAuditAdmin(){
     var msg = document.getElementById("auditMsg");
     if(!adminSessionGuard(msg || document.createElement("div"))) return;
+    var tipeEl = document.getElementById("auditTipeFilter");
     var filters = {
       cabang: document.getElementById("auditCabang").value,
       bulanMulai: document.getElementById("auditBulanMulai").value,
       bulanAkhir: document.getElementById("auditBulanAkhir").value,
       petugas: document.getElementById("auditPetugas").value,
+      tipe: tipeEl ? tipeEl.value : "SEMUA",
       tahun: "2026"
     };
-    var key = cKey(["auditAdmin", filters.cabang, filters.bulanMulai, filters.bulanAkhir, filters.petugas]);
+    var key = cKey(["auditAdmin", filters.cabang, filters.bulanMulai, filters.bulanAkhir, filters.petugas, filters.tipe]);
     var cached = cGet(key);
     if(cached){ try{ renderAuditAdmin(cached); }catch(e){} }
     google.script.run
@@ -18561,6 +18591,8 @@ function applyRejectedAlasanFilter_(which){
   if(auditLoadBtn) auditLoadBtn.addEventListener("click", loadAuditAdmin);
   var auditRefreshBtn = document.getElementById("auditRefreshBtn");
   if(auditRefreshBtn) auditRefreshBtn.addEventListener("click", loadAuditAdmin);
+  var auditTipeFilter = document.getElementById("auditTipeFilter");
+  if(auditTipeFilter) auditTipeFilter.addEventListener("change", loadAuditAdmin);
   var kanitAuditLoadBtn = document.getElementById("kanitAuditLoadBtn");
   if(kanitAuditLoadBtn) kanitAuditLoadBtn.addEventListener("click", loadAuditKanit);
   var kanitAuditRefreshBtn = document.getElementById("kanitAuditRefreshBtn");
