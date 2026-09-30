@@ -2485,6 +2485,36 @@ button.kanit-profile-btn{
   padding: 0 !important;
   overflow: hidden !important;
 }
+/* Pesan sukses/error selalu terlihat */
+#tab-kanitauditreport #kanitAuditMsg{
+  display:block !important;
+  min-height: 0;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#tab-kanitauditreport #kanitAuditMsg.show.ok{
+  color: #86EFAC !important;
+  background: rgba(34,197,94,0.12);
+  border: 1px solid rgba(34,197,94,0.35);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+#tab-kanitauditreport #kanitAuditMsg.show.err{
+  color: #FCA5A5 !important;
+  background: rgba(248,113,113,0.12);
+  border: 1px solid rgba(248,113,113,0.35);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+#tab-kanitauditreport:not(.audit-mid-flow) #kanitAuditSubmitBtn{
+  display: inline-flex !important;
+  visibility: visible !important;
+  height: auto !important;
+  margin-top: 10px !important;
+  padding: 8px 16px !important;
+  overflow: visible !important;
+}
 
 
 #tab-kanitauditreport #kanitAuditItemsPel .audit-item-card,
@@ -7565,6 +7595,185 @@ h1, h2, h3, h4, .admin-topbar-title, .auth-brand h1, .auth-card-head h1 {
   .approval-filters .field{ max-width: none !important; flex: 1 1 100% !important; }
 }
 
+/* ===== Approval Audit — list + wizard detail (high contrast) ===== */
+#auditApprovalView,
+#auditApprovalView *{
+  color:#F1F5F9;
+}
+#auditApprovalView label,
+#auditApprovalView .field label{
+  color:#94A3B8 !important;
+  font-size:11px !important;
+  font-weight:600 !important;
+  letter-spacing:0.03em;
+  text-transform:uppercase;
+  margin-bottom:4px !important;
+}
+#auditApprovalView input,
+#auditApprovalView select,
+#auditApprovalView textarea{
+  background:rgba(15,23,42,0.65) !important;
+  border:1px solid rgba(255,255,255,0.14) !important;
+  color:#F8FAFC !important;
+  border-radius:10px !important;
+  padding:10px 12px !important;
+  font-size:13px !important;
+  width:100%;
+  box-sizing:border-box;
+}
+#auditApprovalView input::placeholder{
+  color:#64748B !important;
+}
+#auditApprovalView a{
+  color:#F0B27A !important;
+}
+
+#auditPengajuanList{
+  display:flex;flex-direction:column;gap:12px;
+}
+.appr-list-card{
+  background:linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:16px;padding:16px 18px;
+  transition:border-color .15s, background .15s, transform .15s;
+}
+.appr-list-card:hover{
+  border-color:rgba(232,168,106,0.4);
+  background:rgba(232,168,106,0.06);
+}
+.appr-list-top{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;
+}
+.appr-list-cab{
+  font-size:17px;font-weight:800;color:#FFFFFF !important;letter-spacing:0.03em;
+}
+.appr-list-sub{
+  font-size:12px;color:#94A3B8 !important;margin-bottom:12px;
+}
+.appr-list-counts{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;
+}
+.appr-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;
+  border:1px solid rgba(255,255,255,0.12);color:#E2E8F0 !important;
+}
+.appr-chip.pel{ background:rgba(248,113,113,0.14); border-color:rgba(248,113,113,0.35); color:#FECACA !important; }
+.appr-chip.sup{ background:rgba(96,165,250,0.14); border-color:rgba(96,165,250,0.35); color:#BFDBFE !important; }
+.appr-chip b{ font-family:'JetBrains Mono',ui-monospace,monospace; font-size:13px; color:inherit !important; }
+.appr-list-actions{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+}
+.appr-list-actions .btn-xs{ width:auto!important; max-width:none!important; }
+
+.appr-detail-head{
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;
+}
+.appr-detail-meta{ flex:1; min-width:140px; }
+.appr-meta-cab{ font-size:20px;font-weight:800;color:#FFFFFF !important; }
+.appr-meta-sub{ font-size:12px;color:#94A3B8 !important;margin-top:3px; }
+
+.appr-summary-card,
+.appr-detail-card{
+  background:linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:16px;padding:18px 20px;margin-bottom:14px;
+}
+.appr-sum-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);
+  font-size:13px;color:#E2E8F0 !important;
+}
+.appr-sum-row span{ color:#94A3B8 !important; }
+.appr-sum-row b,
+.appr-sum-row .appr-num{ color:#FFFFFF !important; }
+.appr-sum-row:last-of-type{ border-bottom:none; }
+.appr-num{ font-family:'JetBrains Mono',ui-monospace,monospace; font-size:18px; }
+.appr-num.pel{ color:#FECACA !important; }
+.appr-num.sup{ color:#BFDBFE !important; }
+.appr-id{ font-family:'JetBrains Mono',ui-monospace,monospace; font-size:11px; color:#94A3B8 !important; }
+.appr-summary-link{
+  display:inline-flex;align-items:center;gap:6px;margin-top:14px;
+  color:#F0B27A !important;font-weight:700;font-size:13px;text-decoration:none;
+  padding:8px 12px;border-radius:10px;
+  background:rgba(232,168,106,0.1);border:1px solid rgba(232,168,106,0.28);
+}
+.appr-summary-link:hover{ background:rgba(232,168,106,0.18); }
+.appr-step-pill{
+  display:inline-block;font-size:11px;font-weight:800;letter-spacing:0.05em;
+  text-transform:uppercase;color:#F0B27A !important;
+  background:rgba(232,168,106,0.14);border:1px solid rgba(232,168,106,0.35);
+  border-radius:999px;padding:5px 12px;margin-bottom:14px;
+}
+.appr-note{ font-size:13px;color:#CBD5E1 !important;margin:0 0 12px; }
+
+/* Field grid detail — label kecil, value putih jelas */
+.appr-detail-card .field{
+  margin-bottom:12px !important;
+}
+.appr-detail-card .field label{
+  display:block;
+  color:#94A3B8 !important;
+  font-size:11px !important;
+  font-weight:600 !important;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  margin-bottom:5px !important;
+}
+.appr-readonly,
+.appr-detail-card .appr-readonly,
+#auditApprDetailPane .appr-readonly{
+  padding:10px 12px !important;
+  border-radius:10px !important;
+  background:rgba(15,23,42,0.7) !important;
+  border:1px solid rgba(255,255,255,0.12) !important;
+  color:#FFFFFF !important;
+  font-size:14px !important;
+  font-weight:600 !important;
+  line-height:1.4;
+  min-height:20px;
+}
+.appr-detail-card input.ed-jenis,
+.appr-detail-card input.ed-petugas,
+.appr-detail-card input.ed-faktur,
+.appr-detail-card input.ed-ket,
+#auditApprDetailPane input.ed-jenis,
+#auditApprDetailPane input.ed-petugas,
+#auditApprDetailPane input.ed-faktur,
+#auditApprDetailPane input.ed-ket,
+#auditApprDetailPane input#apprCatatan{
+  background:rgba(15,23,42,0.75) !important;
+  border:1px solid rgba(255,255,255,0.16) !important;
+  color:#FFFFFF !important;
+  -webkit-text-fill-color:#FFFFFF !important;
+  caret-color:#F0B27A !important;
+  font-size:14px !important;
+  font-weight:600 !important;
+  border-radius:10px !important;
+  padding:10px 12px !important;
+}
+
+.appr-detail-nav{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end;
+  padding-top:6px;margin-top:4px;
+}
+.appr-detail-nav .btn-xs{ width:auto!important; max-width:none!important; }
+
+/* Status badge di approval */
+#auditApprovalView .status-badge{
+  display:inline-flex;align-items:center;
+  padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;
+  border:1px solid transparent;
+}
+#auditApprovalView .status-badge.menunggu{
+  background:rgba(232,168,106,0.15)!important;color:#F0C090!important;border-color:rgba(232,168,106,0.35)!important;
+}
+#auditApprovalView .status-badge.disetujui{
+  background:rgba(34,197,94,0.15)!important;color:#86EFAC!important;border-color:rgba(34,197,94,0.35)!important;
+}
+#auditApprovalView .status-badge.ditolak{
+  background:rgba(248,113,113,0.15)!important;color:#FCA5A5!important;border-color:rgba(248,113,113,0.35)!important;
+}
 
 /* ===== F2: tabel mobile ringkas + rejected date UX ===== */
 @media (max-width: 700px){
@@ -12047,7 +12256,8 @@ button.admin-topbar-avatar:hover,
         <div class="field"><label>Petugas</label><select id="auditPetugas"><option value="SEMUA">Semua</option></select></div>
         <button type="button" id="auditLoadBtn" class="btn-xs">Terapkan</button>
         <button type="button" id="auditRefreshBtn" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
-        <button type="button" id="btnOpenApprovalAudit" class="btn-xs" style="margin-left:auto;">Approval Audit</button>
+        <button type="button" id="btnOpenImportAcp" class="btn-xs secondary" style="margin-left:auto;">Import ACP</button>
+        <button type="button" id="btnOpenApprovalAudit" class="btn-xs">Approval Audit</button>
       </div>
       <div id="auditKpi" class="audit-kpi-grid"></div>
       <div class="audit-charts audit-charts-2" style="margin-bottom:12px;">
@@ -12063,18 +12273,51 @@ button.admin-topbar-avatar:hover,
       <div class="audit-table-wrap"><table class="audit-table app-table"><thead><tr><th>Cabang</th><th>Bulan</th><th>TW</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="auditDetailBody"></tbody></table></div>
       </div><!-- /auditMainView -->
 
+      <!-- Import ACP (KC) -->
+      <div id="auditImportAcpView" style="display:none;">
+        <div class="approval-toolbar">
+          <button type="button" id="btnBackImportAcp" class="btn-xs secondary">← Kembali</button>
+          <span class="appr-title">Import ACP</span>
+        </div>
+        <div class="appr-summary-card" style="margin-bottom:12px;">
+          <p class="appr-note" style="margin:0 0 8px;">
+            Paste data dari Excel ACP (termasuk baris header). 
+            <b>Hanya periode yang ada di data yang diganti</b> — bulan lain tidak hilang.
+          </p>
+          <textarea id="acpImportText" rows="10" placeholder="Paste di sini (Ctrl+V)… header + baris data ACP" style="width:100%;min-height:180px;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#F8FAFC;padding:10px;font-size:12px;font-family:ui-monospace,monospace;"></textarea>
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <button type="button" id="acpImportBtn" class="btn-xs">Proses Import</button>
+            <span class="muted" style="font-size:12px;color:#94A3B8;">Upload file .xlsx bisa menyusul — paste sudah cukup.</span>
+          </div>
+          <div class="msg" id="acpImportMsg"></div>
+          <div id="acpImportPreview" style="margin-top:10px;"></div>
+        </div>
+      </div>
+
       <div id="auditApprovalView" style="display:none;">
         <div class="approval-toolbar">
           <button type="button" id="btnBackApprovalAudit" class="btn-xs secondary">← Kembali</button>
           <span class="appr-title">Approval Audit</span>
           <button type="button" id="auditPengajuanLoadBtn" class="btn-icon-refresh" title="Muat antrian"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
         </div>
-        <div class="approval-filters filter-row-compact">
-          <div class="field"><label>Status</label>
-            <select id="auditPengajuanStatus"><option value="Menunggu">Menunggu</option><option value="SEMUA">Semua</option><option value="Disetujui">Disetujui</option><option value="Ditolak">Ditolak</option></select>
+        <!-- LIST: ringkasan pengajuan -->
+        <div id="auditApprListPane">
+          <div class="approval-filters filter-row-compact">
+            <div class="field"><label>Status</label>
+              <select id="auditPengajuanStatus"><option value="Menunggu">Menunggu</option><option value="SEMUA">Semua</option><option value="Disetujui">Disetujui</option><option value="Ditolak">Ditolak</option></select>
+            </div>
           </div>
+          <div id="auditPengajuanList"><div class="empty-log">Memuat antrian…</div></div>
         </div>
-        <div id="auditPengajuanList"><div class="empty-log">Klik Muat antrian.</div></div>
+        <!-- DETAIL: wizard per temuan (halaman terpisah) -->
+        <div id="auditApprDetailPane" style="display:none;">
+          <div class="appr-detail-head">
+            <button type="button" id="btnBackApprList" class="btn-xs secondary">← Daftar</button>
+            <div class="appr-detail-meta" id="auditApprDetailMeta"></div>
+          </div>
+          <div id="auditApprDetailBody"></div>
+          <div class="appr-detail-nav" id="auditApprDetailNav"></div>
+        </div>
         <div class="msg" id="auditMsg"></div>
         <datalist id="auditTemuanList"></datalist>
         <datalist id="auditPetugasList"></datalist>
@@ -18648,20 +18891,15 @@ function renderKanitAuditWizard(){
     var st = window.__kanitAuditWiz || { total:0, step:0, nPel:0, nSup:0, order:"pel-first" };
     if(!st.order) st.order = "pel-first";
 
-    // Jangan auto-rebuild di sini (penyebab Next 2x & skip temuan)
     var pageEl = document.getElementById("tab-kanitauditreport");
     var stepNum = (typeof st.step === "number") ? st.step : 0;
-    var midFlow = (st.total > 0) && !(stepNum > st.total);
+    // mid-flow = sedang isi detail temuan (bukan form utama & bukan halaman selesai)
+    var midFlow = (st.total > 0) && stepNum >= 1 && stepNum <= st.total;
     if(pageEl){
       if(midFlow) pageEl.classList.add("audit-mid-flow");
       else pageEl.classList.remove("audit-mid-flow");
     }
-    if(submitBtn){
-      if(midFlow){ submitBtn.style.display = "none"; submitBtn.setAttribute("hidden","hidden"); }
-      else { submitBtn.style.display = ""; submitBtn.removeAttribute("hidden"); }
-    }
 
-    // Kartu tetap di container — hanya show/hide (jangan pindah DOM)
     function allCardsOrdered(){
       var pel = Array.prototype.slice.call(document.querySelectorAll("#kanitAuditItemsPel > .audit-item-card"));
       var sup = Array.prototype.slice.call(document.querySelectorAll("#kanitAuditItemsSup > .audit-item-card"));
@@ -18684,50 +18922,81 @@ function renderKanitAuditWizard(){
         else window.scrollTo(0,0);
       }catch(e){}
     }
+    function setSubmitVisible(yes, label){
+      if(!submitBtn) return;
+      if(yes){
+        submitBtn.style.display = "";
+        submitBtn.style.visibility = "visible";
+        submitBtn.style.height = "";
+        submitBtn.style.margin = "";
+        submitBtn.style.padding = "";
+        submitBtn.removeAttribute("hidden");
+        submitBtn.disabled = false;
+        if(label) submitBtn.textContent = label;
+      } else {
+        submitBtn.style.display = "none";
+        submitBtn.setAttribute("hidden","hidden");
+      }
+    }
 
     if(!shell) return;
     hideAllCards();
 
-    // 0 temuan → data utama + Kirim
-    if(st.total <= 0){
-      showMain(true);
-      shell.innerHTML = '<div class="audit-wiz-note">Tidak ada temuan detail. Silakan kirim report.</div>';
-      if(submitBtn){ submitBtn.style.display = ""; submitBtn.removeAttribute("hidden"); submitBtn.textContent = "Kirim Report"; }
-      if(pageEl) pageEl.classList.remove("audit-mid-flow");
-      return;
-    }
-
-    // step 0 → data utama + Next saja
+    // —— Form utama (step 0) ——
+    // 0 temuan → Kirim. Ada temuan → 1× Next langsung ke detail #1 (tanpa layar ekstra)
     if(stepNum <= 0){
       showMain(true);
-      shell.innerHTML =
-        '<div class="audit-wiz-intro">'+
-          '<div class="audit-step-pill">Data utama</div>'+
-          '<div class="audit-wiz-note">Ada <b>'+st.nPel+'</b> pelanggaran &amp; <b>'+st.nSup+'</b> support.</div>'+
-          '<button type="button" class="btn-xs" id="kanitAuditWizStart">Next</button>'+
-        '</div>';
-      if(submitBtn){ submitBtn.style.display = "none"; submitBtn.setAttribute("hidden","hidden"); }
-      var start = document.getElementById("kanitAuditWizStart");
-      if(start) start.onclick = function(){
-        if(typeof validateKanitAuditForm1_ === "function" && !validateKanitAuditForm1_(true)) return;
-        st.step = 1;
-        st.order = "pel-first";
-        window.__kanitAuditWiz = st;
-        renderKanitAuditWizard();
-      };
+      if(st.total <= 0){
+        shell.innerHTML =
+          '<div class="audit-wiz-intro">'+
+            '<div class="audit-wiz-note">Isi total temuan (boleh 0). Jika 0, langsung kirim report.</div>'+
+          '</div>';
+        setSubmitVisible(true, "Kirim Report");
+      } else {
+        shell.innerHTML =
+          '<div class="audit-wiz-intro">'+
+            '<div class="audit-wiz-note">Siap isi <b>'+st.nPel+'</b> pelanggaran &amp; <b>'+st.nSup+'</b> support.</div>'+
+            '<button type="button" class="btn-xs" id="kanitAuditWizStart">Next → Detail temuan</button>'+
+          '</div>';
+        setSubmitVisible(false);
+        var start = document.getElementById("kanitAuditWizStart");
+        if(start) start.onclick = function(){
+          if(typeof validateKanitAuditForm1_ === "function" && !validateKanitAuditForm1_(true)) return;
+          // Jangan rebuild di sini (bisa reset step → Next 2×). Kartu sudah ada dari change count.
+          var nPelNow = Math.max(0, Number((document.getElementById("kanitAuditNPel")||{}).value) || 0);
+          var nSupNow = Math.max(0, Number((document.getElementById("kanitAuditNSup")||{}).value) || 0);
+          var totalNow = nPelNow + nSupNow;
+          if(totalNow <= 0){
+            showMsg(document.getElementById("kanitAuditMsg"), "Isi jumlah temuan dulu, atau tekan Kirim jika 0.", "err");
+            return;
+          }
+          var cardsNow = document.querySelectorAll("#kanitAuditItemsPel .audit-item-card, #kanitAuditItemsSup .audit-item-card");
+          if(cardsNow.length < totalNow){
+            try{ rebuildKanitAuditItems(); }catch(eR){}
+          }
+          st.step = 1;
+          st.nPel = nPelNow;
+          st.nSup = nSupNow;
+          st.total = totalNow;
+          st.order = "pel-first";
+          window.__kanitAuditWiz = st;
+          renderKanitAuditWizard();
+        };
+      }
       return;
     }
 
-    // selesai semua detail
+    // —— Selesai semua detail → tombol Kirim jelas ——
     if(stepNum > st.total){
       showMain(false);
+      hideAllCards();
       shell.innerHTML =
-        '<div class="audit-wiz-page">'+
+        '<div class="audit-wiz-page" style="padding:16px;">'+
           '<div class="audit-step-pill">Selesai</div>'+
-          '<div class="audit-wiz-note">Semua detail temuan sudah diisi. Kirim report.</div>'+
+          '<div class="audit-wiz-note" style="margin:12px 0;">Semua detail temuan sudah diisi. Tekan <b>Kirim Report</b> di bawah.</div>'+
           '<button type="button" class="btn-xs secondary" id="kanitAuditWizPrev">← Kembali</button>'+
         '</div>';
-      if(submitBtn){ submitBtn.style.display = ""; submitBtn.removeAttribute("hidden"); submitBtn.textContent = "Kirim Report"; }
+      setSubmitVisible(true, "Kirim Report");
       if(pageEl) pageEl.classList.remove("audit-mid-flow");
       var prev0 = document.getElementById("kanitAuditWizPrev");
       if(prev0) prev0.onclick = function(){
@@ -18735,18 +19004,27 @@ function renderKanitAuditWizard(){
         window.__kanitAuditWiz = st;
         renderKanitAuditWizard();
       };
+      // Pastikan pesan terlihat
+      var msgEl = document.getElementById("kanitAuditMsg");
+      if(msgEl){ msgEl.style.display = ""; msgEl.style.visibility = "visible"; }
       pageTop();
       return;
     }
 
-    // step 1..total → satu kartu
+    // —— step 1..total → satu kartu detail ——
     showMain(false);
-    if(submitBtn){ submitBtn.style.display = "none"; submitBtn.setAttribute("hidden","hidden"); }
+    setSubmitVisible(false);
     var cards = allCardsOrdered();
     var card = cards[stepNum - 1];
     if(!card){
-      // fallback: skip ke selesai jika kartu hilang
-      shell.innerHTML = '<div class="audit-wiz-note">Kartu temuan tidak ditemukan ('+stepNum+'/'+st.total+').</div>';
+      // Kartu belum ter-render — rebuild lalu coba lagi 1×
+      try{ rebuildKanitAuditItems(); }catch(eB){}
+      cards = allCardsOrdered();
+      card = cards[stepNum - 1];
+    }
+    if(!card){
+      shell.innerHTML = '<div class="audit-wiz-note">Kartu temuan tidak ditemukan. Ubah jumlah temuan lalu coba lagi.</div>';
+      setSubmitVisible(false);
       return;
     }
     card.style.display = "block";
@@ -18762,7 +19040,7 @@ function renderKanitAuditWizard(){
               ? '<button type="button" class="btn-xs secondary" id="kanitAuditWizPrev">← Sebelumnya</button>'
               : '<button type="button" class="btn-xs secondary" id="kanitAuditWizBackMain">← Data utama</button>')+
             (isLast
-              ? '<button type="button" class="btn-xs" id="kanitAuditWizFinish">Kirim Report</button>'
+              ? '<button type="button" class="btn-xs" id="kanitAuditWizFinish">Selesai</button>'
               : '<button type="button" class="btn-xs" id="kanitAuditWizNext">Next</button>')+
           '</div>'+
         '</div>'+
@@ -18784,7 +19062,7 @@ function renderKanitAuditWizard(){
       if(petugas && !petugas.value){ alert("Petugas belum dipilih"); return false; }
       if(faktur && !(faktur.value||"").trim()){ alert("No Faktur belum diisi"); return false; }
       if(ket && !(ket.value||"").trim()){ alert("Keterangan belum diisi"); return false; }
-      if(file && file.files && file.files.length === 0){ alert("Upload surat pernyataan belum ada"); return false; }
+      if(file && !(file.files && file.files[0])){ alert("Upload surat pernyataan belum ada"); return false; }
       return true;
     }
 
@@ -18808,16 +19086,12 @@ function renderKanitAuditWizard(){
       window.__kanitAuditWiz = st;
       renderKanitAuditWizard();
     };
-    // Temuan terakhir: langsung kirim (bukan Next/Selesai ekstra)
+    // Temuan terakhir → halaman Selesai + tombol Kirim (jangan auto-submit diam-diam)
     if(finish) finish.onclick = function(){
       if(!validateCard_()) return;
       st.step = st.total + 1;
       window.__kanitAuditWiz = st;
-      if(pageEl) pageEl.classList.remove("audit-mid-flow");
-      var sb = document.getElementById("kanitAuditSubmitBtn");
-      if(sb){ sb.style.display = ""; sb.removeAttribute("hidden"); }
-      // trigger submit yang sama
-      if(sb) sb.click();
+      renderKanitAuditWizard();
     };
     pageTop();
   }
@@ -18872,43 +19146,64 @@ function renderKanitAuditWizard(){
   }
 
   var kanitAuditSubmitBtn = document.getElementById("kanitAuditSubmitBtn");
-  if(kanitAuditSubmitBtn){
+  if(kanitAuditSubmitBtn && !kanitAuditSubmitBtn._auditSubmitBound){
+    kanitAuditSubmitBtn._auditSubmitBound = true;
     kanitAuditSubmitBtn.addEventListener("click", function(){
       var msg = document.getElementById("kanitAuditMsg");
+      if(msg){
+        msg.style.display = "block";
+        msg.style.visibility = "visible";
+        msg.style.opacity = "1";
+        msg.style.position = "relative";
+        msg.style.zIndex = "20";
+      }
       clearMsg(msg);
       if(!session.cabang || !session.cabangPin){ showMsg(msg, "Sesi berakhir.", "err"); return; }
-      if(typeof validateKanitAuditForm1_ === "function" && !validateKanitAuditForm1_(true)) return;
-      var tanggal = document.getElementById("kanitAuditTanggal").value;
-      var periode = document.getElementById("kanitAuditInBulan").value;
-      var nPel = Math.max(0, Number(document.getElementById("kanitAuditNPel").value) || 0);
-      var nSup = Math.max(0, Number(document.getElementById("kanitAuditNSup").value) || 0);
+      // Form utama bisa hidden saat step selesai — validasi manual field
+      var tanggalEl = document.getElementById("kanitAuditTanggal");
+      var periodeEl = document.getElementById("kanitAuditInBulan");
+      var nPelEl = document.getElementById("kanitAuditNPel");
+      var nSupEl = document.getElementById("kanitAuditNSup");
       var summaryInput = document.getElementById("kanitAuditSummaryFile");
+      var tanggal = tanggalEl ? tanggalEl.value : "";
+      var periode = periodeEl ? periodeEl.value : "";
+      var nPel = Math.max(0, Number(nPelEl && nPelEl.value) || 0);
+      var nSup = Math.max(0, Number(nSupEl && nSupEl.value) || 0);
       if(!tanggal){ showMsg(msg, "Tanggal audit wajib.", "err"); return; }
-      if(!periode){ showMsg(msg, "Periode wajib.", "err"); return; }
-      var summaryFile = summaryInput && summaryInput.files && summaryInput.files[0] ? summaryInput.files[0] : null;
-      if(!summaryFile){
-        // coba cari ulang di form box
-        var alt = document.querySelector("#kanitAuditFormBox input[type=file]#kanitAuditSummaryFile, #kanitAuditFormMain input[type=file], #tab-kanitauditreport input#kanitAuditSummaryFile");
-        if(alt && alt.files && alt.files[0]) summaryFile = alt.files[0];
+      if(!periode){ showMsg(msg, "Periode wajib — pilih tanggal dulu.", "err"); return; }
+      if(nPelEl && String(nPelEl.value).trim() === ""){ showMsg(msg, "Total pelanggaran masih kosong.", "err"); return; }
+      if(nSupEl && String(nSupEl.value).trim() === ""){ showMsg(msg, "Total support masih kosong.", "err"); return; }
+      var summaryFileObj = summaryInput && summaryInput.files && summaryInput.files[0] ? summaryInput.files[0] : null;
+      if(!summaryFileObj){
+        var alt = document.querySelector("#kanitAuditFormBox input#kanitAuditSummaryFile, #tab-kanitauditreport input#kanitAuditSummaryFile");
+        if(alt && alt.files && alt.files[0]){ summaryFileObj = alt.files[0]; summaryInput = alt; }
       }
-      if(!summaryFile){ showMsg(msg, "Upload Audit Summary wajib.", "err"); return; }
+      if(!summaryFileObj){ showMsg(msg, "Upload Audit Summary wajib.", "err"); return; }
 
       var rawItems = readItemCards("#kanitAuditItemsPel").concat(readItemCards("#kanitAuditItemsSup"));
+      // Hanya validasi sejumlah nPel+nSup (hindari kartu sisa)
+      rawItems = rawItems.slice(0, nPel + nSup);
       for(var i=0;i<rawItems.length;i++){
         var it = rawItems[i];
         if(!it.jenisTemuan || !it.petugas || !it.noFaktur || !it.keterangan){
-          showMsg(msg, "Semua field detail temuan wajib diisi (#"+(i+1)+").", "err"); return;
+          showMsg(msg, "Detail temuan #"+(i+1)+" belum lengkap.", "err"); return;
         }
-        if(!it.fileInput.files || !it.fileInput.files[0]){
-          showMsg(msg, "Upload surat pernyataan wajib untuk setiap temuan (#"+(i+1)+").", "err"); return;
+        if(!it.fileInput || !it.fileInput.files || !it.fileInput.files[0]){
+          showMsg(msg, "Upload surat pernyataan wajib (#"+(i+1)+").", "err"); return;
         }
       }
 
       kanitAuditSubmitBtn.disabled = true;
-      showMsg(msg, "Mengunggah dokumen...", "ok");
+      kanitAuditSubmitBtn.textContent = "Mengirim...";
+      showMsg(msg, "Mengunggah dokumen, mohon tunggu…", "ok");
 
-      fileToPayload(summaryInput.files[0], function(summaryFile, err1){
-        if(err1 || !summaryFile){ kanitAuditSubmitBtn.disabled = false; showMsg(msg, err1||"Gagal baca Audit Summary.", "err"); return; }
+      fileToPayload(summaryFileObj, function(summaryPayload, err1){
+        if(err1 || !summaryPayload){
+          kanitAuditSubmitBtn.disabled = false;
+          kanitAuditSubmitBtn.textContent = "Kirim Report";
+          showMsg(msg, err1||"Gagal baca Audit Summary.", "err");
+          return;
+        }
         var items = [];
         var idx = 0;
         function nextItem(){
@@ -18921,31 +19216,47 @@ function renderKanitAuditWizard(){
               tahun: String(tanggal).slice(0,4),
               totalPelanggaran: nPel,
               totalSupport: nSup,
-              auditSummaryFile: summaryFile,
+              auditSummaryFile: summaryPayload,
               items: items
             };
             google.script.run
               .withSuccessHandler(function(r){
                 kanitAuditSubmitBtn.disabled = false;
-                if(!r || r.status !== "OK"){ showMsg(msg, (r&&r.reason)||"Gagal kirim.", "err"); return; }
-                showMsg(msg, "Pengajuan terkirim. Menunggu approve KC.", "ok");
-                document.getElementById("kanitAuditNPel").value = "";
-                document.getElementById("kanitAuditNSup").value = "";
-                document.getElementById("kanitAuditSummaryFile").value = "";
-                rebuildKanitAuditItems();
-                loadKanitAuditRiwayat();
-                setTimeout(function(){ try{ backKanitAuditDashboard(); loadAuditKanit(); }catch(e){} }, 900);
+                kanitAuditSubmitBtn.textContent = "Kirim Report";
+                if(!r || r.status !== "OK"){
+                  showMsg(msg, (r&&r.reason)||"Gagal kirim.", "err");
+                  return;
+                }
+                showMsg(msg, "✓ Pengajuan terkirim. Menunggu approve KC.", "ok");
+                try{ alert("Pengajuan audit berhasil dikirim.\nMenunggu approve Kepala Cabang."); }catch(eA){}
+                try{
+                  if(nPelEl) nPelEl.value = "";
+                  if(nSupEl) nSupEl.value = "";
+                  if(summaryInput) summaryInput.value = "";
+                }catch(eC){}
+                try{ rebuildKanitAuditItems(); }catch(eR){}
+                try{ loadKanitAuditRiwayat(); }catch(eL){}
+                setTimeout(function(){
+                  try{ backKanitAuditDashboard(); loadAuditKanit(); }catch(e){}
+                }, 1800);
               })
               .withFailureHandler(function(err){
                 kanitAuditSubmitBtn.disabled = false;
+                kanitAuditSubmitBtn.textContent = "Kirim Report";
                 showMsg(msg, String(err.message||err), "err");
+                try{ alert("Gagal kirim: "+String(err.message||err)); }catch(eA){}
               })
               .submitAuditPengajuan(payload);
             return;
           }
           var cur = rawItems[idx++];
           fileToPayload(cur.fileInput.files[0], function(f, err2){
-            if(err2 || !f){ kanitAuditSubmitBtn.disabled = false; showMsg(msg, err2||"Gagal baca file temuan.", "err"); return; }
+            if(err2 || !f){
+              kanitAuditSubmitBtn.disabled = false;
+              kanitAuditSubmitBtn.textContent = "Kirim Report";
+              showMsg(msg, err2||"Gagal baca file temuan.", "err");
+              return;
+            }
             items.push({
               tipe: cur.tipe,
               jenisTemuan: cur.jenisTemuan,
@@ -18964,15 +19275,221 @@ function renderKanitAuditWizard(){
 
   // ---- Admin approval queue ----
   var _auditApprLoading = false;
+  // State approval wizard KC
+  window.__auditAppr = window.__auditAppr || { list: [], current: null, step: 0, edits: {} };
+
+  function showAuditApprList_(){
+    var listPane = document.getElementById("auditApprListPane");
+    var detPane = document.getElementById("auditApprDetailPane");
+    if(listPane) listPane.style.display = "";
+    if(detPane) detPane.style.display = "none";
+    window.__auditAppr.current = null;
+    window.__auditAppr.step = 0;
+  }
+
+  function openAuditApprDetail_(p){
+    if(!p) return;
+    window.__auditAppr.current = p;
+    window.__auditAppr.step = 0;
+    window.__auditAppr.edits = {};
+    (p.details || []).forEach(function(d){
+      window.__auditAppr.edits[d.id] = {
+        id: d.id,
+        jenisTemuan: d.jenisTemuan || "",
+        petugas: d.petugas || "",
+        noFaktur: d.noFaktur || "",
+        keterangan: d.keterangan || ""
+      };
+    });
+    var listPane = document.getElementById("auditApprListPane");
+    var detPane = document.getElementById("auditApprDetailPane");
+    if(listPane) listPane.style.display = "none";
+    if(detPane) detPane.style.display = "";
+    renderAuditApprDetailPage_();
+  }
+
+  function saveCurrentApprEdit_(){
+    var st = window.__auditAppr;
+    if(!st.current) return;
+    var details = st.current.details || [];
+    if(st.step < 1 || st.step > details.length) return;
+    var d = details[st.step - 1];
+    if(!d) return;
+    var body = document.getElementById("auditApprDetailBody");
+    if(!body) return;
+    st.edits[d.id] = {
+      id: d.id,
+      jenisTemuan: (body.querySelector(".ed-jenis") && body.querySelector(".ed-jenis").value) || "",
+      petugas: (body.querySelector(".ed-petugas") && body.querySelector(".ed-petugas").value) || "",
+      noFaktur: (body.querySelector(".ed-faktur") && body.querySelector(".ed-faktur").value) || "",
+      keterangan: (body.querySelector(".ed-ket") && body.querySelector(".ed-ket").value) || ""
+    };
+  }
+
+  function renderAuditApprDetailPage_(){
+    var st = window.__auditAppr;
+    var p = st.current;
+    if(!p) return;
+    var details = p.details || [];
+    var total = details.length;
+    var step = st.step; // 0 = ringkasan, 1..total = detail, total+1 = keputusan
+    var meta = document.getElementById("auditApprDetailMeta");
+    var body = document.getElementById("auditApprDetailBody");
+    var nav = document.getElementById("auditApprDetailNav");
+    if(meta){
+      meta.innerHTML =
+        '<div class="appr-meta-cab">'+escHtml(p.cabang)+'</div>'+
+        '<div class="appr-meta-sub">'+escHtml(p.periode||"")+' '+escHtml(p.tahun||"")+' · '+escHtml(p.tw||"")+' · '+escHtml(p.tanggalAudit||"")+'</div>';
+    }
+    if(!body || !nav) return;
+
+    // STEP 0 — ringkasan pengajuan
+    if(step <= 0){
+      body.innerHTML =
+        '<div class="appr-summary-card">'+
+          '<div class="appr-sum-row"><span>Status</span><span class="status-badge '+escHtml((p.status||"").toLowerCase())+'">'+escHtml(p.status||"")+'</span></div>'+
+          '<div class="appr-sum-row"><span>Pelanggaran</span><b class="appr-num pel">'+Number(p.totalPelanggaran||0)+'</b></div>'+
+          '<div class="appr-sum-row"><span>Support</span><b class="appr-num sup">'+Number(p.totalSupport||0)+'</b></div>'+
+          '<div class="appr-sum-row"><span>ID</span><span class="appr-id">'+escHtml(p.id||"")+'</span></div>'+
+          (p.auditSummaryUrl
+            ? '<a class="appr-summary-link" href="'+escHtml(p.auditSummaryUrl)+'" target="_blank" rel="noopener">📄 Buka Audit Summary</a>'
+            : '<div class="empty-log">Audit Summary tidak tersedia</div>')+
+        '</div>';
+      nav.innerHTML =
+        (total > 0
+          ? '<button type="button" class="btn-xs" id="apprNextBtn">Periksa detail →</button>'
+          : (p.status === "Menunggu"
+              ? '<button type="button" class="btn-xs" id="apprDecideBtn">Ke keputusan →</button>'
+              : ''))+
+        '';
+      var n1 = document.getElementById("apprNextBtn");
+      if(n1) n1.onclick = function(){ st.step = 1; renderAuditApprDetailPage_(); };
+      var d1 = document.getElementById("apprDecideBtn");
+      if(d1) d1.onclick = function(){ st.step = total + 1; renderAuditApprDetailPage_(); };
+      return;
+    }
+
+    // STEP total+1 — keputusan
+    if(step > total){
+      body.innerHTML =
+        '<div class="appr-summary-card">'+
+          '<div class="appr-step-pill">Keputusan</div>'+
+          '<p class="appr-note">Sudah memeriksa <b>'+total+'</b> detail temuan.</p>'+
+          (p.status === "Menunggu"
+            ? '<div class="field"><label>Catatan KC (opsional)</label><input type="text" id="apprCatatan" placeholder="Catatan approve / tolak"></div>'
+            : '<div class="empty-log">Status: '+escHtml(p.status)+'</div>')+
+        '</div>';
+      nav.innerHTML =
+        '<button type="button" class="btn-xs secondary" id="apprPrevBtn">← Kembali</button>'+
+        (p.status === "Menunggu"
+          ? '<button type="button" class="btn-xs secondary" id="apprRejectBtn">Tolak</button>'+
+            '<button type="button" class="btn-xs" id="apprApproveBtn">Approve</button>'
+          : '');
+      var pv = document.getElementById("apprPrevBtn");
+      if(pv) pv.onclick = function(){ st.step = total > 0 ? total : 0; renderAuditApprDetailPage_(); };
+      var ap = document.getElementById("apprApproveBtn");
+      if(ap) ap.onclick = function(){
+        var edits = Object.keys(st.edits).map(function(k){ return st.edits[k]; });
+        var catatan = (document.getElementById("apprCatatan") && document.getElementById("apprCatatan").value) || "";
+        ap.disabled = true;
+        showMsg(document.getElementById("auditMsg"), "Menyimpan approval…", "ok");
+        google.script.run
+          .withSuccessHandler(function(r){
+            ap.disabled = false;
+            if(!r || r.status !== "OK"){ showMsg(document.getElementById("auditMsg"), (r&&r.reason)||"Gagal", "err"); return; }
+            showMsg(document.getElementById("auditMsg"), "Disetujui. Data masuk dashboard.", "ok");
+            try{ alert("Pengajuan disetujui."); }catch(e){}
+            showAuditApprList_();
+            loadAuditPengajuanAdmin(true);
+            try{ loadAuditAdmin(); }catch(e2){}
+          })
+          .withFailureHandler(function(err){
+            ap.disabled = false;
+            showMsg(document.getElementById("auditMsg"), String(err.message||err), "err");
+          })
+          .approveAuditPengajuan(session.adminPin, p.id, edits, catatan);
+      };
+      var rj = document.getElementById("apprRejectBtn");
+      if(rj) rj.onclick = function(){
+        var catatan = (document.getElementById("apprCatatan") && document.getElementById("apprCatatan").value) || "";
+        if(!catatan){ alert("Isi catatan alasan penolakan."); return; }
+        rj.disabled = true;
+        google.script.run
+          .withSuccessHandler(function(r){
+            rj.disabled = false;
+            if(!r || r.status !== "OK"){ showMsg(document.getElementById("auditMsg"), (r&&r.reason)||"Gagal", "err"); return; }
+            showMsg(document.getElementById("auditMsg"), "Ditolak.", "ok");
+            showAuditApprList_();
+            loadAuditPengajuanAdmin(true);
+          })
+          .withFailureHandler(function(err){
+            rj.disabled = false;
+            showMsg(document.getElementById("auditMsg"), String(err.message||err), "err");
+          })
+          .rejectAuditPengajuan(session.adminPin, p.id, catatan);
+      };
+      return;
+    }
+
+    // STEP 1..total — satu temuan per halaman
+    var d = details[step - 1];
+    var ed = st.edits[d.id] || d;
+    var canEdit = p.status === "Menunggu";
+    body.innerHTML =
+      '<div class="appr-detail-card">'+
+        '<div class="appr-step-pill">'+escHtml(d.tipe||"Temuan")+' · '+step+' / '+total+'</div>'+
+        '<div class="field"><label>Jenis temuan</label>'+
+          (canEdit
+            ? '<input class="ed-jenis" value="'+escAttr(ed.jenisTemuan||"")+'">'
+            : '<div class="appr-readonly">'+escHtml(ed.jenisTemuan||"—")+'</div>')+
+        '</div>'+
+        '<div class="field"><label>Petugas</label>'+
+          (canEdit
+            ? '<input class="ed-petugas" value="'+escAttr(ed.petugas||"")+'">'
+            : '<div class="appr-readonly">'+escHtml(ed.petugas||"—")+'</div>')+
+        '</div>'+
+        '<div class="field"><label>No Faktur</label>'+
+          (canEdit
+            ? '<input class="ed-faktur" value="'+escAttr(ed.noFaktur||"")+'">'
+            : '<div class="appr-readonly">'+escHtml(ed.noFaktur||"—")+'</div>')+
+        '</div>'+
+        '<div class="field"><label>Keterangan</label>'+
+          (canEdit
+            ? '<input class="ed-ket" value="'+escAttr(ed.keterangan||"")+'">'
+            : '<div class="appr-readonly">'+escHtml(ed.keterangan||"—")+'</div>')+
+        '</div>'+
+        (d.fileUrl
+          ? '<a class="appr-summary-link" href="'+escHtml(d.fileUrl)+'" target="_blank" rel="noopener">📄 Lihat surat pernyataan</a>'
+          : '<div class="empty-log">Surat tidak tersedia</div>')+
+      '</div>';
+    nav.innerHTML =
+      '<button type="button" class="btn-xs secondary" id="apprPrevBtn">'+(step <= 1 ? '← Ringkasan' : '← Sebelumnya')+'</button>'+
+      '<button type="button" class="btn-xs" id="apprNextBtn">'+(step >= total ? 'Ke keputusan →' : 'Next →')+'</button>';
+    var prevB = document.getElementById("apprPrevBtn");
+    if(prevB) prevB.onclick = function(){
+      saveCurrentApprEdit_();
+      st.step = step <= 1 ? 0 : step - 1;
+      renderAuditApprDetailPage_();
+    };
+    var nextB = document.getElementById("apprNextBtn");
+    if(nextB) nextB.onclick = function(){
+      saveCurrentApprEdit_();
+      st.step = step >= total ? total + 1 : step + 1;
+      renderAuditApprDetailPage_();
+    };
+  }
+
   function loadAuditPengajuanAdmin(force){
     var msg = document.getElementById("auditMsg");
     if(!adminSessionGuard(msg || document.createElement("div"))) return;
     if(_auditApprLoading && !force) return;
-    var st = document.getElementById("auditPengajuanStatus").value;
+    var stEl = document.getElementById("auditPengajuanStatus");
+    var st = stEl ? stEl.value : "Menunggu";
     var wrap = document.getElementById("auditPengajuanList");
     var btn = document.getElementById("auditPengajuanLoadBtn");
+    showAuditApprList_();
     if(typeof showSkeleton === "function") showSkeleton(wrap, 3);
-    else wrap.innerHTML = '<div class="empty-log">Memuat antrian...</div>';
+    else if(wrap) wrap.innerHTML = '<div class="empty-log">Memuat antrian...</div>';
     if(btn) btn.disabled = true;
     _auditApprLoading = true;
     google.script.run
@@ -18980,90 +19497,57 @@ function renderKanitAuditWizard(){
         _auditApprLoading = false;
         if(btn) btn.disabled = false;
         var wrap = document.getElementById("auditPengajuanList");
+        if(!wrap) return;
         if(!r || r.status !== "OK"){ wrap.innerHTML = '<div class="empty-log">'+escHtml((r&&r.reason)||"Gagal")+'</div>'; return; }
         var list = r.list || [];
+        window.__auditAppr.list = list;
         if(!list.length){ wrap.innerHTML = '<div class="empty-log">Tidak ada pengajuan.</div>'; return; }
         wrap.innerHTML = list.map(function(p){
           var stc = (p.status||"").toLowerCase();
-          var detailsHtml = (p.details||[]).map(function(d){
-            return '<div class="audit-item-card" data-id="'+d.id+'">'+
-              '<h5>'+d.tipe+'</h5>'+
-              '<div class="field"><label>Jenis</label><input class="ed-jenis" value="'+escAttr(d.jenisTemuan||'')+'"></div>'+
-              '<div class="field"><label>Petugas</label><input class="ed-petugas" value="'+escAttr(d.petugas||'')+'"></div>'+
-              '<div class="field"><label>No Faktur</label><input class="ed-faktur" value="'+escAttr(d.noFaktur||"").replace(/"/g,'&quot;')+'"></div>'+
-              '<div class="field"><label>Keterangan</label><input class="ed-ket" value="'+escAttr(d.keterangan||'')+'"></div>'+
-              (d.fileUrl?'<a href="'+d.fileUrl+'" target="_blank" rel="noopener">Lihat surat</a>':'')+
-            '</div>';
-          }).join("") || '<div class="empty-log">Tidak ada detail temuan (0/0).</div>';
-          var actions = (p.status === "Menunggu")
-            ? '<div class="field"><label>Catatan KC</label><input class="ed-catatan" placeholder="Opsional"></div>'+
-              '<button type="button" class="btn-xs btn-approve-audit" data-id="'+p.id+'">Approve</button> '+
-              '<button type="button" class="btn-xs secondary btn-reject-audit" data-id="'+p.id+'">Tolak</button>'
-            : '';
-          return '<div class="audit-pengajuan-card" data-id="'+p.id+'">'+
-            '<div><b>'+p.cabang+'</b> · '+p.id+' <span class="status-badge '+stc+'">'+p.status+'</span></div>'+
-            '<div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Audit '+p.tanggalAudit+' · Periode '+p.periode+' '+p.tahun+' · '+p.tw+
-            '<br>Pelanggaran '+p.totalPelanggaran+' · Support '+p.totalSupport+'</div>'+
-            (p.auditSummaryUrl?'<div style="margin-top:4px;"><a href="'+p.auditSummaryUrl+'" target="_blank" rel="noopener">Audit Summary</a></div>':'')+
-            detailsHtml + actions +
+          var nPel = Number(p.totalPelanggaran||0);
+          var nSup = Number(p.totalSupport||0);
+          return '<div class="appr-list-card" data-id="'+escHtml(p.id)+'">'+
+            '<div class="appr-list-top">'+
+              '<div class="appr-list-cab">'+escHtml(p.cabang)+'</div>'+
+              '<span class="status-badge '+stc+'">'+escHtml(p.status||"")+'</span>'+
+            '</div>'+
+            '<div class="appr-list-sub">'+escHtml(p.tanggalAudit||"")+' · '+escHtml(p.periode||"")+' '+escHtml(p.tahun||"")+' · '+escHtml(p.tw||"")+'</div>'+
+            '<div class="appr-list-counts">'+
+              '<span class="appr-chip pel"><b>'+nPel+'</b> Pelanggaran</span>'+
+              '<span class="appr-chip sup"><b>'+nSup+'</b> Support</span>'+
+            '</div>'+
+            '<div class="appr-list-actions">'+
+              (p.auditSummaryUrl ? '<a class="btn-xs secondary" href="'+escHtml(p.auditSummaryUrl)+'" target="_blank" rel="noopener">Audit Summary</a>' : '')+
+              '<button type="button" class="btn-xs btn-appr-open" data-id="'+escHtml(p.id)+'">Periksa</button>'+
+            '</div>'+
           '</div>';
         }).join("");
 
-        wrap.querySelectorAll(".btn-approve-audit").forEach(function(btn){
-          btn.addEventListener("click", function(){
-            var id = btn.getAttribute("data-id");
-            var card = wrap.querySelector('.audit-pengajuan-card[data-id="'+id+'"]');
-            var edits = [];
-            card.querySelectorAll(".audit-item-card[data-id]").forEach(function(c){
-              edits.push({
-                id: c.getAttribute("data-id"),
-                jenisTemuan: c.querySelector(".ed-jenis").value,
-                petugas: c.querySelector(".ed-petugas").value,
-                noFaktur: c.querySelector(".ed-faktur").value,
-                keterangan: c.querySelector(".ed-ket").value
-              });
-            });
-            var catatan = (card.querySelector(".ed-catatan") && card.querySelector(".ed-catatan").value) || "";
-            btn.disabled = true;
-            google.script.run
-              .withSuccessHandler(function(r){
-                btn.disabled = false;
-                if(!r || r.status !== "OK"){ showMsg(document.getElementById("auditMsg"), (r&&r.reason)||"Gagal", "err"); return; }
-                showMsg(document.getElementById("auditMsg"), "Disetujui. Data masuk dashboard.", "ok");
-                loadAuditPengajuanAdmin();
-                loadAuditAdmin();
-              })
-              .withFailureHandler(function(err){ btn.disabled = false; showMsg(document.getElementById("auditMsg"), String(err.message||err), "err"); })
-              .approveAuditPengajuan(session.adminPin, id, edits, catatan);
-          });
-        });
-        wrap.querySelectorAll(".btn-reject-audit").forEach(function(btn){
-          btn.addEventListener("click", function(){
-            var id = btn.getAttribute("data-id");
-            var card = wrap.querySelector('.audit-pengajuan-card[data-id="'+id+'"]');
-            var catatan = (card.querySelector(".ed-catatan") && card.querySelector(".ed-catatan").value) || "";
-            btn.disabled = true;
-            google.script.run
-              .withSuccessHandler(function(r){
-                btn.disabled = false;
-                if(!r || r.status !== "OK"){ showMsg(document.getElementById("auditMsg"), (r&&r.reason)||"Gagal", "err"); return; }
-                showMsg(document.getElementById("auditMsg"), "Ditolak.", "ok");
-                loadAuditPengajuanAdmin();
-              })
-              .withFailureHandler(function(err){
-                btn.dataset.busy = "0";
-                btn.disabled = false;
-                showMsg(document.getElementById("auditMsg"), String(err.message||err), "err");
-              })
-              .rejectAuditPengajuan(session.adminPin, id, catatan);
+        wrap.querySelectorAll(".btn-appr-open").forEach(function(b){
+          b.addEventListener("click", function(){
+            var id = b.getAttribute("data-id");
+            var found = (window.__auditAppr.list || []).filter(function(x){ return String(x.id) === String(id); })[0];
+            if(found) openAuditApprDetail_(found);
           });
         });
       })
       .withFailureHandler(function(err){
-        document.getElementById("auditPengajuanList").innerHTML = '<div class="empty-log">'+String(err.message||err)+'</div>';
+        _auditApprLoading = false;
+        if(btn) btn.disabled = false;
+        var w = document.getElementById("auditPengajuanList");
+        if(w) w.innerHTML = '<div class="empty-log">'+escHtml(String(err.message||err))+'</div>';
       })
       .getAuditPengajuanAdmin(session.adminPin, st);
   }
+
+  (function wireApprBackList(){
+    var b = document.getElementById("btnBackApprList");
+    if(b && !b._wired){
+      b._wired = true;
+      b.addEventListener("click", function(){ showAuditApprList_(); });
+    }
+  })();
+
   var auditPengajuanLoadBtn = document.getElementById("auditPengajuanLoadBtn");
   if(auditPengajuanLoadBtn) auditPengajuanLoadBtn.addEventListener("click", function(){ loadAuditPengajuanAdmin(true); });
   var _audSt = document.getElementById("auditPengajuanStatus");
@@ -20526,11 +21010,21 @@ function loadAdminBertugas(){
     function showAuditApproval(on){
       var main = document.getElementById("auditMainView");
       var appr = document.getElementById("auditApprovalView");
+      var imp = document.getElementById("auditImportAcpView");
       if(main) main.style.display = on ? "none" : "";
       if(appr) appr.style.display = on ? "" : "none";
+      if(imp) imp.style.display = "none";
       if(on){
         try{ loadAuditPengajuanAdmin(false); }catch(e){ try{ document.getElementById("auditPengajuanLoadBtn").click(); }catch(e2){} }
       }
+    }
+    function showAuditImportAcp(on){
+      var main = document.getElementById("auditMainView");
+      var appr = document.getElementById("auditApprovalView");
+      var imp = document.getElementById("auditImportAcpView");
+      if(main) main.style.display = on ? "none" : "";
+      if(appr) appr.style.display = "none";
+      if(imp) imp.style.display = on ? "" : "none";
     }
     var b1 = document.getElementById("btnOpenApprovalCuti");
     var b2 = document.getElementById("btnBackApprovalCuti");
@@ -20540,6 +21034,54 @@ function loadAdminBertugas(){
     var b4 = document.getElementById("btnBackApprovalAudit");
     if(b3) b3.addEventListener("click", function(){ showAuditApproval(true); });
     if(b4) b4.addEventListener("click", function(){ showAuditApproval(false); });
+    var b5 = document.getElementById("btnOpenImportAcp");
+    var b6 = document.getElementById("btnBackImportAcp");
+    if(b5) b5.addEventListener("click", function(){ showAuditImportAcp(true); });
+    if(b6) b6.addEventListener("click", function(){ showAuditImportAcp(false); });
+    var acpBtn = document.getElementById("acpImportBtn");
+    if(acpBtn && !acpBtn._wired){
+      acpBtn._wired = true;
+      acpBtn.addEventListener("click", function(){
+        var msg = document.getElementById("acpImportMsg");
+        var text = (document.getElementById("acpImportText") || {}).value || "";
+        if(!String(text).trim()){ showMsg(msg, "Paste data Excel dulu.", "err"); return; }
+        if(!session.adminPin){ showMsg(msg, "Sesi KC berakhir.", "err"); return; }
+        acpBtn.disabled = true;
+        acpBtn.textContent = "Memproses…";
+        showMsg(msg, "Mengimpor ACP…", "ok");
+        google.script.run
+          .withSuccessHandler(function(r){
+            acpBtn.disabled = false;
+            acpBtn.textContent = "Proses Import";
+            if(!r || r.status !== "OK"){
+              showMsg(msg, (r && r.reason) || "Gagal import.", "err");
+              return;
+            }
+            var by = r.byCabang || {};
+            var lines = Object.keys(by).sort().map(function(c){
+              return c + ": " + by[c].pel + " Pelanggaran, " + by[c].sup + " Support";
+            });
+            var prev = document.getElementById("acpImportPreview");
+            if(prev){
+              prev.innerHTML =
+                '<div class="appr-summary-card">'+
+                  '<div class="appr-step-pill">Hasil import</div>'+
+                  '<p class="appr-note"><b>'+r.imported+'</b> temuan · Periode: '+(r.periods||[]).join(", ")+'</p>'+
+                  (lines.length ? '<ul style="margin:0;padding-left:18px;color:#E2E8F0;font-size:13px;">'+lines.map(function(l){ return '<li>'+l+'</li>'; }).join("")+'</ul>' : '')+
+                  '<p class="appr-note" style="margin-top:8px;color:#86EFAC;">Dashboard langsung ter-update. Data bulan lain tidak dihapus.</p>'+
+                '</div>';
+            }
+            showMsg(msg, r.message || "Import berhasil.", "ok");
+            try{ loadAuditAdmin(); }catch(e){}
+          })
+          .withFailureHandler(function(err){
+            acpBtn.disabled = false;
+            acpBtn.textContent = "Proses Import";
+            showMsg(msg, String(err.message || err), "err");
+          })
+          .importAuditAcpText(session.adminPin, text);
+      });
+    }
   })();
 
 </script>
