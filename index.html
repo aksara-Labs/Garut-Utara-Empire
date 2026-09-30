@@ -12256,8 +12256,7 @@ button.admin-topbar-avatar:hover,
         <div class="field"><label>Petugas</label><select id="auditPetugas"><option value="SEMUA">Semua</option></select></div>
         <button type="button" id="auditLoadBtn" class="btn-xs">Terapkan</button>
         <button type="button" id="auditRefreshBtn" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
-        <button type="button" id="btnOpenImportAcp" class="btn-xs secondary" style="margin-left:auto;">Import ACP</button>
-        <button type="button" id="btnOpenApprovalAudit" class="btn-xs">Approval Audit</button>
+        <button type="button" id="btnOpenApprovalAudit" class="btn-xs" style="margin-left:auto;">Approval Audit</button>
       </div>
       <div id="auditKpi" class="audit-kpi-grid"></div>
       <div class="audit-charts audit-charts-2" style="margin-bottom:12px;">
@@ -12272,27 +12271,6 @@ button.admin-topbar-avatar:hover,
       <div class="rejected-top3-title">Detail temuan</div>
       <div class="audit-table-wrap"><table class="audit-table app-table"><thead><tr><th>Cabang</th><th>Bulan</th><th>TW</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="auditDetailBody"></tbody></table></div>
       </div><!-- /auditMainView -->
-
-      <!-- Import ACP (KC) -->
-      <div id="auditImportAcpView" style="display:none;">
-        <div class="approval-toolbar">
-          <button type="button" id="btnBackImportAcp" class="btn-xs secondary">← Kembali</button>
-          <span class="appr-title">Import ACP</span>
-        </div>
-        <div class="appr-summary-card" style="margin-bottom:12px;">
-          <p class="appr-note" style="margin:0 0 8px;">
-            Paste data dari Excel ACP (termasuk baris header). 
-            <b>Hanya periode yang ada di data yang diganti</b> — bulan lain tidak hilang.
-          </p>
-          <textarea id="acpImportText" rows="10" placeholder="Paste di sini (Ctrl+V)… header + baris data ACP" style="width:100%;min-height:180px;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#F8FAFC;padding:10px;font-size:12px;font-family:ui-monospace,monospace;"></textarea>
-          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-            <button type="button" id="acpImportBtn" class="btn-xs">Proses Import</button>
-            <span class="muted" style="font-size:12px;color:#94A3B8;">Upload file .xlsx bisa menyusul — paste sudah cukup.</span>
-          </div>
-          <div class="msg" id="acpImportMsg"></div>
-          <div id="acpImportPreview" style="margin-top:10px;"></div>
-        </div>
-      </div>
 
       <div id="auditApprovalView" style="display:none;">
         <div class="approval-toolbar">
@@ -12338,6 +12316,11 @@ button.admin-topbar-avatar:hover,
             <div class="admin-menu-card-body"><div class="admin-menu-card-title">Rejected</div><div class="admin-menu-card-desc">Paste data rejected dari Excel</div></div>
             <span class="admin-menu-arrow">&rarr;</span>
           </button>
+          <button type="button" class="admin-menu-card" id="updateDataAcpCard">
+            <div class="admin-menu-icon accent"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6M9 11h6"/></svg></div>
+            <div class="admin-menu-card-body"><div class="admin-menu-card-title">Audit ACP</div><div class="admin-menu-card-desc">Paste data temuan ACP → dashboard audit</div></div>
+            <span class="admin-menu-arrow">&rarr;</span>
+          </button>
         </div>
       </div>
 
@@ -12366,6 +12349,19 @@ button.admin-topbar-avatar:hover,
           <div class="import-history-title" style="margin-top:10px;">Riwayat update rejected</div>
           <div id="rejectedImportHistory"><div class="empty-log">Belum ada riwayat.</div></div>
         </div>
+      </div>
+
+      <div id="updateDataAcpPanel" class="hub-panel-full" style="display:none;">
+        <button type="button" class="hub-back-btn" data-hub="updateData">&larr; Kembali</button>
+        <p style="font-size:13px;color:#CBD5E1;margin:0 0 10px;line-height:1.45;">
+          Paste data dari Excel ACP (termasuk <b>header</b>). 
+          Hanya periode yang ada di data yang diganti — <b>bulan lain tidak hilang</b>.
+          Dashboard Audit langsung ter-update.
+        </p>
+        <textarea id="acpImportText" rows="10" placeholder="Paste di sini (Ctrl+V)… header + baris data ACP"></textarea>
+        <button type="button" id="acpImportBtn" class="btn-xs" style="margin-top:10px;width:auto;">Proses Import ACP</button>
+        <div class="msg" id="acpImportMsg"></div>
+        <div id="acpImportPreview" style="margin-top:12px;"></div>
       </div>
     </div>
 
@@ -13907,8 +13903,12 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     document.getElementById("kpiBisnisWrap").innerHTML = "";
     document.getElementById("updateDataOmsetPanel").style.display = "none";
     document.getElementById("updateDataRejectedPanel").style.display = "none";
+    var acpP = document.getElementById("updateDataAcpPanel");
+    if(acpP) acpP.style.display = "none";
     document.getElementById("updateDataOmsetCard").classList.remove("active");
     document.getElementById("updateDataRejectedCard").classList.remove("active");
+    var acpC = document.getElementById("updateDataAcpCard");
+    if(acpC) acpC.classList.remove("active");
     ["pemantauanStatusPanel","pemantauanRiwayatPanel","pemantauanSelisihPanel","pemantauanGrafikPanel"].forEach(function(id){ document.getElementById(id).style.display = "none"; });
     ["pemantauanStatusCard","pemantauanRiwayatCard","pemantauanSelisihCard","pemantauanGrafikCard"].forEach(function(id){ document.getElementById(id).classList.remove("active"); });
     ["cabangDaftarPanel","cabangTambahPanel","cabangKaryawanPanel","cabangTtdPanel"].forEach(function(id){ var el=document.getElementById(id); if(el){ el.style.display="none"; el.classList.remove("hub-panel-open"); } });
@@ -16585,7 +16585,8 @@ function applyRejectedAlasanFilter_(which){
 
   var updateDataHubNav = setupHubNav("updateDataHub", [
     ["updateDataOmsetCard", "updateDataOmsetPanel"],
-    ["updateDataRejectedCard", "updateDataRejectedPanel"]
+    ["updateDataRejectedCard", "updateDataRejectedPanel"],
+    ["updateDataAcpCard", "updateDataAcpPanel"]
   ]);
   // Setiap buka panel omset/rejected → muat riwayat update
   ["updateDataOmsetCard", "updateDataRejectedCard"].forEach(function(id){
@@ -21010,21 +21011,11 @@ function loadAdminBertugas(){
     function showAuditApproval(on){
       var main = document.getElementById("auditMainView");
       var appr = document.getElementById("auditApprovalView");
-      var imp = document.getElementById("auditImportAcpView");
       if(main) main.style.display = on ? "none" : "";
       if(appr) appr.style.display = on ? "" : "none";
-      if(imp) imp.style.display = "none";
       if(on){
         try{ loadAuditPengajuanAdmin(false); }catch(e){ try{ document.getElementById("auditPengajuanLoadBtn").click(); }catch(e2){} }
       }
-    }
-    function showAuditImportAcp(on){
-      var main = document.getElementById("auditMainView");
-      var appr = document.getElementById("auditApprovalView");
-      var imp = document.getElementById("auditImportAcpView");
-      if(main) main.style.display = on ? "none" : "";
-      if(appr) appr.style.display = "none";
-      if(imp) imp.style.display = on ? "" : "none";
     }
     var b1 = document.getElementById("btnOpenApprovalCuti");
     var b2 = document.getElementById("btnBackApprovalCuti");
@@ -21034,10 +21025,8 @@ function loadAdminBertugas(){
     var b4 = document.getElementById("btnBackApprovalAudit");
     if(b3) b3.addEventListener("click", function(){ showAuditApproval(true); });
     if(b4) b4.addEventListener("click", function(){ showAuditApproval(false); });
-    var b5 = document.getElementById("btnOpenImportAcp");
-    var b6 = document.getElementById("btnBackImportAcp");
-    if(b5) b5.addEventListener("click", function(){ showAuditImportAcp(true); });
-    if(b6) b6.addEventListener("click", function(){ showAuditImportAcp(false); });
+
+    // Import ACP di menu Update Data
     var acpBtn = document.getElementById("acpImportBtn");
     if(acpBtn && !acpBtn._wired){
       acpBtn._wired = true;
@@ -21052,7 +21041,7 @@ function loadAdminBertugas(){
         google.script.run
           .withSuccessHandler(function(r){
             acpBtn.disabled = false;
-            acpBtn.textContent = "Proses Import";
+            acpBtn.textContent = "Proses Import ACP";
             if(!r || r.status !== "OK"){
               showMsg(msg, (r && r.reason) || "Gagal import.", "err");
               return;
@@ -21067,8 +21056,8 @@ function loadAdminBertugas(){
                 '<div class="appr-summary-card">'+
                   '<div class="appr-step-pill">Hasil import</div>'+
                   '<p class="appr-note"><b>'+r.imported+'</b> temuan · Periode: '+(r.periods||[]).join(", ")+'</p>'+
-                  (lines.length ? '<ul style="margin:0;padding-left:18px;color:#E2E8F0;font-size:13px;">'+lines.map(function(l){ return '<li>'+l+'</li>'; }).join("")+'</ul>' : '')+
-                  '<p class="appr-note" style="margin-top:8px;color:#86EFAC;">Dashboard langsung ter-update. Data bulan lain tidak dihapus.</p>'+
+                  (lines.length ? '<ul style="margin:0;padding-left:18px;color:#E2E8F0;font-size:13px;">'+lines.map(function(l){ return '<li>'+escHtml(l)+'</li>'; }).join("")+'</ul>' : '')+
+                  '<p class="appr-note" style="margin-top:8px;color:#86EFAC;">Dashboard Audit langsung ter-update. Data bulan lain tidak dihapus.</p>'+
                 '</div>';
             }
             showMsg(msg, r.message || "Import berhasil.", "ok");
@@ -21076,7 +21065,7 @@ function loadAdminBertugas(){
           })
           .withFailureHandler(function(err){
             acpBtn.disabled = false;
-            acpBtn.textContent = "Proses Import";
+            acpBtn.textContent = "Proses Import ACP";
             showMsg(msg, String(err.message || err), "err");
           })
           .importAuditAcpText(session.adminPin, text);
