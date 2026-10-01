@@ -7852,6 +7852,122 @@ h1, h2, h3, h4, .admin-topbar-title, .auth-brand h1, .auth-card-head h1 {
   #tab-audit .audit-table{ min-width:640px; }
 }
 
+
+
+/* ===== Upload Surat ACP — Fase 1+2 ===== */
+#tab-kanitauditreport .audit-input-box{
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 16px 18px 20px !important;
+  border-radius: 16px !important;
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25) !important;
+}
+#tab-kanitauditreport .audit-report-head{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  margin-bottom: 14px !important;
+}
+#tab-kanitauditreport .kanit-acp-kpi{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px;
+  margin: 12px 0 14px;
+}
+#tab-kanitauditreport .kanit-acp-kpi .k{
+  padding:10px 12px; border-radius:12px;
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  text-align:center;
+}
+#tab-kanitauditreport .kanit-acp-kpi .k .lab{ font-size:10px; font-weight:700; color:#94A3B8; text-transform:uppercase; letter-spacing:.04em; }
+#tab-kanitauditreport .kanit-acp-kpi .k .num{ font-size:20px; font-weight:800; color:#F1F5F9; margin-top:2px; }
+#tab-kanitauditreport .kanit-acp-kpi .k.pel .num{ color:#FCA5A5; }
+#tab-kanitauditreport .kanit-acp-kpi .k.sup .num{ color:#93C5FD; }
+#tab-kanitauditreport .kanit-acp-kpi .k.belum .num{ color:#F0B27A; }
+#tab-kanitauditreport .kanit-acp-table-wrap{
+  max-height: min(58vh, 480px); overflow:auto;
+  border-radius:12px; border:1px solid rgba(255,255,255,0.08);
+}
+#tab-kanitauditreport table.kanit-acp-table{
+  width:100%; border-collapse:collapse; font-size:12px; color:#E2E8F0;
+}
+#tab-kanitauditreport table.kanit-acp-table thead th{
+  position:sticky; top:0; z-index:2;
+  background:#1a2230; color:#E8A86A; font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.04em;
+  padding:10px 12px; text-align:left; border-bottom:1px solid rgba(232,168,106,0.25);
+  white-space:nowrap;
+}
+#tab-kanitauditreport table.kanit-acp-table tbody td{
+  padding:11px 12px; border-bottom:1px solid rgba(255,255,255,0.06);
+  vertical-align:middle; color:#E2E8F0 !important;
+}
+#tab-kanitauditreport table.kanit-acp-table tbody tr:nth-child(even) td{
+  background:rgba(255,255,255,0.02);
+}
+#tab-kanitauditreport table.kanit-acp-table tbody tr:hover td{
+  background:rgba(232,168,106,0.06);
+}
+#tab-kanitauditreport .acp-badge{
+  display:inline-block; padding:3px 9px; border-radius:999px;
+  font-size:10px; font-weight:800; letter-spacing:.03em; text-transform:uppercase;
+}
+#tab-kanitauditreport .acp-badge.pel{ background:rgba(248,113,113,0.15); color:#FCA5A5; border:1px solid rgba(248,113,113,0.35); }
+#tab-kanitauditreport .acp-badge.sup{ background:rgba(96,165,250,0.15); color:#93C5FD; border:1px solid rgba(96,165,250,0.35); }
+#tab-kanitauditreport .acp-badge.belum{ background:rgba(240,178,122,0.15); color:#F0B27A; border:1px solid rgba(240,178,122,0.4); }
+#tab-kanitauditreport .acp-badge.sudah{ background:rgba(134,239,172,0.12); color:#86EFAC; border:1px solid rgba(134,239,172,0.35); }
+#tab-kanitauditreport .kanit-acp-up-btn{
+  background:linear-gradient(135deg,#E8A86A,#D4924A) !important;
+  color:#1a1208 !important; font-weight:700 !important;
+  border:none !important; border-radius:8px !important;
+  padding:6px 12px !important; font-size:11px !important; cursor:pointer !important;
+}
+#tab-kanitauditreport .kanit-acp-ganti-btn{
+  background:transparent !important; color:#E8A86A !important;
+  border:1px solid rgba(232,168,106,0.45) !important; border-radius:8px !important;
+  padding:5px 10px !important; font-size:11px !important; font-weight:600 !important; cursor:pointer !important;
+}
+#tab-kanitauditreport .kanit-acp-lihat{
+  color:#93C5FD !important; font-size:11px !important; font-weight:600 !important;
+  text-decoration:none !important; margin-right:8px !important;
+}
+#tab-kanitauditreport .kanit-acp-actions{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+#tab-kanitauditreport .filter-row-compact{ gap:10px !important; margin-bottom:4px !important; }
+@media(max-width:700px){
+  #tab-kanitauditreport .kanit-acp-kpi{ grid-template-columns:1fr 1fr 1fr; gap:6px; }
+  #tab-kanitauditreport .kanit-acp-kpi .k .num{ font-size:16px; }
+  #tab-kanitauditreport table.kanit-acp-table{ font-size:11px; }
+  #tab-kanitauditreport table.kanit-acp-table thead th,
+  #tab-kanitauditreport table.kanit-acp-table tbody td{ padding:8px 8px; }
+}
+
+/* Kanit Audit: halaman report vs dashboard — jangan nyangkut */
+#tab-kanitaudit:not(.active),
+#tab-kanitauditreport:not(.active){
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+}
+#tab-kanitaudit.active,
+#tab-kanitauditreport.active{
+  display: block !important;
+  visibility: visible !important;
+  height: auto !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
+}
+#tab-kanitauditreport .audit-input-box{
+  max-width: 920px;
+  margin: 0 auto;
+}
+#tab-kanitauditreport .kanit-acp-file{
+  color: #E2E8F0 !important;
+  max-width: 140px;
+}
+
 /* Kanit Dashboard Audit = sama tema KC */
 #tab-kanitaudit .audit-kpi-grid{ display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px; margin:0 !important; }
 #tab-kanitaudit .audit-charts.audit-charts-2{ display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:10px; margin:0 !important; }
@@ -11941,7 +12057,7 @@ button.admin-topbar-avatar:hover,
           <div class="field"><label>Tahun</label><input type="text" id="kanitAcpTahun" value="2026" style="width:80px;"></div>
           <button type="button" id="kanitAcpLoadBtn" class="btn-xs">Muat temuan ACP</button>
         </div>
-        <div id="kanitAcpSummary" style="margin:10px 0;font-size:12px;color:#94A3B8;"></div>
+        <div id="kanitAcpSummary" class="kanit-acp-kpi" style="display:none;"></div>
         <div id="kanitAcpList" class="audit-table-wrap" style="max-height:min(55vh,420px);"><div class="empty-log">Pilih bulan lalu klik Muat temuan ACP.</div></div>
         <div class="msg" id="kanitAuditReportMsg" style="display:none;margin-top:10px;"></div>
         <div id="kanitAuditRiwayatWrap" style="margin-top:18px;">
@@ -15466,7 +15582,8 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       scope.querySelectorAll(".subpanel").forEach(function(p){
         p.classList.remove("active");
         // pastikan panel berat tidak nyangkut di menu lain
-        if (p.id === "tab-kasarea" || p.id === "tab-kanitkasarea" || p.id === "tab-cashopname") {
+        if (p.id === "tab-kasarea" || p.id === "tab-kanitkasarea" || p.id === "tab-cashopname" ||
+            p.id === "tab-kanitaudit" || p.id === "tab-kanitauditreport") {
           try { p.style.display = "none"; } catch (eH) {}
         }
       });
@@ -15496,7 +15613,8 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
           panel.style.display = "";
         }
         panel.classList.add("active");
-        if (panel.id === "tab-kasarea" || panel.id === "tab-kanitkasarea" || panel.id === "tab-cashopname") {
+        if (panel.id === "tab-kasarea" || panel.id === "tab-kanitkasarea" || panel.id === "tab-cashopname" ||
+            panel.id === "tab-kanitaudit" || panel.id === "tab-kanitauditreport") {
           try { panel.style.display = ""; } catch (eS) {}
         }
       }
@@ -19627,36 +19745,54 @@ function renderKanitAuditWizard(){
     // default bulan sebelumnya jika tgl 1-5
     el.value = nowB;
   }
-  function renderKanitAcpList(items){
+    function renderKanitAcpList(items){
     var wrap = document.getElementById("kanitAcpList");
     if(!wrap) return;
     if(!items || !items.length){
       wrap.innerHTML = '<div class="empty-log" style="padding:16px;">Tidak ada temuan ACP untuk filter ini. Pastikan KC sudah import ACP.</div>';
       return;
     }
-    var head = '<div class="kanit-acp-row" style="font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;">'+
-      '<span>Tipe</span><span>Jenis / Petugas / Faktur</span><span>Status</span><span></span><span>Upload</span></div>';
-    var body = items.map(function(it){
+    var rows = items.map(function(it){
       var tipeCls = (it.tipe === "Support") ? "sup" : "pel";
       var st = (it.suratStatus === "SUDAH") ? "sudah" : "belum";
       var stLabel = st === "sudah" ? "SUDAH" : "BELUM";
-      var link = it.suratUrl ? ('<a href="'+escHtml(it.suratUrl)+'" target="_blank" rel="noopener" style="color:#93C5FD;font-size:11px;">Lihat</a>') : "—";
-      return '<div class="kanit-acp-row" data-id="'+escHtml(it.id)+'">'+
-        '<span class="acp-tipe '+tipeCls+'">'+escHtml(it.tipe||"—")+'</span>'+
-        '<span><b>'+escHtml(it.jenisTemuan||"—")+'</b><br><span style="color:#94A3B8;font-size:11px;">'+escHtml(it.petugas||"—")+' · '+escHtml(it.noFaktur||"—")+'</span></span>'+
-        '<span class="kanit-acp-status '+st+'">'+stLabel+'</span>'+
-        '<span>'+link+'</span>'+
-        '<span><input type="file" class="kanit-acp-file" accept=".pdf,image/*,.jpg,.jpeg,.png" data-id="'+escHtml(it.id)+'" style="font-size:11px;max-width:120px;"></span>'+
-        '</div>';
+      var lihat = it.suratUrl
+        ? ('<a class="kanit-acp-lihat" href="'+escHtml(it.suratUrl)+'" target="_blank" rel="noopener">Lihat</a>')
+        : "";
+      var btnCls = st === "sudah" ? "kanit-acp-ganti-btn" : "kanit-acp-up-btn";
+      var upLabel = st === "sudah" ? "Ganti" : "Upload surat";
+      return '<tr data-id="'+escHtml(it.id)+'">'+
+        '<td><span class="acp-badge '+tipeCls+'">'+escHtml(it.tipe||"—")+'</span></td>'+
+        '<td>'+escHtml(it.jenisTemuan||"—")+'</td>'+
+        '<td>'+escHtml(it.petugas||"—")+'</td>'+
+        '<td style="font-variant-numeric:tabular-nums;">'+escHtml(it.noFaktur||"—")+'</td>'+
+        '<td><span class="acp-badge '+st+'">'+stLabel+'</span></td>'+
+        '<td><span class="kanit-acp-actions">'+lihat+
+          '<button type="button" class="'+btnCls+'" data-id="'+escHtml(it.id)+'">'+upLabel+'</button>'+
+          '<input type="file" class="kanit-acp-file" accept=".pdf,image/*,.jpg,.jpeg,.png" data-id="'+escHtml(it.id)+'" hidden>'+
+        '</span></td></tr>';
     }).join("");
-    wrap.innerHTML = head + body;
+    wrap.innerHTML =
+      '<div class="kanit-acp-table-wrap"><table class="kanit-acp-table app-table">'+
+      '<thead><tr><th>Tipe</th><th>Jenis temuan</th><th>Petugas</th><th>No. Faktur</th><th>Status</th><th>Aksi</th></tr></thead>'+
+      '<tbody>'+rows+'</tbody></table></div>';
+    wrap.querySelectorAll(".kanit-acp-up-btn, .kanit-acp-ganti-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.getAttribute("data-id");
+        var inp = wrap.querySelector('.kanit-acp-file[data-id="'+id+'"]');
+        if(inp) inp.click();
+      });
+    });
     wrap.querySelectorAll(".kanit-acp-file").forEach(function(inp){
       inp.addEventListener("change", function(){
         if(!inp.files || !inp.files[0]) return;
-        uploadKanitAcpSurat_(inp.getAttribute("data-id"), inp.files[0], inp);
+        var btn = wrap.querySelector('[data-id="'+inp.getAttribute("data-id")+'"].kanit-acp-up-btn, [data-id="'+inp.getAttribute("data-id")+'"].kanit-acp-ganti-btn');
+        if(!btn) btn = wrap.querySelector('button[data-id="'+inp.getAttribute("data-id")+'"]');
+        uploadKanitAcpSurat_(inp.getAttribute("data-id"), inp.files[0], btn || inp);
       });
     });
   }
+
   function uploadKanitAcpSurat_(id, file, inp){
     var msg = document.getElementById("kanitAuditReportMsg");
     if(!session.cabang || !session.cabangPin){
@@ -19664,7 +19800,11 @@ function renderKanitAuditWizard(){
       return;
     }
     if(msg) showMsg(msg, "Mengunggah surat…", "ok");
-    if(inp) inp.disabled = true;
+    var prevTxt = "";
+    if(inp){
+      inp.disabled = true;
+      if(inp.tagName === "BUTTON"){ prevTxt = inp.textContent; inp.textContent = "Upload…"; }
+    }
     var reader = new FileReader();
     reader.onload = function(){
       var b64 = String(reader.result || "");
@@ -19672,7 +19812,10 @@ function renderKanitAuditWizard(){
       if(comma >= 0) b64 = b64.substring(comma + 1);
       google.script.run
         .withSuccessHandler(function(r){
-          if(inp) inp.disabled = false;
+          if(inp){
+            inp.disabled = false;
+            if(inp.tagName === "BUTTON" && prevTxt) inp.textContent = prevTxt;
+          }
           if(!r || r.status !== "OK"){
             if(msg) showMsg(msg, (r && r.reason) || "Gagal upload.", "err");
             return;
@@ -19681,7 +19824,10 @@ function renderKanitAuditWizard(){
           loadKanitAcpList_();
         })
         .withFailureHandler(function(err){
-          if(inp) inp.disabled = false;
+          if(inp){
+            inp.disabled = false;
+            if(inp.tagName === "BUTTON" && prevTxt) inp.textContent = prevTxt;
+          }
           if(msg) showMsg(msg, String(err.message || err), "err");
         })
         .uploadSuratAcpTemuan(session.cabang, session.cabangPin, {
@@ -19717,8 +19863,11 @@ function renderKanitAuditWizard(){
           return;
         }
         if(sum){
-          sum.innerHTML = "Pelanggaran: <b>"+(r.totalPelanggaran||0)+"</b> · Support: <b>"+(r.totalSupport||0)+
-            "</b> · Belum upload surat: <b style='color:#F0B27A;'>"+(r.belumUpload||0)+"</b>";
+          sum.style.display = "grid";
+          sum.innerHTML =
+            '<div class="k pel"><div class="lab">Pelanggaran</div><div class="num">'+(r.totalPelanggaran||0)+'</div></div>'+
+            '<div class="k sup"><div class="lab">Support</div><div class="num">'+(r.totalSupport||0)+'</div></div>'+
+            '<div class="k belum"><div class="lab">Belum upload</div><div class="num">'+(r.belumUpload||0)+'</div></div>';
         }
         renderKanitAcpList(r.items || []);
       })
@@ -20194,58 +20343,59 @@ function renderKanitAuditWizard(){
 
 
   function openKanitAuditReportPage(){
-    // Form 1 = halaman penuh (bukan numpuk di bawah)
-    window.__kanitAuditWiz = { nPel:0, nSup:0, step:0, total:0, order:"pel-first" };
-    try{
-      var nPelEl = document.getElementById("kanitAuditNPel");
-      var nSupEl = document.getElementById("kanitAuditNSup");
-      if(nPelEl) nPelEl.value = "";
-      if(nSupEl) nSupEl.value = "";
-      var mainReset = document.getElementById("kanitAuditFormMain");
-      if(mainReset) mainReset.style.display = "";
-      var host = document.getElementById("kanitAuditWizCardHost");
-      if(host) host.innerHTML = "";
-      var riw0 = document.getElementById("kanitAuditRiwayatWrap");
-      if(riw0) riw0.style.display = "none";
-      var page0 = document.getElementById("tab-kanitauditreport");
-      if(page0) page0.classList.remove("audit-show-riwayat");
-      try{ wireKanitAuditFileInputs_(); }catch(eW){}
-      try{ wireKanitAuditDynamicValidation_(); }catch(eD){}
-    }catch(eR){}
-    var root = document.getElementById("screen-kanit") || document;
-    root.querySelectorAll(".panel.subpanel").forEach(function(p){ p.classList.remove("active"); });
-    var page = document.getElementById("tab-kanitauditreport");
-    if(page) page.classList.add("active");
-    document.querySelectorAll('.tab-btn[data-tab]').forEach(function(b){
-      if(b.closest("#screen-kanit") || b.closest(".admin-shell")){
-        if(b.getAttribute("data-tab")==="kanitaudit") b.classList.add("active");
-        else if(b.closest("#screen-kanit")) b.classList.remove("active");
-      }
+    // Halaman penuh: sembunyikan semua subpanel Kanit, tampilkan report saja
+    var root = document.getElementById("screen-kanit") || document.getElementById("screen-omset-form") || document;
+    root.querySelectorAll(".panel.subpanel").forEach(function(p){
+      p.classList.remove("active");
+      try{ p.style.display = "none"; }catch(e){}
     });
-    var nav = document.querySelector('.tab-btn[data-tab="kanitaudit"]');
-    if(nav) nav.classList.add("active");
-    try{ loadKanitAuditKaryawan(); }catch(e){}
+    var page = document.getElementById("tab-kanitauditreport");
+    if(page){
+      page.classList.add("active");
+      page.style.display = "block";
+      page.style.visibility = "visible";
+    }
+    var dash = document.getElementById("tab-kanitaudit");
+    if(dash){
+      dash.classList.remove("active");
+      dash.style.display = "none";
+    }
+    document.querySelectorAll('#screen-kanit .tab-btn[data-tab], #screen-omset-form .tab-btn[data-tab]').forEach(function(b){
+      if(b.getAttribute("data-tab")==="kanitaudit") b.classList.add("active");
+      else b.classList.remove("active");
+    });
+    try{ fillKanitAcpBulan(); }catch(e){}
+    try{ loadKanitAcpList_(); }catch(e){}
     try{
-      google.script.run
-        .withSuccessHandler(function(r){
-          if(r && r.status==="OK") kanitAuditTemuanOptions = r.temuanList || [];
-          rebuildKanitAuditItems();
-        })
-        .withFailureHandler(function(){ rebuildKanitAuditItems(); })
-        .getAuditTemuanOptions(session.cabang, session.cabangPin);
-    }catch(e){ try{ rebuildKanitAuditItems(); }catch(e2){} }
-    try{ syncKanitAuditFromTanggal(); }catch(e){}
-    try{ loadKanitAuditRiwayat(); }catch(e){}
+      var kt = document.getElementById("kanitTopbarTitle");
+      if(kt) kt.textContent = "Upload Surat Pernyataan";
+      var at = document.getElementById("adminTopbarTitle");
+      if(at) at.textContent = "Upload Surat Pernyataan";
+    }catch(eT){}
     try{ window.scrollTo(0,0); }catch(e){}
   }
   function backKanitAuditDashboard(){
-    var root = document.getElementById("screen-kanit") || document;
-    root.querySelectorAll(".panel.subpanel").forEach(function(p){ p.classList.remove("active"); });
+    var root = document.getElementById("screen-kanit") || document.getElementById("screen-omset-form") || document;
+    root.querySelectorAll(".panel.subpanel").forEach(function(p){
+      p.classList.remove("active");
+      try{ p.style.display = "none"; }catch(e){}
+    });
+    var page = document.getElementById("tab-kanitauditreport");
+    if(page){ page.classList.remove("active"); page.style.display = "none"; }
     var dash = document.getElementById("tab-kanitaudit");
-    if(dash) dash.classList.add("active");
+    if(dash){
+      dash.classList.add("active");
+      dash.style.display = "block";
+      dash.style.visibility = "visible";
+    }
     var nav = document.querySelector('.tab-btn[data-tab="kanitaudit"]');
     if(nav) nav.classList.add("active");
-    try{ loadAuditKanit(); }catch(e){}
+    try{ loadAuditKanit(true); }catch(e){}
+    try{
+      var kt = document.getElementById("kanitTopbarTitle");
+      if(kt) kt.textContent = "Dashboard Audit";
+    }catch(eT){}
+    try{ window.scrollTo(0,0); }catch(e){}
   }
   (function(){
     var btn = document.getElementById("kanitAuditReportBtn");
