@@ -7595,6 +7595,262 @@ h1, h2, h3, h4, .admin-topbar-title, .auth-brand h1, .auth-card-head h1 {
   .approval-filters .field{ max-width: none !important; flex: 1 1 100% !important; }
 }
 
+
+/* ===== Dashboard Audit A+B denser layout ===== */
+#tab-audit #auditMainView{ display:flex; flex-direction:column; gap:10px; }
+#tab-audit #auditFilterRow{
+  display:flex; flex-wrap:wrap; align-items:flex-end; gap:8px;
+  padding:10px 12px; margin:0;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;
+}
+#tab-audit #auditFilterRow .field{ margin:0; min-width:100px; flex:1 1 110px; }
+#tab-audit #auditFilterRow .field label{
+  font-size:10px; font-weight:700; color:#94A3B8; text-transform:uppercase;
+  letter-spacing:0.04em; margin-bottom:4px;
+}
+#tab-audit #auditFilterRow select{
+  width:100%; font-size:12px; padding:7px 10px; border-radius:10px;
+}
+#tab-audit #auditFilterRow .btn-xs,
+#tab-audit #auditFilterRow .btn-icon-refresh{ flex:0 0 auto; }
+#tab-audit .audit-kpi-grid{
+  display:grid; grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:8px; margin:0 !important;
+}
+@media(max-width:1200px){
+  #tab-audit .audit-kpi-grid{ grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+}
+@media(max-width:1000px){
+  #tab-audit .audit-kpi-grid{ grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+}
+@media(max-width:640px){
+  #tab-audit .audit-kpi-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+#tab-audit .audit-kpi{
+  padding:10px 12px !important; border-radius:12px !important;
+  background:linear-gradient(145deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02)) !important;
+  border:1px solid rgba(255,255,255,0.09) !important;
+}
+#tab-audit .audit-kpi .v{ font-size:20px !important; }
+#tab-audit .audit-charts.audit-charts-2{
+  display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);
+  gap:10px; margin:0 !important;
+}
+#tab-audit .audit-charts.audit-charts-3{
+  display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1.1fr) minmax(0,0.7fr);
+  gap:10px; margin:0 !important;
+}
+@media(max-width:900px){
+  #tab-audit .audit-charts.audit-charts-2,
+  #tab-audit .audit-charts.audit-charts-3{ grid-template-columns:1fr !important; }
+}
+#tab-audit .audit-card{
+  padding:10px 12px !important; border-radius:14px !important;
+  background:rgba(255,255,255,0.03) !important;
+  border:1px solid rgba(255,255,255,0.08) !important;
+  min-height:0;
+}
+#tab-audit .audit-card h4{ margin:0 0 8px !important; font-size:10.5px !important; }
+#tab-audit .audit-vchart{ min-height:140px; }
+#tab-audit .audit-vbar-wrap{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:4px; height:120px; padding:0 2px;
+}
+#tab-audit .audit-vbar{
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  justify-content:flex-end; min-width:0; height:100%;
+}
+#tab-audit .audit-vbar .b{
+  width:70%; max-width:28px; border-radius:6px 6px 2px 2px;
+  background:linear-gradient(180deg,#F0C090 0%,#E8A86A 100%);
+  box-shadow:0 0 12px rgba(232,168,106,0.25);
+}
+#tab-audit .audit-vbar .c{ font-size:11px; font-weight:800; color:#F8FAFC; margin-bottom:4px; }
+#tab-audit .good-pill{
+  writing-mode:vertical-rl; transform:rotate(180deg);
+  font-size:9px; font-weight:800; letter-spacing:0.06em;
+  color:#86EFAC; background:rgba(34,197,94,0.12);
+  border:1px solid rgba(34,197,94,0.3); border-radius:6px;
+  padding:6px 3px; max-height:72px;
+}
+#tab-audit .pending-pill{
+  font-size:14px; font-weight:700; color:#64748B;
+  background:rgba(100,116,139,0.12);
+  border:1px dashed rgba(100,116,139,0.35);
+  border-radius:8px; padding:8px 6px; line-height:1;
+}
+#tab-audit .audit-vbar-pending{ opacity:0.7; }
+#tab-audit .audit-vbar-labels{
+  display:flex; justify-content:space-between; gap:4px; margin-top:6px;
+}
+#tab-audit .audit-vbar-labels span{
+  flex:1; text-align:center; font-size:10px; color:#94A3B8; font-weight:600;
+}
+#tab-audit .audit-table-wrap{
+  max-height:min(42vh,380px); border-radius:14px !important;
+  border:1px solid rgba(255,255,255,0.08) !important;
+}
+#tab-audit .rejected-top3-title{
+  margin:4px 0 6px !important; font-size:12px !important;
+}
+#tab-audit .audit-loading{ margin:0 !important; padding:10px !important; }
+
+
+/* ===== Dashboard Audit Fase C — polish mewah ===== */
+#tab-audit .audit-kpi .k{ font-size:10px !important; letter-spacing:0.05em; }
+#tab-audit .audit-kpi .s{ font-size:10px !important; color:#64748B !important; }
+#tab-audit .audit-kpi-pel .v{ color:#FCA5A5 !important; }
+#tab-audit .audit-kpi-sup .v{ color:#93C5FD !important; }
+#tab-audit #auditKpi > div[style*="grid-column"]{
+  font-size:10.5px !important; color:#64748B !important;
+  padding:0 2px; margin-top:-2px !important;
+}
+#tab-audit .audit-card h4{
+  display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+  color:#E8A86A !important; font-weight:700 !important;
+}
+#tab-audit .audit-card-hint{ color:#64748B !important; font-weight:600 !important; }
+#tab-audit .audit-hbar{
+  display:grid !important;
+  grid-template-columns:minmax(90px,1.15fr) minmax(60px,1.2fr) 26px !important;
+  gap:6px !important; margin-bottom:6px !important; font-size:11px !important;
+}
+#tab-audit .audit-hbar .lab{ color:#CBD5E1 !important; font-weight:600; }
+#tab-audit .audit-hbar .track{
+  height:8px !important; background:rgba(255,255,255,0.06) !important;
+  border-radius:99px !important;
+}
+#tab-audit .audit-hbar .track > i{
+  background:linear-gradient(90deg,#7C5CFF,#5B9AE8) !important;
+  box-shadow:0 0 8px rgba(91,154,232,0.25);
+}
+#tab-audit .audit-hbar.green .track > i{
+  background:linear-gradient(90deg,#34D399,#6BCB8E) !important;
+  box-shadow:0 0 8px rgba(52,211,153,0.2);
+}
+#tab-audit .audit-hbar.orange .track > i{
+  background:linear-gradient(90deg,#E8A86A,#F0C090) !important;
+  box-shadow:0 0 8px rgba(232,168,106,0.25);
+}
+#tab-audit .audit-hbar .val{ color:#F8FAFC !important; font-weight:700 !important; }
+#tab-audit .audit-table thead th{
+  background:rgba(18,20,26,0.98) !important;
+  color:#E8A86A !important; font-size:10px !important;
+  letter-spacing:0.05em !important; padding:9px 10px !important;
+  border-bottom:1px solid rgba(232,168,106,0.25) !important;
+}
+#tab-audit .audit-table tbody td{
+  padding:8px 10px !important; font-size:12px !important;
+  color:#E2E8F0 !important; border-bottom:1px solid rgba(255,255,255,0.05) !important;
+}
+#tab-audit .audit-table tbody tr:nth-child(even) td{
+  background:rgba(255,255,255,0.02) !important;
+}
+#tab-audit .audit-table tbody tr:hover td{
+  background:rgba(232,168,106,0.06) !important;
+}
+#tab-audit .appr-chip.pel,
+#tab-audit .appr-chip.sup{
+  font-size:10px !important; font-weight:700 !important;
+  border-radius:999px !important; padding:2px 8px !important;
+}
+#tab-audit .rejected-top3-title{
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  color:#F8FAFC !important; font-weight:700 !important;
+}
+#tab-audit #auditFilterRow select:focus{
+  outline:none; border-color:rgba(232,168,106,0.45);
+  box-shadow:0 0 0 2px rgba(232,168,106,0.12);
+}
+#tab-audit #auditLoadBtn{
+  background:linear-gradient(135deg,#E8A86A,#D4924A) !important;
+  color:#1a1208 !important; font-weight:700 !important;
+  border:none !important; border-radius:10px !important;
+}
+#tab-audit #btnOpenApprovalAudit{
+  border:1px solid rgba(232,168,106,0.35) !important;
+  color:#F0C090 !important; background:rgba(232,168,106,0.08) !important;
+  border-radius:10px !important;
+}
+
+
+/* ===== Dashboard Audit Fase D — mobile ===== */
+@media (max-width: 900px) {
+  #tab-audit #auditFilterRow{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:8px !important;
+    padding:10px !important;
+  }
+  #tab-audit #auditFilterRow .field{
+    min-width:0 !important; flex:none !important; width:100%;
+  }
+  #tab-audit #auditFilterRow .field label{ font-size:9.5px !important; }
+  #tab-audit #auditFilterRow select{ font-size:12px !important; padding:8px 10px !important; }
+  #tab-audit #auditLoadBtn,
+  #tab-audit #auditRefreshBtn,
+  #tab-audit #btnOpenApprovalAudit{
+    width:100%; justify-content:center;
+  }
+  #tab-audit #auditLoadBtn{ grid-column:1 / -1; }
+  #tab-audit #auditRefreshBtn{ grid-column:1; }
+  #tab-audit #btnOpenApprovalAudit{ grid-column:2; margin-left:0 !important; }
+  #tab-audit .audit-kpi-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+  }
+  #tab-audit .audit-kpi .v{ font-size:18px !important; }
+  #tab-audit .audit-charts.audit-charts-2,
+  #tab-audit .audit-charts.audit-charts-3{
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+  }
+  #tab-audit .audit-vchart{ min-height:120px; }
+  #tab-audit .audit-vbar-wrap{ height:100px !important; gap:3px !important; }
+  #tab-audit .audit-vbar .b{ max-width:22px !important; width:80% !important; }
+  #tab-audit .audit-vbar .c{ font-size:10px !important; }
+  #tab-audit .good-pill{ font-size:8px !important; padding:4px 2px !important; max-height:56px; }
+  #tab-audit .pending-pill{ font-size:12px !important; padding:6px 4px !important; }
+  #tab-audit .audit-vbar-labels span{ font-size:9px !important; }
+  #tab-audit .audit-hbar{
+    grid-template-columns:minmax(70px,1fr) minmax(50px,1.1fr) 22px !important;
+    gap:5px !important; margin-bottom:5px !important; font-size:10.5px !important;
+  }
+  #tab-audit .audit-table-wrap{
+    max-height:min(50vh,320px) !important;
+    -webkit-overflow-scrolling:touch;
+    overflow-x:auto !important;
+  }
+  #tab-audit .audit-table{
+    min-width:720px; /* scroll horizontal, kolom tetap terbaca */
+  }
+  #tab-audit .audit-table th,
+  #tab-audit .audit-table td{
+    padding:7px 8px !important; font-size:11px !important;
+    white-space:nowrap;
+  }
+  #tab-audit .audit-table td:nth-child(5),
+  #tab-audit .audit-table td:nth-child(8){
+    white-space:normal; max-width:140px;
+  }
+  #tab-audit .rejected-top3-title{ font-size:11px !important; }
+  #tab-audit #auditKpi > div[style*="grid-column"]{
+    grid-column:1 / -1 !important;
+  }
+}
+@media (max-width: 480px) {
+  #tab-audit #auditFilterRow{
+    grid-template-columns:1fr !important;
+  }
+  #tab-audit #auditRefreshBtn,
+  #tab-audit #btnOpenApprovalAudit{ grid-column:1 / -1 !important; }
+  #tab-audit .audit-kpi-grid{
+    grid-template-columns:1fr 1fr !important;
+  }
+  #tab-audit .audit-table{ min-width:640px; }
+}
 /* ===== Dashboard Audit chips + loading ===== */
 .audit-tipe-chips{
   display:flex;flex-wrap:wrap;gap:6px;align-items:center;
@@ -18538,20 +18794,24 @@ function applyRejectedAlasanFilter_(which){
     var max = 1;
     arr.forEach(function(x){ if(x.value > max) max = x.value; });
     var bars = arr.map(function(x){
-      if(x.good || x.value === 0){
-        return '<div class="audit-vbar" title="'+x.label+': 0 temuan (GOOD)">'+
+      // Belum audit (mis. Oktober belum upload ACP) — bukan GOOD
+      if(x.pending){
+        return '<div class="audit-vbar audit-vbar-pending" title="'+x.label+': belum audit">'+
+          '<div class="pending-pill">—</div></div>';
+      }
+      // Sudah audit, 0 temuan → GOOD
+      if(x.good || (x.value === 0 && !x.pending)){
+        return '<div class="audit-vbar audit-vbar-good" title="'+x.label+': 0 temuan (GOOD)">'+
           '<div class="good-pill">GOOD</div></div>';
       }
-      // min 28px supaya bar angka 1 selalu lebih tinggi dari pill GOOD (~18px)
-      var h = Math.max(28, Math.round((x.value/max)*100));
-      return '<div class="audit-vbar" title="'+x.label+': '+x.value+'">'+
+      var h = Math.max(32, Math.round((x.value/max)*110));
+      return '<div class="audit-vbar audit-vbar-val" title="'+x.label+': '+x.value+'">'+
         '<div class="c">'+x.value+'</div>'+
         '<div class="b" style="height:'+h+'px;"></div></div>';
     }).join("");
     var labels = arr.map(function(x){
       return '<span>'+String(x.label).slice(0,3)+'</span>';
     }).join("");
-    // label bulan di baris terpisah → selalu lurus sejajar
     el.innerHTML = '<div class="audit-vchart"><div class="audit-vbar-wrap">'+bars+'</div>'+
       '<div class="audit-vbar-labels">'+labels+'</div></div>';
   }
@@ -18561,18 +18821,26 @@ function applyRejectedAlasanFilter_(which){
     var nSup = d.totalSupport != null ? d.totalSupport : 0;
     var nFr = d.totalFraud != null ? d.totalFraud : 0;
     var pet = (d.petugasTerbanyak && d.petugasTerbanyak.key) ? d.petugasTerbanyak : { key: "-", count: 0 };
+    var cab = (d.cabangTerbanyak && d.cabangTerbanyak.key) ? d.cabangTerbanyak : { key: "-", count: 0 };
+    var jen = (d.jenisTerbanyak && d.jenisTerbanyak.key) ? d.jenisTerbanyak : { key: "-", count: 0 };
     var tipeLabel = d.filterTipe && d.filterTipe !== "SEMUA" ? d.filterTipe : "Semua";
     try {
       var tf = document.getElementById("auditTipeFilter");
       if (tf && tf.value) tipeLabel = tf.value === "SEMUA" ? "Semua" : tf.value;
     } catch (e) {}
     var hint = d.hintFilter || "";
+    function shortName(s, n){
+      s = String(s || "-");
+      return s.length > (n||22) ? s.slice(0, n-1) + "…" : s;
+    }
     el.innerHTML =
       '<div class="audit-kpi"><div class="k">Ditampilkan</div><div class="v">'+d.total+'</div><div class="s">filter: '+escHtml(tipeLabel)+'</div></div>'+
       '<div class="audit-kpi audit-kpi-pel"><div class="k">Pelanggaran</div><div class="v" style="color:#FCA5A5;">'+nPel+'</div><div class="s">seluruh periode</div></div>'+
       '<div class="audit-kpi audit-kpi-sup"><div class="k">Support</div><div class="v" style="color:#93C5FD;">'+nSup+'</div><div class="s">seluruh periode</div></div>'+
       '<div class="audit-kpi"><div class="k">Fraud</div><div class="v" style="color:#F0B27A;">'+nFr+'</div><div class="s">seluruh periode</div></div>'+
-      '<div class="audit-kpi"><div class="k">Petugas terbanyak</div><div class="v" style="font-size:13px;">'+escHtml(pet.key||"-")+'</div><div class="s">'+(pet.count||0)+' · '+escHtml(tipeLabel)+'</div></div>'+
+      '<div class="audit-kpi"><div class="k">Cabang terbanyak</div><div class="v" style="font-size:14px;">'+escHtml(shortName(cab.key,16))+'</div><div class="s">'+(cab.count||0)+' · '+escHtml(tipeLabel)+'</div></div>'+
+      '<div class="audit-kpi"><div class="k">Jenis terbanyak</div><div class="v" style="font-size:12px;" title="'+escHtml(jen.key||"-")+'">'+escHtml(shortName(jen.key,28))+'</div><div class="s">'+(jen.count||0)+' · '+escHtml(tipeLabel)+'</div></div>'+
+      '<div class="audit-kpi"><div class="k">Petugas terbanyak</div><div class="v" style="font-size:13px;">'+escHtml(shortName(pet.key,20))+'</div><div class="s">'+(pet.count||0)+' · '+escHtml(tipeLabel)+'</div></div>'+
       (hint ? '<div style="grid-column:1/-1;font-size:11px;color:#94A3B8;margin-top:2px;">'+escHtml(hint)+'</div>' : '');
   }
   function fillDatalist(id, arr){
