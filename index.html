@@ -12353,8 +12353,8 @@ button.admin-topbar-avatar:hover,
       <div id="auditLoading" class="audit-loading" style="display:none;">Memuat dashboard…</div>
       <div id="auditKpi" class="audit-kpi-grid"></div>
       <div class="audit-charts audit-charts-2" style="margin-bottom:12px;">
-        <div class="audit-card"><h4>Tren per bulan</h4><div id="auditTren"></div></div>
-        <div class="audit-card"><h4>Per cabang</h4><div id="auditCabangChart"></div></div>
+        <div class="audit-card"><h4>Tren per bulan <span class="audit-card-hint" id="auditTrenHint"></span></h4><div id="auditTren"></div></div>
+        <div class="audit-card"><h4>Per cabang <span class="audit-card-hint" id="auditCabangHint"></span></h4><div id="auditCabangChart"></div></div>
       </div>
       <div class="audit-charts audit-charts-3">
         <div class="audit-card"><h4>Top petugas <span class="audit-card-hint" id="auditTopPetugasHint"></span></h4><div id="auditTopPetugas"></div></div>
@@ -18565,12 +18565,14 @@ function applyRejectedAlasanFilter_(which){
       var tf = document.getElementById("auditTipeFilter");
       if (tf && tf.value) tipeLabel = tf.value === "SEMUA" ? "Semua" : tf.value;
     } catch (e) {}
+    var hint = d.hintFilter || "";
     el.innerHTML =
       '<div class="audit-kpi"><div class="k">Ditampilkan</div><div class="v">'+d.total+'</div><div class="s">filter: '+escHtml(tipeLabel)+'</div></div>'+
-      '<div class="audit-kpi audit-kpi-pel"><div class="k">Pelanggaran</div><div class="v" style="color:#FCA5A5;">'+nPel+'</div><div class="s">periode terpilih</div></div>'+
-      '<div class="audit-kpi audit-kpi-sup"><div class="k">Support</div><div class="v" style="color:#93C5FD;">'+nSup+'</div><div class="s">periode terpilih</div></div>'+
-      '<div class="audit-kpi"><div class="k">Fraud</div><div class="v" style="color:#F0B27A;">'+nFr+'</div><div class="s">periode terpilih</div></div>'+
-      '<div class="audit-kpi"><div class="k">Petugas terbanyak</div><div class="v" style="font-size:13px;">'+escHtml(pet.key||"-")+'</div><div class="s">'+(pet.count||0)+' · '+escHtml(tipeLabel)+'</div></div>';
+      '<div class="audit-kpi audit-kpi-pel"><div class="k">Pelanggaran</div><div class="v" style="color:#FCA5A5;">'+nPel+'</div><div class="s">seluruh periode</div></div>'+
+      '<div class="audit-kpi audit-kpi-sup"><div class="k">Support</div><div class="v" style="color:#93C5FD;">'+nSup+'</div><div class="s">seluruh periode</div></div>'+
+      '<div class="audit-kpi"><div class="k">Fraud</div><div class="v" style="color:#F0B27A;">'+nFr+'</div><div class="s">seluruh periode</div></div>'+
+      '<div class="audit-kpi"><div class="k">Petugas terbanyak</div><div class="v" style="font-size:13px;">'+escHtml(pet.key||"-")+'</div><div class="s">'+(pet.count||0)+' · '+escHtml(tipeLabel)+'</div></div>'+
+      (hint ? '<div style="grid-column:1/-1;font-size:11px;color:#94A3B8;margin-top:2px;">'+escHtml(hint)+'</div>' : '');
   }
   function fillDatalist(id, arr){
     var el = document.getElementById(id);
@@ -18589,9 +18591,13 @@ function applyRejectedAlasanFilter_(which){
       var tf = document.getElementById("auditTipeFilter");
       if (tf && tf.value) tipeLabel = tf.value === "SEMUA" ? "Semua" : tf.value;
     } catch (e) {}
+    var h0 = document.getElementById("auditTrenHint");
+    var h0b = document.getElementById("auditCabangHint");
     var h1 = document.getElementById("auditTopPetugasHint");
     var h2 = document.getElementById("auditTopTemuanHint");
     var h3 = document.getElementById("auditDetailHint");
+    if (h0) h0.textContent = "· " + tipeLabel + " · semua bulan di filter";
+    if (h0b) h0b.textContent = "(" + tipeLabel + ")";
     if (h1) h1.textContent = "(" + tipeLabel + ")";
     if (h2) h2.textContent = "(" + tipeLabel + ")";
     if (h3) h3.textContent = "· " + (d.total || 0) + " baris · " + tipeLabel;
