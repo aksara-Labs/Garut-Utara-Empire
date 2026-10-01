@@ -12455,6 +12455,7 @@ button.admin-topbar-avatar:hover,
         <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
           <button type="button" id="acpImportBtn" class="btn-xs" style="width:auto;">Proses Import ACP</button>
           <button type="button" id="acpSeedSupportBtn" class="btn-xs secondary" style="width:auto;" title="42 temuan Support Jan–Agt 2026">Isi Support Jan–Agt</button>
+          <button type="button" id="acpSeedPelBtn" class="btn-xs secondary" style="width:auto;" title="55 temuan Pelanggaran Jan–Agt 2026">Isi Pelanggaran Jan–Agt</button>
         </div>
         <div class="msg" id="acpImportMsg"></div>
         <div id="acpImportPreview" style="margin-top:12px;"></div>
@@ -21289,6 +21290,39 @@ function loadAdminBertugas(){
             showMsg(msg, String(err.message || err), "err");
           })
           .seedAuditSupportJanAgtAdmin(session.adminPin);
+      });
+    }
+    var seedPelBtn = document.getElementById("acpSeedPelBtn");
+    if (seedPelBtn && !seedPelBtn._wired) {
+      seedPelBtn._wired = true;
+      seedPelBtn.addEventListener("click", function(){
+        var msg = document.getElementById("acpImportMsg");
+        if (!session.adminPin) { showMsg(msg, "Sesi KC berakhir.", "err"); return; }
+        if (!confirm("Isi 55 temuan Pelanggaran Januari–Agustus 2026?\nSupport & September tidak dihapus.")) return;
+        seedPelBtn.disabled = true;
+        seedPelBtn.textContent = "Memproses…";
+        showMsg(msg, "Mengisi Pelanggaran Jan–Agt…", "ok");
+        google.script.run
+          .withSuccessHandler(function(r){
+            seedPelBtn.disabled = false;
+            seedPelBtn.textContent = "Isi Pelanggaran Jan–Agt";
+            if (!r || r.status !== "OK") {
+              showMsg(msg, (r && r.reason) || "Gagal seed.", "err");
+              return;
+            }
+            var prev = document.getElementById("acpImportPreview");
+            if (prev) {
+              prev.innerHTML = '<div class="appr-summary-card"><div class="appr-step-pill">Pelanggaran Jan–Agt</div><p class="appr-note"><b>'+(r.imported||0)+'</b> baris · Periode: '+(r.periods||[]).join(", ")+'</p><p class="appr-note" style="color:#86EFAC;">Support & September aman.</p></div>';
+            }
+            showMsg(msg, r.message || "Berhasil.", "ok");
+            try { loadAuditAdmin(true); } catch (e) {}
+          })
+          .withFailureHandler(function(err){
+            seedPelBtn.disabled = false;
+            seedPelBtn.textContent = "Isi Pelanggaran Jan–Agt";
+            showMsg(msg, String(err.message || err), "err");
+          })
+          .seedAuditPelanggaranJanAgtAdmin(session.adminPin);
       });
     }
   })();
