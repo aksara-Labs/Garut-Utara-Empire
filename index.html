@@ -9665,6 +9665,35 @@ button.admin-topbar-avatar:hover,
   color: #FCA5A5 !important;
 }
 
+/* ===== Kas Area — jangan nyangkut di menu lain ===== */
+#tab-kasarea.subpanel:not(.active),
+#tab-kanitkasarea.subpanel:not(.active),
+.panel.subpanel#tab-kasarea:not(.active),
+.panel.subpanel#tab-kanitkasarea:not(.active){
+  display: none !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  width: 0 !important; height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+#tab-kasarea.subpanel.active,
+#tab-kanitkasarea.subpanel.active,
+.panel.subpanel#tab-kasarea.active,
+.panel.subpanel#tab-kanitkasarea.active{
+  display: block !important;
+  visibility: visible !important;
+  position: relative !important;
+  left: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
 /* ===== Kas Area — transparan glass + checkbox native Excel-like ===== */
 /* ===== Kas Area — grid profesional ===== */
 #tab-kasarea,
@@ -11583,15 +11612,9 @@ button.admin-topbar-avatar:hover,
         <div class="field"><label>Bulan mulai</label><select id="kanitAuditBulanMulai"></select></div>
         <div class="field"><label>Bulan akhir</label><select id="kanitAuditBulanAkhir"></select></div>
         <div class="field"><label>Petugas</label><select id="kanitAuditPetugas"><option value="SEMUA">Semua</option></select></div>
-        <div class="field" style="min-width:200px;">
+        <div class="field">
           <label>Tipe temuan</label>
-          <div class="audit-tipe-chips" id="kanitAuditTipeChips">
-            <button type="button" class="audit-tipe-chip active" data-tipe="Pelanggaran">Pelanggaran</button>
-            <button type="button" class="audit-tipe-chip" data-tipe="Support">Support</button>
-            <button type="button" class="audit-tipe-chip" data-tipe="Fraud">Fraud</button>
-            <button type="button" class="audit-tipe-chip" data-tipe="SEMUA">Semua</button>
-          </div>
-          <select id="kanitAuditTipeFilter" style="display:none;">
+          <select id="kanitAuditTipeFilter">
             <option value="Pelanggaran" selected>Pelanggaran</option>
             <option value="Support">Support</option>
             <option value="Fraud">Fraud</option>
@@ -12313,15 +12336,9 @@ button.admin-topbar-avatar:hover,
         <div class="field"><label>Bulan mulai</label><select id="auditBulanMulai"></select></div>
         <div class="field"><label>Bulan akhir</label><select id="auditBulanAkhir"></select></div>
         <div class="field"><label>Petugas</label><select id="auditPetugas"><option value="SEMUA">Semua</option></select></div>
-        <div class="field" style="min-width:200px;">
+        <div class="field">
           <label>Tipe temuan</label>
-          <div class="audit-tipe-chips" id="auditTipeChips">
-            <button type="button" class="audit-tipe-chip active" data-tipe="Pelanggaran">Pelanggaran</button>
-            <button type="button" class="audit-tipe-chip" data-tipe="Support">Support</button>
-            <button type="button" class="audit-tipe-chip" data-tipe="Fraud">Fraud</button>
-            <button type="button" class="audit-tipe-chip" data-tipe="SEMUA">Semua</button>
-          </div>
-          <select id="auditTipeFilter" style="display:none;">
+          <select id="auditTipeFilter">
             <option value="Pelanggaran" selected>Pelanggaran</option>
             <option value="Support">Support</option>
             <option value="Fraud">Fraud</option>
@@ -12435,7 +12452,10 @@ button.admin-topbar-avatar:hover,
           Dashboard Audit langsung ter-update.
         </p>
         <textarea id="acpImportText" rows="10" placeholder="Paste di sini (Ctrl+V)… header + baris data ACP"></textarea>
-        <button type="button" id="acpImportBtn" class="btn-xs" style="margin-top:10px;width:auto;">Proses Import ACP</button>
+        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+          <button type="button" id="acpImportBtn" class="btn-xs" style="width:auto;">Proses Import ACP</button>
+          <button type="button" id="acpSeedSupportBtn" class="btn-xs secondary" style="width:auto;" title="42 temuan Support Jan–Agt 2026">Isi Support Jan–Agt</button>
+        </div>
         <div class="msg" id="acpImportMsg"></div>
         <div id="acpImportPreview" style="margin-top:12px;"></div>
       </div>
@@ -15165,7 +15185,13 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     btn.addEventListener("click", function(){
       var scope = btn.closest(".screen") || document;
       scope.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
-      scope.querySelectorAll(".subpanel").forEach(function(p){ p.classList.remove("active"); });
+      scope.querySelectorAll(".subpanel").forEach(function(p){
+        p.classList.remove("active");
+        // pastikan panel berat tidak nyangkut di menu lain
+        if (p.id === "tab-kasarea" || p.id === "tab-kanitkasarea" || p.id === "tab-cashopname") {
+          try { p.style.display = "none"; } catch (eH) {}
+        }
+      });
       btn.classList.add("active");
       // Tutup sidebar setelah pilih menu (mobile)
       try{ if(typeof closeAdminSidebar === "function") closeAdminSidebar(); }catch(e){}
@@ -15192,6 +15218,9 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
           panel.style.display = "";
         }
         panel.classList.add("active");
+        if (panel.id === "tab-kasarea" || panel.id === "tab-kanitkasarea" || panel.id === "tab-cashopname") {
+          try { panel.style.display = ""; } catch (eS) {}
+        }
       }
       // Preload dropdown alasan reject sebelum Tampilkan
       try{
@@ -18708,39 +18737,14 @@ function applyRejectedAlasanFilter_(which){
   if(auditLoadBtn) auditLoadBtn.addEventListener("click", function(){ loadAuditAdmin(true); });
   var auditRefreshBtn = document.getElementById("auditRefreshBtn");
   if(auditRefreshBtn) auditRefreshBtn.addEventListener("click", function(){ loadAuditAdmin(true); });
-  // Chip tipe temuan
-  (function(){
-    var chips = document.getElementById("auditTipeChips");
-    var sel = document.getElementById("auditTipeFilter");
-    if (!chips || !sel) return;
-    chips.addEventListener("click", function(ev){
-      var btn = ev.target.closest(".audit-tipe-chip");
-      if (!btn) return;
-      var tipe = btn.getAttribute("data-tipe") || "Pelanggaran";
-      sel.value = tipe;
-      chips.querySelectorAll(".audit-tipe-chip").forEach(function(c){ c.classList.remove("active"); });
-      btn.classList.add("active");
-      loadAuditAdmin(true);
-    });
-  })();
+  var auditTipeFilter = document.getElementById("auditTipeFilter");
+  if (auditTipeFilter) auditTipeFilter.addEventListener("change", function(){ loadAuditAdmin(true); });
   var kanitAuditLoadBtn = document.getElementById("kanitAuditLoadBtn");
   if(kanitAuditLoadBtn) kanitAuditLoadBtn.addEventListener("click", function(){ loadAuditKanit(true); });
   var kanitAuditRefreshBtn = document.getElementById("kanitAuditRefreshBtn");
   if(kanitAuditRefreshBtn) kanitAuditRefreshBtn.addEventListener("click", function(){ loadAuditKanit(true); });
-  (function(){
-    var chips = document.getElementById("kanitAuditTipeChips");
-    var sel = document.getElementById("kanitAuditTipeFilter");
-    if (!chips || !sel) return;
-    chips.addEventListener("click", function(ev){
-      var btn = ev.target.closest(".audit-tipe-chip");
-      if (!btn) return;
-      var tipe = btn.getAttribute("data-tipe") || "Pelanggaran";
-      sel.value = tipe;
-      chips.querySelectorAll(".audit-tipe-chip").forEach(function(c){ c.classList.remove("active"); });
-      btn.classList.add("active");
-      loadAuditKanit(true);
-    });
-  })();
+  var kanitAuditTipeFilter = document.getElementById("kanitAuditTipeFilter");
+  if (kanitAuditTipeFilter) kanitAuditTipeFilter.addEventListener("change", function(){ loadAuditKanit(true); });
 
   /* old admin submit removed */
 
@@ -21246,6 +21250,39 @@ function loadAdminBertugas(){
             showMsg(msg, String(err.message || err), "err");
           })
           .importAuditAcpText(session.adminPin, text);
+      });
+    }
+    var seedBtn = document.getElementById("acpSeedSupportBtn");
+    if (seedBtn && !seedBtn._wired) {
+      seedBtn._wired = true;
+      seedBtn.addEventListener("click", function(){
+        var msg = document.getElementById("acpImportMsg");
+        if (!session.adminPin) { showMsg(msg, "Sesi KC berakhir.", "err"); return; }
+        if (!confirm("Isi 42 temuan Support Januari–Agustus 2026?\nPelanggaran & data September tidak dihapus.")) return;
+        seedBtn.disabled = true;
+        seedBtn.textContent = "Memproses…";
+        showMsg(msg, "Mengisi Support Jan–Agt…", "ok");
+        google.script.run
+          .withSuccessHandler(function(r){
+            seedBtn.disabled = false;
+            seedBtn.textContent = "Isi Support Jan–Agt";
+            if (!r || r.status !== "OK") {
+              showMsg(msg, (r && r.reason) || "Gagal seed.", "err");
+              return;
+            }
+            var prev = document.getElementById("acpImportPreview");
+            if (prev) {
+              prev.innerHTML = '<div class="appr-summary-card"><div class="appr-step-pill">Support Jan–Agt</div><p class="appr-note"><b>'+(r.imported||0)+'</b> baris · Periode: '+(r.periods||[]).join(", ")+'</p><p class="appr-note" style="color:#86EFAC;">Pelanggaran & September aman.</p></div>';
+            }
+            showMsg(msg, r.message || "Berhasil.", "ok");
+            try { loadAuditAdmin(true); } catch (e) {}
+          })
+          .withFailureHandler(function(err){
+            seedBtn.disabled = false;
+            seedBtn.textContent = "Isi Support Jan–Agt";
+            showMsg(msg, String(err.message || err), "err");
+          })
+          .seedAuditSupportJanAgtAdmin(session.adminPin);
       });
     }
   })();
