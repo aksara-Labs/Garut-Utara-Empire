@@ -2612,6 +2612,393 @@ textarea.is-invalid{
   box-shadow: 0 0 0 2px rgba(239,68,68,0.22) !important;
 }
 
+
+/* =========================================================
+   GLOBAL BUTTON UNIFY — outline gold (gaya Pilih file)
+   Semua tombol aksi di app: outline, kecil, seragam
+   ========================================================= */
+button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.theme-toggle):not(.profile-btn):not(.notif-btn):not(.pin-btn):not(.logo-btn),
+.btn,
+.btn-xs,
+.btn-sm,
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-outline-gold,
+.btn-ghost,
+.btn-icon-refresh,
+.btn-appr-ok,
+.btn-appr-no,
+a.btn,
+a.btn-outline-gold,
+input[type="button"],
+input[type="submit"]{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 36px !important;
+  padding: 0 14px !important;
+  border-radius: 10px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.01em !important;
+  background: transparent !important;
+  background-image: none !important;
+  color: #E8A86A !important;
+  border: 1.5px solid rgba(232,168,106,0.65) !important;
+  box-shadow: none !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  transition: background .12s, border-color .12s, color .12s !important;
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+}
+button:not(.sidebar-item):not(.nav-item):not(.menu-item):hover,
+.btn:hover,
+.btn-xs:hover,
+.btn-sm:hover,
+.btn-primary:hover,
+.btn-outline-gold:hover,
+.btn-ghost:hover,
+a.btn:hover,
+a.btn-outline-gold:hover{
+  background: rgba(232,168,106,0.12) !important;
+  border-color: rgba(232,168,106,0.9) !important;
+  color: #F0C090 !important;
+  filter: none !important;
+  transform: none !important;
+}
+button:disabled,
+.btn:disabled,
+[disabled]{
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
+}
+/* Icon-only refresh tetap kotak kecil */
+.btn-icon-refresh,
+button.btn-icon-refresh{
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+}
+/* Jangan ganggu sidebar / topbar profil */
+.sidebar button,
+.sidebar .nav-link,
+#sidebar button,
+.topbar .profile-chip,
+.topbar .notif-bell,
+.sidebar-item,
+.nav-item{
+  /* biarkan style sendiri — dikecualikan di selector utama */
+}
+/* Approval decide: Approve tetap outline gold (bukan hijau solid) */
+.appr-btn-ok,
+.appr-btn-no,
+.appr-btn-ghost,
+.appr-btn{
+  display: inline-flex !important;
+  height: 30px !important;
+  padding: 0 12px !important;
+  border-radius: 10px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  background: transparent !important;
+  color: #E8A86A !important;
+  border: 1.5px solid rgba(232,168,106,0.65) !important;
+  width: auto !important;
+}
+.appr-btn-ok:hover,
+.appr-btn-no:hover{
+  background: rgba(232,168,106,0.12) !important;
+}
+/* Muat / filter buttons */
+#kanitAcpLoadBtn,
+#btnOpenApprovalAudit,
+#btnOpenApprovalCuti,
+.filter-row button,
+.toolbar button,
+.approval-toolbar button{
+  height: 32px !important;
+  padding: 0 14px !important;
+}
+
+
+/* Approval cabang — clean list */
+#auditPengajuanList{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  max-width: 520px !important;
+  width: 100% !important;
+}
+#auditPengajuanList .appr-cab-card{
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  padding: 12px 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  background: rgba(15,23,42,0.55) !important;
+  cursor: pointer !important;
+  transition: border-color .15s, background .15s !important;
+}
+#auditPengajuanList .appr-cab-card:hover{
+  border-color: rgba(232,168,106,0.4) !important;
+  background: rgba(30,41,59,0.75) !important;
+}
+#auditPengajuanList .appr-cab-code{
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: #F8FAFC !important;
+}
+#auditPengajuanList .appr-cab-period{
+  font-size: 11px !important;
+  color: #94A3B8 !important;
+  margin-top: 2px !important;
+}
+#auditPengajuanList .appr-cab-nums{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 2px !important;
+  font-size: 11px !important;
+  color: #64748B !important;
+  margin-left: auto !important;
+}
+#auditPengajuanList .appr-cab-nums b{ color: #E2E8F0 !important; font-weight: 700; }
+#auditPengajuanList .appr-cab-nums .n-wait b{ color: #FDE68A !important; }
+#auditPengajuanList .appr-cab-nums .n-todo b{ color: #94A3B8 !important; }
+#auditPengajuanList .appr-cab-arrow{
+  color: #475569 !important;
+  font-size: 18px !important;
+}
+#auditApprovalView .approval-filters{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+}
+#auditApprovalView .approval-filters .field{
+  min-width: 140px !important;
+  max-width: 200px !important;
+}
+
+
+/* Sembunyikan logout kosong di footer sidebar + theme toggle */
+#logoutFromAdmin,
+button.admin-sidebar-logout,
+.admin-sidebar-logout,
+#themeToggle,
+.theme-toggle{
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  opacity: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+
+/* ========== FASE B: Report Audit Kanit polish ========== */
+#tab-kanitauditreport{
+  max-width: 100% !important;
+  padding: 0 4px 24px !important;
+}
+#tab-kanitauditreport .acp-page-head{
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 12px !important;
+  padding: 0 2px !important;
+}
+#tab-kanitauditreport .acp-page-title{
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  color: #F8FAFC !important;
+}
+#tab-kanitauditreport .acp-page-sub{
+  font-size: 11px !important;
+  color: #94A3B8 !important;
+  margin-top: 2px !important;
+}
+#tab-kanitauditreport .acp-shell{
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 16px !important;
+  background: rgba(15,23,42,0.35) !important;
+  padding: 12px 14px 16px !important;
+  max-width: 100% !important;
+}
+#tab-kanitauditreport .acp-toolbar{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
+  gap: 8px 10px !important;
+  margin-bottom: 10px !important;
+  padding-bottom: 10px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+#tab-kanitauditreport .acp-toolbar .field{
+  margin: 0 !important;
+  min-width: 110px !important;
+  max-width: 160px !important;
+  flex: 0 1 140px !important;
+}
+#tab-kanitauditreport .acp-toolbar .field label{
+  font-size: 10px !important;
+  color: #94A3B8 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  margin-bottom: 4px !important;
+}
+#tab-kanitauditreport .acp-toolbar select,
+#tab-kanitauditreport .acp-toolbar input{
+  height: 32px !important;
+  border-radius: 9px !important;
+  font-size: 12px !important;
+}
+/* Summary bar tipis */
+#tab-kanitauditreport .acp-summary-card{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+  padding: 10px 12px !important;
+  margin-bottom: 10px !important;
+  border-radius: 11px !important;
+  border: 1px solid rgba(232,168,106,0.22) !important;
+  background: rgba(232,168,106,0.06) !important;
+}
+#tab-kanitauditreport .acp-sum-title{
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: #F1F5F9 !important;
+}
+#tab-kanitauditreport .acp-sum-desc{
+  font-size: 10px !important;
+  color: #94A3B8 !important;
+  margin-top: 1px !important;
+}
+/* KPI chips 1 baris */
+#tab-kanitauditreport .acp-kpi-chips,
+#tab-kanitauditreport .kanit-acp-kpi.acp-kpi-chips{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  grid-template-columns: none !important;
+}
+#tab-kanitauditreport .acp-kpi-chips .chip{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  height: 28px !important;
+  padding: 0 10px !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #CBD5E1 !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  background: rgba(255,255,255,0.04) !important;
+}
+#tab-kanitauditreport .acp-kpi-chips .chip b{
+  font-weight: 800 !important;
+  font-variant-numeric: tabular-nums !important;
+}
+#tab-kanitauditreport .acp-kpi-chips .chip.pel b{ color: #FCA5A5 !important; }
+#tab-kanitauditreport .acp-kpi-chips .chip.sup b{ color: #93C5FD !important; }
+#tab-kanitauditreport .acp-kpi-chips .chip.belum b{ color: #F0B27A !important; }
+#tab-kanitauditreport .acp-kpi-chips .chip.wait b{ color: #FDE68A !important; }
+#tab-kanitauditreport .acp-kpi-chips .chip.ok b{ color: #86EFAC !important; }
+/* Table */
+#tab-kanitauditreport .kanit-acp-table-wrap{
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 12px !important;
+  overflow: auto !important;
+  max-height: min(58vh, 560px) !important;
+}
+#tab-kanitauditreport .kanit-acp-table{
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 12px !important;
+}
+#tab-kanitauditreport .kanit-acp-table thead th{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+  background: #0f172a !important;
+  color: #94A3B8 !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  padding: 10px 10px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+  white-space: nowrap !important;
+}
+#tab-kanitauditreport .kanit-acp-table tbody td{
+  padding: 9px 10px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  color: #E2E8F0 !important;
+  vertical-align: middle !important;
+}
+#tab-kanitauditreport .kanit-acp-table tbody tr:hover td{
+  background: rgba(255,255,255,0.03) !important;
+}
+#tab-kanitauditreport .kanit-acp-actions{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  align-items: center !important;
+}
+/* Sticky Kirim semua */
+#tab-kanitauditreport .acp-bulk-sticky{
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 5 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin-top: 12px !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(232,168,106,0.28) !important;
+  background: rgba(15,23,42,0.92) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.25) !important;
+}
+#tab-kanitauditreport .acp-bulk-info{
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #E2E8F0 !important;
+}
+@media (max-width: 720px){
+  #tab-kanitauditreport .acp-toolbar .field{ max-width: none !important; flex: 1 1 45% !important; }
+  #tab-kanitauditreport .kanit-acp-table-wrap{ max-height: 50vh !important; }
+}
+
 </style>
 
 <style>
@@ -8303,6 +8690,29 @@ h1, h2, h3, h4, .admin-topbar-title, .auth-brand h1, .auth-card-head h1 {
 .appr-stat.s-belum b{ color: #94A3B8 !important; }
 .appr-stat.s-ok b{ color: #86EFAC !important; }
 .appr-cab-arrow{ font-size: 22px; color: #64748B; font-weight: 300; }
+
+.appr-period-tag{
+  display:inline-block; margin-left:8px;
+  font-size:10px; font-weight:700; color:#94A3B8;
+  padding:2px 7px; border-radius:6px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.08);
+}
+.appr-cab-card{
+  background: rgba(15,23,42,0.65) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+.appr-cab-card .appr-status{
+  max-width: 220px;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.25;
+  font-size: 10px;
+}
+#auditPengajuanList{
+  max-width: 640px !important;
+}
+
 .appr-note-tolak{ font-size: 11px; color: #FCA5A5; margin: 6px 0 8px; }
 .appr-status.belum{
   color: #94A3B8 !important;
@@ -8312,6 +8722,100 @@ h1, h2, h3, h4, .admin-topbar-title, .auth-brand h1, .auth-card-head h1 {
 #auditApprDetailBody{
   display: flex; flex-direction: column; gap: 10px;
   max-width: 720px;
+}
+
+
+/* ===== Approval cabang cards — FORCE dark premium ===== */
+#auditPengajuanList{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  max-width: 560px !important;
+  width: 100% !important;
+}
+#auditPengajuanList .appr-cab-card,
+button.appr-cab-card{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 14px !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  margin: 0 !important;
+  padding: 14px 16px !important;
+  text-align: left !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: rgba(15, 23, 42, 0.72) !important;
+  background-image: none !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important;
+  color: #F1F5F9 !important;
+  cursor: pointer !important;
+  transition: border-color .15s, background .15s !important;
+  font-family: inherit !important;
+}
+#auditPengajuanList .appr-cab-card:hover,
+button.appr-cab-card:hover{
+  border-color: rgba(232,168,106,0.45) !important;
+  background: rgba(30, 41, 59, 0.9) !important;
+  background-image: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+#auditPengajuanList .appr-cab-left{
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+#auditPengajuanList .appr-cab-code{
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  color: #FFFFFF !important;
+  letter-spacing: 0.02em !important;
+}
+#auditPengajuanList .appr-cab-period{
+  font-size: 12px !important;
+  color: #94A3B8 !important;
+  margin-top: 3px !important;
+  font-weight: 500 !important;
+}
+#auditPengajuanList .appr-status{
+  flex: 0 0 auto !important;
+  max-width: 160px !important;
+  text-align: center !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  padding: 6px 10px !important;
+  border-radius: 999px !important;
+  white-space: normal !important;
+}
+#auditPengajuanList .appr-status.belum{
+  color: #CBD5E1 !important;
+  background: rgba(148,163,184,0.12) !important;
+  border: 1px solid rgba(148,163,184,0.25) !important;
+}
+#auditPengajuanList .appr-status.menunggu{
+  color: #FDE68A !important;
+  background: rgba(250,204,21,0.12) !important;
+  border: 1px solid rgba(250,204,21,0.3) !important;
+}
+#auditPengajuanList .appr-status.approve{
+  color: #86EFAC !important;
+  background: rgba(34,197,94,0.12) !important;
+  border: 1px solid rgba(34,197,94,0.3) !important;
+}
+#auditPengajuanList .appr-status.tolak{
+  color: #FCA5A5 !important;
+  background: rgba(239,68,68,0.12) !important;
+  border: 1px solid rgba(239,68,68,0.3) !important;
+}
+#auditPengajuanList .appr-cab-arrow{
+  flex: 0 0 auto !important;
+  font-size: 20px !important;
+  color: #64748B !important;
+  font-weight: 300 !important;
 }
 
 /* ===== Approval Audit cards — premium ===== */
@@ -12210,6 +12714,58 @@ button.admin-topbar-avatar:hover,
 .acp-summary-status.ok{ color:#86EFAC; }
 .acp-summary-status a{ color:#93C5FD; }
 
+
+/* Samakan semua tombol aksi ACP dengan Pilih file */
+#tab-kanitauditreport .kanit-acp-btn-primary,
+#tab-kanitauditreport .kanit-acp-btn-ghost,
+#tab-kanitauditreport .kanit-acp-btn-link,
+#tab-kanitauditreport #kanitAcpSummaryPick,
+#tab-kanitauditreport #kanitAcpKirimSemua,
+#tab-kanitauditreport #kanitAcpLoadBtn,
+#tab-kanitauditreport .acp-sum-extra .kanit-acp-btn-primary,
+#tab-kanitauditreport .acp-sum-extra a.kanit-acp-btn-primary{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 30px !important;
+  padding: 0 12px !important;
+  border-radius: 10px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  background: transparent !important;
+  color: #E8A86A !important;
+  border: 1.5px solid rgba(232,168,106,0.65) !important;
+  box-shadow: none !important;
+  width: auto !important;
+  max-width: none !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+#tab-kanitauditreport .kanit-acp-btn-primary:hover,
+#tab-kanitauditreport #kanitAcpSummaryPick:hover,
+#tab-kanitauditreport .acp-sum-extra a.kanit-acp-btn-primary:hover{
+  background: rgba(232,168,106,0.12) !important;
+}
+.acp-sum-extra{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 4px;
+}
+.acp-sum-file{
+  font-size: 12px;
+  color: #86EFAC;
+  font-weight: 600;
+  margin-right: 6px;
+}
+.acp-sum-right{
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
 /* ===== FORCE FULL WIDTH Upload Surat (override semua max-width lama) ===== */
 #tab-kanitauditreport.panel,
 #tab-kanitauditreport.subpanel,
@@ -12695,13 +13251,13 @@ button.admin-topbar-avatar:hover,
             <input type="file" id="kanitAcpSummaryFile" accept=".pdf,image/*,.jpg,.jpeg,.png" hidden>
           </div>
         </div>
-        <div id="kanitAcpBulkBar" class="acp-bulk-bar" style="display:none;">
+        <div id="kanitAcpSummary" class="kanit-acp-kpi acp-kpi-chips" style="display:none;"></div>
+        <div id="kanitAcpList"><div class="acp-empty">Memuat…</div></div>
+        <div class="msg" id="kanitAuditReportMsg" style="display:none;margin-top:10px;"></div>
+        <div id="kanitAcpBulkBar" class="acp-bulk-bar acp-bulk-sticky" style="display:none;">
           <div class="acp-bulk-info" id="kanitAcpBulkInfo">0 / 0 file siap</div>
           <button type="button" id="kanitAcpKirimSemua" class="btn-outline-gold" disabled>Kirim semua</button>
         </div>
-        <div id="kanitAcpSummary" class="kanit-acp-kpi" style="display:none;"></div>
-        <div id="kanitAcpList"><div class="acp-empty">Memuat…</div></div>
-        <div class="msg" id="kanitAuditReportMsg" style="display:none;margin-top:10px;"></div>
       </div>
     </div>
 
@@ -12808,7 +13364,7 @@ button.admin-topbar-avatar:hover,
           <span class="sidebar-powered-label">Powered by</span>
           <img src="data:image/png;base64,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" alt="AksaraLab" class="sidebar-powered-logo" width="177" height="24">
         </div>
-        <button class="back-link admin-sidebar-logout" id="logoutFromAdmin" style="display:none;"></button>
+        <!-- logoutFromAdmin removed from sidebar; logout via profil -->
       </aside>
 
       <div class="admin-main">
@@ -13409,6 +13965,16 @@ button.admin-topbar-avatar:hover,
         <!-- LIST: ringkasan pengajuan -->
         <div id="auditApprListPane">
           <div class="approval-filters filter-row-compact">
+            <div class="field"><label>Bulan</label>
+              <select id="auditPengajuanBulan">
+                <option value="September" selected>September</option>
+                <option value="Oktober">Oktober</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+                <option value="SEMUA">Semua (Sep–Des)</option>
+                <option value="ARSIP">Arsip Jan–Agt</option>
+              </select>
+            </div>
             <div class="field"><label>Status</label>
               <select id="auditPengajuanStatus"><option value="SEMUA" selected>Semua</option><option value="Menunggu">Menunggu</option><option value="Disetujui">Disetujui</option><option value="Ditolak">Ditolak</option></select>
             </div>
@@ -20528,40 +21094,83 @@ function renderKanitAuditWizard(){
   function updateKanitAcpSummaryBar_(url){
     var st = document.getElementById("kanitAcpSummaryStatus");
     var pick = document.getElementById("kanitAcpSummaryPick");
+    var actions = document.getElementById("kanitAcpSummaryActions");
     if(!st) return;
     var draft = window._kanitAcpSummaryDraft;
-    if(url){
-      window._kanitAcpSummaryReady = true;
+    var hasServer = !!(url || window._kanitAcpSummaryUrl);
+    var hasDraft = !!(draft && draft.base64);
+    window._kanitAcpSummaryReady = hasServer || hasDraft;
+
+    if(pick) pick.textContent = (hasServer || hasDraft) ? "Ganti file" : "Pilih file";
+
+    if(hasDraft){
       st.className = "acp-summary-status ok";
-      st.innerHTML = 'Tersimpan: <a href="'+escHtml(url)+'" target="_blank" rel="noopener">Lihat</a>';
-      if(pick) pick.textContent = "Ganti file";
-    } else if(draft && draft.base64){
-      window._kanitAcpSummaryReady = true;
+      st.innerHTML =
+        '<span class="acp-sum-file">'+escHtml(draft.name||"file")+'</span>';
+    } else if(hasServer){
       st.className = "acp-summary-status ok";
-      st.innerHTML = 'Siap dikirim: <b style="color:#E8A86A">'+escHtml(draft.name||"file")+'</b>'+
-        ' <button type="button" class="appr-btn appr-btn-ghost" id="kanitAcpSummaryPreviewBtn" style="height:26px;padding:0 8px;font-size:11px;">Lihat</button>'+
-        ' <button type="button" class="appr-btn appr-btn-ghost" id="kanitAcpSummaryClearBtn" style="height:26px;padding:0 8px;font-size:11px;">Hapus</button>';
-      if(pick) pick.textContent = "Ganti file";
-      setTimeout(function(){
-        var pv = document.getElementById("kanitAcpSummaryPreviewBtn");
-        var cl = document.getElementById("kanitAcpSummaryClearBtn");
-        if(pv) pv.onclick = function(){ try{ showKanitAcpPreview_(draft); }catch(e){} };
-        if(cl) cl.onclick = function(){
+      st.innerHTML = '<span class="acp-sum-file">Sudah tersimpan</span>';
+    } else {
+      st.className = "acp-summary-status";
+      st.textContent = "Belum dipilih";
+    }
+
+    // Tombol aksi seragam
+    var extra = document.getElementById("kanitAcpSummaryExtra");
+    if(!extra && actions){
+      extra = document.createElement("span");
+      extra.id = "kanitAcpSummaryExtra";
+      extra.className = "acp-sum-extra";
+      actions.appendChild(extra);
+    }
+    if(extra){
+      var html = "";
+      if(hasDraft){
+        html += '<button type="button" class="kanit-acp-btn-primary" id="kanitAcpSummaryPreviewBtn">Lihat</button>';
+        html += '<button type="button" class="kanit-acp-btn-primary" id="kanitAcpSummaryClearBtn">Hapus</button>';
+      } else if(hasServer){
+        var u = url || window._kanitAcpSummaryUrl || "";
+        if(u) html += '<a class="kanit-acp-btn-primary" href="'+escHtml(u)+'" target="_blank" rel="noopener">Lihat</a>';
+        html += '<button type="button" class="kanit-acp-btn-primary" id="kanitAcpSummaryClearBtn">Hapus</button>';
+      }
+      extra.innerHTML = html;
+      var pv = document.getElementById("kanitAcpSummaryPreviewBtn");
+      if(pv) pv.onclick = function(){ try{ showKanitAcpPreview_(draft); }catch(e){} };
+      var cl = document.getElementById("kanitAcpSummaryClearBtn");
+      if(cl) cl.onclick = function(){
+        if(hasDraft && !hasServer){
           window._kanitAcpSummaryDraft = null;
-          window._kanitAcpSummaryReady = false;
           window._kanitAcpSummaryUrl = "";
+          window._kanitAcpSummaryReady = false;
           updateKanitAcpSummaryBar_("");
           try{ if(window._kanitAcpLastItems) renderKanitAcpList(window._kanitAcpLastItems); }catch(e){}
           try{ updateKanitAcpBulkBar_(); }catch(e){}
-        };
-      }, 0);
-    } else {
-      window._kanitAcpSummaryReady = false;
-      st.className = "acp-summary-status";
-      st.textContent = "Belum dipilih (tidak ke Drive sebelum Kirim)";
-      if(pick) pick.textContent = "Pilih file";
+          return;
+        }
+        // Hapus dari sheet
+        if(!confirm("Hapus Audit Summary periode ini?")) return;
+        var bulanEl = document.getElementById("kanitAcpBulan");
+        var tahunEl = document.getElementById("kanitAcpTahun");
+        cl.disabled = true;
+        google.script.run
+          .withSuccessHandler(function(r){
+            cl.disabled = false;
+            if(!r || r.status!=="OK"){ alert((r&&r.reason)||"Gagal hapus"); return; }
+            window._kanitAcpSummaryDraft = null;
+            window._kanitAcpSummaryUrl = "";
+            window._kanitAcpSummaryReady = false;
+            updateKanitAcpSummaryBar_("");
+            try{ loadKanitAcpList_({ noFallback:true }); }catch(e){}
+          })
+          .withFailureHandler(function(err){ cl.disabled=false; alert(String(err.message||err)); })
+          .clearAuditSummaryKanit(session.cabang, session.cabangPin, {
+            bulan: bulanEl ? bulanEl.value : "",
+            tahun: tahunEl ? String(tahunEl.value||"2026").trim() : "2026"
+          });
+      };
     }
   }
+
   function renderKanitAcpList(items, opts){
     opts = opts || {};
 
@@ -20821,13 +21430,14 @@ function renderKanitAuditWizard(){
           }
         }
         if(sum){
-          sum.style.display = "grid";
+          sum.style.display = "flex";
+          sum.className = "kanit-acp-kpi acp-kpi-chips";
           sum.innerHTML =
-            '<div class="k pel"><div class="lab">Pelanggaran</div><div class="num">'+(r.totalPelanggaran||0)+'</div></div>'+
-            '<div class="k sup"><div class="lab">Support</div><div class="num">'+(r.totalSupport||0)+'</div></div>'+
-            '<div class="k belum"><div class="lab">Belum</div><div class="num">'+(r.belumUpload||0)+'</div></div>'+
-            '<div class="k" style="border-color:rgba(250,204,21,0.25)"><div class="lab">Menunggu</div><div class="num" style="color:#FDE68A">'+(r.menunggu||0)+'</div></div>'+
-            '<div class="k" style="border-color:rgba(134,239,172,0.25)"><div class="lab">Approve</div><div class="num" style="color:#86EFAC">'+(r.approve||0)+'</div></div>';
+            '<span class="chip pel"><b>'+(r.totalPelanggaran||0)+'</b> Pelanggaran</span>'+
+            '<span class="chip sup"><b>'+(r.totalSupport||0)+'</b> Support</span>'+
+            '<span class="chip belum"><b>'+(r.belumUpload||0)+'</b> Belum</span>'+
+            '<span class="chip wait"><b>'+(r.menunggu||0)+'</b> Menunggu</span>'+
+            '<span class="chip ok"><b>'+(r.approve||0)+'</b> Approve</span>';
         }
         window._kanitAcpLastItems = items;
         window._kanitAcpSummaryUrl = r.auditSummaryUrl || "";
@@ -21147,8 +21757,9 @@ function renderKanitAuditWizard(){
     if(meta){
       meta.innerHTML =
         '<div class="appr-meta-cab">'+escHtml(g.cabang)+'</div>'+
-        '<div class="appr-meta-sub">'+escHtml(g.bulan)+' '+escHtml(g.tahun)+
-        (g.summaryUrl ? ' · <a href="'+escHtml(g.summaryUrl)+'" target="_blank" rel="noopener">Audit Summary</a>' : ' · Summary belum ada')+
+        '<div class="appr-meta-sub">'+g.items.length+' temuan · '+
+          g.nBelum+' belum · '+g.nMenunggu+' menunggu · '+g.nApprove+' approve'+
+          (g.summaryUrl ? ' · <a href="'+escHtml(g.summaryUrl)+'" target="_blank" rel="noopener">Audit Summary</a>' : '')+
         '</div>';
     }
     if(nav) nav.innerHTML = '';
@@ -21162,9 +21773,13 @@ function renderKanitAuditWizard(){
       if(stU==="SUDAH") stU="MENUNGGU";
       var tipe = it.tipe || "Pelanggaran";
       var tipeCls = String(tipe).toLowerCase().indexOf("support")>=0 ? "sup" : "pel";
+      var periode = [it.bulan, it.tahun].filter(Boolean).join(" ");
       return '<article class="appr-card" data-id="'+escHtml(it.id)+'">'+
         '<header class="appr-card-head">'+
-          '<span class="appr-tipe '+tipeCls+'">'+escHtml(tipe)+'</span>'+
+          '<div>'+
+            '<span class="appr-tipe '+tipeCls+'">'+escHtml(tipe)+'</span>'+
+            (periode ? '<span class="appr-period-tag">'+escHtml(periode)+'</span>' : '')+
+          '</div>'+
           '<span class="appr-status '+stU.toLowerCase()+'">'+escHtml(stU)+'</span>'+
         '</header>'+
         '<div class="appr-jenis">'+escHtml(it.jenisTemuan||"—")+'</div>'+
@@ -21461,21 +22076,30 @@ function renderKanitAuditWizard(){
           return;
         }
         var list = r.items || [];
+        // Filter bulan: default Sep+ (Jan–Agt = arsip)
+        var bulanEl = document.getElementById("auditPengajuanBulan");
+        var bulanF = bulanEl ? String(bulanEl.value||"September") : "September";
+        var ARSIP = {januari:1,februari:1,maret:1,april:1,mei:1,juni:1,juli:1,agustus:1};
+        var AKTIF = {september:1,oktober:1,november:1,desember:1};
+        list = list.filter(function(it){
+          var b = String(it.bulan||"").toLowerCase().trim();
+          if(bulanF === "ARSIP") return !!ARSIP[b];
+          if(bulanF === "SEMUA") return !!AKTIF[b];
+          return b === String(bulanF).toLowerCase();
+        });
         window.__auditAppr.list = list;
         if(!list.length){
-          wrap.innerHTML = '<div class="empty-log">Tidak ada data ACP.</div>';
+          wrap.innerHTML = '<div class="empty-log">Tidak ada data untuk filter ini.</div>';
           return;
         }
-        // Group by cabang + bulan + tahun
+        // Group PER CABANG saja
         var groups = {};
         list.forEach(function(it){
-          var key = String(it.cabang||"")+"|"+String(it.bulan||"")+"|"+String(it.tahun||"");
+          var key = String(it.cabang||"").trim() || "—";
           if(!groups[key]){
             groups[key] = {
               key: key,
-              cabang: it.cabang||"",
-              bulan: it.bulan||"",
-              tahun: it.tahun||"",
+              cabang: key,
               items: [],
               nBelum:0, nMenunggu:0, nApprove:0, nTolak:0,
               summaryUrl: ""
@@ -21495,31 +22119,35 @@ function renderKanitAuditWizard(){
         var keys = Object.keys(groups).sort();
         wrap.innerHTML = keys.map(function(k){
           var g = groups[k];
-          var statusLabel = "BELUM";
+          var statusLabel = "Belum Upload Surat Pernyataan";
           var statusCls = "belum";
-          if(g.nMenunggu > 0){ statusLabel = "MENUNGGU"; statusCls = "menunggu"; }
-          else if(g.nTolak > 0 && g.nMenunggu===0 && g.nBelum===0){ statusLabel = "ADA TOLAK"; statusCls = "tolak"; }
-          else if(g.nApprove > 0 && g.nBelum===0 && g.nMenunggu===0){ statusLabel = "SELESAI"; statusCls = "approve"; }
-          else if(g.nBelum > 0 && g.nMenunggu===0){ statusLabel = "BELUM KIRIM"; statusCls = "belum"; }
-          return '<button type="button" class="appr-cab-card" data-key="'+escHtml(k)+'">'+
+          if(g.nMenunggu > 0){
+            statusLabel = g.nMenunggu + " Menunggu Approve";
+            statusCls = "menunggu";
+          } else if(g.nTolak > 0 && g.nBelum===0){
+            statusLabel = "Ada Tolak ("+g.nTolak+")";
+            statusCls = "tolak";
+          } else if(g.nApprove > 0 && g.nBelum===0 && g.nMenunggu===0){
+            statusLabel = "Semua Approved";
+            statusCls = "approve";
+          } else if(g.nBelum > 0){
+            statusLabel = "Belum Upload Surat Pernyataan";
+            statusCls = "belum";
+          }
+          var total = g.items.length;
+          return '<div class="appr-cab-card" role="button" tabindex="0" data-key="'+escHtml(k)+'">'+
             '<div class="appr-cab-left">'+
               '<div class="appr-cab-code">'+escHtml(g.cabang)+'</div>'+
-              '<div class="appr-cab-period">'+escHtml(g.bulan)+' '+escHtml(g.tahun)+'</div>'+
+              '<div class="appr-cab-period">'+total+' temuan · '+g.nBelum+' belum · '+g.nMenunggu+' menunggu</div>'+
             '</div>'+
-            '<div class="appr-cab-stats">'+
-              '<span class="appr-stat s-menunggu"><b>'+g.nMenunggu+'</b> menunggu</span>'+
-              '<span class="appr-stat s-belum"><b>'+g.nBelum+'</b> belum</span>'+
-              '<span class="appr-stat s-ok"><b>'+g.nApprove+'</b> approve</span>'+
-            '</div>'+
-            '<span class="appr-status '+statusCls+'">'+statusLabel+'</span>'+
+            '<span class="appr-status '+statusCls+'">'+escHtml(statusLabel)+'</span>'+
             '<span class="appr-cab-arrow">›</span>'+
-          '</button>';
+          '</div>';
         }).join("");
         wrap.querySelectorAll(".appr-cab-card").forEach(function(card){
-          card.addEventListener("click", function(){
-            var key = card.getAttribute("data-key");
-            openAcpCabangDetail_(key);
-          });
+          function go(){ openAcpCabangDetail_(card.getAttribute("data-key")); }
+          card.addEventListener("click", go);
+          card.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
         });
       })
       .withFailureHandler(function(err){
