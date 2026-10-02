@@ -11924,6 +11924,61 @@ button.admin-topbar-avatar:hover,
 .kanit-acp-preview-fallback{ font-size:12px; color:#94A3B8; }
 .kanit-acp-preview-fallback a{ color:#93C5FD; }
 
+
+.btn-outline-gold,
+#btnOpenApprovalAudit,
+#kanitAuditReportBtn{
+  display:inline-flex !important; align-items:center; justify-content:center;
+  height:34px !important; padding:0 16px !important;
+  border-radius:10px !important;
+  background: transparent !important;
+  color: #E8A86A !important;
+  border: 1.5px solid rgba(232,168,106,0.65) !important;
+  font-weight: 700 !important; font-size: 12px !important;
+  box-shadow: none !important;
+  width: auto !important; max-width: none !important;
+  cursor: pointer !important;
+}
+.btn-outline-gold:hover,
+#btnOpenApprovalAudit:hover,
+#kanitAuditReportBtn:hover{
+  background: rgba(232,168,106,0.12) !important;
+  border-color: #E8A86A !important;
+}
+#tab-kanitauditreport .kanit-acp-btn-primary,
+#tab-kanitauditreport .kanit-acp-btn-ghost,
+#tab-kanitauditreport .kanit-acp-btn-link{
+  height: 30px !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  background: transparent !important;
+  color: #E8A86A !important;
+  border: 1.5px solid rgba(232,168,106,0.65) !important;
+  box-shadow: none !important;
+  padding: 0 12px !important;
+}
+#tab-kanitauditreport .kanit-acp-btn-primary:hover,
+#tab-kanitauditreport .kanit-acp-btn-ghost:hover,
+#tab-kanitauditreport .kanit-acp-btn-link:hover{
+  background: rgba(232,168,106,0.12) !important;
+}
+#tab-kanitauditreport .kanit-acp-btn-link{
+  color: #E8A86A !important;
+  text-decoration: none !important;
+}
+.acp-summary-bar{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  padding:10px 12px; margin-bottom:12px;
+  border:1px solid rgba(232,168,106,0.25);
+  border-radius:12px; background:rgba(232,168,106,0.05);
+}
+.acp-summary-label{ font-size:12px; font-weight:700; color:#F1F5F9; }
+.acp-summary-label .req{ color:#FCA5A5; font-weight:600; font-size:11px; }
+.acp-summary-status{ font-size:12px; color:#94A3B8; }
+.acp-summary-status.ok{ color:#86EFAC; }
+.acp-summary-status a{ color:#93C5FD; }
+
 /* ===== FORCE FULL WIDTH Upload Surat (override semua max-width lama) ===== */
 #tab-kanitauditreport.panel,
 #tab-kanitauditreport.subpanel,
@@ -12396,7 +12451,15 @@ button.admin-topbar-avatar:hover,
         <div class="acp-toolbar">
           <div class="field"><label>Bulan</label><select id="kanitAcpBulan"></select></div>
           <div class="field"><label>Tahun</label><input type="text" id="kanitAcpTahun" value="2026" inputmode="numeric" maxlength="4"></div>
-          <button type="button" id="kanitAcpLoadBtn" class="btn-xs">Muat</button>
+          <button type="button" id="kanitAcpLoadBtn" class="btn-outline-gold">Muat</button>
+        </div>
+        <div class="acp-summary-bar" id="kanitAcpSummaryBar">
+          <div class="acp-summary-label">Audit Summary <span class="req">*wajib</span></div>
+          <div class="acp-summary-actions" id="kanitAcpSummaryActions">
+            <button type="button" id="kanitAcpSummaryPick" class="btn-outline-gold">Pilih Audit Summary</button>
+            <input type="file" id="kanitAcpSummaryFile" accept=".pdf,image/*,.jpg,.jpeg,.png" hidden>
+          </div>
+          <div class="acp-summary-status" id="kanitAcpSummaryStatus">Belum diunggah</div>
         </div>
         <div id="kanitAcpSummary" class="kanit-acp-kpi" style="display:none;"></div>
         <div id="kanitAcpList"><div class="acp-empty">Memuat…</div></div>
@@ -20198,7 +20261,20 @@ function renderKanitAuditWizard(){
     el.value = nowB;
   }
   var _kanitAcpDraft = {}; // id -> { name, mime, base64 }
-  function renderKanitAcpList(items){
+  function updateKanitAcpSummaryBar_(url){
+    var st = document.getElementById("kanitAcpSummaryStatus");
+    if(!st) return;
+    if(url){
+      st.className = "acp-summary-status ok";
+      st.innerHTML = 'Sudah: <a href="'+escHtml(url)+'" target="_blank" rel="noopener">Lihat Audit Summary</a>';
+    } else {
+      st.className = "acp-summary-status";
+      st.textContent = "Belum diunggah";
+    }
+  }
+  function renderKanitAcpList(items, opts){
+    opts = opts || {};
+
     var wrap = document.getElementById("kanitAcpList");
     if(!wrap) return;
     if(!items || !items.length){
@@ -20282,7 +20358,7 @@ function renderKanitAuditWizard(){
         if (!id || !act) return;
         if (act === "pick") {
           var inp = wrap.querySelector('.kanit-acp-file[data-id="'+id+'"]');
-          if (inp) inp.click();
+          if (inp) { try { inp.value = ""; } catch(eV) {} inp.click(); }
           return;
         }
         if (act === "preview") {
@@ -20296,7 +20372,10 @@ function renderKanitAuditWizard(){
         }
         if (act === "clear") {
           delete _kanitAcpDraft[id];
-          try { loadKanitAcpList_({ noFallback: true, silent: true }); } catch(e) {}
+          try {
+            if (window._kanitAcpLastItems) renderKanitAcpList(window._kanitAcpLastItems);
+            else loadKanitAcpList_({ noFallback: true, silent: true });
+          } catch(e) {}
           return;
         }
         if (act === "reset") {
@@ -20323,6 +20402,10 @@ function renderKanitAuditWizard(){
           return;
         }
         if (act === "send") {
+          if (!window._kanitAcpSummaryUrl) {
+            alert("Upload Audit Summary dulu (wajib) sebelum kirim surat.");
+            return;
+          }
           var d = _kanitAcpDraft[id];
           if (!d) return;
           uploadKanitAcpSurat_(id, d, btn);
@@ -20454,7 +20537,12 @@ function renderKanitAuditWizard(){
             '<div class="k" style="border-color:rgba(250,204,21,0.25)"><div class="lab">Menunggu</div><div class="num" style="color:#FDE68A">'+(r.menunggu||0)+'</div></div>'+
             '<div class="k" style="border-color:rgba(134,239,172,0.25)"><div class="lab">Approve</div><div class="num" style="color:#86EFAC">'+(r.approve||0)+'</div></div>';
         }
-        renderKanitAcpList(items);
+        window._kanitAcpLastItems = items;
+        window._kanitAcpSummaryUrl = r.auditSummaryUrl || "";
+        try { updateKanitAcpSummaryBar_(r.auditSummaryUrl || ""); } catch(eS) {}
+        // Blokir kirim surat jika summary belum ada
+        renderKanitAcpList(items, { requireSummary: !r.auditSummaryUrl });
+
       })
       .withFailureHandler(function(err){
         if(listEl) listEl.innerHTML = '<div class="acp-empty">'+String(err.message || err)+'</div>';
@@ -20476,6 +20564,56 @@ function renderKanitAuditWizard(){
     }
     // open halaman report: lihat openKanitAuditReportPage (jangan double-bind)
   })();
+
+  (function wireKanitAcpSummary(){
+    var pick = document.getElementById("kanitAcpSummaryPick");
+    var file = document.getElementById("kanitAcpSummaryFile");
+    if(pick && file && !pick._wired){
+      pick._wired = true;
+      pick.addEventListener("click", function(){ try{ file.value=""; }catch(e){} file.click(); });
+      file.addEventListener("change", function(){
+        if(!file.files || !file.files[0]) return;
+        if(!session.cabang || !session.cabangPin){ alert("Sesi berakhir"); return; }
+        var f = file.files[0];
+        var st = document.getElementById("kanitAcpSummaryStatus");
+        if(st){ st.textContent = "Mengunggah…"; st.className="acp-summary-status"; }
+        pick.disabled = true;
+        var reader = new FileReader();
+        reader.onload = function(){
+          var dataUrl = String(reader.result||"");
+          var b64 = dataUrl;
+          var comma = b64.indexOf(",");
+          if(comma>=0) b64 = b64.substring(comma+1);
+          var bulanEl = document.getElementById("kanitAcpBulan");
+          var tahunEl = document.getElementById("kanitAcpTahun");
+          google.script.run
+            .withSuccessHandler(function(r){
+              pick.disabled = false;
+              if(!r || r.status!=="OK"){
+                if(st) st.textContent = (r&&r.reason)||"Gagal upload";
+                alert((r&&r.reason)||"Gagal upload Audit Summary");
+                return;
+              }
+              window._kanitAcpSummaryUrl = r.auditSummaryUrl || "";
+              updateKanitAcpSummaryBar_(r.auditSummaryUrl || "");
+              try{ loadKanitAcpList_({ noFallback:true }); }catch(e){}
+            })
+            .withFailureHandler(function(err){
+              pick.disabled = false;
+              if(st) st.textContent = String(err.message||err);
+              alert(String(err.message||err));
+            })
+            .uploadAuditSummaryKanit(session.cabang, session.cabangPin, {
+              bulan: bulanEl ? bulanEl.value : "",
+              tahun: tahunEl ? String(tahunEl.value||"2026").trim() : "2026",
+              file: { name: f.name, mimeType: f.type||"application/pdf", base64: b64 }
+            });
+        };
+        reader.readAsDataURL(f);
+      });
+    }
+  })();
+
 
   function loadKanitAuditRiwayat(){
     var wrap = document.getElementById("kanitAuditRiwayat");
@@ -20838,60 +20976,90 @@ function renderKanitAuditWizard(){
     if(!adminSessionGuard(msg || document.createElement("div"))) return;
     if(_auditApprLoading && !force) return;
     var stEl = document.getElementById("auditPengajuanStatus");
-    var st = stEl ? stEl.value : "Menunggu";
+    var stRaw = stEl ? stEl.value : "Menunggu";
+    var stMap = { "Menunggu":"MENUNGGU", "Disetujui":"APPROVE", "Ditolak":"TOLAK", "SEMUA":"SEMUA" };
+    var st = stMap[stRaw] || "MENUNGGU";
     var wrap = document.getElementById("auditPengajuanList");
     var btn = document.getElementById("auditPengajuanLoadBtn");
     showAuditApprList_();
     if(typeof showSkeleton === "function") showSkeleton(wrap, 3);
-    else if(wrap) wrap.innerHTML = '<div class="empty-log">Memuat antrian...</div>';
+    else if(wrap) wrap.innerHTML = '<div class="empty-log">Memuat antrian ACP…</div>';
     if(btn) btn.disabled = true;
     _auditApprLoading = true;
     google.script.run
       .withSuccessHandler(function(r){
         _auditApprLoading = false;
         if(btn) btn.disabled = false;
-        var wrap = document.getElementById("auditPengajuanList");
         if(!wrap) return;
-        if(!r || r.status !== "OK"){ wrap.innerHTML = '<div class="empty-log">'+escHtml((r&&r.reason)||"Gagal")+'</div>'; return; }
-        var list = r.list || [];
+        if(!r || r.status !== "OK"){
+          wrap.innerHTML = '<div class="empty-log">'+escHtml((r&&r.reason)||"Gagal")+'</div>';
+          return;
+        }
+        var list = r.items || [];
         window.__auditAppr.list = list;
-        if(!list.length){ wrap.innerHTML = '<div class="empty-log">Tidak ada pengajuan.</div>'; return; }
-        wrap.innerHTML = list.map(function(p){
-          var stc = (p.status||"").toLowerCase();
-          var nPel = Number(p.totalPelanggaran||0);
-          var nSup = Number(p.totalSupport||0);
-          return '<div class="appr-list-card" data-id="'+escHtml(p.id)+'">'+
+        if(!list.length){
+          wrap.innerHTML = '<div class="empty-log">Tidak ada antrian surat ACP.</div>';
+          return;
+        }
+        wrap.innerHTML = list.map(function(it){
+          var stc = String(it.suratStatus||"BELUM").toLowerCase();
+          var tipe = it.tipe || "";
+          return '<div class="appr-list-card" data-id="'+escHtml(it.id)+'">'+
             '<div class="appr-list-top">'+
-              '<div class="appr-list-cab">'+escHtml(p.cabang)+'</div>'+
-              '<span class="status-badge '+stc+'">'+escHtml(p.status||"")+'</span>'+
+              '<div class="appr-list-cab">'+escHtml(it.cabang)+' · '+escHtml(it.bulan||"")+' '+escHtml(it.tahun||"")+'</div>'+
+              '<span class="status-badge '+stc+'">'+escHtml(it.suratStatus||"")+'</span>'+
             '</div>'+
-            '<div class="appr-list-sub">'+escHtml(p.tanggalAudit||"")+' · '+escHtml(p.periode||"")+' '+escHtml(p.tahun||"")+' · '+escHtml(p.tw||"")+'</div>'+
-            '<div class="appr-list-counts">'+
-              '<span class="appr-chip pel"><b>'+nPel+'</b> Pelanggaran</span>'+
-              '<span class="appr-chip sup"><b>'+nSup+'</b> Support</span>'+
-            '</div>'+
+            '<div class="appr-list-sub">'+escHtml(tipe)+' · '+escHtml(it.jenisTemuan||"—")+'</div>'+
+            '<div class="appr-list-sub">Petugas: '+escHtml(it.petugas||"—")+' · Faktur: '+escHtml(it.noFaktur||"—")+'</div>'+
             '<div class="appr-list-actions">'+
-              (p.auditSummaryUrl ? '<a class="btn-xs secondary" href="'+escHtml(p.auditSummaryUrl)+'" target="_blank" rel="noopener">Audit Summary</a>' : '')+
-              '<button type="button" class="btn-xs btn-appr-open" data-id="'+escHtml(p.id)+'">Periksa</button>'+
+              (it.auditSummaryUrl ? '<a class="btn-outline-gold" href="'+escHtml(it.auditSummaryUrl)+'" target="_blank" rel="noopener">Summary</a>' : '')+
+              (it.suratUrl ? '<a class="btn-outline-gold" href="'+escHtml(it.suratUrl)+'" target="_blank" rel="noopener">Surat</a>' : '')+
+              (String(it.suratStatus).toUpperCase()==="MENUNGGU"
+                ? '<button type="button" class="btn-outline-gold btn-appr-ok" data-id="'+escHtml(it.id)+'">Approve</button>'+
+                  '<button type="button" class="btn-outline-gold btn-appr-no" data-id="'+escHtml(it.id)+'">Tolak</button>'
+                : '')+
             '</div>'+
           '</div>';
         }).join("");
-
-        wrap.querySelectorAll(".btn-appr-open").forEach(function(b){
+        wrap.querySelectorAll(".btn-appr-ok").forEach(function(b){
           b.addEventListener("click", function(){
             var id = b.getAttribute("data-id");
-            var found = (window.__auditAppr.list || []).filter(function(x){ return String(x.id) === String(id); })[0];
-            if(found) openAuditApprDetail_(found);
+            b.disabled = true;
+            google.script.run
+              .withSuccessHandler(function(r2){
+                b.disabled = false;
+                if(!r2 || r2.status!=="OK"){ alert((r2&&r2.reason)||"Gagal"); return; }
+                loadAuditPengajuanAdmin(true);
+              })
+              .withFailureHandler(function(err){ b.disabled=false; alert(String(err.message||err)); })
+              .setAcpTemuanApproval(session.adminPin, { id: id, action: "APPROVE" });
+          });
+        });
+        wrap.querySelectorAll(".btn-appr-no").forEach(function(b){
+          b.addEventListener("click", function(){
+            var id = b.getAttribute("data-id");
+            var note = prompt("Catatan tolak (wajib):");
+            if(note === null) return;
+            note = String(note||"").trim();
+            if(!note){ alert("Catatan wajib saat tolak"); return; }
+            b.disabled = true;
+            google.script.run
+              .withSuccessHandler(function(r2){
+                b.disabled = false;
+                if(!r2 || r2.status!=="OK"){ alert((r2&&r2.reason)||"Gagal"); return; }
+                loadAuditPengajuanAdmin(true);
+              })
+              .withFailureHandler(function(err){ b.disabled=false; alert(String(err.message||err)); })
+              .setAcpTemuanApproval(session.adminPin, { id: id, action: "TOLAK", note: note });
           });
         });
       })
       .withFailureHandler(function(err){
         _auditApprLoading = false;
         if(btn) btn.disabled = false;
-        var w = document.getElementById("auditPengajuanList");
-        if(w) w.innerHTML = '<div class="empty-log">'+escHtml(String(err.message||err))+'</div>';
+        if(wrap) wrap.innerHTML = '<div class="empty-log">'+escHtml(String(err.message||err))+'</div>';
       })
-      .getAuditPengajuanAdmin(session.adminPin, st);
+      .getAcpTemuanAdmin(session.adminPin, { status: st });
   }
 
   (function wireApprBackList(){
