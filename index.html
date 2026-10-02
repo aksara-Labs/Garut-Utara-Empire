@@ -13234,6 +13234,12 @@ button.admin-topbar-avatar:hover,
       return raw ? JSON.parse(raw) : null;
     }catch(e){ return null; }
   }
+  function kinerjaMonthKey_(){
+    try{
+      var d=new Date();
+      return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+    }catch(e){ return "x"; }
+  }
   function cGet(key, maxAge){
     try{
       var o = cReadRaw_(key);
@@ -14408,7 +14414,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     // jangan blank total — tampilkan cache bila ada
     (function(){
       var cab = (document.getElementById("kinerjaHarianCabang")||{}).value || "Semua Cabang";
-      var cached = cGet(cKey(["kinerja", cab]));
+      var cached = cGet(cKey(["kinerja_v6", kinerjaMonthKey_(), cab]));
       if(cached){
         try{ renderKinerjaHarian(cached, "kinerjaHarianWrap", true, true); kinerjaHarianLoaded = true; }
         catch(e){ document.getElementById("kinerjaHarianWrap").innerHTML = '<div class="empty-log">Siap dimuat.</div>'; kinerjaHarianLoaded = false; }
@@ -14672,7 +14678,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var cabang = document.getElementById("kinerjaHarianCabang").value || "Semua Cabang";
     var wrap = document.getElementById("kinerjaHarianWrap");
     var btn = document.getElementById("kinerjaHarianLoadBtn");
-    var key = cKey(["kinerja_v4", cabang]);
+    var key = cKey(["kinerja_v6", kinerjaMonthKey_(), cabang]);
     var cached = (!forceRefresh) ? cGet(key) : null;
     if (cached) {
       try { renderKinerjaHarian(cached, "kinerjaHarianWrap", true, true); kinerjaHarianLoaded = true; } catch (e) {}
@@ -17462,7 +17468,7 @@ function applyRejectedAlasanFilter_(which){
     clearMsg(msgEl);
     if(!session.cabang || !session.cabangPin){ showMsg(msgEl, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
     var wrap = document.getElementById("kanitKinerjaHarianWrap");
-    var key = cKey(["kinerjaKanit", session.cabang]);
+    var key = cKey(["kinerja_v6", kinerjaMonthKey_(), "kanit", session.cabang]);
     var cached = cGet(key);
     if(cached){ try{ renderKinerjaHarian(cached, "kanitKinerjaHarianWrap", false, true); }catch(e){} }
     else wrap.innerHTML = '<div class="empty-log">Memuat kinerja harian...</div>';
