@@ -2288,16 +2288,22 @@ button.kanit-profile-btn{
 }
 
 
-/* Report Audit Form — layout rapih + tombol kecil */
+/* Report Audit Form — FULL WIDTH (bukan kartu 560px di tengah) */
 #tab-kanitauditreport{
-  max-width: 560px !important;
-  margin: 0 auto !important;
-  padding: 12px 8px 24px !important;
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 8px 4px 20px !important;
+  box-sizing: border-box !important;
 }
 #tab-kanitauditreport .audit-input-box,
-#kanitAuditFormBox{
-  max-width: 100% !important;
-  padding: 16px !important;
+#kanitAuditFormBox,
+#tab-kanitauditreport .acp-shell{
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 16px 18px !important;
+  box-sizing: border-box !important;
 }
 #tab-kanitauditreport #kanitAuditReportBack,
 #tab-kanitauditreport .btn-xs,
@@ -2380,9 +2386,11 @@ button.kanit-profile-btn{
 
 /* Report Audit — polish lanjutan */
 #tab-kanitauditreport{
-  max-width: 520px !important;
-  margin: 0 auto !important;
-  padding: 10px 8px 28px !important;
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 8px 4px 20px !important;
+  box-sizing: border-box !important;
 }
 #tab-kanitauditreport .audit-report-head,
 #tab-kanitauditreport > div:first-of-type{
@@ -2535,9 +2543,12 @@ button.kanit-profile-btn{
     margin: 0 0 0 8px !important; /* rata kiri area konten, bukan center */
   }
   #tab-kanitauditreport{
-    max-width: 680px !important;
-    margin: 0 0 0 8px !important;
-  }
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 8px 4px 20px !important;
+  box-sizing: border-box !important;
+}
 }
 @media (min-width: 1200px){
   #tab-kanitinput,
@@ -2545,8 +2556,12 @@ button.kanit-profile-btn{
     max-width: 720px !important;
   }
   #tab-kanitauditreport{
-    max-width: 760px !important;
-  }
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 8px 4px 20px !important;
+  box-sizing: border-box !important;
+}
 }
 /* Hilangkan panah atas-bawah input number */
 input[type=number]::-webkit-outer-spin-button,
@@ -2562,11 +2577,12 @@ input[type=number]{
 
 @media (min-width: 900px){
   #tab-kanitauditreport{
-    max-width: 680px !important;
-    width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: auto !important;
-  }
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 8px 4px 20px !important;
+  box-sizing: border-box !important;
+}
   #tab-kanitinput,
   #screen-omset-form #tab-kanitinput{
     max-width: 640px !important;
@@ -7950,7 +7966,11 @@ h1, h2, h3, h4, .admin-topbar-title, .auth-brand h1, .auth-card-head h1 {
 
 /* ===== Upload Surat ACP — layout lebar, 1 baris, minim scroll ===== */
 #tab-kanitauditreport{
-  overflow-x: hidden !important;
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 8px 4px 20px !important;
+  box-sizing: border-box !important;
 }
 #tab-kanitauditreport .audit-input-box{
   max-width: none !important;
@@ -8111,8 +8131,9 @@ h1, h2, h3, h4, .admin-topbar-title, .auth-brand h1, .auth-card-head h1 {
   pointer-events: auto !important;
 }
 #tab-kanitauditreport .audit-input-box{
-  max-width: 920px;
-  margin: 0 auto;
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
 }
 #tab-kanitauditreport .kanit-acp-file{
   color: #E2E8F0 !important;
@@ -11768,6 +11789,38 @@ button.admin-topbar-avatar:hover,
   font-size:12.5px !important;
 }
 
+
+/* ===== FORCE FULL WIDTH Upload Surat (override semua max-width lama) ===== */
+#tab-kanitauditreport.panel,
+#tab-kanitauditreport.subpanel,
+#tab-kanitauditreport.active,
+#tab-kanitauditreport{
+  max-width: none !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+#tab-kanitauditreport .audit-input-box,
+#tab-kanitauditreport #kanitAuditFormBox,
+#tab-kanitauditreport .acp-shell{
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+#tab-kanitauditreport .kanit-acp-table-wrap,
+#tab-kanitauditreport table.kanit-acp-table{
+  width: 100% !important;
+  min-width: 0 !important;
+}
+@media (min-width: 900px){
+  #tab-kanitauditreport table.kanit-acp-table tbody td:nth-child(2),
+  #tab-kanitauditreport table.kanit-acp-table tbody td:nth-child(3){
+    white-space: nowrap !important;
+  }
+}
 </style>
 </head>
 <body>
