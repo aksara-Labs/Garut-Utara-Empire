@@ -22911,7 +22911,47 @@ function renderKanitAuditWizard(){
     reader.readAsDataURL(file);
   }
 
+  function openAcpSuratPreview_(id, asAdmin){
+    if(!id) return;
+    var tip = document.createElement("div");
+    tip.textContent = "Memuat preview…";
+    tip.style.cssText = "position:fixed;bottom:20px;right:20px;z-index:99999;background:#0f172a;color:#fff;padding:10px 14px;border-radius:10px;border:1px solid rgba(232,168,106,.4);font-size:12px;";
+    document.body.appendChild(tip);
+    var run = google.script.run
+      .withSuccessHandler(function(r){
+        try{ tip.remove(); }catch(e){}
+        if(!r || r.status!=="OK" || !r.dataUrl){
+          alert((r&&r.reason)||"Gagal preview");
+          return;
+        }
+        var mime = String(r.mimeType||"");
+        if(mime.indexOf("image/")===0){
+          var w = window.open("");
+          if(w){ w.document.write('<img src="'+r.dataUrl+'" style="max-width:100%"/>'); }
+          else {
+            var a=document.createElement("a"); a.href=r.dataUrl; a.target="_blank"; a.click();
+          }
+        } else {
+          var a=document.createElement("a");
+          a.href=r.dataUrl;
+          a.target="_blank";
+          a.download = r.name || "surat.pdf";
+          a.click();
+        }
+      })
+      .withFailureHandler(function(err){
+        try{ tip.remove(); }catch(e){}
+        alert(String(err.message||err));
+      });
+    if(asAdmin){
+      run.getAcpSuratPreview(session.adminPin, id);
+    } else {
+      run.getAcpSuratPreview(session.cabang, session.cabangPin, id, "kanit");
+    }
+  }
+
   var _kanitAcpDraft = {}; // id -> { name, mime, base64 }
+
 
 
   function updateKanitAcpBulkBar_(){
@@ -23076,7 +23116,9 @@ function renderKanitAuditWizard(){
           '<span class="kanit-acp-done">Selesai</span>';
       } else if (st === "MENUNGGU") {
         actions =
-          (it.suratUrl ? '<a class="kanit-acp-btn-link" href="'+escHtml(it.suratUrl)+'" target="_blank" rel="noopener">Lihat</a>' : '')+
+          (it.suratUrl
+            ? '<a class="kanit-acp-btn-link" href="'+escHtml(it.suratUrl)+'" target="_blank" rel="noopener">Lihat</a>'
+            : '<button type="button" class="kanit-acp-btn-link" data-act="preview-server" data-id="'+escHtml(it.id)+'">Lihat</button>')+
           '<button type="button" class="kanit-acp-btn-ghost" data-act="reset" data-id="'+escHtml(it.id)+'">Batalkan</button>';
       } else {
         if (draft) {
@@ -23129,6 +23171,10 @@ function renderKanitAuditWizard(){
             return;
           }
           showKanitAcpPreview_(dr);
+          return;
+        }
+        if (act === "preview-server") {
+          openAcpSuratPreview_(id, false);
           return;
         }
         if (act === "clear") {
@@ -23733,7 +23779,11 @@ function renderKanitAuditWizard(){
         (it.approveNote ? '<div class="appr-note-tolak">Catatan: '+escHtml(it.approveNote)+'</div>' : '')+
         '<footer class="appr-card-foot">'+
           '<div class="appr-links">'+
-            (it.suratUrl ? '<a class="appr-btn appr-btn-ghost" href="'+escHtml(it.suratUrl)+'" target="_blank" rel="noopener">Lihat Surat</a>' : '<span class="appr-muted">Belum ada surat</span>')+
+            (it.suratUrl
+              ? '<a class="appr-btn appr-btn-ghost" href="'+escHtml(it.suratUrl)+'" target="_blank" rel="noopener">Lihat Surat</a>'
+              : (it.hasPreview || it.stagingFileId || stU==="MENUNGGU"
+                  ? '<button type="button" class="appr-btn appr-btn-ghost btn-appr-preview" data-id="'+escHtml(it.id)+'">Lihat Surat</button>'
+                  : '<span class="appr-muted">Belum ada surat</span>'))+
           '</div>'+
           (stU==="MENUNGGU"
             ? '<div class="appr-decide">'+
@@ -23744,6 +23794,11 @@ function renderKanitAuditWizard(){
         '</footer>'+
       '</article>';
     }).join("");
+    body.querySelectorAll(".btn-appr-preview").forEach(function(b){
+      b.addEventListener("click", function(){
+        openAcpSuratPreview_(b.getAttribute("data-id"), true);
+      });
+    });
     body.querySelectorAll(".btn-appr-ok").forEach(function(b){
       b.addEventListener("click", function(){
         var id = b.getAttribute("data-id");
@@ -23754,7 +23809,7 @@ function renderKanitAuditWizard(){
             if(!r2 || r2.status!=="OK"){ alert((r2&&r2.reason)||"Gagal"); return; }
             // update local + re-open detail
             var it = (g.items||[]).filter(function(x){ return String(x.id)===String(id); })[0];
-            if(it) it.suratStatus = "APPROVE";
+            if(it){ it.suratStatus = "APPROVE"; if(r2.suratUrl) it.suratUrl = r2.suratUrl; }
             g.nMenunggu = Math.max(0, g.nMenunggu-1);
             g.nApprove++;
             openAcpCabangDetail_(key);
