@@ -13992,8 +13992,9 @@ button.admin-topbar-avatar:hover,
   align-items: flex-end !important;
   gap: 10px !important;
   flex-wrap: wrap !important;
-  margin: 0 0 14px !important;
+  margin: 0 0 12px !important;
   padding: 0 !important;
+  max-width: 820px !important;
 }
 #auditApprovalView .approval-toolbar #btnBackApprovalAudit{
   height: 34px !important;
@@ -14058,16 +14059,21 @@ button.admin-topbar-avatar:hover,
     max-width: none !important;
   }
 }
+#auditApprovalView #auditApprListPane,
+#auditApprovalView #auditApprDetailPane{
+  max-width: 820px !important;
+  width: 100% !important;
+}
 #auditPengajuanList .appr-cab-card,
 #auditApprovalView .appr-cab-card{
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  gap: 14px !important;
+  gap: 10px !important;
   width: 100% !important;
   max-width: none !important;
-  min-height: 56px !important;
-  padding: 12px 16px !important;
+  min-height: 48px !important;
+  padding: 10px 14px !important;
   margin: 0 !important;
   border-radius: 12px !important;
   border: 1px solid rgba(255,255,255,0.10) !important;
@@ -14080,8 +14086,9 @@ button.admin-topbar-avatar:hover,
   background: rgba(30,41,59,0.92) !important;
 }
 #auditPengajuanList .appr-cab-code{
-  flex: 0 0 86px !important;
-  font-size: 15px !important;
+  flex: 0 0 auto !important;
+  min-width: 72px !important;
+  font-size: 14px !important;
   font-weight: 800 !important;
   color: #FFFFFF !important;
   letter-spacing: 0.04em !important;
@@ -14090,10 +14097,10 @@ button.admin-topbar-avatar:hover,
 #auditPengajuanList .appr-cab-chips,
 #auditApprovalView .appr-cab-chips{
   display: flex !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
   align-items: center !important;
   gap: 6px !important;
-  flex: 1 1 auto !important;
+  flex: 0 1 auto !important;
   min-width: 0 !important;
 }
 #auditPengajuanList .appr-chip,
@@ -14130,7 +14137,8 @@ button.admin-topbar-avatar:hover,
   flex: 0 0 auto !important;
   max-width: none !important;
   height: 26px !important;
-  padding: 0 12px !important;
+  padding: 0 11px !important;
+  margin-left: 4px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -14143,9 +14151,11 @@ button.admin-topbar-avatar:hover,
 }
 #auditPengajuanList .appr-cab-arrow{
   flex: 0 0 auto !important;
-  font-size: 18px !important;
+  margin-left: auto !important;
+  font-size: 16px !important;
   color: #64748B !important;
   line-height: 1 !important;
+  padding-left: 8px !important;
 }
 
 /* Detail halaman */
@@ -22815,6 +22825,11 @@ function renderKanitAuditWizard(){
     var info = document.getElementById("kanitAcpBulkInfo");
     var btn = document.getElementById("kanitAcpKirimSemua");
     if(!bar) return;
+    if(window._kanitAcpSending){
+      bar.style.display = "flex";
+      if(btn){ btn.disabled = true; btn.textContent = "Mengirim…"; }
+      return;
+    }
     var items = window._kanitAcpLastItems || [];
     var need = items.filter(function(it){
       var st = String(it.suratStatus||"BELUM").toUpperCase();
@@ -22823,7 +22838,14 @@ function renderKanitAuditWizard(){
     });
     var ready = 0;
     need.forEach(function(it){ if(_kanitAcpDraft[it.id] && _kanitAcpDraft[it.id].base64) ready++; });
-    if(!window._kanitAcpSummaryReady || !need.length){
+    // Tidak ada yang perlu dikirim → sembunyikan tombol Kirim
+    if(!need.length){
+      bar.style.display = "none";
+      if(btn){ btn.disabled = true; btn.textContent = "Kirim semua"; }
+      if(info) info.textContent = "";
+      return;
+    }
+    if(!window._kanitAcpSummaryReady){
       bar.style.display = "none";
       return;
     }
@@ -23222,6 +23244,7 @@ function renderKanitAuditWizard(){
     if(!btn || btn._wired) return;
     btn._wired = true;
     btn.addEventListener("click", function(){
+      if(window._kanitAcpSending || btn.disabled) return;
       if(!window._kanitAcpSummaryReady){
         alert("Pilih Audit Summary dulu (wajib).");
         return;
@@ -23246,33 +23269,77 @@ function renderKanitAuditWizard(){
         return;
       }
       btn.disabled = true;
-      var done = 0, fail = 0;
+      window._kanitAcpSending = true;
+      btn.textContent = "Mengirim…";
       var info = document.getElementById("kanitAcpBulkInfo");
       var bulanEl = document.getElementById("kanitAcpBulan");
       var tahunEl = document.getElementById("kanitAcpTahun");
-      function sendSurats(){
-        if(!queue.length){
-          btn.disabled = false;
-          window._kanitAcpSummaryDraft = null;
-          if(info) info.textContent = "Selesai: "+done+" surat"+(fail?(", "+fail+" gagal"):"");
-          try{ loadKanitAcpList_({ noFallback:true }); }catch(e){}
-          return;
-        }
-        var job = queue.shift();
-        if(info) info.textContent = "Mengirim surat "+(done+fail+1)+"/"+need+"…";
-        google.script.run
-          .withSuccessHandler(function(r){
-            if(r && r.status==="OK"){ done++; delete _kanitAcpDraft[job.id]; }
-            else fail++;
-            sendSurats();
-          })
-          .withFailureHandler(function(){ fail++; sendSurats(); })
-          .uploadSuratAcpTemuan(session.cabang, session.cabangPin, {
+      function finishSend_(ok, fail){
+        window._kanitAcpSending = false;
+        // Update status lokal → tidak muncul tombol Kirim lagi
+        (window._kanitAcpLastItems || []).forEach(function(it){
+          if(_kanitAcpDraft[it.id]) return; // masih gagal / belum terkirim
+          var st = String(it.suratStatus||"").toUpperCase();
+          if(st==="BELUM" || st==="TOLAK" || st==="SUDAH"){
+            // hanya yang sudah dihapus dari draft = sukses
+          }
+        });
+        try{ updateKanitAcpBulkBar_(); }catch(e){}
+        if(info) info.textContent = "Selesai: "+(ok||0)+" surat"+((fail)?(", "+fail+" gagal"):"");
+        try{ loadKanitAcpList_({ noFallback:true }); }catch(e){}
+      }
+      function sendSuratsBatch(){
+        if(info) info.textContent = "Mengirim "+queue.length+" surat sekaligus…";
+        var files = queue.map(function(job){
+          return {
             id: job.id,
             file: { name: job.draft.name, mimeType: job.draft.mime, base64: job.draft.base64 }
-          });
+          };
+        });
+        google.script.run
+          .withSuccessHandler(function(r){
+            if(!r || r.status!=="OK"){
+              window._kanitAcpSending = false;
+              btn.disabled = false;
+              btn.textContent = "Kirim semua";
+              if(info) info.textContent = "";
+              alert((r&&r.reason)||"Gagal kirim surat");
+              try{ updateKanitAcpBulkBar_(); }catch(e){}
+              return;
+            }
+            var ok = r.ok || 0, fail = r.fail || 0;
+            (r.results||[]).forEach(function(x){
+              if(x && x.status==="OK" && x.id){
+                delete _kanitAcpDraft[x.id];
+                // tandai MENUNGGU di list lokal
+                (window._kanitAcpLastItems||[]).forEach(function(it){
+                  if(String(it.id)===String(x.id)){
+                    it.suratStatus = "MENUNGGU";
+                    it.suratUrl = x.suratUrl || it.suratUrl || "";
+                  }
+                });
+              }
+            });
+            window._kanitAcpSummaryDraft = null;
+            window._kanitAcpSending = false;
+            // Tombol hilang jika semua sudah terkirim
+            try{ renderKanitAcpList(window._kanitAcpLastItems || []); }catch(e){}
+            try{ updateKanitAcpBulkBar_(); }catch(e){}
+            if(info) info.textContent = "Selesai: "+ok+" surat"+(fail?(", "+fail+" gagal"):"");
+            // reload server (background) tanpa mengaktifkan Kirim lagi
+            try{ loadKanitAcpList_({ noFallback:true }); }catch(e){}
+          })
+          .withFailureHandler(function(err){
+            window._kanitAcpSending = false;
+            btn.disabled = false;
+            btn.textContent = "Kirim semua";
+            if(info) info.textContent = "";
+            alert(String(err.message||err));
+            try{ updateKanitAcpBulkBar_(); }catch(e){}
+          })
+          .uploadSuratAcpTemuanBatch(session.cabang, session.cabangPin, { files: files });
       }
-      // 1) Audit Summary ke Drive dulu jika masih draft
+      // 1) Audit Summary ke Drive dulu jika masih draft, lalu batch surat
       if(window._kanitAcpSummaryDraft && window._kanitAcpSummaryDraft.base64 && !window._kanitAcpSummaryUrl){
         if(info) info.textContent = "Mengirim Audit Summary…";
         var sd = window._kanitAcpSummaryDraft;
@@ -23286,7 +23353,7 @@ function renderKanitAuditWizard(){
             window._kanitAcpSummaryUrl = r.auditSummaryUrl || "";
             window._kanitAcpSummaryDraft = null;
             updateKanitAcpSummaryBar_(window._kanitAcpSummaryUrl);
-            sendSurats();
+            sendSuratsBatch();
           })
           .withFailureHandler(function(err){
             btn.disabled = false;
@@ -23298,7 +23365,7 @@ function renderKanitAuditWizard(){
             file: { name: sd.name, mimeType: sd.mime, base64: sd.base64 }
           });
       } else {
-        sendSurats();
+        sendSuratsBatch();
       }
     });
   })();
