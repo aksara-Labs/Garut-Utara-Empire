@@ -4180,6 +4180,31 @@ button.tab-btn.admin-nav-btn{
   display: none !important;
 }
 
+
+/* Progress kirim surat */
+#kanitAcpBulkBar .acp-bulk-left{
+  display:flex; flex-direction:column; gap:6px; flex:1 1 auto; min-width:0;
+}
+#kanitAcpProgWrap{
+  display:flex !important; align-items:center; gap:10px; width:100%; max-width:420px;
+}
+#kanitAcpProgWrap[style*="display: none"],
+#kanitAcpProgWrap[style*="display:none"]{ display:none !important; }
+.acp-prog-track{
+  flex:1 1 auto; height:8px; border-radius:999px;
+  background:rgba(255,255,255,0.08); overflow:hidden;
+  border:1px solid rgba(255,255,255,0.1);
+}
+.acp-prog-fill{
+  height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg,#E8A86A,#f59e0b);
+  transition:width .25s ease;
+}
+.acp-prog-pct{
+  flex:0 0 auto; font-size:11px; font-weight:800; color:#FDE68A;
+  min-width:36px; text-align:right;
+}
+
 </style>
 
 <style>
@@ -14712,7 +14737,13 @@ button.admin-topbar-avatar:hover,
         <div id="kanitAcpList"><div class="acp-empty">Memuat…</div></div>
         <div class="msg" id="kanitAuditReportMsg" style="display:none;margin-top:10px;"></div>
         <div id="kanitAcpBulkBar" class="acp-bulk-bar acp-bulk-sticky" style="display:none;">
-          <div class="acp-bulk-info" id="kanitAcpBulkInfo">0 / 0 file siap</div>
+          <div class="acp-bulk-left">
+            <div class="acp-bulk-info" id="kanitAcpBulkInfo">0 / 0 file siap</div>
+            <div class="acp-prog-wrap" id="kanitAcpProgWrap" style="display:none;">
+              <div class="acp-prog-track"><div class="acp-prog-fill" id="kanitAcpProgFill" style="width:0%"></div></div>
+              <div class="acp-prog-pct" id="kanitAcpProgPct">0%</div>
+            </div>
+          </div>
           <button type="button" id="kanitAcpKirimSemua" class="btn-outline-gold" disabled>Kirim semua</button>
         </div>
       </div>
@@ -22818,7 +22849,70 @@ function renderKanitAuditWizard(){
     var nowB = AUDIT_BULAN[new Date().getMonth()] || "September";
     el.value = nowB;
   }
+  function setKanitAcpProgress_(pct, label){
+    var wrap = document.getElementById("kanitAcpProgWrap");
+    var fill = document.getElementById("kanitAcpProgFill");
+    var pctEl = document.getElementById("kanitAcpProgPct");
+    var info = document.getElementById("kanitAcpBulkInfo");
+    var bar = document.getElementById("kanitAcpBulkBar");
+    if(bar) bar.style.display = "flex";
+    if(wrap) wrap.style.display = "flex";
+    pct = Math.max(0, Math.min(100, Math.round(pct||0)));
+    if(fill) fill.style.width = pct + "%";
+    if(pctEl) pctEl.textContent = pct + "%";
+    if(info && label) info.textContent = label;
+  }
+  function hideKanitAcpProgress_(){
+    var wrap = document.getElementById("kanitAcpProgWrap");
+    if(wrap) wrap.style.display = "none";
+    var fill = document.getElementById("kanitAcpProgFill");
+    if(fill) fill.style.width = "0%";
+  }
+  /** Kompres gambar di browser sebelum upload (percepat Drive) */
+  function compressImageToBase64_(file, maxW, quality, cb){
+    maxW = maxW || 1280;
+    quality = quality || 0.72;
+    var mime = String(file.type||"").toLowerCase();
+    if(mime.indexOf("image/")!==0 || mime.indexOf("png")>=0 && file.size < 400000){
+      // PDF / non-image / png kecil → tanpa kompres
+      var reader = new FileReader();
+      reader.onload = function(){
+        var dataUrl = String(reader.result||"");
+        var b64 = dataUrl; var comma = b64.indexOf(",");
+        if(comma>=0) b64 = b64.substring(comma+1);
+        cb(null, { name: file.name, mime: file.type||"application/pdf", base64: b64, dataUrl: dataUrl });
+      };
+      reader.onerror = function(){ cb("Gagal baca file"); };
+      reader.readAsDataURL(file);
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        try{
+          var w = img.width, h = img.height;
+          if(w > maxW){ h = Math.round(h * maxW / w); w = maxW; }
+          var canvas = document.createElement("canvas");
+          canvas.width = w; canvas.height = h;
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, w, h);
+          var outMime = "image/jpeg";
+          var dataUrl = canvas.toDataURL(outMime, quality);
+          var b64 = dataUrl.substring(dataUrl.indexOf(",")+1);
+          var newName = String(file.name||"surat").replace(/\.(png|webp|jpeg|jpg)$/i, "") + ".jpg";
+          cb(null, { name: newName, mime: outMime, base64: b64, dataUrl: dataUrl });
+        }catch(e){ cb(String(e.message||e)); }
+      };
+      img.onerror = function(){ cb("Gagal load gambar"); };
+      img.src = String(reader.result||"");
+    };
+    reader.onerror = function(){ cb("Gagal baca file"); };
+    reader.readAsDataURL(file);
+  }
+
   var _kanitAcpDraft = {}; // id -> { name, mime, base64 }
+
 
   function updateKanitAcpBulkBar_(){
     var bar = document.getElementById("kanitAcpBulkBar");
@@ -23084,21 +23178,15 @@ function renderKanitAuditWizard(){
         if (!inp.files || !inp.files[0]) return;
         var id = inp.getAttribute("data-id");
         var file = inp.files[0];
-        var reader = new FileReader();
-        reader.onload = function(){
-          var dataUrl = String(reader.result || "");
-          var b64 = dataUrl;
-          var comma = b64.indexOf(",");
-          if (comma >= 0) b64 = b64.substring(comma + 1);
-          _kanitAcpDraft[id] = {
-            name: file.name,
-            mime: file.type || "application/pdf",
-            base64: b64,
-            dataUrl: dataUrl
-          };
-          try { loadKanitAcpList_({ noFallback: true, silent: true }); } catch(e) {}
-        };
-        reader.readAsDataURL(file);
+        compressImageToBase64_(file, 1280, 0.7, function(err, draft){
+          if(err || !draft){ alert(err||"Gagal proses file"); return; }
+          _kanitAcpDraft[id] = draft;
+          try {
+            if (window._kanitAcpLastItems) renderKanitAcpList(window._kanitAcpLastItems);
+            else loadKanitAcpList_({ noFallback: true, silent: true });
+          } catch(e) {}
+          try{ updateKanitAcpBulkBar_(); }catch(e2){}
+        });
       });
     }
   }
@@ -23289,29 +23377,38 @@ function renderKanitAuditWizard(){
         try{ loadKanitAcpList_({ noFallback:true }); }catch(e){}
       }
       function sendSuratsBatch(){
-        if(info) info.textContent = "Mengirim "+queue.length+" surat sekaligus…";
+        var total = queue.length;
         var files = queue.map(function(job){
           return {
             id: job.id,
             file: { name: job.draft.name, mimeType: job.draft.mime, base64: job.draft.base64 }
           };
         });
+        setKanitAcpProgress_(8, "Menyiapkan "+total+" surat…");
+        // Progress simulasi sambil menunggu server (batch 1x)
+        var fake = 8;
+        if(window._kanitAcpProgTimer) clearInterval(window._kanitAcpProgTimer);
+        window._kanitAcpProgTimer = setInterval(function(){
+          fake = Math.min(88, fake + Math.max(1, Math.round(12/Math.max(1,total))));
+          setKanitAcpProgress_(fake, "Mengunggah ke Drive… "+fake+"%");
+        }, 450);
         google.script.run
           .withSuccessHandler(function(r){
+            if(window._kanitAcpProgTimer){ clearInterval(window._kanitAcpProgTimer); window._kanitAcpProgTimer=null; }
             if(!r || r.status!=="OK"){
               window._kanitAcpSending = false;
+              hideKanitAcpProgress_();
               btn.disabled = false;
               btn.textContent = "Kirim semua";
-              if(info) info.textContent = "";
               alert((r&&r.reason)||"Gagal kirim surat");
               try{ updateKanitAcpBulkBar_(); }catch(e){}
               return;
             }
+            setKanitAcpProgress_(100, "Selesai");
             var ok = r.ok || 0, fail = r.fail || 0;
             (r.results||[]).forEach(function(x){
               if(x && x.status==="OK" && x.id){
                 delete _kanitAcpDraft[x.id];
-                // tandai MENUNGGU di list lokal
                 (window._kanitAcpLastItems||[]).forEach(function(it){
                   if(String(it.id)===String(x.id)){
                     it.suratStatus = "MENUNGGU";
@@ -23322,18 +23419,31 @@ function renderKanitAuditWizard(){
             });
             window._kanitAcpSummaryDraft = null;
             window._kanitAcpSending = false;
-            // Tombol hilang jika semua sudah terkirim
+            // Sembunyikan tombol Kirim jika semua sudah terkirim
             try{ renderKanitAcpList(window._kanitAcpLastItems || []); }catch(e){}
             try{ updateKanitAcpBulkBar_(); }catch(e){}
-            if(info) info.textContent = "Selesai: "+ok+" surat"+(fail?(", "+fail+" gagal"):"");
-            // reload server (background) tanpa mengaktifkan Kirim lagi
+            var info = document.getElementById("kanitAcpBulkInfo");
+            if(info) info.textContent = "Terkirim: "+ok+" surat"+(fail?(" · "+fail+" gagal"):"");
+            // Jika tidak ada yang gagal → hilangkan bar kirim setelah 1.2s
+            if(!fail){
+              setTimeout(function(){
+                hideKanitAcpProgress_();
+                var bar = document.getElementById("kanitAcpBulkBar");
+                if(bar) bar.style.display = "none";
+              }, 1200);
+            } else {
+              hideKanitAcpProgress_();
+              btn.disabled = false;
+              try{ updateKanitAcpBulkBar_(); }catch(e){}
+            }
             try{ loadKanitAcpList_({ noFallback:true }); }catch(e){}
           })
           .withFailureHandler(function(err){
+            if(window._kanitAcpProgTimer){ clearInterval(window._kanitAcpProgTimer); window._kanitAcpProgTimer=null; }
             window._kanitAcpSending = false;
+            hideKanitAcpProgress_();
             btn.disabled = false;
             btn.textContent = "Kirim semua";
-            if(info) info.textContent = "";
             alert(String(err.message||err));
             try{ updateKanitAcpBulkBar_(); }catch(e){}
           })
