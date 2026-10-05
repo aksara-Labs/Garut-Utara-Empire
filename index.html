@@ -2617,7 +2617,7 @@ textarea.is-invalid{
    GLOBAL BUTTON UNIFY — outline gold (gaya Pilih file)
    Semua tombol aksi di app: outline, kecil, seragam
    ========================================================= */
-button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.theme-toggle):not(.profile-btn):not(.notif-btn):not(.pin-btn):not(.logo-btn),
+button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.admin-nav-btn):not(.admin-hamburger):not(.theme-toggle):not(.profile-btn):not(.notif-btn):not(.pin-btn):not(.logo-btn):not(.power-btn),
 .btn,
 .btn-xs,
 .btn-sm,
@@ -2660,7 +2660,7 @@ input[type="submit"]{
   box-sizing: border-box !important;
   font-family: inherit !important;
 }
-button:not(.sidebar-item):not(.nav-item):not(.menu-item):hover,
+button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.admin-nav-btn):not(.admin-hamburger):not(.power-btn):hover,
 .btn:hover,
 .btn-xs:hover,
 .btn-sm:hover,
@@ -2997,6 +2997,614 @@ button.admin-sidebar-logout,
 @media (max-width: 720px){
   #tab-kanitauditreport .acp-toolbar .field{ max-width: none !important; flex: 1 1 45% !important; }
   #tab-kanitauditreport .kanit-acp-table-wrap{ max-height: 50vh !important; }
+}
+
+
+/* ========== FASE C: Dashboard Audit KC + Kanit ========== */
+#tab-audit #auditMainView,
+#tab-kanitaudit{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  max-width: 100% !important;
+}
+#tab-audit #auditFilterRow,
+#tab-kanitaudit #kanitAuditFilterRow{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
+  gap: 8px 10px !important;
+  padding: 10px 12px !important;
+  margin: 0 !important;
+  background: rgba(15,23,42,0.45) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+}
+#tab-audit #auditFilterRow .field,
+#tab-kanitaudit #kanitAuditFilterRow .field{
+  margin: 0 !important;
+  min-width: 100px !important;
+  max-width: 150px !important;
+  flex: 1 1 110px !important;
+}
+#tab-audit #auditFilterRow .field label,
+#tab-kanitaudit #kanitAuditFilterRow .field label{
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #94A3B8 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  margin-bottom: 4px !important;
+}
+#tab-audit #auditFilterRow select,
+#tab-kanitaudit #kanitAuditFilterRow select{
+  width: 100% !important;
+  height: 32px !important;
+  font-size: 12px !important;
+  padding: 0 10px !important;
+  border-radius: 9px !important;
+  background: rgba(15,23,42,0.7) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: #F1F5F9 !important;
+}
+#tab-audit #btnOpenApprovalAudit,
+#tab-kanitaudit #kanitAuditReportBtn{
+  margin-left: auto !important;
+  height: 32px !important;
+  padding: 0 14px !important;
+  font-size: 12px !important;
+}
+/* KPI 4 kolom + meta chips */
+#tab-audit .audit-kpi-grid.audit-kpi-v2,
+#tab-kanitaudit .audit-kpi-grid.audit-kpi-v2,
+.audit-kpi-grid.audit-kpi-v2{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  margin: 0 !important;
+}
+#tab-audit .audit-kpi-v2 .audit-kpi,
+#tab-kanitaudit .audit-kpi-v2 .audit-kpi,
+.audit-kpi-v2 .audit-kpi{
+  padding: 12px 14px !important;
+  border-radius: 12px !important;
+  background: rgba(15,23,42,0.55) !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  min-height: 0 !important;
+}
+#tab-audit .audit-kpi-v2 .audit-kpi .k,
+#tab-kanitaudit .audit-kpi-v2 .audit-kpi .k,
+.audit-kpi-v2 .audit-kpi .k{
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #94A3B8 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+#tab-audit .audit-kpi-v2 .audit-kpi .v,
+#tab-kanitaudit .audit-kpi-v2 .audit-kpi .v,
+.audit-kpi-v2 .audit-kpi .v{
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: #F8FAFC !important;
+  margin-top: 4px !important;
+  line-height: 1.15 !important;
+}
+#tab-audit .audit-kpi-v2 .audit-kpi .s,
+#tab-kanitaudit .audit-kpi-v2 .audit-kpi .s,
+.audit-kpi-v2 .audit-kpi .s{
+  font-size: 10px !important;
+  color: #64748B !important;
+  margin-top: 2px !important;
+}
+.audit-kpi-v2 .audit-kpi-pel .v{ color: #FCA5A5 !important; }
+.audit-kpi-v2 .audit-kpi-sup .v{ color: #93C5FD !important; }
+.audit-kpi-v2 .audit-kpi-fr .v{ color: #F0B27A !important; }
+.audit-kpi-v2 .audit-kpi-meta{
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin-top: 2px !important;
+}
+.audit-kpi-v2 .meta-chip{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  height: 28px !important;
+  padding: 0 10px !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #CBD5E1 !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+.audit-kpi-v2 .meta-chip em{
+  font-style: normal !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  color: #64748B !important;
+}
+.audit-kpi-v2 .meta-chip b{
+  color: #E8A86A !important;
+  font-weight: 800 !important;
+  font-variant-numeric: tabular-nums !important;
+}
+/* Charts denser, less empty space */
+#tab-audit .audit-charts.audit-charts-2,
+#tab-kanitaudit .audit-charts.audit-charts-2{
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) !important;
+  gap: 10px !important;
+  margin: 0 !important;
+}
+#tab-audit .audit-charts.audit-charts-3,
+#tab-kanitaudit .audit-charts.audit-charts-3{
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.85fr) !important;
+  gap: 10px !important;
+  margin: 0 !important;
+}
+#tab-audit .audit-card,
+#tab-kanitaudit .audit-card{
+  padding: 12px 14px !important;
+  border-radius: 14px !important;
+  background: rgba(15,23,42,0.5) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  min-height: 0 !important;
+}
+#tab-audit .audit-card h4,
+#tab-kanitaudit .audit-card h4{
+  margin: 0 0 10px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #94A3B8 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+#tab-audit .audit-table-wrap,
+#tab-kanitaudit .audit-table-wrap{
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 12px !important;
+  overflow: auto !important;
+  max-height: min(42vh, 420px) !important;
+  background: rgba(15,23,42,0.35) !important;
+}
+#tab-audit .audit-table thead th,
+#tab-kanitaudit .audit-table thead th{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+  background: #0f172a !important;
+  color: #94A3B8 !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  padding: 10px 10px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+  white-space: nowrap !important;
+}
+#tab-audit .audit-table tbody td,
+#tab-kanitaudit .audit-table tbody td{
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+  color: #E2E8F0 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+#tab-audit .rejected-top3-title,
+#tab-kanitaudit .rejected-top3-title{
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #CBD5E1 !important;
+  margin: 4px 0 0 !important;
+}
+#tab-audit .audit-loading,
+#tab-kanitaudit .audit-loading{
+  font-size: 12px !important;
+  color: #94A3B8 !important;
+  padding: 8px 0 !important;
+}
+@media (max-width: 900px){
+  #tab-audit .audit-charts.audit-charts-2,
+  #tab-audit .audit-charts.audit-charts-3,
+  #tab-kanitaudit .audit-charts.audit-charts-2,
+  #tab-kanitaudit .audit-charts.audit-charts-3{
+    grid-template-columns: 1fr !important;
+  }
+  .audit-kpi-grid.audit-kpi-v2{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  #tab-audit #auditFilterRow .field,
+  #tab-kanitaudit #kanitAuditFilterRow .field{
+    max-width: none !important;
+    flex: 1 1 45% !important;
+  }
+  #tab-audit #btnOpenApprovalAudit,
+  #tab-kanitaudit #kanitAuditReportBtn{
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+
+/* ========== FASE D: Mobile pass — Audit modules ========== */
+@media (max-width: 768px){
+  /* Dashboard Audit */
+  #tab-audit #auditMainView,
+  #tab-kanitaudit{
+    gap: 10px !important;
+    padding-bottom: 16px !important;
+  }
+  #tab-audit #auditFilterRow,
+  #tab-kanitaudit #kanitAuditFilterRow{
+    padding: 10px !important;
+    gap: 8px !important;
+  }
+  #tab-audit #auditFilterRow .field,
+  #tab-kanitaudit #kanitAuditFilterRow .field{
+    flex: 1 1 calc(50% - 8px) !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+  #tab-audit #auditLoadBtn,
+  #tab-audit #auditRefreshBtn,
+  #tab-kanitaudit #kanitAuditLoadBtn,
+  #tab-kanitaudit #kanitAuditRefreshBtn{
+    flex: 0 0 auto !important;
+  }
+  #tab-audit #btnOpenApprovalAudit,
+  #tab-kanitaudit #kanitAuditReportBtn{
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-top: 2px !important;
+  }
+  .audit-kpi-grid.audit-kpi-v2{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  .audit-kpi-v2 .audit-kpi .v{
+    font-size: 18px !important;
+  }
+  .audit-kpi-v2 .audit-kpi-meta{
+    gap: 6px !important;
+  }
+  .audit-kpi-v2 .meta-chip{
+    font-size: 10px !important;
+    height: 26px !important;
+    padding: 0 8px !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  #tab-audit .audit-charts.audit-charts-2,
+  #tab-audit .audit-charts.audit-charts-3,
+  #tab-kanitaudit .audit-charts.audit-charts-2,
+  #tab-kanitaudit .audit-charts.audit-charts-3{
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  #tab-audit .audit-card,
+  #tab-kanitaudit .audit-card{
+    padding: 10px 12px !important;
+  }
+  #tab-audit .audit-vbar-wrap,
+  #tab-kanitaudit .audit-vbar-wrap{
+    height: 100px !important;
+  }
+  #tab-audit .audit-table-wrap,
+  #tab-kanitaudit .audit-table-wrap{
+    max-height: 50vh !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  #tab-audit .audit-table,
+  #tab-kanitaudit .audit-table{
+    min-width: 520px !important; /* horizontal scroll, jangan remuk */
+  }
+
+  /* Report Audit Kanit */
+  #tab-kanitauditreport .acp-page-head{
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  #tab-kanitauditreport .acp-page-title{
+    font-size: 15px !important;
+  }
+  #tab-kanitauditreport .acp-shell{
+    padding: 10px !important;
+    border-radius: 12px !important;
+  }
+  #tab-kanitauditreport .acp-toolbar{
+    gap: 8px !important;
+  }
+  #tab-kanitauditreport .acp-toolbar .field{
+    flex: 1 1 calc(50% - 8px) !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+  #tab-kanitauditreport .acp-toolbar #kanitAcpLoadBtn{
+    flex: 1 1 100% !important;
+  }
+  #tab-kanitauditreport .acp-summary-card{
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+  #tab-kanitauditreport .acp-sum-right{
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+  #tab-kanitauditreport .acp-kpi-chips{
+    gap: 6px !important;
+  }
+  #tab-kanitauditreport .acp-kpi-chips .chip{
+    font-size: 10px !important;
+    height: 26px !important;
+    padding: 0 8px !important;
+  }
+  #tab-kanitauditreport .kanit-acp-table-wrap{
+    max-height: 45vh !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  #tab-kanitauditreport .kanit-acp-table{
+    min-width: 560px !important;
+  }
+  #tab-kanitauditreport .kanit-acp-actions{
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 4px !important;
+  }
+  #tab-kanitauditreport .kanit-acp-actions .kanit-acp-btn-primary,
+  #tab-kanitauditreport .kanit-acp-actions .kanit-acp-btn-ghost,
+  #tab-kanitauditreport .kanit-acp-actions .kanit-acp-btn-link{
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  #tab-kanitauditreport .acp-bulk-sticky{
+    position: sticky !important;
+    bottom: 8px !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  #tab-kanitauditreport .acp-bulk-sticky #kanitAcpKirimSemua{
+    flex: 1 1 100% !important;
+  }
+
+  /* Approval Audit KC */
+  #auditApprovalView .approval-toolbar{
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+  #auditApprovalView .approval-filters{
+    gap: 8px !important;
+  }
+  #auditApprovalView .approval-filters .field{
+    flex: 1 1 calc(50% - 8px) !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+  #auditPengajuanList{
+    max-width: none !important;
+    gap: 8px !important;
+  }
+  #auditPengajuanList .appr-cab-card{
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+  #auditPengajuanList .appr-cab-code{
+    font-size: 14px !important;
+  }
+  #auditPengajuanList .appr-cab-period{
+    font-size: 11px !important;
+  }
+  #auditPengajuanList .appr-cab-nums{
+    font-size: 10px !important;
+  }
+  #auditApprDetailBody{
+    max-width: none !important;
+  }
+  #auditApprDetailBody .appr-card{
+    padding: 12px !important;
+  }
+  #auditApprDetailBody .appr-card-foot{
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  #auditApprDetailBody .appr-decide{
+    width: 100% !important;
+  }
+  #auditApprDetailBody .appr-decide .appr-btn{
+    flex: 1 1 auto !important;
+  }
+  #auditApprDetailBody .appr-meta-row{
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+
+  /* Preview modal mobile */
+  .kanit-acp-preview-modal{
+    width: calc(100vw - 24px) !important;
+    max-width: 100% !important;
+    max-height: 85vh !important;
+  }
+  .kanit-acp-preview-body img,
+  .kanit-acp-preview-body iframe{
+    max-height: 60vh !important;
+  }
+}
+
+@media (max-width: 400px){
+  .audit-kpi-grid.audit-kpi-v2{
+    grid-template-columns: 1fr 1fr !important;
+  }
+  #tab-audit #auditFilterRow .field,
+  #tab-kanitaudit #kanitAuditFilterRow .field{
+    flex: 1 1 100% !important;
+  }
+}
+
+
+/* ===== FIX SIDEBAR KLIK MENU ===== */
+.admin-sidebar,
+.admin-sidebar *{
+  pointer-events: auto !important;
+}
+.admin-sidebar .admin-nav-btn,
+.admin-sidebar .tab-btn.admin-nav-btn,
+button.admin-nav-btn,
+button.tab-btn.admin-nav-btn{
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 2 !important;
+  /* jangan kena global outline gold */
+  height: auto !important;
+  min-height: 40px !important;
+  max-height: none !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding: 10px 12px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  background: transparent !important;
+  color: rgba(255,255,255,0.82) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  box-shadow: none !important;
+}
+.admin-sidebar .admin-nav-btn:hover,
+.admin-sidebar .tab-btn.admin-nav-btn:hover{
+  background: rgba(255,255,255,0.07) !important;
+  color: #fff !important;
+  border: none !important;
+}
+.admin-sidebar .admin-nav-btn.active,
+.admin-sidebar .tab-btn.admin-nav-btn.active{
+  background: rgba(232,168,106,0.2) !important;
+  color: #F0C090 !important;
+  border: none !important;
+  font-weight: 700 !important;
+}
+/* Overlay jangan nutup sidebar di desktop */
+@media (min-width: 880px){
+  .admin-sidebar-overlay{
+    display: none !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+  }
+  .admin-sidebar{
+    transform: none !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+  }
+}
+/* Mobile: overlay di BAWAH sidebar (z-index) */
+@media (max-width: 879px){
+  .admin-sidebar-overlay.open{
+    z-index: 450 !important;
+  }
+  .admin-sidebar.open{
+    z-index: 460 !important;
+    transform: translate3d(0,0,0) !important;
+    pointer-events: auto !important;
+  }
+}
+
+
+/* ===== NUCLEAR FIX: SIDEBAR HARUS BISA DIKLIK ===== */
+.admin-sidebar-overlay:not(.open){
+  display: none !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  z-index: -1 !important;
+}
+.admin-sidebar-overlay.open{
+  display: block !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  z-index: 450 !important;
+}
+.admin-sidebar,
+#adminSidebar,
+#kanitSidebar{
+  pointer-events: auto !important;
+  visibility: visible !important;
+}
+.admin-sidebar .admin-nav-btn,
+.admin-sidebar button.tab-btn,
+#adminSidebar button,
+#kanitSidebar button{
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 5 !important;
+  position: relative !important;
+  touch-action: manipulation !important;
+}
+.admin-sidebar .admin-nav-icon,
+.admin-sidebar .admin-nav-icon *,
+.admin-sidebar svg{
+  pointer-events: none !important;
+}
+@media (min-width: 880px){
+  .admin-sidebar-overlay,
+  #adminSidebarOverlay,
+  #kanitSidebarOverlay{
+    display: none !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    z-index: -1 !important;
+  }
+  .admin-sidebar,
+  #adminSidebar,
+  #kanitSidebar{
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 252px !important;
+    max-width: 252px !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    transform: none !important;
+    translate: none !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    z-index: 5000 !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow-y: auto !important;
+  }
+  .admin-main{
+    margin-left: 252px !important;
+    width: calc(100% - 252px) !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+}
+@media (max-width: 879px){
+  .admin-sidebar:not(.open),
+  #adminSidebar:not(.open),
+  #kanitSidebar:not(.open){
+    transform: translate3d(-105%,0,0) !important;
+    pointer-events: none !important;
+  }
+  .admin-sidebar.open,
+  #adminSidebar.open,
+  #kanitSidebar.open{
+    transform: translate3d(0,0,0) !important;
+    pointer-events: auto !important;
+    z-index: 5000 !important;
+  }
 }
 
 </style>
@@ -20251,29 +20859,26 @@ function applyRejectedAlasanFilter_(which){
     var jen = (d.jenisTerbanyak && d.jenisTerbanyak.key) ? d.jenisTerbanyak : { key: "-", count: 0 };
     var tipeLabel = d.filterTipe && d.filterTipe !== "SEMUA" ? d.filterTipe : "Semua";
     try {
-      var tf = document.getElementById("auditTipeFilter");
+      var tf = document.getElementById("auditTipeFilter") || document.getElementById("kanitAuditTipeFilter");
       if (tf && tf.value) tipeLabel = tf.value === "SEMUA" ? "Semua" : tf.value;
     } catch (e) {}
-    var hint = d.hintFilter || "";
     function shortName(s, n){
       s = String(s || "-");
       return s.length > (n||22) ? s.slice(0, n-1) + "…" : s;
     }
+    el.className = "audit-kpi-grid audit-kpi-v2";
     el.innerHTML =
-      '<div class="audit-kpi"><div class="k">Ditampilkan</div><div class="v">'+d.total+'</div><div class="s">filter: '+escHtml(tipeLabel)+'</div></div>'+
-      '<div class="audit-kpi audit-kpi-pel"><div class="k">Pelanggaran</div><div class="v" style="color:#FCA5A5;">'+nPel+'</div><div class="s">seluruh periode</div></div>'+
-      '<div class="audit-kpi audit-kpi-sup"><div class="k">Support</div><div class="v" style="color:#93C5FD;">'+nSup+'</div><div class="s">seluruh periode</div></div>'+
-      '<div class="audit-kpi"><div class="k">Fraud</div><div class="v" style="color:#F0B27A;">'+nFr+'</div><div class="s">seluruh periode</div></div>'+
-      '<div class="audit-kpi"><div class="k">Cabang terbanyak</div><div class="v" style="font-size:14px;">'+escHtml(shortName(cab.key,16))+'</div><div class="s">'+(cab.count||0)+' · '+escHtml(tipeLabel)+'</div></div>'+
-      '<div class="audit-kpi"><div class="k">Jenis terbanyak</div><div class="v" style="font-size:12px;" title="'+escHtml(jen.key||"-")+'">'+escHtml(shortName(jen.key,28))+'</div><div class="s">'+(jen.count||0)+' · '+escHtml(tipeLabel)+'</div></div>'+
-      '<div class="audit-kpi"><div class="k">Petugas terbanyak</div><div class="v" style="font-size:13px;">'+escHtml(shortName(pet.key,20))+'</div><div class="s">'+(pet.count||0)+' · '+escHtml(tipeLabel)+'</div></div>'+
-      (hint ? '<div style="grid-column:1/-1;font-size:11px;color:#94A3B8;margin-top:2px;">'+escHtml(hint)+'</div>' : '');
+      '<div class="audit-kpi audit-kpi-pel"><div class="k">Pelanggaran</div><div class="v">'+nPel+'</div></div>'+
+      '<div class="audit-kpi audit-kpi-sup"><div class="k">Support</div><div class="v">'+nSup+'</div></div>'+
+      '<div class="audit-kpi audit-kpi-fr"><div class="k">Fraud</div><div class="v">'+nFr+'</div></div>'+
+      '<div class="audit-kpi"><div class="k">Total</div><div class="v">'+d.total+'</div><div class="s">'+escHtml(tipeLabel)+'</div></div>'+
+      '<div class="audit-kpi-meta">'+
+        '<span class="meta-chip"><em>Cabang</em> '+escHtml(shortName(cab.key,14))+' <b>'+(cab.count||0)+'</b></span>'+
+        '<span class="meta-chip"><em>Jenis</em> '+escHtml(shortName(jen.key,20))+' <b>'+(jen.count||0)+'</b></span>'+
+        '<span class="meta-chip"><em>Petugas</em> '+escHtml(shortName(pet.key,16))+' <b>'+(pet.count||0)+'</b></span>'+
+      '</div>';
   }
-  function fillDatalist(id, arr){
-    var el = document.getElementById(id);
-    if(!el) return;
-    el.innerHTML = (arr||[]).map(function(x){ return '<option value="'+String(x).replace(/"/g,'&quot;')+'">'; }).join("");
-  }
+
   function renderAuditAdmin(d){
     renderAuditKpi(document.getElementById("auditKpi"), d);
     renderVBars(document.getElementById("auditTren"), d.trenBulan);
@@ -20451,6 +21056,90 @@ function applyRejectedAlasanFilter_(which){
   })();
 
   var auditLoadBtn = document.getElementById("auditLoadBtn");
+
+
+  
+  (function fixSidebarClicks(){
+    function closeAllSidebars(){
+      document.querySelectorAll(".admin-sidebar").forEach(function(s){
+        s.classList.remove("open"); s.classList.remove("show"); s.classList.remove("active");
+      });
+      document.querySelectorAll(".admin-sidebar-overlay").forEach(function(o){
+        o.classList.remove("open");
+      });
+      try{ document.body.classList.remove("sidebar-open"); }catch(e){}
+      try{ document.body.style.overflow = ""; }catch(e){}
+    }
+    // Overlay close only
+    document.querySelectorAll(".admin-sidebar-overlay").forEach(function(overlay){
+      if(overlay._fixWired) return;
+      overlay._fixWired = true;
+      overlay.addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        closeAllSidebars();
+      });
+    });
+    // Desktop: pastikan overlay tidak open
+    if(window.innerWidth >= 880){
+      closeAllSidebars();
+    }
+    // CAPTURE phase — pastikan klik menu selalu jalan
+    if(!document._navCaptureWired){
+      document._navCaptureWired = true;
+      document.addEventListener("click", function(ev){
+        var btn = ev.target && ev.target.closest && ev.target.closest("button.admin-nav-btn, button.tab-btn.admin-nav-btn");
+        if(!btn) return;
+        var tab = btn.getAttribute("data-tab");
+        if(!tab) return;
+        // Jangan blok listener lain — hanya pastikan panel aktif
+        try{
+          var scope = btn.closest(".screen") || document;
+          scope.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
+          scope.querySelectorAll(".subpanel").forEach(function(p){
+            p.classList.remove("active");
+            try{ p.style.removeProperty("display"); }catch(e){}
+          });
+          btn.classList.add("active");
+          var panel = scope.querySelector("#tab-" + tab) || document.getElementById("tab-" + tab);
+          if(panel){
+            panel.classList.add("active");
+            try{ panel.style.display = "block"; panel.style.visibility = "visible"; }catch(e){}
+          }
+          // tutup sidebar mobile setelah pilih
+          if(window.innerWidth < 880) closeAllSidebars();
+          // title
+          try{
+            var lab = btn.querySelector(".admin-nav-label");
+            var titleText = lab ? lab.textContent.trim() : "";
+            var at = document.getElementById("adminTopbarTitle");
+            var kt = document.getElementById("kanitTopbarTitle");
+            if(at && titleText && btn.closest("#adminSidebar")) at.textContent = titleText;
+            if(kt && titleText && btn.closest("#kanitSidebar")) kt.textContent = titleText;
+          }catch(e){}
+        }catch(err){}
+      }, true);
+    }
+  })();
+
+
+  (function wireAuditFilterAuto(){
+    ["auditCabang","auditBulanMulai","auditBulanAkhir","auditPetugas","auditTipeFilter"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && !el._autoWired){
+        el._autoWired = true;
+        el.addEventListener("change", function(){ try{ loadAuditAdmin(true); }catch(e){} });
+      }
+    });
+    ["kanitAuditBulanMulai","kanitAuditBulanAkhir","kanitAuditPetugas","kanitAuditTipeFilter"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && !el._autoWired){
+        el._autoWired = true;
+        el.addEventListener("change", function(){ try{ loadAuditKanit(true); }catch(e){} });
+      }
+    });
+  })();
+
   if(auditLoadBtn) auditLoadBtn.addEventListener("click", function(){ loadAuditAdmin(true); });
   var auditRefreshBtn = document.getElementById("auditRefreshBtn");
   if(auditRefreshBtn) auditRefreshBtn.addEventListener("click", function(){ loadAuditAdmin(true); });
