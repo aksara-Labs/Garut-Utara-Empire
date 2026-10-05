@@ -6,7 +6,7 @@
   2. Deploy New version (Apps Script) atau push (GitHub Pages)
   3. Hard refresh Ctrl+Shift+R
   4. Login NIK + PIN 123456
-  5. Console: [MyDashboard] build FULLW-20260922
+  5. Console: [MyDashboard] build SIDEBAR-FIX-20261005
 -->
 <head>
 <title>MyDashboard — Garut Utara Empire</title>
@@ -353,6 +353,7 @@ html,body{background:#0B0D10!important;color:#E5E7EB!important;margin:0;font-fam
 #dashSelisihCard.selisih-beda .admin-stat-value{ color:#FCA5A5!important; }
 #dashSelisihCard.selisih-sama .admin-stat-value{ color:#86EFAC!important; }
 .dash-selisih-overlay{
+  display:none;
   position:fixed; inset:0; z-index:9999;
   background:rgba(0,0,0,0.55); backdrop-filter:blur(4px);
   display:flex; align-items:center; justify-content:center; padding:16px;
@@ -3604,6 +3605,60 @@ button.tab-btn.admin-nav-btn{
     transform: translate3d(0,0,0) !important;
     pointer-events: auto !important;
     z-index: 5000 !important;
+  }
+}
+
+
+/* Hamburger + mobile sidebar MUST work */
+.admin-hamburger,
+#adminHamburgerBtn,
+#kanitHamburgerBtn{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 7000 !important;
+  position: relative !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #E8A86A !important;
+  padding: 0 !important;
+}
+.admin-hamburger svg,
+#adminHamburgerBtn svg,
+#kanitHamburgerBtn svg{
+  pointer-events: none !important;
+  width: 22px !important;
+  height: 22px !important;
+}
+@media (min-width: 880px){
+  .admin-hamburger,
+  #adminHamburgerBtn,
+  #kanitHamburgerBtn{
+    display: none !important;
+  }
+}
+@media (max-width: 879px){
+  .admin-sidebar.open,
+  #adminSidebar.open,
+  #kanitSidebar.open{
+    transform: translate3d(0,0,0) !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    z-index: 6000 !important;
+  }
+  .admin-sidebar-overlay.open,
+  #adminSidebarOverlay.open,
+  #kanitSidebarOverlay.open{
+    display: block !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 5500 !important;
   }
 }
 
@@ -13634,7 +13689,7 @@ button.admin-topbar-avatar:hover,
 </aside>
       <div class="admin-main">
         <div class="admin-topbar">
-          <button class="admin-hamburger" id="kanitHamburgerBtn" type="button" aria-label="Menu">
+          <button class="admin-hamburger" id="kanitHamburgerBtn" type="button" aria-label="Menu" onclick="try{if(window.__toggleKanitSidebar)window.__toggleKanitSidebar();else{var s=document.getElementById('kanitSidebar');var o=document.getElementById('kanitSidebarOverlay');if(s){s.classList.toggle('open');s.style.transform=s.classList.contains('open')?'translate3d(0,0,0)':'translate3d(-105%,0,0)';s.style.pointerEvents=s.classList.contains('open')?'auto':'none';s.style.zIndex='6000';}if(o){o.classList.toggle('open');o.style.display=o.classList.contains('open')?'block':'none';o.style.pointerEvents=o.classList.contains('open')?'auto':'none';}} }catch(e){}">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
           </button>
           <div class="admin-topbar-title" id="kanitTopbarTitle">Input Omset</div>
@@ -13977,7 +14032,7 @@ button.admin-topbar-avatar:hover,
 
       <div class="admin-main">
         <div class="admin-topbar">
-          <button class="admin-hamburger" id="adminHamburgerBtn" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="adminSidebar">
+          <button class="admin-hamburger" id="adminHamburgerBtn" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="adminSidebar" onclick="try{if(window.__toggleAdminSidebar)window.__toggleAdminSidebar();else{var s=document.getElementById('adminSidebar');var o=document.getElementById('adminSidebarOverlay');if(s){s.classList.toggle('open');s.style.transform=s.classList.contains('open')?'translate3d(0,0,0)':'translate3d(-105%,0,0)';s.style.pointerEvents=s.classList.contains('open')?'auto':'none';s.style.zIndex='6000';}if(o){o.classList.toggle('open');o.style.display=o.classList.contains('open')?'block':'none';o.style.pointerEvents=o.classList.contains('open')?'auto':'none';}} }catch(e){}">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
           </button>
           <div class="admin-topbar-title" id="adminTopbarTitle">Dashboard</div>
@@ -14867,6 +14922,18 @@ button.admin-topbar-avatar:hover,
 </div>
 
 <script>
+/* Safe event binder — jangan crash kalau elemen null */
+function $on(id, type, fn, opts){
+  try{
+    var el = typeof id === "string" ? document.getElementById(id) : id;
+    if(!el || !el.addEventListener) return null;
+    el.addEventListener(type, fn, opts || false);
+    return el;
+  }catch(e){ return null; }
+}
+function $el(id){ try{ return document.getElementById(id); }catch(e){ return null; } }
+
+
   try{ document.documentElement.removeAttribute("data-theme"); localStorage.removeItem("theme"); }catch(e){}
 
   // ============================================================
@@ -15563,7 +15630,7 @@ button.admin-topbar-avatar:hover,
     document.getElementById("cabangPinInput").focus();
   }
 
-  document.getElementById("backFromCabangPin").addEventListener("click", function(){
+  $on("backFromCabangPin", "click", function(){
     session.cabang = null;
     showScreen("screen-landing");
   });
@@ -15693,7 +15760,7 @@ button.admin-topbar-avatar:hover,
     if(nikEl) nikEl.addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); if(pinEl) pinEl.focus(); } });
   })();
 
-document.getElementById("cabangPinSubmit").addEventListener("click", function(){
+$on("cabangPinSubmit", "click", function(){
     var pin = document.getElementById("cabangPinInput").value.trim();
     var msgEl = document.getElementById("cabangPinMsg");
     if(!/^\d{4}$/.test(pin)){ showMsg(msgEl, "PIN harus 4 digit angka.", "err"); return; }
@@ -15724,17 +15791,17 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       .verifyCabangPin(session.cabang, pin);
   });
 
-  document.getElementById("showChangeCabangPin").addEventListener("click", function(){
+  $on("showChangeCabangPin", "click", function(){
     document.getElementById("cabangLoginBlock").style.display = "none";
     document.getElementById("cabangChangeBlock").style.display = "block";
     clearMsg(document.getElementById("cabangChangeMsg"));
   });
-  document.getElementById("showLoginCabangPin").addEventListener("click", function(){
+  $on("showLoginCabangPin", "click", function(){
     document.getElementById("cabangChangeBlock").style.display = "none";
     document.getElementById("cabangLoginBlock").style.display = "block";
   });
 
-  document.getElementById("cabangChangeSubmit").addEventListener("click", function(){
+  $on("cabangChangeSubmit", "click", function(){
     var oldPin = document.getElementById("cabangOldPin").value.trim();
     var n1 = document.getElementById("cabangNewPin1").value.trim();
     var n2 = document.getElementById("cabangNewPin2").value.trim();
@@ -15799,7 +15866,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     }
   }
 
-  document.getElementById("logoutFromForm").addEventListener("click", function(){
+  $on("logoutFromForm", "click", function(){
     session.cabang = null;
     session.cabangPin = null;
     session.sessionToken = null;
@@ -16115,29 +16182,31 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
 
     // Tanggal beda dari hari ini -> tampilkan peringatan & wajib centang dulu
     // sebelum tombol "Ya, Kirim ke Sheets" bisa diklik. Kalau sama, aman, langsung aktif.
-    dateWarningCheck.checked = false;
+    if(dateWarningCheck) dateWarningCheck.checked = false;
     if(tanggal !== todayStr()){
-      dateWarningText.innerHTML = '⚠️ Tanggal yang dipilih (<b>'+formatTanggalDisplay(tanggal)+'</b>) berbeda dengan hari ini (<b>'+formatTanggalDisplay(todayStr())+'</b>).';
-      dateWarningEl.style.display = "block";
-      modalConfirm.disabled = true;
+      if(dateWarningText) dateWarningText.innerHTML = '⚠️ Tanggal yang dipilih (<b>'+formatTanggalDisplay(tanggal)+'</b>) berbeda dengan hari ini (<b>'+formatTanggalDisplay(todayStr())+'</b>).';
+      if(dateWarningEl) dateWarningEl.style.display = "block";
+      if(modalConfirm) modalConfirm.disabled = true;
     } else {
-      dateWarningEl.style.display = "none";
-      modalConfirm.disabled = false;
+      if(dateWarningEl) dateWarningEl.style.display = "none";
+      if(modalConfirm) modalConfirm.disabled = false;
     }
 
-    modalOverlay.classList.add("show");
+    if(modalOverlay) modalOverlay.classList.add("show");
   });
 
   var dateWarningEl = document.getElementById("dateWarning");
   var dateWarningText = document.getElementById("dateWarningText");
   var dateWarningCheck = document.getElementById("dateWarningCheck");
-  dateWarningCheck.addEventListener("change", function(){
-    modalConfirm.disabled = !dateWarningCheck.checked;
-  });
+  if(dateWarningCheck){
+    dateWarningCheck.addEventListener("change", function(){
+      if(modalConfirm) modalConfirm.disabled = !dateWarningCheck.checked;
+    });
+  }
 
-  modalCancel.addEventListener("click", function(){ modalOverlay.classList.remove("show"); pendingData = null; });
-  modalConfirm.addEventListener("click", function(){ if(modalConfirm.disabled) return; modalOverlay.classList.remove("show"); if(pendingData) doActualSubmit(); });
-  modalOverlay.addEventListener("click", function(ev){ if(ev.target === modalOverlay){ modalOverlay.classList.remove("show"); pendingData = null; } });
+  if(modalCancel) modalCancel.addEventListener("click", function(){ if(modalOverlay) modalOverlay.classList.remove("show"); pendingData = null; });
+  if(modalConfirm) modalConfirm.addEventListener("click", function(){ if(modalConfirm.disabled) return; if(modalOverlay) modalOverlay.classList.remove("show"); if(pendingData) doActualSubmit(); });
+  if(modalOverlay) modalOverlay.addEventListener("click", function(ev){ if(ev.target === modalOverlay){ modalOverlay.classList.remove("show"); pendingData = null; } });
 
   // ---------------- Admin gate ----------------
   var _gearBtn = document.getElementById("gearBtn");
@@ -16147,11 +16216,13 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     showScreen("screen-admin-pin");
     document.getElementById("adminPinInput").focus();
   });
-  document.getElementById("backFromAdminPin").addEventListener("click", function(){
+  var _backAdminPin = document.getElementById("backFromAdminPin");
+  if(_backAdminPin) _backAdminPin.addEventListener("click", function(){
     showScreen("screen-landing");
   });
 
-  document.getElementById("adminPinSubmit").addEventListener("click", function(){
+  var _adminPinSubmit = document.getElementById("adminPinSubmit");
+  if(_adminPinSubmit) _adminPinSubmit.addEventListener("click", function(){
     var pin = document.getElementById("adminPinInput").value.trim();
     var msgEl = document.getElementById("adminPinMsg");
     if(!/^\d{6}$/.test(pin)){ showMsg(msgEl, "PIN admin harus 6 digit angka.", "err"); return; }
@@ -16183,7 +16254,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       .verifyAdminPin(pin);
   });
 
-  document.getElementById("logoutFromAdmin").addEventListener("click", function(){
+  $on("logoutFromAdmin", "click", function(){
     session.adminPin = null;
     session.sessionToken = null;
     try{ stopAdminNotifPoll(); }catch(e){}
@@ -16564,7 +16635,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       .getKinerjaHarian(session.adminPin, cabang, !!forceRefresh, getKinerjaBulanYm_(false));
   }
 
-  document.getElementById("kinerjaHarianLoadBtn").addEventListener("click", function(){
+  $on("kinerjaHarianLoadBtn", "click", function(){
     // Klik manual "Tampilkan" SELALU baca langsung dari sheet (lewati cache
     // warm-trigger yang bisa ketinggalan sampai ~10 menit) -- supaya data
     // yang baru saja diinput Kanit langsung kelihatan, gak ketiban cache lama.
@@ -16783,7 +16854,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
   }
 
   // Admin: pilih cabang (atau Total Area) + bulan.
-  document.getElementById("menuHarianLoadBtn").addEventListener("click", function(){
+  $on("menuHarianLoadBtn", "click", function(){
     var msgEl = document.getElementById("menuHarianMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -16815,7 +16886,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
   });
 
   // Kanit: dikunci ke cabang sendiri, cuma pilih bulan.
-  document.getElementById("kanitMenuHarianLoadBtn").addEventListener("click", function(){
+  $on("kanitMenuHarianLoadBtn", "click", function(){
     var msgEl = document.getElementById("kanitMenuHarianMsg");
     clearMsg(msgEl);
     if(!session.cabang || !session.cabangPin){ showMsg(msgEl, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
@@ -17056,7 +17127,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       })
       .submitCuti(session.cabang, session.cabangPin, kar, tgl, tgl, "Cuti", "");
   }
-  document.getElementById("kanitLiburActionPopup").addEventListener("click", function(e){
+  $on("kanitLiburActionPopup", "click", function(e){
     var btn = e.target.closest("button[data-act]");
     if(!btn) return;
     var act = btn.getAttribute("data-act");
@@ -17074,7 +17145,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     }
   });
 
-  document.getElementById("kanitJadwalLiburLoadBtn").addEventListener("click", function(){
+  $on("kanitJadwalLiburLoadBtn", "click", function(){
     var msgEl = document.getElementById("kanitJadwalLiburMsg");
     clearMsg(msgEl);
     if(!session.cabang || !session.cabangPin){ showMsg(msgEl, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
@@ -17110,7 +17181,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       .getJadwalLiburKanit(session.cabang, session.cabangPin, bulan);
   });
 
-  document.getElementById("kanitJadwalLiburSaveBtn").addEventListener("click", function(){
+  $on("kanitJadwalLiburSaveBtn", "click", function(){
     var msgEl = document.getElementById("kanitJadwalLiburMsg");
     clearMsg(msgEl);
     if(!session.cabang || !session.cabangPin){ showMsg(msgEl, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
@@ -17141,7 +17212,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
   });
 
   // Admin: Jadwal Libur read-only, pilih cabang + bulan.
-  document.getElementById("jadwalLiburLoadBtn").addEventListener("click", function(){
+  $on("jadwalLiburLoadBtn", "click", function(){
     var msgEl = document.getElementById("jadwalLiburMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -17360,7 +17431,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     kanitCutiLoaded = true;
   }
 
-  document.getElementById("kanitCutiSubmitBtn").addEventListener("click", function(){
+  $on("kanitCutiSubmitBtn", "click", function(){
     var msgEl = document.getElementById("kanitCutiMsg");
     clearMsg(msgEl);
     if(!session.cabang || !session.cabangPin){ showMsg(msgEl, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
@@ -17430,11 +17501,108 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
       .getCutiAdmin(session.adminPin, cabang, status);
     approvalCutiLoaded = true;
   }
-  document.getElementById("approvalCutiLoadBtn").addEventListener("click", function(){ loadApprovalCutiList(true); });
+  $on("approvalCutiLoadBtn", "click", function(){ loadApprovalCutiList(true); });
   var _apprCab = document.getElementById("approvalCutiCabang");
   var _apprSt = document.getElementById("approvalCutiStatus");
   if(_apprCab) _apprCab.addEventListener("change", function(){ loadApprovalCutiList(true); });
   if(_apprSt) _apprSt.addEventListener("change", function(){ loadApprovalCutiList(true); });
+
+
+  // === SIDEBAR NAV BINDER (laptop-safe) ===
+  (function bindSidebarNav(){
+    function activateTab(btn){
+      if(!btn) return;
+      var tab = btn.getAttribute("data-tab");
+      if(!tab) return;
+      var scope = btn.closest(".screen") || document;
+      // active state
+      try{
+        scope.querySelectorAll(".tab-btn, .admin-nav-btn").forEach(function(b){ b.classList.remove("active"); });
+      }catch(e){}
+      btn.classList.add("active");
+      // hide all subpanels in this screen
+      try{
+        scope.querySelectorAll(".subpanel, .panel.subpanel").forEach(function(p){
+          p.classList.remove("active");
+          p.style.display = "none";
+        });
+      }catch(e){}
+      // show target
+      var panel = document.getElementById("tab-" + tab);
+      if(!panel){
+        panel = scope.querySelector("#tab-" + tab);
+      }
+      if(panel){
+        // ensure panel is inside active screen content
+        try{
+          var host = scope.querySelector(".admin-content") || scope.querySelector(".admin-main");
+          if(host && panel.parentElement !== host && tab === "dokumen"){
+            host.appendChild(panel);
+          }
+        }catch(e){}
+        panel.classList.add("active");
+        panel.style.display = "block";
+        panel.style.visibility = "visible";
+        panel.style.opacity = "1";
+      }
+      // topbar title
+      try{
+        var lab = btn.querySelector(".admin-nav-label");
+        var titleText = lab ? String(lab.textContent||"").trim() : "";
+        if(titleText){
+          var at = document.getElementById("adminTopbarTitle");
+          var kt = document.getElementById("kanitTopbarTitle");
+          if(at && btn.closest("#adminSidebar")) at.textContent = titleText;
+          if(kt && btn.closest("#kanitSidebar")) kt.textContent = titleText;
+        }
+      }catch(e){}
+      // close mobile sidebar
+      try{
+        if(window.innerWidth < 880){
+          document.querySelectorAll(".admin-sidebar").forEach(function(s){ s.classList.remove("open"); });
+          document.querySelectorAll(".admin-sidebar-overlay").forEach(function(o){ o.classList.remove("open"); });
+        }
+      }catch(e){}
+      // trigger same auto-loads as old handler (best-effort)
+      try{
+        if(tab === "kinerjaharian" && typeof loadKinerjaHarian === "function") loadKinerjaHarian(false);
+        if(tab === "menuharian" && typeof loadMenuHarian === "function") loadMenuHarian(false);
+        if(tab === "audit" && typeof loadAuditAdmin === "function") loadAuditAdmin(false);
+        if(tab === "kanitaudit" && typeof loadAuditKanit === "function") loadAuditKanit(false);
+        if(tab === "kasarea" && typeof loadKasArea === "function") loadKasArea();
+        if(tab === "kanitkasarea" && typeof loadKasArea === "function") loadKasArea();
+        if(tab === "cashopname" && typeof loadCashOpname === "function") loadCashOpname();
+        if(tab === "dashboard" && typeof loadAdminDashboard === "function") loadAdminDashboard();
+      }catch(eLoad){}
+    }
+    function wire(){
+      document.querySelectorAll("#adminSidebar .admin-nav-btn, #kanitSidebar .admin-nav-btn, #adminSidebar .tab-btn, #kanitSidebar .tab-btn").forEach(function(btn){
+        btn.style.pointerEvents = "auto";
+        btn.style.cursor = "pointer";
+        try{ btn.disabled = false; btn.removeAttribute("disabled"); }catch(e){}
+        if(btn._sidebarNavWired) return;
+        btn._sidebarNavWired = true;
+        btn.addEventListener("click", function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          activateTab(btn);
+        }, false);
+      });
+      // kill stuck overlays that block UI
+      try{
+        document.querySelectorAll(".admin-sidebar-overlay").forEach(function(o){
+          if(window.innerWidth >= 880) o.classList.remove("open");
+        });
+        var ds = document.getElementById("dashSelisihOverlay");
+        if(ds && !ds.querySelector(".dash-selisih-modal")) ds.remove();
+      }catch(e){}
+    }
+    if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
+    else wire();
+    // re-wire after short delay (session screens may render late)
+    setTimeout(wire, 500);
+    setTimeout(wire, 1500);
+  })();
 
   document.querySelectorAll(".tab-btn").forEach(function(btn){
     btn.addEventListener("click", function(){
@@ -17623,12 +17791,56 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     try{ closeAllProfileModals(); }catch(e){}
   });
 
+
+  // Hamburger always works (delegation)
+  document.addEventListener("click", function(e){
+    var t = e.target;
+    if(!t || !t.closest) return;
+    var hb = t.closest("#adminHamburgerBtn, #kanitHamburgerBtn, button.admin-hamburger");
+    if(!hb) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if(hb.id === "kanitHamburgerBtn" || (hb.closest && hb.closest("#screen-omset-form"))){
+      var side = document.getElementById("kanitSidebar");
+      var ov = document.getElementById("kanitSidebarOverlay");
+      if(side && side.classList.contains("open")){
+        side.classList.remove("open");
+        side.style.transform = "translate3d(-105%,0,0)";
+        if(ov){ ov.classList.remove("open"); ov.style.display="none"; ov.style.pointerEvents="none"; }
+        try{ document.body.style.overflow=""; }catch(err){}
+      } else {
+        if(side){ side.classList.add("open"); side.style.transform="translate3d(0,0,0)"; side.style.pointerEvents="auto"; side.style.zIndex="6000"; }
+        if(ov){ ov.classList.add("open"); ov.style.display="block"; ov.style.opacity="1"; ov.style.pointerEvents="auto"; ov.style.zIndex="5500"; }
+        try{ document.body.style.overflow="hidden"; }catch(err){}
+      }
+      return;
+    }
+    // admin
+    if(typeof openAdminSidebar === "function" && typeof closeAdminSidebar === "function"){
+      var s = document.getElementById("adminSidebar");
+      if(s && s.classList.contains("open")) closeAdminSidebar();
+      else openAdminSidebar();
+    }
+  }, true);
+
   function openAdminSidebar(){
     var s = document.getElementById("adminSidebar");
     var o = document.getElementById("adminSidebarOverlay");
     var b = document.getElementById("adminHamburgerBtn");
-    if(s) s.classList.add("open");
-    if(o) o.classList.add("open");
+    if(s){
+      s.classList.add("open");
+      s.style.transform = "translate3d(0,0,0)";
+      s.style.pointerEvents = "auto";
+      s.style.visibility = "visible";
+      s.style.zIndex = "6000";
+    }
+    if(o){
+      o.classList.add("open");
+      o.style.display = "block";
+      o.style.opacity = "1";
+      o.style.pointerEvents = "auto";
+      o.style.zIndex = "5500";
+    }
     if(b) b.setAttribute("aria-expanded", "true");
     try{ document.body.style.overflow = "hidden"; }catch(e){}
   }
@@ -17636,8 +17848,22 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var s = document.getElementById("adminSidebar");
     var o = document.getElementById("adminSidebarOverlay");
     var b = document.getElementById("adminHamburgerBtn");
-    if(s) s.classList.remove("open");
-    if(o) o.classList.remove("open");
+    if(s){
+      s.classList.remove("open");
+      if(window.innerWidth < 880){
+        s.style.transform = "translate3d(-105%,0,0)";
+        s.style.pointerEvents = "none";
+      } else {
+        s.style.transform = "";
+        s.style.pointerEvents = "auto";
+      }
+    }
+    if(o){
+      o.classList.remove("open");
+      o.style.display = "none";
+      o.style.opacity = "0";
+      o.style.pointerEvents = "none";
+    }
     if(b) b.setAttribute("aria-expanded", "false");
     try{ document.body.style.overflow = ""; }catch(e){}
   }
@@ -17679,13 +17905,39 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     var ov = document.getElementById("kanitSidebarOverlay");
     var btn = document.getElementById("kanitHamburgerBtn");
     function kOpen(){
-      if(side) side.classList.add("open");
-      if(ov) ov.classList.add("open");
+      if(side){
+        side.classList.add("open");
+        side.style.transform = "translate3d(0,0,0)";
+        side.style.pointerEvents = "auto";
+        side.style.visibility = "visible";
+        side.style.zIndex = "6000";
+      }
+      if(ov){
+        ov.classList.add("open");
+        ov.style.display = "block";
+        ov.style.opacity = "1";
+        ov.style.pointerEvents = "auto";
+        ov.style.zIndex = "5500";
+      }
       try{ document.body.style.overflow = "hidden"; }catch(e){}
     }
     function kClose(){
-      if(side) side.classList.remove("open");
-      if(ov) ov.classList.remove("open");
+      if(side){
+        side.classList.remove("open");
+        if(window.innerWidth < 880){
+          side.style.transform = "translate3d(-105%,0,0)";
+          side.style.pointerEvents = "none";
+        } else {
+          side.style.transform = "";
+          side.style.pointerEvents = "auto";
+        }
+      }
+      if(ov){
+        ov.classList.remove("open");
+        ov.style.display = "none";
+        ov.style.opacity = "0";
+        ov.style.pointerEvents = "none";
+      }
       try{ document.body.style.overflow = ""; }catch(e){}
     }
     if(btn){
@@ -17810,7 +18062,7 @@ document.getElementById("cabangPinSubmit").addEventListener("click", function(){
     if(existing) existing.remove();
     var overlay = document.createElement("div");
     overlay.id = "dashSelisihOverlay";
-    overlay.className = "dash-selisih-overlay";
+    overlay.className = "dash-selisih-overlay"; overlay.style.display = "flex";
     var bodyHtml = _dashSelisihResults
       ? renderSelisihDetailHtml_(_dashSelisihResults)
       : '<div class="empty-log" style="color:#CBD5E1">Belum ada data. Tunggu sebentar atau refresh dashboard.</div>';
@@ -17932,7 +18184,7 @@ function loadAdminSummary(force){
   }
 
   // Status harian
-  document.getElementById("statusCheckBtn").addEventListener("click", function(){
+  $on("statusCheckBtn", "click", function(){
     var msgEl = document.getElementById("statusMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -17965,7 +18217,7 @@ function loadAdminSummary(force){
             '<button type="button" id="statusSummaryBtn" style="margin-top:16px; width:100%;">Lihat Summary Gabungan</button>'+
             '<div id="statusSummaryBox" style="display:none; margin-top:14px; border-top:1px dashed var(--navy-700); padding-top:4px;"></div>'
           );
-          document.getElementById("statusSummaryBtn").addEventListener("click", function(){
+          $on("statusSummaryBtn", "click", function(){
             var box = document.getElementById("statusSummaryBox");
             var showing = box.style.display === "block";
             if(showing){
@@ -18001,7 +18253,7 @@ function loadAdminSummary(force){
   });
 
   // Riwayat input
-  document.getElementById("riwayatLoadBtn").addEventListener("click", function(){
+  $on("riwayatLoadBtn", "click", function(){
     var msgEl = document.getElementById("riwayatMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -18033,7 +18285,7 @@ function loadAdminSummary(force){
 
 
   // Grafik pencapaian
-  document.getElementById("grafikLoadBtn").addEventListener("click", function(){
+  $on("grafikLoadBtn", "click", function(){
     var msgEl = document.getElementById("grafikMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -18067,7 +18319,7 @@ function loadAdminSummary(force){
   });
 
   // Omset Bulanan (Gadai: Target vs Aktual, dari spreadsheet lain)
-  document.getElementById("omsetBulananLoadBtn").addEventListener("click", function(){
+  $on("omsetBulananLoadBtn", "click", function(){
     var msgEl = document.getElementById("omsetBulananMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -18096,7 +18348,7 @@ function loadAdminSummary(force){
   });
 
   // ---------------- Cek Selisih (Input Kanit vs Program) ----------------
-  document.getElementById("selisihLoadBtn").addEventListener("click", function(){
+  $on("selisihLoadBtn", "click", function(){
     var msgEl = document.getElementById("selisihMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -18521,7 +18773,7 @@ function applyRejectedAlasanFilter_(which){
   var pendingRejectedMain = null;
   var pendingRejectedCompare = null;
 
-  document.getElementById("rejectedAnalysisLoadBtn").addEventListener("click", function(){
+  $on("rejectedAnalysisLoadBtn", "click", function(){
     var msgEl = document.getElementById("rejectedAnalysisMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -18579,7 +18831,7 @@ function applyRejectedAlasanFilter_(which){
       .getRejectedCabangComparison(session.adminPin, startDate, endDate);
   });
 
-  document.getElementById("rejectedAnalisaBtn").addEventListener("click", function(){
+  $on("rejectedAnalisaBtn", "click", function(){
     if(!pendingRejectedMain) return;
     var label = pendingRejectedMain.cabang === "TOTAL_AREA" ? "Total Area (Semua Cabang)" : pendingRejectedMain.cabang;
     var data = pendingRejectedMain.data || {};
@@ -18871,7 +19123,7 @@ function applyRejectedAlasanFilter_(which){
     doc.save(rejectedExportFilenameBase_(cabangLabel, startDate, endDate) + ".pdf");
   }
 
-  document.getElementById("rejectedExportExcelBtn").addEventListener("click", function(){
+  $on("rejectedExportExcelBtn", "click", function(){
     if(!pendingRejectedMain) return;
     var isTotalArea = pendingRejectedMain.cabang === "TOTAL_AREA";
     var label = isTotalArea ? "Total Area (Semua Cabang)" : pendingRejectedMain.cabang;
@@ -18891,7 +19143,7 @@ function applyRejectedAlasanFilter_(which){
     }, 10);
   });
 
-  document.getElementById("rejectedExportPdfBtn").addEventListener("click", function(){
+  $on("rejectedExportPdfBtn", "click", function(){
     if(!pendingRejectedMain) return;
     var isTotalArea = pendingRejectedMain.cabang === "TOTAL_AREA";
     var label = isTotalArea ? "Total Area (Semua Cabang)" : pendingRejectedMain.cabang;
@@ -19004,16 +19256,16 @@ function applyRejectedAlasanFilter_(which){
     });
   });
 
-  document.getElementById("cabangDaftarCard").addEventListener("click", function(){
+  $on("cabangDaftarCard", "click", function(){
     if(!cabangConfigLoaded) loadCabangConfigTab();
   });
-  document.getElementById("cabangKaryawanCard").addEventListener("click", function(){
+  $on("cabangKaryawanCard", "click", function(){
     if(!karyawanLoaded) {
       setTimeout(function(){ try{ document.getElementById("karyawanLoadBtn").click(); }catch(e){} }, 50);
     }
   });
 
-  document.getElementById("rejectedAnalysisSingleDateBtn").addEventListener("click", function(){
+  $on("rejectedAnalysisSingleDateBtn", "click", function(){
     var val = document.getElementById("rejectedAnalysisSingleDate").value;
     if(!val) return;
     document.getElementById("rejectedAnalysisStart").value = val;
@@ -19050,7 +19302,7 @@ function applyRejectedAlasanFilter_(which){
       .getUpdateDataMeta(session.adminPin);
   }
 
-  document.getElementById("rejectedImportBtn").addEventListener("click", function(){
+  $on("rejectedImportBtn", "click", function(){
     var msgEl = document.getElementById("rejectedImportMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -19096,7 +19348,7 @@ function applyRejectedAlasanFilter_(which){
   });
 
   // ---------------- Update Data: Omset (paste dari HRIS) ----------------
-  document.getElementById("omsetImportBtn").addEventListener("click", function(){
+  $on("omsetImportBtn", "click", function(){
     var msgEl = document.getElementById("omsetImportMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -19253,7 +19505,7 @@ function applyRejectedAlasanFilter_(which){
     wrap.innerHTML = cardsHtml + totalHtml + sectionsHtml;
   }
 
-  document.getElementById("kpiBisnisLoadBtn").addEventListener("click", function(){
+  $on("kpiBisnisLoadBtn", "click", function(){
     var msgEl = document.getElementById("kpiBisnisMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -19352,7 +19604,7 @@ function applyRejectedAlasanFilter_(which){
     }
   })();
 
-  document.getElementById("kanitKinerjaHarianLoadBtn").addEventListener("click", function(){
+  $on("kanitKinerjaHarianLoadBtn", "click", function(){
     var msgEl = document.getElementById("kanitKinerjaHarianMsg");
     clearMsg(msgEl);
     if(!session.cabang || !session.cabangPin){ showMsg(msgEl, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
@@ -19381,7 +19633,7 @@ function applyRejectedAlasanFilter_(which){
   });
 
   // ---------------- Kanit: Omset Bulanan (cabang sendiri) ----------------
-  document.getElementById("kanitOmsetBulananLoadBtn").addEventListener("click", function(){
+  $on("kanitOmsetBulananLoadBtn", "click", function(){
     var msgEl = document.getElementById("kanitOmsetBulananMsg");
     clearMsg(msgEl);
     if(!session.cabang || !session.cabangPin){ showMsg(msgEl, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
@@ -19422,7 +19674,7 @@ function applyRejectedAlasanFilter_(which){
     if(kpiEndEl && !kpiEndEl.value) kpiEndEl.value = todayStr().slice(0,7);
   })();
 
-  document.getElementById("kanitPencapaianLoadBtn").addEventListener("click", function(){
+  $on("kanitPencapaianLoadBtn", "click", function(){
     var msgEl = document.getElementById("kanitPencapaianMsg");
     clearMsg(msgEl);
     if(!session.cabang || !session.cabangPin){ showMsg(msgEl, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
@@ -19456,7 +19708,7 @@ function applyRejectedAlasanFilter_(which){
   });
 
   // ---------------- Rejected: Kanit (cabang sendiri) ----------------
-  document.getElementById("kanitRejectedSingleDateBtn").addEventListener("click", function(){
+  $on("kanitRejectedSingleDateBtn", "click", function(){
     var val = document.getElementById("kanitRejectedSingleDate").value;
     if(!val) return;
     document.getElementById("kanitRejectedStart").value = val;
@@ -19464,7 +19716,7 @@ function applyRejectedAlasanFilter_(which){
     document.getElementById("kanitRejectedLoadBtn").click();
   });
 
-  document.getElementById("kanitRejectedLoadBtn").addEventListener("click", function(){
+  $on("kanitRejectedLoadBtn", "click", function(){
     var msgEl = document.getElementById("kanitRejectedMsg");
     clearMsg(msgEl);
     if(!session.cabang || !session.cabangPin){ showMsg(msgEl, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
@@ -19496,7 +19748,7 @@ function applyRejectedAlasanFilter_(which){
       .getRejectedAnalysisKanit(session.cabang, session.cabangPin, startDate, endDate);
   });
 
-  document.getElementById("adminChangeSubmit").addEventListener("click", function(){
+  $on("adminChangeSubmit", "click", function(){
     var msgEl = document.getElementById("adminChangeMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -19669,7 +19921,7 @@ function applyRejectedAlasanFilter_(which){
       .getCabangConfig(session.adminPin);
   }
 
-  document.getElementById("cabangConfigSaveBtn").addEventListener("click", function(){
+  $on("cabangConfigSaveBtn", "click", function(){
     var msgEl = document.getElementById("cabangConfigMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -19717,7 +19969,7 @@ function applyRejectedAlasanFilter_(which){
       .updateCabangLiburMinggu(session.adminPin, updates);
   });
 
-  document.getElementById("cabangBaruSubmit").addEventListener("click", function(){
+  $on("cabangBaruSubmit", "click", function(){
     var msgEl = document.getElementById("cabangBaruMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -19861,7 +20113,7 @@ function applyRejectedAlasanFilter_(which){
     pagWrap.innerHTML = html;
   }
 
-  document.getElementById("karyawanPaginationWrap").addEventListener("click", function(e){
+  $on("karyawanPaginationWrap", "click", function(e){
     var btn = e.target.closest(".karyawan-page-btn");
     if(!btn || btn.disabled) return;
     karyawanCurrentPage = parseInt(btn.dataset.page, 10) || 1;
@@ -19877,12 +20129,12 @@ function applyRejectedAlasanFilter_(which){
       renderKaryawanPage();
     });
   });
-  document.getElementById("karyawanSearchInput").addEventListener("input", function(){
+  $on("karyawanSearchInput", "input", function(){
     if(!karyawanLoaded) return;
     karyawanCurrentPage = 1;
     renderKaryawanPage();
   });
-  document.getElementById("karyawanResetBtn").addEventListener("click", function(){
+  $on("karyawanResetBtn", "click", function(){
     document.getElementById("karyawanSearchInput").value = "";
     document.getElementById("karyawanFilterCabang").value = "SEMUA";
     document.getElementById("karyawanFilterJabatan").value = "SEMUA";
@@ -19891,7 +20143,7 @@ function applyRejectedAlasanFilter_(which){
   });
 
   // Klik ikon i → menu Mutasi / Promosi / SP3-Resign
-  document.getElementById("karyawanListWrap").addEventListener("click", function(e){
+  $on("karyawanListWrap", "click", function(e){
     var infoBtn = e.target.closest(".karyawan-info-btn");
     if(infoBtn){
       var trI = infoBtn.closest("tr");
@@ -20364,12 +20616,12 @@ function applyRejectedAlasanFilter_(which){
     wireDebitAdd("kaDebitAddBtnKanit","kaDebitTglKanit","kaDebitItemKanit","kaDebitNomKanit");
   })();
 
-  document.getElementById("karyawanBaruToggleBtn").addEventListener("click", function(){
+  $on("karyawanBaruToggleBtn", "click", function(){
     var panel = document.getElementById("karyawanBaruPanel");
     panel.style.display = (panel.style.display === "none") ? "block" : "none";
   });
 
-  document.getElementById("karyawanImportToggleBtn").addEventListener("click", function(){
+  $on("karyawanImportToggleBtn", "click", function(){
     var panel = document.getElementById("karyawanImportPanel");
     panel.style.display = (panel.style.display === "none") ? "block" : "none";
   });
@@ -20403,11 +20655,11 @@ function applyRejectedAlasanFilter_(which){
       .getKaryawanList(session.adminPin);
   }
 
-  document.getElementById("karyawanLoadBtn").addEventListener("click", function(){
+  $on("karyawanLoadBtn", "click", function(){
     loadKaryawanTab();
   });
 
-  document.getElementById("karyawanBaruSubmit").addEventListener("click", function(){
+  $on("karyawanBaruSubmit", "click", function(){
     var msgEl = document.getElementById("karyawanBaruMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -20439,7 +20691,7 @@ function applyRejectedAlasanFilter_(which){
       .addKaryawan(session.adminPin, nama, nik, cabang, jabatan);
   });
 
-  document.getElementById("karyawanImportBtn").addEventListener("click", function(){
+  $on("karyawanImportBtn", "click", function(){
     var msgEl = document.getElementById("karyawanImportMsg");
     clearMsg(msgEl);
     if(!adminSessionGuard(msgEl)) return;
@@ -20538,19 +20790,19 @@ function applyRejectedAlasanFilter_(which){
     function closeModal(){ modal.classList.remove("show"); }
     btn.addEventListener("click", openModal);
     btn.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openModal(); } });
-    document.getElementById("adminProfileClose").addEventListener("click", closeModal);
+    $on("adminProfileClose", "click", closeModal);
     modal.addEventListener("click", function(e){ if(e.target === modal) closeModal(); });
-    document.getElementById("adminProfileTogglePin").addEventListener("click", function(){
+    $on("adminProfileTogglePin", "click", function(){
       document.getElementById("adminProfilePinBox").classList.toggle("show");
     });
-    document.getElementById("adminProfileSaveName").addEventListener("click", function(){
+    $on("adminProfileSaveName", "click", function(){
       var n = document.getElementById("adminProfileNameInput").value.trim() || "Syahrul Zuniardin";
       var j = document.getElementById("adminProfileJabatanInput").value.trim() || "Kepala Admin";
       try{ localStorage.setItem(KEY_N, n); localStorage.setItem(KEY_J, j); }catch(e){}
       loadAdminProfile();
       showMsg(document.getElementById("adminChangeMsg"), "Profil disimpan.", "ok");
     });
-    document.getElementById("adminProfilePhotoInput").addEventListener("change", function(){
+    $on("adminProfilePhotoInput", "change", function(){
       var f = this.files && this.files[0];
       if(!f) return;
       if(f.size > 5*1024*1024){ showMsg(document.getElementById("adminChangeMsg"), "Foto max 5MB.", "err"); return; }
@@ -20561,7 +20813,7 @@ function applyRejectedAlasanFilter_(which){
       });
       this.value = "";
     });
-    document.getElementById("adminProfilePhotoClear").addEventListener("click", function(){
+    $on("adminProfilePhotoClear", "click", function(){
       try{ localStorage.removeItem(KEY_P); }catch(e){}
       loadAdminProfile();
     });
@@ -20621,12 +20873,12 @@ function applyRejectedAlasanFilter_(which){
       modal.setAttribute("hidden", "");
     }
     btn.addEventListener("click", openModal);
-    document.getElementById("kanitProfileClose").addEventListener("click", closeModal);
+    $on("kanitProfileClose", "click", closeModal);
     modal.addEventListener("click", function(e){ if(e.target === modal) closeModal(); });
-    document.getElementById("kanitProfileTogglePin").addEventListener("click", function(){
+    $on("kanitProfileTogglePin", "click", function(){
       document.getElementById("kanitProfilePinBox").classList.toggle("show");
     });
-    document.getElementById("kanitProfilePhotoInput").addEventListener("change", function(){
+    $on("kanitProfilePhotoInput", "change", function(){
       var f = this.files && this.files[0];
       if(!f) return;
       var key = "kanitPhoto_" + (session.cabang || "");
@@ -20638,13 +20890,13 @@ function applyRejectedAlasanFilter_(which){
       });
       this.value = "";
     });
-    document.getElementById("kanitProfilePhotoClear").addEventListener("click", function(){
+    $on("kanitProfilePhotoClear", "click", function(){
       var key = "kanitPhoto_" + (session.cabang || "");
       try{ localStorage.removeItem(key); }catch(e){}
       applyKanitMini();
       setProfilePhotoEl(document.getElementById("kanitProfilePhoto"), "", (kanitProfileCache.nama||"K").charAt(0));
     });
-    document.getElementById("kanitProfileSavePin").addEventListener("click", function(){
+    $on("kanitProfileSavePin", "click", function(){
       var msgEl = document.getElementById("kanitProfileMsg");
       clearMsg(msgEl);
       var oldPin = document.getElementById("kanitProfileOldPin").value.trim();
@@ -21059,70 +21311,6 @@ function applyRejectedAlasanFilter_(which){
 
 
   
-  (function fixSidebarClicks(){
-    function closeAllSidebars(){
-      document.querySelectorAll(".admin-sidebar").forEach(function(s){
-        s.classList.remove("open"); s.classList.remove("show"); s.classList.remove("active");
-      });
-      document.querySelectorAll(".admin-sidebar-overlay").forEach(function(o){
-        o.classList.remove("open");
-      });
-      try{ document.body.classList.remove("sidebar-open"); }catch(e){}
-      try{ document.body.style.overflow = ""; }catch(e){}
-    }
-    // Overlay close only
-    document.querySelectorAll(".admin-sidebar-overlay").forEach(function(overlay){
-      if(overlay._fixWired) return;
-      overlay._fixWired = true;
-      overlay.addEventListener("click", function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        closeAllSidebars();
-      });
-    });
-    // Desktop: pastikan overlay tidak open
-    if(window.innerWidth >= 880){
-      closeAllSidebars();
-    }
-    // CAPTURE phase — pastikan klik menu selalu jalan
-    if(!document._navCaptureWired){
-      document._navCaptureWired = true;
-      document.addEventListener("click", function(ev){
-        var btn = ev.target && ev.target.closest && ev.target.closest("button.admin-nav-btn, button.tab-btn.admin-nav-btn");
-        if(!btn) return;
-        var tab = btn.getAttribute("data-tab");
-        if(!tab) return;
-        // Jangan blok listener lain — hanya pastikan panel aktif
-        try{
-          var scope = btn.closest(".screen") || document;
-          scope.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
-          scope.querySelectorAll(".subpanel").forEach(function(p){
-            p.classList.remove("active");
-            try{ p.style.removeProperty("display"); }catch(e){}
-          });
-          btn.classList.add("active");
-          var panel = scope.querySelector("#tab-" + tab) || document.getElementById("tab-" + tab);
-          if(panel){
-            panel.classList.add("active");
-            try{ panel.style.display = "block"; panel.style.visibility = "visible"; }catch(e){}
-          }
-          // tutup sidebar mobile setelah pilih
-          if(window.innerWidth < 880) closeAllSidebars();
-          // title
-          try{
-            var lab = btn.querySelector(".admin-nav-label");
-            var titleText = lab ? lab.textContent.trim() : "";
-            var at = document.getElementById("adminTopbarTitle");
-            var kt = document.getElementById("kanitTopbarTitle");
-            if(at && titleText && btn.closest("#adminSidebar")) at.textContent = titleText;
-            if(kt && titleText && btn.closest("#kanitSidebar")) kt.textContent = titleText;
-          }catch(e){}
-        }catch(err){}
-      }, true);
-    }
-  })();
-
-
   (function wireAuditFilterAuto(){
     ["auditCabang","auditBulanMulai","auditBulanAkhir","auditPetugas","auditTipeFilter"].forEach(function(id){
       var el = document.getElementById(id);
@@ -23072,7 +23260,7 @@ function renderKanitAuditWizard(){
     });
   }
 
-  document.getElementById("cabangConfigWrap").addEventListener("click", function(e){
+  $on("cabangConfigWrap", "click", function(e){
     var btn = e.target.closest(".cabang-ttd-btn");
     if(!btn) return;
     openCabangTtdPanel(btn.getAttribute("data-kode"));
@@ -23574,7 +23762,7 @@ function renderKanitAuditWizard(){
   })();
 
   // extend popup click handler for sakit / admin cuti
-  document.getElementById("kanitLiburActionPopup").addEventListener("click", function(e){
+  $on("kanitLiburActionPopup", "click", function(e){
     var btn = e.target.closest("button[data-act]");
     if(!btn || ! _liburPopupTarget) return;
     var act = btn.getAttribute("data-act");
