@@ -3662,6 +3662,120 @@ button.tab-btn.admin-nav-btn{
   }
 }
 
+
+/* ===== Update Data — layout rapi ===== */
+#tab-updatedata{
+  max-width: 100% !important;
+}
+#tab-updatedata #updateDataHub .admin-menu-grid{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  margin: 0 !important;
+}
+@media (max-width: 900px){
+  #tab-updatedata #updateDataHub .admin-menu-grid{
+    grid-template-columns: 1fr !important;
+  }
+}
+#tab-updatedata .admin-menu-card{
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 16px 16px !important;
+  border-radius: 14px !important;
+  background: rgba(15,23,42,0.55) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  height: auto !important;
+  min-height: 72px !important;
+  width: 100% !important;
+  color: #E2E8F0 !important;
+}
+#tab-updatedata .admin-menu-card:hover{
+  border-color: rgba(232,168,106,0.45) !important;
+  background: rgba(232,168,106,0.08) !important;
+}
+#tab-updatedata .admin-menu-card-title{
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #F8FAFC !important;
+}
+#tab-updatedata .admin-menu-card-desc{
+  font-size: 12px !important;
+  color: #94A3B8 !important;
+  margin-top: 2px !important;
+}
+#tab-updatedata .hub-panel-full{
+  margin-top: 8px !important;
+  padding: 16px !important;
+  border-radius: 14px !important;
+  background: rgba(15,23,42,0.45) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+#tab-updatedata .hub-back-btn{
+  height: 32px !important;
+  padding: 0 12px !important;
+  margin-bottom: 12px !important;
+  width: auto !important;
+}
+#tab-updatedata textarea{
+  width: 100% !important;
+  min-height: 160px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: rgba(0,0,0,0.35) !important;
+  color: #F1F5F9 !important;
+  padding: 12px !important;
+  font-size: 13px !important;
+  font-family: ui-monospace, monospace !important;
+  box-sizing: border-box !important;
+}
+#tab-updatedata #omsetImportBtn,
+#tab-updatedata #rejectedImportBtn,
+#tab-updatedata #acpImportBtn,
+#tab-updatedata #acpSeedSupportBtn{
+  height: 34px !important;
+  padding: 0 14px !important;
+  width: auto !important;
+  margin-top: 10px !important;
+}
+#tab-updatedata .import-history-box{
+  margin-top: 16px !important;
+  padding: 12px 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  background: rgba(255,255,255,0.03) !important;
+}
+#tab-updatedata .import-history-title{
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #CBD5E1 !important;
+  margin-bottom: 8px !important;
+}
+#tab-updatedata p{
+  color: #CBD5E1 !important;
+}
+
+
+/* Kas Area hard-hide when not active (override inline) */
+#tab-kasarea:not(.active),
+#tab-kanitkasarea:not(.active){
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
 </style>
 
 <style>
@@ -17520,11 +17634,26 @@ $on("cabangPinSubmit", "click", function(){
         scope.querySelectorAll(".tab-btn, .admin-nav-btn").forEach(function(b){ b.classList.remove("active"); });
       }catch(e){}
       btn.classList.add("active");
-      // hide all subpanels in this screen
+      // hide ALL subpanels (force — cegah kas area / cash opname nyangkut)
+      function forceHidePanel(p){
+        if(!p) return;
+        p.classList.remove("active");
+        try{
+          p.style.setProperty("display", "none", "important");
+          p.style.setProperty("visibility", "hidden", "important");
+          p.style.setProperty("opacity", "0", "important");
+          p.style.setProperty("pointer-events", "none", "important");
+          p.style.setProperty("position", "absolute", "important");
+          p.style.setProperty("left", "-9999px", "important");
+          p.style.setProperty("height", "0", "important");
+          p.style.setProperty("overflow", "hidden", "important");
+        }catch(e){ try{ p.style.display="none"; }catch(e2){} }
+      }
       try{
-        scope.querySelectorAll(".subpanel, .panel.subpanel").forEach(function(p){
-          p.classList.remove("active");
-          p.style.display = "none";
+        scope.querySelectorAll(".subpanel, .panel.subpanel").forEach(forceHidePanel);
+        // hard-hide sticky modules by id (lintas scope)
+        ["tab-kasarea","tab-kanitkasarea","tab-cashopname","tab-kanitauditreport","tab-auditApprovalView"].forEach(function(id){
+          forceHidePanel(document.getElementById(id));
         });
       }catch(e){}
       // show target
@@ -17533,7 +17662,6 @@ $on("cabangPinSubmit", "click", function(){
         panel = scope.querySelector("#tab-" + tab);
       }
       if(panel){
-        // ensure panel is inside active screen content
         try{
           var host = scope.querySelector(".admin-content") || scope.querySelector(".admin-main");
           if(host && panel.parentElement !== host && tab === "dokumen"){
@@ -17541,9 +17669,20 @@ $on("cabangPinSubmit", "click", function(){
           }
         }catch(e){}
         panel.classList.add("active");
-        panel.style.display = "block";
-        panel.style.visibility = "visible";
-        panel.style.opacity = "1";
+        try{
+          panel.style.setProperty("display", "block", "important");
+          panel.style.setProperty("visibility", "visible", "important");
+          panel.style.setProperty("opacity", "1", "important");
+          panel.style.setProperty("pointer-events", "auto", "important");
+          panel.style.setProperty("position", "relative", "important");
+          panel.style.setProperty("left", "auto", "important");
+          panel.style.setProperty("height", "auto", "important");
+          panel.style.setProperty("overflow", "visible", "important");
+          panel.style.setProperty("width", "100%", "important");
+        }catch(e){
+          panel.style.display = "block";
+          panel.style.visibility = "visible";
+        }
       }
       // topbar title
       try{
@@ -17619,10 +17758,27 @@ $on("cabangPinSubmit", "click", function(){
           p.style.removeProperty("overflow");
           p.style.removeProperty("margin");
           p.style.removeProperty("padding");
+          p.style.removeProperty("position");
+          p.style.removeProperty("left");
+          p.style.removeProperty("opacity");
+          p.style.removeProperty("pointer-events");
+          p.style.removeProperty("width");
         } catch (eH) {
           try { p.style.display = ""; p.style.visibility = ""; } catch (e2) {}
         }
       });
+      // Kas Area / Cash Opname / Report Audit — force hide jika bukan tab aktif
+      try{
+        var stickyIds = ["tab-kasarea","tab-kanitkasarea","tab-cashopname","tab-kanitauditreport"];
+        stickyIds.forEach(function(id){
+          if(("tab-"+btn.dataset.tab) === id) return;
+          var el = document.getElementById(id);
+          if(!el) return;
+          el.classList.remove("active");
+          el.style.setProperty("display","none","important");
+          el.style.setProperty("visibility","hidden","important");
+        });
+      }catch(eSt){}
       // Report Audit bukan menu sidebar — selalu sembunyikan saat pilih menu lain
       try {
         var rep = document.getElementById("tab-kanitauditreport");
