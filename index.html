@@ -4417,9 +4417,9 @@ button.tab-btn.admin-nav-btn{
 
   .libur-action-popup{
     position:fixed; z-index:600; min-width:150px;
-    background:var(--navy-800); border:1px solid var(--steel);
-    border-radius:10px; box-shadow:0 10px 28px rgba(0,0,0,0.45);
-    padding:6px; display:none;
+    background:#FFFFFF; border:1px solid #E2E8F0;
+    border-radius:10px; box-shadow:0 12px 40px rgba(15,23,42,0.14);
+    padding:6px; display:none; color:#0F172A;
   }
   .libur-action-popup.show{ display:block; }
   .libur-action-popup .pap-title{
@@ -4431,7 +4431,7 @@ button.tab-btn.admin-nav-btn{
     background:transparent; border:1px solid transparent; border-radius:7px;
     color:var(--ink); font-size:13px; cursor:pointer;
   }
-  .libur-action-popup button:hover{ background:rgba(var(--gold-rgb),0.12); border-color:var(--gold); color:var(--gold); }
+  .libur-action-popup button:hover{ background:#F1F5F9; border-color:#CBD5E1; color:#0F172A; }
   .libur-action-popup button.danger:hover{ border-color:var(--err); color:var(--err); background:rgba(var(--err-rgb),0.1); }
   .libur-cell.st-cuti-pending{ background:rgba(198,161,91,0.25) !important; color:var(--gold) !important; }
   .btn-icon-refresh{
@@ -5725,19 +5725,21 @@ button.tab-btn.admin-nav-btn{
   .kpi-tri-legend i.target{ background:#E8A598; }
 
   .kinerja-kpi-ring{
-    width:44px; height:44px; border-radius:50%; flex-shrink:0;
+    width:48px; height:48px; border-radius:50%; flex-shrink:0;
     display:flex; align-items:center; justify-content:center;
-    background:conic-gradient(var(--ring-color, #E8A598) var(--ring-pct, 0%), rgba(232,165,152,0.25) 0);
+    background:conic-gradient(var(--ring-color, #2563EB) var(--ring-pct, 0%), #E2E8F0 0);
     position:relative;
   }
   .kinerja-kpi-ring::before{
     content:""; position:absolute; inset:5px; border-radius:50%;
-    background:var(--navy-800);
+    background:#FFFFFF;
+    box-shadow: inset 0 0 0 1px rgba(15,23,42,0.06);
   }
   .kinerja-kpi-ring span{
     position:relative; z-index:1;
     font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700;
-    color:var(--ink);
+    color:#0F172A !important;
+    -webkit-text-fill-color:#0F172A !important;
   }
   .bar-pct{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--gold); margin-top:4px; text-align:right; }
 
@@ -7678,23 +7680,23 @@ button.tab-btn.admin-nav-btn{
     opacity:1 !important;
   }
   .admin-content .rejected-detail-table th{
-    background:#1E3A5F !important;
-    color:#FFFFFF !important;
-    -webkit-text-fill-color:#FFFFFF !important;
+    background:#F8FAFC !important;
+    color:#0F172A !important;
+    -webkit-text-fill-color:#0F172A !important;
   }
   .admin-content .rejected-detail-table td{
-    background:rgba(15,23,42,0.55) !important;
+    background:#FFFFFF !important;
   }
   .admin-content .rejected-detail-table tr:nth-child(even) td{
-    background:rgba(30,41,59,0.7) !important;
+    background:#F8FAFC !important;
   }
   .admin-content .rejected-detail-table td .sub{
     color:#94A3B8 !important;
     -webkit-text-fill-color:#94A3B8 !important;
   }
   .admin-content .rejected-detail-table-wrap{
-    background:rgba(15,18,24,0.6) !important;
-    border:1px solid rgba(255,255,255,0.14) !important;
+    background:#FFFFFF !important;
+    border:1px solid #E2E8F0 !important;
   }
   /* netralisasi rule span gelap di dalam tabel */
   .admin-content table.rejected-detail-table span,
@@ -8398,8 +8400,8 @@ table.co-denom-table thead th,
 #menuHarianWrap thead th, #kanitMenuHarianWrap thead th,
 #jadwalLiburWrap thead th, #kanitJadwalLiburWrap thead th,
 #rejectedDetailWrap thead th {
-  background: #1A1F28 !important;
-  color: var(--gold) !important;
+  background: #F8FAFC !important;
+  color: #0F172A !important;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10.5px;
   font-weight: 600;
@@ -8630,7 +8632,7 @@ table tfoot td, tr.total-row td, tr.row-total td {
     position: sticky;
     left: 0;
     z-index: 6;
-    background: #1A1F28 !important;
+    background: #F8FAFC !important;
   }
   .admin-main, .admin-content {
     padding-left: 12px !important;
@@ -11376,8 +11378,8 @@ input:focus-visible{
 .audit-table thead th,
 #tab-audit .audit-table th,
 .audit-table th{
-  background: #1A1F28 !important;
-  color: #E0A06A !important;
+  background: #F8FAFC !important;
+  color: #0F172A !important;
   -webkit-text-fill-color: #E0A06A !important;
   border-bottom: 1px solid rgba(212,137,74,0.3) !important;
   padding: 10px 12px !important;
@@ -11410,15 +11412,15 @@ input:focus-visible{
 #rejectedAnalysisWrap table thead th,
 #kanitRejectedWrap table thead th,
 .rejected-table th{
-  background: #1A1F28 !important;
-  color: #E0A06A !important;
+  background: #F8FAFC !important;
+  color: #0F172A !important;
   border-bottom: 1px solid rgba(212,137,74,0.3) !important;
 }
 #rejectedDetailWrap table tbody td,
 #rejectedAnalysisWrap table tbody td,
 #kanitRejectedWrap table tbody td{
-  background:#F8FAFC !important;
-  color: #E5E7EB !important;
+  background:#FFFFFF !important;
+  color: #0F172A !important;
   border-bottom: 1px solid rgba(255,255,255,0.07) !important;
 }
 #rejectedDetailWrap table tbody tr:nth-child(even) td,
@@ -11505,9 +11507,9 @@ table.karyawan-table thead th, table.log-table thead th{
   position: sticky !important;
   top: 0 !important;
   z-index: 2 !important;
-  background: #1A1F28 !important;
-  color: #E0A06A !important;
-  -webkit-text-fill-color: #E0A06A !important;
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
@@ -11717,20 +11719,20 @@ button.admin-topbar-avatar{
 html, body, .admin-main, .admin-content, .admin-sidebar,
 .screen, * {
   scrollbar-width: thin;
-  scrollbar-color: #3A4150 #1A1F28;
+  scrollbar-color: #CBD5E1 #F1F5F9;
 }
 *::-webkit-scrollbar {
   width: 8px !important;
   height: 8px !important;
 }
 *::-webkit-scrollbar-track {
-  background: #1A1F28 !important;
+  background: #F1F5F9 !important;
   border-radius: 8px !important;
 }
 *::-webkit-scrollbar-thumb {
-  background: #3A4150 !important;
+  background: #CBD5E1 !important;
   border-radius: 8px !important;
-  border: 2px solid #1A1F28 !important;
+  border: 2px solid #F1F5F9 !important;
 }
 *::-webkit-scrollbar-thumb:hover {
   background: #5A6270 !important;
@@ -14900,6 +14902,452 @@ html[data-theme="light"] ::-webkit-scrollbar-thumb { background: #CBD5E1 !import
 
 /* ========== END HYBRID LIGHT v2 ========== */
 
+/* ========== FASE R1+R2: scrollbar + rejected light ========== */
+/* Scrollbar */
+html[data-theme="light"] ::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+html[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #F1F5F9 !important;
+  border-radius: 8px !important;
+}
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #CBD5E1 !important;
+  border-radius: 8px !important;
+  border: 2px solid #F1F5F9 !important;
+}
+html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8 !important;
+}
+html[data-theme="light"] * {
+  scrollbar-color: #CBD5E1 #F1F5F9 !important;
+}
+
+/* Rejected – detail + analisa: pure light */
+html[data-theme="light"] #rejectedDetailWrap,
+html[data-theme="light"] #rejectedAnalysisWrap,
+html[data-theme="light"] #kanitRejectedWrap,
+html[data-theme="light"] .rejected-detail-table-wrap,
+html[data-theme="light"] .admin-content .rejected-detail-table-wrap {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  overflow: auto !important;
+}
+
+html[data-theme="light"] #rejectedDetailWrap table,
+html[data-theme="light"] #rejectedAnalysisWrap table,
+html[data-theme="light"] #kanitRejectedWrap table,
+html[data-theme="light"] .rejected-detail-table,
+html[data-theme="light"] .rejected-table,
+html[data-theme="light"] .admin-content .rejected-detail-table {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+html[data-theme="light"] #rejectedDetailWrap thead th,
+html[data-theme="light"] #rejectedAnalysisWrap thead th,
+html[data-theme="light"] #kanitRejectedWrap thead th,
+html[data-theme="light"] .rejected-detail-table th,
+html[data-theme="light"] .rejected-table th,
+html[data-theme="light"] .admin-content .rejected-detail-table th {
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+  font-weight: 600 !important;
+}
+
+html[data-theme="light"] #rejectedDetailWrap tbody td,
+html[data-theme="light"] #rejectedAnalysisWrap tbody td,
+html[data-theme="light"] #kanitRejectedWrap tbody td,
+html[data-theme="light"] .rejected-detail-table td,
+html[data-theme="light"] .admin-content .rejected-detail-table td {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+}
+
+html[data-theme="light"] #rejectedDetailWrap tbody tr:nth-child(even) td,
+html[data-theme="light"] #rejectedAnalysisWrap tbody tr:nth-child(even) td,
+html[data-theme="light"] #kanitRejectedWrap tbody tr:nth-child(even) td,
+html[data-theme="light"] .rejected-detail-table tr:nth-child(even) td {
+  background: #F8FAFC !important;
+}
+
+html[data-theme="light"] #rejectedDetailWrap tbody tr:hover td,
+html[data-theme="light"] #rejectedAnalysisWrap tbody tr:hover td,
+html[data-theme="light"] .rejected-detail-table tr:hover td {
+  background: #F1F5F9 !important;
+}
+
+/* Badge alasan soft */
+html[data-theme="light"] #rejectedDetailWrap .badge,
+html[data-theme="light"] .rejected-detail-table .badge,
+html[data-theme="light"] .rejected-detail-table span[style*="background"] {
+  opacity: 1 !important;
+}
+
+/* Analisa summary numbers */
+html[data-theme="light"] #rejectedAnalysisWrap .ob-summary-card,
+html[data-theme="light"] #rejectedAnalysisWrap .stat-card,
+html[data-theme="light"] #tab-rejected .ob-summary-card {
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] #rejectedAnalysisWrap .ob-summary-card .k,
+html[data-theme="light"] #tab-rejected .ob-summary-card .k {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+html[data-theme="light"] #rejectedAnalysisWrap .ob-summary-card .v,
+html[data-theme="light"] #tab-rejected .ob-summary-card .v {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+
+html[data-theme="light"] .rejected-top3-title,
+html[data-theme="light"] .rejected-top3-item {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+
+/* Filter rejected */
+html[data-theme="light"] #tab-rejected input,
+html[data-theme="light"] #tab-rejected select,
+html[data-theme="light"] #tab-kanitrejected input,
+html[data-theme="light"] #tab-kanitrejected select {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] #tab-rejected label,
+html[data-theme="light"] #tab-kanitrejected label {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+
+/* Tombol Tampilkan dll – netral */
+html[data-theme="light"] #tab-rejected .btn-outline-gold,
+html[data-theme="light"] #tab-kanitrejected .btn-outline-gold {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: 1px solid #0F172A !important;
+}
+/* ========== END FASE R1+R2 ========== */
+
+/* ========== FASE R3: Jadwal Libur light ========== */
+html[data-theme="light"] #jadwalLiburWrap,
+html[data-theme="light"] #kanitJadwalLiburWrap,
+html[data-theme="light"] .libur-table-wrap {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  overflow: auto !important;
+}
+
+html[data-theme="light"] .libur-table {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+html[data-theme="light"] .libur-table th {
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  border-right: 1px solid #F1F5F9 !important;
+}
+html[data-theme="light"] .libur-table th .dow {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+html[data-theme="light"] .libur-table th.dow-min .dow,
+html[data-theme="light"] .libur-table th.dow-min {
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+}
+
+html[data-theme="light"] .libur-table td {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-color: #F1F5F9 !important;
+}
+
+html[data-theme="light"] .libur-table td.label-col {
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-right: 1px solid #E2E8F0 !important;
+  position: sticky;
+  left: 0;
+  z-index: 3;
+}
+
+/* Nama karyawan netral gelap */
+html[data-theme="light"] .libur-person-name,
+html[data-theme="light"] #jadwalLiburWrap .libur-person-name,
+html[data-theme="light"] #kanitJadwalLiburWrap .libur-person-name {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] .libur-person-job,
+html[data-theme="light"] #jadwalLiburWrap .libur-person-job,
+html[data-theme="light"] #kanitJadwalLiburWrap .libur-person-job {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+
+html[data-theme="light"] .libur-avatar {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+
+/* Sel kalender */
+html[data-theme="light"] .libur-cell {
+  background: #FFFFFF !important;
+  color: #94A3B8 !important;
+  -webkit-text-fill-color: #94A3B8 !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 6px !important;
+}
+html[data-theme="light"] .libur-cell:hover {
+  background: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+}
+html[data-theme="light"] .libur-cell.is-minggu {
+  background: #FFF7ED !important;
+  color: #9A3412 !important;
+  -webkit-text-fill-color: #9A3412 !important;
+}
+html[data-theme="light"] .libur-cell.st-libur,
+html[data-theme="light"] .libur-table [data-status="L"] {
+  background: #FEF3C7 !important;
+  color: #B45309 !important;
+  -webkit-text-fill-color: #B45309 !important;
+  border-color: #FCD34D !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] .libur-cell.st-cuti,
+html[data-theme="light"] .libur-table [data-status="C"] {
+  background: #DBEAFE !important;
+  color: #1D4ED8 !important;
+  -webkit-text-fill-color: #1D4ED8 !important;
+  border-color: #93C5FD !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] .libur-cell.st-cuti-pending {
+  background: #E0E7FF !important;
+  color: #4338CA !important;
+  -webkit-text-fill-color: #4338CA !important;
+}
+html[data-theme="light"] .libur-cell.st-sakit,
+html[data-theme="light"] .libur-table .mark-S {
+  background: #FFEDD5 !important;
+  color: #C2410C !important;
+  -webkit-text-fill-color: #C2410C !important;
+  border: 1px dashed #FDBA74 !important;
+}
+
+html[data-theme="light"] .libur-kuota-banner {
+  background: #FFFBEB !important;
+  border: 1px solid #FDE68A !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .libur-kuota-banner b {
+  color: #B45309 !important;
+  -webkit-text-fill-color: #B45309 !important;
+}
+
+html[data-theme="light"] .kuota-pill {
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+  border-radius: 999px !important;
+  padding: 2px 8px !important;
+  font-size: 10px !important;
+}
+html[data-theme="light"] .kuota-pill.is-empty {
+  background: #FEE2E2 !important;
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+}
+
+html[data-theme="light"] .libur-legend {
+  color: #64748B !important;
+}
+html[data-theme="light"] .libur-legend .dot.kerja {
+  background: #FFFFFF !important;
+  border: 1px solid #CBD5E1 !important;
+}
+html[data-theme="light"] .libur-legend .dot.libur {
+  background: #FCD34D !important;
+}
+
+/* Popup aksi libur — putih terbaca */
+html[data-theme="light"] .libur-action-popup {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 12px 40px rgba(15,23,42,0.12) !important;
+  border-radius: 12px !important;
+  color: #0F172A !important;
+  z-index: 5000 !important;
+}
+html[data-theme="light"] .libur-action-popup .pap-title {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+html[data-theme="light"] .libur-action-popup button {
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 8px !important;
+}
+html[data-theme="light"] .libur-action-popup button:hover {
+  background: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .libur-action-popup button.danger {
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+  border-color: #FECACA !important;
+}
+
+/* Juga override block gelap di label-col table navy */
+html[data-theme="light"] #jadwalLiburWrap table thead th,
+html[data-theme="light"] #kanitJadwalLiburWrap table thead th {
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #jadwalLiburWrap tbody td,
+html[data-theme="light"] #kanitJadwalLiburWrap tbody td {
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] #jadwalLiburWrap tbody tr:nth-child(even) td.label-col,
+html[data-theme="light"] #kanitJadwalLiburWrap tbody tr:nth-child(even) td.label-col {
+  background: #F8FAFC !important;
+}
+/* ========== END FASE R3 ========== */
+
+
+
+/* ========== Omset Harian + KPI ring light ========== */
+html[data-theme="light"] .kinerja-kpi-ring{
+  background: conic-gradient(var(--ring-color, #2563EB) var(--ring-pct, 0%), #E2E8F0 0) !important;
+}
+html[data-theme="light"] .kinerja-kpi-ring::before{
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] .kinerja-kpi-ring span{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+
+html[data-theme="light"] .harian-table,
+html[data-theme="light"] .harian-table-synced{
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .harian-table th,
+html[data-theme="light"] .harian-table-synced th{
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .harian-table th .dow{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+html[data-theme="light"] .harian-table td,
+html[data-theme="light"] .harian-table-synced td{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  background: #FFFFFF !important;
+  border-top: 1px solid #F1F5F9 !important;
+}
+html[data-theme="light"] .harian-table th.label-col,
+html[data-theme="light"] .harian-table td.label-col,
+html[data-theme="light"] .harian-table th.total-col,
+html[data-theme="light"] .harian-table td.total-col{
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+html[data-theme="light"] .harian-table tr.total-row td{
+  color: #0F172A !important;
+  font-weight: 700 !important;
+  background: #FFF7ED !important;
+}
+html[data-theme="light"] .harian-table td.max-day-cell{
+  background: #FEE2E2 !important;
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+}
+html[data-theme="light"] .harian-chart-val{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .harian-chart-val.is-max{
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+}
+html[data-theme="light"] .harian-chart-bar{
+  background: linear-gradient(180deg, #94A3B8, #64748B) !important;
+}
+html[data-theme="light"] .harian-chart-bar.is-max{
+  background: linear-gradient(180deg, #F87171, #DC2626) !important;
+}
+html[data-theme="light"] .harian-chart-day{
+  color: #64748B !important;
+}
+html[data-theme="light"] .harian-table-wrap,
+html[data-theme="light"] .harian-sync-wrap{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+}
+html[data-theme="light"] .ob-summary-card{
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .ob-summary-card .k{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+html[data-theme="light"] .ob-summary-card .v{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .compare-box{
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+}
+/* ========== END omset/ring light ========== */
+
+
 
 
 </style>
@@ -17014,7 +17462,7 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     var al = document.getElementById("jadwalLiburBulanLabel");
     if(kl) kl.textContent = jadwalDefault || "—";
     if(al) al.textContent = jadwalDefault || "—";
-    var showNext = (new Date()).getDate() >= 25 && allowed.length > 1;
+    var showNext = (new Date()).getDate() >= 25 && allowed.length > 1; /* R3: hanya tgl 25+ */
     var kn = document.getElementById("kanitJadwalNextMonthBtn");
     var an = document.getElementById("jadwalLiburNextMonthBtn");
     if(kn) kn.style.display = showNext ? "" : "none";
@@ -17912,7 +18360,7 @@ $on("cabangPinSubmit", "click", function(){
         return '<div class="kinerja-kpi-card">' +
           '<div class="kinerja-kpi-card-head">'+
             '<span class="label" style="display:inline-flex;align-items:center;gap:7px">'+khCatIconSvg_(k.key)+' '+escHtml(k.label)+'</span>'+
-            '<div class="kinerja-kpi-ring" style="--ring-pct:'+ringPct+'%; --ring-color:#E8A598;"><span>'+k.capaianPersen+'</span></div>'+
+            '<div class="kinerja-kpi-ring" style="--ring-pct:'+ringPct+'%; --ring-color:#2563EB;"><span>'+k.capaianPersen+'</span></div>'+
           '</div>' +
           '<div class="kinerja-kpi-nums">Aktual: <b>' + k.aktual + '</b> &nbsp;|&nbsp; Target: <b>' + k.target + '</b> &nbsp;|&nbsp; Proyeksi: <b>' + k.proyeksi + '</b></div>' +
           '<div class="kpi-tri-bar" title="Aktual / Proyeksi / Target">'+
@@ -18413,7 +18861,7 @@ $on("cabangPinSubmit", "click", function(){
       for(var i=0;i<JAB_ORDER.length;i++){ if(s.indexOf(JAB_ORDER[i])>=0) return i; }
       return 99;
     }
-    var AV_COLORS = ["#D4894A","#8B5CF6","#10B981","#F59E0B","#F43F5E","#06B6D4","#6366F1"];
+    var AV_COLORS = ["#334155","#475569","#64748B","#1E293B","#0F172A","#3F4A5A","#526277"];
     var sortedKar = data.karyawan.slice().filter(function(k){
       var jab = String(k.jabatan||"").toLowerCase();
       return jab.indexOf("kepala cabang") < 0;
@@ -20952,7 +21400,7 @@ function applyRejectedAlasanFilter_(which){
       return '<div class="kinerja-kpi-card" style="background:rgba(15,23,42,0.85);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:14px 16px;color:#F8FAFC;">'+
         '<div class="kinerja-kpi-card-head" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'+
           '<span class="label" style="color:#F8FAFC;font-weight:700;font-size:13px;">'+metric.icon+' '+metric.label.toUpperCase()+'</span>'+
-          '<div class="kinerja-kpi-ring" style="--ring-pct:'+ringPct+'%;--ring-color:#38BDF8;color:#F8FAFC;"><span style="color:#F8FAFC;">'+pct+'%</span></div>'+
+          '<div class="kinerja-kpi-ring" style="--ring-pct:'+ringPct+'%;--ring-color:#2563EB;"><span>'+pct+'%</span></div>'+
         '</div>'+
         '<div class="kinerja-kpi-nums" style="color:#CBD5E1;font-size:12px;margin-bottom:10px;">Aktual: <b style="color:#FFF;">'+fmt(nAktual)+'</b> &nbsp;|&nbsp; Target: <b style="color:#FFF;">'+fmt(nTarget)+'</b></div>'+
         '<div class="kpi-tri-bar" style="height:10px;background:rgba(255,255,255,0.12);border-radius:999px;overflow:hidden;position:relative;">'+
@@ -25500,6 +25948,20 @@ function renderKanitAuditWizard(){
       }
     });
   }
+  
+  // R3: sembunyikan Input bulan depan jika hari < 25
+  (function(){
+    function syncNextMonthBtnVisibility(){
+      var show = (new Date()).getDate() >= 25;
+      ["jadwalLiburNextMonthBtn","kanitJadwalNextMonthBtn"].forEach(function(id){
+        var el = document.getElementById(id);
+        if(el && !show) el.style.display = "none";
+      });
+    }
+    syncNextMonthBtnVisibility();
+    document.addEventListener("visibilitychange", function(){ if(!document.hidden) syncNextMonthBtnVisibility(); });
+  })();
+
   var nextBtn = document.getElementById("jadwalLiburNextMonthBtn");
   if(nextBtn){
     nextBtn.addEventListener("click", function(){
