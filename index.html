@@ -17470,6 +17470,201 @@ html[data-theme="light"] .appr-cab-card:hover {
 }
 /* ========== END P4 ========== */
 
+/* ========== P5: QA final harden (KC + Kanit) ========== */
+/* Pastikan shell selalu light */
+html[data-theme="light"] body,
+html[data-theme="light"] #app,
+html[data-theme="light"] .admin-shell,
+html[data-theme="light"] .admin-layout,
+html[data-theme="light"] .admin-main,
+html[data-theme="light"] .admin-content,
+html[data-theme="light"] .admin-body,
+html[data-theme="light"] #screen-admin-dashboard,
+html[data-theme="light"] #screen-omset-form {
+  background: #F4F6F9 !important;
+  color: #0F172A !important;
+}
+
+/* Sidebar tetap putih; active tetap gelap */
+html[data-theme="light"] .admin-sidebar {
+  background: #FFFFFF !important;
+  border-right: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .admin-sidebar .admin-nav-btn:not(.active),
+html[data-theme="light"] .admin-sidebar .tab-btn.admin-nav-btn:not(.active) {
+  background: transparent !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .admin-sidebar .admin-nav-btn.active,
+html[data-theme="light"] .admin-sidebar .tab-btn.admin-nav-btn.active {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+html[data-theme="light"] .admin-sidebar-section {
+  color: #94A3B8 !important;
+  -webkit-text-fill-color: #94A3B8 !important;
+}
+
+/* Paksa opacity penuh di konten */
+html[data-theme="light"] .admin-content td,
+html[data-theme="light"] .admin-content th,
+html[data-theme="light"] .admin-content span,
+html[data-theme="light"] .admin-content div,
+html[data-theme="light"] .admin-content p {
+  opacity: 1 !important;
+}
+
+/* Jangan biarkan teks konten jadi putih kecuali di chrome gelap */
+html[data-theme="light"] .admin-content *:not(button):not(.admin-nav-btn):not(.tab-btn):not(.acp-badge):not(.appr-status):not(.appr-tipe):not(.status-badge):not(.chip):not(.kuota-pill):not(.admin-avatar-circle):not(thead th) {
+  /* text color handled by more specific rules */
+}
+
+/* Chart / bar labels */
+html[data-theme="light"] .admin-content .bar-label,
+html[data-theme="light"] .admin-content .bar-pct,
+html[data-theme="light"] .admin-content .bar-detail,
+html[data-theme="light"] .admin-content .chart-legend,
+html[data-theme="light"] .admin-content .legend {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+
+/* Jadwal libur final */
+html[data-theme="light"] .libur-table-wrap,
+html[data-theme="light"] #jadwalLiburWrap,
+html[data-theme="light"] #kanitJadwalLiburWrap {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+}
+html[data-theme="light"] .libur-table td,
+html[data-theme="light"] .libur-table th {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .libur-name,
+html[data-theme="light"] .libur-jabatan {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+
+/* Omset harian table final */
+html[data-theme="light"] .harian-table-wrap {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+}
+html[data-theme="light"] .harian-table th,
+html[data-theme="light"] .harian-table td {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .harian-table .label-col {
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+
+/* Approval cuti final */
+html[data-theme="light"] #tab-approvalcuti,
+html[data-theme="light"] #approvalCutiView {
+  color: #0F172A !important;
+}
+html[data-theme="light"] #tab-approvalcuti table td,
+html[data-theme="light"] #tab-approvalcuti table th {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+
+/* Modal global */
+html[data-theme="light"] .modal-card,
+html[data-theme="light"] .profile-modal,
+html[data-theme="light"] .dialog-card,
+html[data-theme="light"] .popup-card {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(15,23,42,0.15) !important;
+}
+html[data-theme="light"] .modal-card *:not(button),
+html[data-theme="light"] .profile-modal *:not(button),
+html[data-theme="light"] .popup-card *:not(button) {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .modal-card label,
+html[data-theme="light"] .profile-modal label {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+
+/* Notif */
+html[data-theme="light"] .notif-dropdown,
+html[data-theme="light"] .notif-panel,
+html[data-theme="light"] .notif-list {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+  box-shadow: 0 12px 40px rgba(15,23,42,0.12) !important;
+}
+
+/* Login screen align */
+html[data-theme="light"] #screen-login,
+html[data-theme="light"] .login-card {
+  color: #0F172A !important;
+}
+html[data-theme="light"] .login-card {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+}
+html[data-theme="light"] .login-card input {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .login-card label {
+  color: #64748B !important;
+}
+
+/* QA: checkbox always visible */
+html[data-theme="light"] input[type="checkbox"] {
+  opacity: 1 !important;
+  accent-color: #0F172A !important;
+}
+
+/* QA: date inputs */
+html[data-theme="light"] input[type="date"],
+html[data-theme="light"] input[type="month"] {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  color-scheme: light !important;
+}
+
+/* Scrollbar final */
+html[data-theme="light"] ::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+html[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #F1F5F9 !important;
+}
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #CBD5E1 !important;
+  border-radius: 99px !important;
+}
+html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8 !important;
+}
+/* ========== END P5 ========== */
+
+
 
 
 
