@@ -2778,7 +2778,7 @@ button.btn-icon-refresh{
   margin-left: auto !important;
 }
 #auditPengajuanList .appr-cab-nums b{ color:#64748B !important; font-weight: 700; }
-#auditPengajuanList .appr-cab-nums .n-wait b{ color: #FDE68A !important; }
+#auditPengajuanList .appr-cab-nums .n-wait b{ color: #B45309 !important; }
 #auditPengajuanList .appr-cab-nums .n-todo b{ color: #94A3B8 !important; }
 #auditPengajuanList .appr-cab-arrow{
   color: #475569 !important;
@@ -7611,7 +7611,8 @@ button.tab-btn.admin-nav-btn{
     background:rgba(255,255,255,0.03) !important;
   }
   .admin-content .harian-table tr:nth-child(even):not(.total-row) td.label-col{
-    background:#0F172A !important;
+    background:#F8FAFC !important;
+    color:#0F172A !important;
   }
   .harian-chart-val{
     color:#0F172A !important;
@@ -9979,7 +9980,7 @@ button.appr-cab-card{
 #auditPengajuanList .appr-cab-card:hover,
 button.appr-cab-card:hover{
   border-color: rgba(232,168,106,0.45) !important;
-  background: rgba(30, 41, 59, 0.9) !important;
+  background: #F8FAFC !important;
   background-image: none !important;
   filter: none !important;
   transform: none !important;
@@ -19047,6 +19048,1016 @@ html[data-theme="light"] .admin-content .file-drop {
 }
 /* ========== END T8 ========== */
 
+/* ========== FIX: Omset Harian label-col GE/GG never navy ========== */
+html[data-theme="light"] .harian-table td.label-col,
+html[data-theme="light"] .harian-table th.label-col,
+html[data-theme="light"] .admin-content .harian-table td.label-col,
+html[data-theme="light"] .admin-content .harian-table th.label-col,
+html[data-theme="light"] .admin-content .harian-table tr td.label-col,
+html[data-theme="light"] .admin-content .harian-table tr:nth-child(odd) td.label-col,
+html[data-theme="light"] .admin-content .harian-table tr:nth-child(even) td.label-col,
+html[data-theme="light"] .admin-content .harian-table tr:nth-child(even):not(.total-row) td.label-col,
+html[data-theme="light"] .admin-content .harian-table tr:nth-child(odd):not(.total-row) td.label-col,
+html[data-theme="light"] .admin-content .harian-table tr.cmp-row-a td.label-col,
+html[data-theme="light"] .admin-content .harian-table tr.cmp-row-b td.label-col,
+html[data-theme="light"] .admin-content .harian-table tr.cmp-row-d td.label-col,
+html[data-theme="light"] .admin-content .harian-table tr.chart-row td.label-col,
+html[data-theme="light"] .admin-content .harian-table tr.total-row td.label-col {
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-right: 1px solid #E2E8F0 !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+}
+html[data-theme="light"] .admin-content .harian-table tr.total-row td.label-col {
+  background: #FFEDD5 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .admin-content .harian-table tr.cmp-row-d td.label-col {
+  background: #F1F5F9 !important;
+}
+/* data cells stay white */
+html[data-theme="light"] .admin-content .harian-table tr:nth-child(even):not(.total-row):not(.chart-row) td:not(.label-col) {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .admin-content .harian-table tr:nth-child(odd):not(.total-row):not(.chart-row) td:not(.label-col) {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+}
+/* ========== END FIX label-col navy ========== */
+
+/* ========== FIX: Rejected buttons theme + no refresh ========== */
+/* Tampilkan = primary hitam, bukan oranye */
+html[data-theme="light"] #rejectedAnalysisLoadBtn,
+html[data-theme="light"] #kanitRejectedLoadBtn,
+html[data-theme="light"] #tab-rejected .auth-primary-btn,
+html[data-theme="light"] #tab-kanitrejected .auth-primary-btn {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: 1px solid #0F172A !important;
+  border-radius: 999px !important;
+  background-image: none !important;
+  height: 36px !important;
+  padding: 0 16px !important;
+  font-weight: 600 !important;
+  width: auto !important;
+  max-width: 160px !important;
+}
+html[data-theme="light"] #rejectedAnalysisLoadBtn:hover,
+html[data-theme="light"] #kanitRejectedLoadBtn:hover {
+  background: #1E293B !important;
+}
+
+/* Analisa + Export: ghost, hanya tampil via JS saat ada detail */
+html[data-theme="light"] #rejectedAnalisaBtn {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 999px !important;
+  height: 36px !important;
+  padding: 0 16px !important;
+  font-weight: 600 !important;
+  background-image: none !important;
+}
+html[data-theme="light"] #rejectedExportExcelBtn,
+html[data-theme="light"] #rejectedExportPdfBtn,
+html[data-theme="light"] #rejectedExportRow button {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 999px !important;
+  height: 36px !important;
+  padding: 0 14px !important;
+  font-weight: 600 !important;
+  background-image: none !important;
+}
+
+/* Sembunyikan tombol refresh / phantom di filter rejected */
+html[data-theme="light"] #rejectedAnalysisSingleDateBtn,
+html[data-theme="light"] #kanitRejectedSingleDateBtn,
+html[data-theme="light"] #tab-rejected button.refresh-btn,
+html[data-theme="light"] #tab-rejected .refresh-btn,
+html[data-theme="light"] #tab-kanitrejected .refresh-btn,
+html[data-theme="light"] #tab-rejected button[id*="efresh"],
+html[data-theme="light"] #tab-kanitrejected button[id*="efresh"] {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  pointer-events: none !important;
+}
+
+/* Export row gap */
+html[data-theme="light"] #rejectedExportRow {
+  gap: 8px !important;
+  align-items: center !important;
+}
+/* ========== END FIX rejected buttons ========== */
+
+/* ========== FIX: Jadwal Libur compact + next-month btn ========== */
+/* Sembunyikan input bulan depan kecuali tgl >= 25 (JS + CSS fallback) */
+html[data-theme="light"] #jadwalLiburNextMonthBtn.is-hidden-until-25,
+html[data-theme="light"] #kanitJadwalNextMonthBtn.is-hidden-until-25 {
+  display: none !important;
+}
+
+/* Tombol outline hitam, bukan oranye */
+html[data-theme="light"] #jadwalLiburNextMonthBtn,
+html[data-theme="light"] #kanitJadwalNextMonthBtn,
+html[data-theme="light"] #tab-jadwallibur .btn-xs,
+html[data-theme="light"] #tab-kanitjadwallibur .btn-xs,
+html[data-theme="light"] #jadwalLiburApprovalBtn,
+html[data-theme="light"] button#jadwalLiburSaveBtn,
+html[data-theme="light"] #tab-jadwallibur button.secondary {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 999px !important;
+  background-image: none !important;
+  height: 34px !important;
+  padding: 0 12px !important;
+  font-size: 12px !important;
+}
+html[data-theme="light"] #jadwalLiburApprovalBtn,
+html[data-theme="light"] #tab-jadwallibur .auth-primary-btn {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border-color: #0F172A !important;
+}
+
+/* Sembunyikan refresh icon di jadwal jika ada */
+html[data-theme="light"] #tab-jadwallibur .refresh-btn,
+html[data-theme="light"] #tab-kanitjadwallibur .refresh-btn,
+html[data-theme="light"] #jadwalLiburRefreshBtn,
+html[data-theme="light"] #kanitJadwalRefreshBtn {
+  display: none !important;
+}
+
+/* ===== Tabel libur dipadatkan agar muat 1 layar ===== */
+html[data-theme="light"] .libur-table-wrap,
+html[data-theme="light"] #jadwalLiburWrap .libur-table-wrap,
+html[data-theme="light"] #kanitJadwalLiburWrap .libur-table-wrap {
+  max-height: none !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+}
+html[data-theme="light"] .libur-table,
+html[data-theme="light"] .admin-content .libur-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  font-size: 10px !important;
+  border-collapse: collapse !important;
+}
+html[data-theme="light"] .libur-table th,
+html[data-theme="light"] .admin-content .libur-table th {
+  padding: 4px 1px !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  background-image: none !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+html[data-theme="light"] .libur-table th .dow {
+  font-size: 7px !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  display: block !important;
+  line-height: 1 !important;
+}
+html[data-theme="light"] .libur-table th.dow-min .dow,
+html[data-theme="light"] .libur-table th.dow-min {
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+}
+html[data-theme="light"] .libur-table td {
+  padding: 1px !important;
+  border-color: #F1F5F9 !important;
+}
+/* Sticky name col — sempit */
+html[data-theme="light"] .libur-table th.label-col,
+html[data-theme="light"] .libur-table td.label-col,
+html[data-theme="light"] .admin-content .libur-table td:first-child,
+html[data-theme="light"] .admin-content .libur-table th:first-child {
+  width: 118px !important;
+  min-width: 100px !important;
+  max-width: 130px !important;
+  padding: 4px 6px !important;
+  font-size: 11px !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  background-image: none !important;
+}
+html[data-theme="light"] .libur-table td.label-col .jabatan,
+html[data-theme="light"] .libur-table .libur-jabatan,
+html[data-theme="light"] .libur-table .emp-role {
+  font-size: 9px !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+/* Cell klik lebih kecil */
+html[data-theme="light"] .libur-cell {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 28px !important;
+  height: 22px !important;
+  margin: 0 auto !important;
+  border-radius: 4px !important;
+  font-size: 9px !important;
+}
+html[data-theme="light"] .libur-avatar,
+html[data-theme="light"] .libur-table .avatar {
+  width: 22px !important;
+  height: 22px !important;
+  font-size: 9px !important;
+  flex-shrink: 0 !important;
+}
+html[data-theme="light"] .libur-table .kuota-pill,
+html[data-theme="light"] .libur-table .chip {
+  font-size: 8px !important;
+  padding: 1px 5px !important;
+  border-radius: 999px !important;
+}
+/* Day columns share remaining width equally */
+html[data-theme="light"] .libur-table th:not(.label-col),
+html[data-theme="light"] .libur-table td:not(.label-col) {
+  width: auto !important;
+}
+
+html[data-theme="light"] #jadwalLiburLoadBtn,
+html[data-theme="light"] #kanitJadwalLoadBtn,
+html[data-theme="light"] .btn-icon-refresh {
+  display: none !important;
+}
+/* ========== END FIX libur compact ========== */
+
+/* ========== FASE A: Approval Audit list light + dense ========== */
+html[data-theme="light"] #auditApprovalView {
+  background: transparent !important;
+  color: #0F172A !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+/* Toolbar compact */
+html[data-theme="light"] #auditApprovalView .approval-toolbar,
+html[data-theme="light"] #auditApprToolbar {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
+  gap: 10px !important;
+  padding: 12px 14px !important;
+  margin-bottom: 12px !important;
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+}
+html[data-theme="light"] #auditApprovalView .approval-filters {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  align-items: flex-end !important;
+  flex: 1 1 auto !important;
+}
+html[data-theme="light"] #auditApprovalView .approval-filters label {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] #auditApprovalView .approval-filters select {
+  height: 36px !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  min-width: 140px !important;
+}
+html[data-theme="light"] #btnBackApprovalAudit {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 999px !important;
+  height: 36px !important;
+  padding: 0 14px !important;
+}
+
+/* Hide refresh on approval */
+html[data-theme="light"] #auditPengajuanLoadBtn,
+html[data-theme="light"] #auditApprovalView .btn-icon-refresh {
+  display: none !important;
+}
+
+/* List full width, dense */
+html[data-theme="light"] #auditPengajuanList {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Cards — putih, full width, terbaca */
+html[data-theme="light"] #auditPengajuanList .appr-cab-card,
+html[data-theme="light"] .appr-cab-card,
+html[data-theme="light"] button.appr-cab-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 12px 14px !important;
+  background: #FFFFFF !important;
+  background-image: none !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.04) !important;
+  cursor: pointer !important;
+  text-align: left !important;
+}
+html[data-theme="light"] #auditPengajuanList .appr-cab-card:hover,
+html[data-theme="light"] button.appr-cab-card:hover {
+  background: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06) !important;
+}
+
+html[data-theme="light"] .appr-cab-code,
+html[data-theme="light"] #auditPengajuanList .appr-cab-code {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  min-width: 72px !important;
+}
+html[data-theme="light"] .appr-cab-period,
+html[data-theme="light"] .appr-cab-meta,
+html[data-theme="light"] .appr-cab-nums,
+html[data-theme="light"] .appr-cab-nums b {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 12px !important;
+}
+html[data-theme="light"] .appr-cab-nums .n-wait b {
+  color: #B45309 !important;
+  -webkit-text-fill-color: #B45309 !important;
+}
+html[data-theme="light"] .appr-cab-nums .n-todo b {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+html[data-theme="light"] .appr-cab-arrow {
+  color: #94A3B8 !important;
+  -webkit-text-fill-color: #94A3B8 !important;
+  margin-left: auto !important;
+  font-size: 18px !important;
+}
+
+/* Status badges soft */
+html[data-theme="light"] .appr-cab-card .appr-status,
+html[data-theme="light"] .appr-cab-card .acp-badge {
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 3px 10px !important;
+  border: 1px solid transparent !important;
+}
+html[data-theme="light"] .appr-cab-card .appr-status.belum,
+html[data-theme="light"] .appr-cab-card .acp-badge.belum {
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+  border-color: #E2E8F0 !important;
+}
+html[data-theme="light"] .appr-cab-card .appr-status.menunggu,
+html[data-theme="light"] .appr-cab-card .acp-badge.menunggu {
+  background: #FFF7ED !important;
+  color: #9A3412 !important;
+  -webkit-text-fill-color: #9A3412 !important;
+  border-color: #FDBA74 !important;
+}
+html[data-theme="light"] .appr-cab-card .appr-status.approve,
+html[data-theme="light"] .appr-cab-card .acp-badge.approve,
+html[data-theme="light"] .appr-cab-card .appr-status.approved {
+  background: #DCFCE7 !important;
+  color: #166534 !important;
+  -webkit-text-fill-color: #166534 !important;
+  border-color: #86EFAC !important;
+}
+html[data-theme="light"] .appr-cab-card .appr-status.tolak,
+html[data-theme="light"] .appr-cab-card .acp-badge.tolak {
+  background: #FEE2E2 !important;
+  color: #991B1B !important;
+  -webkit-text-fill-color: #991B1B !important;
+  border-color: #FECACA !important;
+}
+
+/* Chip counts inside card */
+html[data-theme="light"] .appr-cab-card .chip,
+html[data-theme="light"] .appr-cab-card .appr-chip {
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  padding: 2px 8px !important;
+}
+
+/* Detail pane if shown */
+html[data-theme="light"] #auditApprDetailPane {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 14px !important;
+  color: #0F172A !important;
+}
+/* ========== END FASE A ========== */
+
+/* ========== FASE B: Dashboard Audit toolbar buttons ========== */
+html[data-theme="light"] #tab-audit .filter-row-compact,
+html[data-theme="light"] #tab-audit .audit-toolbar,
+html[data-theme="light"] #tab-kanitaudit .filter-row-compact {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
+  gap: 10px !important;
+  padding: 12px 14px !important;
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  margin-bottom: 12px !important;
+}
+html[data-theme="light"] #tab-audit .filter-row-compact label,
+html[data-theme="light"] #tab-kanitaudit .filter-row-compact label {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] #tab-audit .filter-row-compact select,
+html[data-theme="light"] #tab-audit .filter-row-compact input,
+html[data-theme="light"] #tab-kanitaudit .filter-row-compact select {
+  height: 36px !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+}
+
+/* Terapkan — hitam pill */
+html[data-theme="light"] #auditLoadBtn,
+html[data-theme="light"] #tab-audit #auditLoadBtn,
+html[data-theme="light"] #tab-kanitaudit #auditLoadBtn {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: 1px solid #0F172A !important;
+  border-radius: 999px !important;
+  height: 36px !important;
+  padding: 0 16px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  max-width: 140px !important;
+}
+html[data-theme="light"] #auditLoadBtn:hover {
+  background: #1E293B !important;
+}
+
+/* Approval Audit — kontras jelas */
+html[data-theme="light"] #btnOpenApprovalAudit,
+html[data-theme="light"] #tab-audit #btnOpenApprovalAudit {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #0F172A !important;
+  border-radius: 999px !important;
+  height: 36px !important;
+  padding: 0 14px !important;
+  font-weight: 700 !important;
+  font-size: 12.5px !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  margin-left: auto !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #btnOpenApprovalAudit:hover {
+  background: #F8FAFC !important;
+}
+/* Badge pending di tombol approval */
+html[data-theme="light"] #btnOpenApprovalAudit .badge,
+html[data-theme="light"] #btnOpenApprovalAudit .notif-dot {
+  background: #DC2626 !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+
+/* Hide refresh */
+html[data-theme="light"] #auditRefreshBtn,
+html[data-theme="light"] #tab-audit .btn-icon-refresh,
+html[data-theme="light"] #tab-kanitaudit .btn-icon-refresh {
+  display: none !important;
+}
+
+/* Loading state text on button */
+html[data-theme="light"] #auditLoadBtn:disabled {
+  opacity: 0.55 !important;
+  cursor: wait !important;
+}
+/* ========== END FASE B ========== */
+
+/* ========== FASE C: Dashboard Audit dense grid layout ========== */
+html[data-theme="light"] #tab-audit #auditMainView,
+html[data-theme="light"] #tab-kanitaudit #auditMainView {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+/* KPI 4 kolom padat */
+html[data-theme="light"] #tab-audit .audit-kpi-grid,
+html[data-theme="light"] #tab-kanitaudit .audit-kpi-grid,
+html[data-theme="light"] .audit-kpi-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin: 0 0 4px !important;
+  width: 100% !important;
+}
+html[data-theme="light"] #tab-audit .audit-kpi,
+html[data-theme="light"] #tab-kanitaudit .audit-kpi,
+html[data-theme="light"] .audit-kpi {
+  background: #FFFFFF !important;
+  background-image: none !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  color: #0F172A !important;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.04) !important;
+  min-height: 0 !important;
+}
+html[data-theme="light"] .audit-kpi .k,
+html[data-theme="light"] .audit-kpi .label {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 4px !important;
+}
+html[data-theme="light"] .audit-kpi .v,
+html[data-theme="light"] .audit-kpi .value {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+}
+html[data-theme="light"] .audit-kpi .sub {
+  color: #64748B !important;
+  font-size: 11px !important;
+}
+
+/* Charts row 2 kolom — isi ruang */
+html[data-theme="light"] #tab-audit .audit-charts-2,
+html[data-theme="light"] #tab-kanitaudit .audit-charts-2,
+html[data-theme="light"] .audit-charts.audit-charts-2 {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  width: 100% !important;
+  align-items: stretch !important;
+}
+
+/* Ranking 3 kolom sejajar */
+html[data-theme="light"] #tab-audit .audit-charts-3,
+html[data-theme="light"] #tab-kanitaudit .audit-charts-3,
+html[data-theme="light"] .audit-charts.audit-charts-3 {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  width: 100% !important;
+  align-items: stretch !important;
+}
+
+/* Cards chart/ranking */
+html[data-theme="light"] #tab-audit .audit-card,
+html[data-theme="light"] #tab-kanitaudit .audit-card,
+html[data-theme="light"] .audit-card {
+  background: #FFFFFF !important;
+  background-image: none !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  color: #0F172A !important;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.04) !important;
+  min-height: 180px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+html[data-theme="light"] .audit-card h4 {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  margin: 0 0 10px !important;
+  padding: 0 !important;
+}
+html[data-theme="light"] .audit-card-hint,
+html[data-theme="light"] .audit-card h4 span {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-size: 10px !important;
+}
+
+/* Chart content fills card */
+html[data-theme="light"] #auditTren,
+html[data-theme="light"] #auditCabangChart,
+html[data-theme="light"] #auditTopPetugas,
+html[data-theme="light"] #auditTopTemuan,
+html[data-theme="light"] #auditTw {
+  flex: 1 1 auto !important;
+  min-height: 140px !important;
+  color: #0F172A !important;
+}
+
+/* Bar labels readable */
+html[data-theme="light"] #tab-audit .bar-label,
+html[data-theme="light"] #tab-audit .bar-name,
+html[data-theme="light"] #tab-audit .bar-val,
+html[data-theme="light"] #tab-audit .rank-name,
+html[data-theme="light"] #tab-audit .rank-val {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 12px !important;
+}
+
+/* Detail table */
+html[data-theme="light"] #tab-audit .audit-detail-wrap,
+html[data-theme="light"] #auditDetailBody,
+html[data-theme="light"] #tab-audit .audit-table-wrap {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  overflow: auto !important;
+  max-height: 360px !important;
+}
+html[data-theme="light"] #tab-audit .audit-table thead th,
+html[data-theme="light"] #auditDetailBody table thead th {
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+}
+html[data-theme="light"] #tab-audit .audit-table tbody td,
+html[data-theme="light"] #auditDetailBody table tbody td {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 12px !important;
+  padding: 8px 10px !important;
+}
+html[data-theme="light"] #tab-audit .audit-table tbody tr:nth-child(even) td {
+  background: #F8FAFC !important;
+}
+
+/* Loading bar thin */
+html[data-theme="light"] #auditLoading {
+  background: #FFF7ED !important;
+  border: 1px solid #FDBA74 !important;
+  color: #9A3412 !important;
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+  text-align: center !important;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  html[data-theme="light"] #tab-audit .audit-charts-2,
+  html[data-theme="light"] #tab-kanitaudit .audit-charts-2 {
+    grid-template-columns: 1fr !important;
+  }
+  html[data-theme="light"] #tab-audit .audit-charts-3,
+  html[data-theme="light"] #tab-kanitaudit .audit-charts-3 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+@media (max-width: 720px) {
+  html[data-theme="light"] #tab-audit .audit-kpi-grid,
+  html[data-theme="light"] #tab-kanitaudit .audit-kpi-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  html[data-theme="light"] #tab-audit .audit-charts-3,
+  html[data-theme="light"] #tab-kanitaudit .audit-charts-3 {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* ========== END FASE C ========== */
+
+/* ========== FASE D: Audit empty / loading / detail polish ========== */
+/* Empty state seragam */
+html[data-theme="light"] #tab-audit .empty-log,
+html[data-theme="light"] #tab-audit .empty-state,
+html[data-theme="light"] #tab-kanitaudit .empty-log,
+html[data-theme="light"] #tab-audit #auditDetailBody:empty::after,
+html[data-theme="light"] #tab-audit .audit-card .empty {
+  display: block !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  background: #F8FAFC !important;
+  border: 1px dashed #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 14px 12px !important;
+  text-align: center !important;
+  font-size: 12.5px !important;
+  margin: 4px 0 !important;
+}
+
+/* Msg / error */
+html[data-theme="light"] #auditMsg,
+html[data-theme="light"] #tab-audit .msg {
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  font-size: 12.5px !important;
+}
+html[data-theme="light"] #auditMsg.err,
+html[data-theme="light"] #tab-audit .msg.err {
+  background: #FEF2F2 !important;
+  border: 1px solid #FECACA !important;
+  color: #991B1B !important;
+}
+html[data-theme="light"] #auditMsg.ok,
+html[data-theme="light"] #tab-audit .msg.ok {
+  background: #F0FDF4 !important;
+  border: 1px solid #BBF7D0 !important;
+  color: #166534 !important;
+}
+
+/* Detail section title */
+html[data-theme="light"] #tab-audit .audit-detail-hint,
+html[data-theme="light"] #auditDetailHint,
+html[data-theme="light"] #tab-audit h3,
+html[data-theme="light"] #tab-audit .section-title {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  margin: 8px 0 8px !important;
+}
+
+/* Detail table refined */
+html[data-theme="light"] #tab-audit table.audit-table,
+html[data-theme="light"] #auditDetailBody table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+html[data-theme="light"] #tab-audit table.audit-table thead th,
+html[data-theme="light"] #auditDetailBody thead th {
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  padding: 9px 10px !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] #tab-audit table.audit-table tbody td,
+html[data-theme="light"] #auditDetailBody tbody td {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 12px !important;
+  padding: 8px 10px !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  vertical-align: top !important;
+}
+html[data-theme="light"] #tab-audit table.audit-table tbody tr:nth-child(even) td,
+html[data-theme="light"] #auditDetailBody tbody tr:nth-child(even) td {
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] #tab-audit table.audit-table tbody tr:hover td,
+html[data-theme="light"] #auditDetailBody tbody tr:hover td {
+  background: #F1F5F9 !important;
+}
+
+/* Badge tipe di detail */
+html[data-theme="light"] #tab-audit .badge-pelanggaran,
+html[data-theme="light"] #tab-audit .tipe-pelanggaran,
+html[data-theme="light"] #auditDetailBody .badge.pelanggaran {
+  background: #FEE2E2 !important;
+  color: #991B1B !important;
+  -webkit-text-fill-color: #991B1B !important;
+  border: 1px solid #FECACA !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+}
+html[data-theme="light"] #tab-audit .badge-support,
+html[data-theme="light"] #tab-audit .tipe-support,
+html[data-theme="light"] #auditDetailBody .badge.support {
+  background: #DBEAFE !important;
+  color: #1E40AF !important;
+  -webkit-text-fill-color: #1E40AF !important;
+  border: 1px solid #BFDBFE !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+}
+html[data-theme="light"] #tab-audit .badge-fraud,
+html[data-theme="light"] #auditDetailBody .badge.fraud {
+  background: #FFEDD5 !important;
+  color: #9A3412 !important;
+  -webkit-text-fill-color: #9A3412 !important;
+  border: 1px solid #FDBA74 !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+}
+
+/* Rank bars inside cards — track light */
+html[data-theme="light"] #tab-audit .rank-bar-track,
+html[data-theme="light"] #tab-audit .bar-track,
+html[data-theme="light"] #tab-audit .audit-bar-bg {
+  background: #E2E8F0 !important;
+  border-radius: 999px !important;
+  height: 8px !important;
+}
+html[data-theme="light"] #tab-audit .rank-row,
+html[data-theme="light"] #tab-audit .bar-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 6px !important;
+  color: #0F172A !important;
+}
+
+/* Chart month axis */
+html[data-theme="light"] #tab-audit .month-label,
+html[data-theme="light"] #auditTren .axis-label {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 10px !important;
+}
+
+/* GOOD / zero label */
+html[data-theme="light"] #tab-audit .good-label,
+html[data-theme="light"] #tab-audit .zero-label {
+  color: #166534 !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+}
+/* ========== END FASE D ========== */
+
+/* ========== FASE E: Audit mobile ========== */
+@media (max-width: 900px) {
+  /* Filter stack */
+  html[data-theme="light"] #tab-audit #auditFilterRow,
+  html[data-theme="light"] #tab-audit .filter-row-compact,
+  html[data-theme="light"] #tab-kanitaudit .filter-row-compact,
+  html[data-theme="light"] #auditApprToolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  html[data-theme="light"] #tab-audit #auditFilterRow .field,
+  html[data-theme="light"] #tab-audit .filter-row-compact .field,
+  html[data-theme="light"] #auditApprovalView .approval-filters .field {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  html[data-theme="light"] #tab-audit #auditFilterRow select,
+  html[data-theme="light"] #tab-audit #auditFilterRow input,
+  html[data-theme="light"] #auditApprovalView select {
+    width: 100% !important;
+  }
+
+  /* Buttons full-ish width */
+  html[data-theme="light"] #auditLoadBtn,
+  html[data-theme="light"] #btnOpenApprovalAudit,
+  html[data-theme="light"] #btnBackApprovalAudit {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  /* KPI 2x2 */
+  html[data-theme="light"] #tab-audit .audit-kpi-grid,
+  html[data-theme="light"] #tab-kanitaudit .audit-kpi-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  html[data-theme="light"] #tab-audit .audit-kpi .v {
+    font-size: 18px !important;
+  }
+
+  /* Charts stack */
+  html[data-theme="light"] #tab-audit .audit-charts-2,
+  html[data-theme="light"] #tab-kanitaudit .audit-charts-2,
+  html[data-theme="light"] #tab-audit .audit-charts-3,
+  html[data-theme="light"] #tab-kanitaudit .audit-charts-3 {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  html[data-theme="light"] #tab-audit .audit-card {
+    min-height: 0 !important;
+    padding: 12px !important;
+  }
+  html[data-theme="light"] #auditTren,
+  html[data-theme="light"] #auditCabangChart,
+  html[data-theme="light"] #auditTopPetugas,
+  html[data-theme="light"] #auditTopTemuan,
+  html[data-theme="light"] #auditTw {
+    min-height: 120px !important;
+  }
+
+  /* Detail table scroll */
+  html[data-theme="light"] #tab-audit .audit-detail-wrap,
+  html[data-theme="light"] #auditDetailBody {
+    max-height: 280px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  html[data-theme="light"] #tab-audit table.audit-table {
+    min-width: 640px !important;
+  }
+
+  /* Approval cards */
+  html[data-theme="light"] #auditPengajuanList .appr-cab-card {
+    flex-wrap: wrap !important;
+    padding: 12px !important;
+    gap: 8px !important;
+  }
+  html[data-theme="light"] #auditPengajuanList .appr-cab-code {
+    font-size: 14px !important;
+  }
+  html[data-theme="light"] #auditPengajuanList .appr-cab-arrow {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  html[data-theme="light"] #tab-audit .audit-kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+  html[data-theme="light"] #tab-audit .audit-kpi .v {
+    font-size: 20px !important;
+  }
+}
+/* ========== END FASE E ========== */
+
+
+
+
+
+
+
+
+
 
 
 
@@ -19537,7 +20548,7 @@ html[data-theme="light"] .compare-box{
         </div>
         <button type="button" id="kanitRejectedLoadBtn" class="auth-primary-btn" style="width:auto;padding:10px 16px;">Tampilkan</button>
         <input type="hidden" id="kanitRejectedSingleDate">
-        <button type="button" id="kanitRejectedSingleDateBtn" style="display:none;"></button>
+        <button type="button" id="kanitRejectedSingleDateBtn" style="display:none !important;width:0;height:0;padding:0;margin:0;border:0;overflow:hidden;" aria-hidden="true"></button>
       </div>
       <div id="kanitRejectedWrap" style="margin-top:20px;"></div>
       <div class="msg" id="kanitRejectedMsg"></div>
@@ -19953,7 +20964,7 @@ html[data-theme="light"] .compare-box{
         </div>
         <button type="button" id="rejectedAnalysisLoadBtn" class="auth-primary-btn" style="width:auto;padding:10px 16px;margin:0;">Tampilkan</button>
         <input type="hidden" id="rejectedAnalysisSingleDate">
-        <button type="button" id="rejectedAnalysisSingleDateBtn" style="display:none;"></button>
+        <button type="button" id="rejectedAnalysisSingleDateBtn" style="display:none !important;width:0;height:0;padding:0;margin:0;border:0;overflow:hidden;" aria-hidden="true"></button>
       </div>
       <div class="msg" id="rejectedAnalysisMsg"></div>
 
@@ -19962,7 +20973,7 @@ html[data-theme="light"] .compare-box{
            baru muncul setelah "Analisa" diklik. -->
       <div id="rejectedDetailWrap" style="margin-top:20px;"></div>
 
-      <button id="rejectedAnalisaBtn" style="display:none; margin-top:22px;">Analisa</button>
+      <button type="button" id="rejectedAnalisaBtn" class="btn-xs secondary" style="display:none; margin-top:16px;">Analisa</button>
 
       <div class="inline-row" id="rejectedExportRow" style="display:none; margin-top:14px;">
         <button type="button" id="rejectedExportExcelBtn" class="secondary">⬇ Export Excel</button>
@@ -21290,8 +22301,8 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     var showNext = (new Date()).getDate() >= 25 && allowed.length > 1; /* R3: hanya tgl 25+ */
     var kn = document.getElementById("kanitJadwalNextMonthBtn");
     var an = document.getElementById("jadwalLiburNextMonthBtn");
-    if(kn) kn.style.display = showNext ? "" : "none";
-    if(an) an.style.display = showNext ? "" : "none";
+    if(kn) kn.style.setProperty("display", showNext ? "inline-flex" : "none", "important");
+    if(an) an.style.setProperty("display", showNext ? "inline-flex" : "none", "important");
   }
   google.script.run
     .withSuccessHandler(function(list){
@@ -24605,7 +25616,10 @@ function applyRejectedAlasanFilter_(which){
         window.__rejectedCache.admin = { data: r.data, label: cabangLabelForEmpty };
         fillRejectedAlasanSelect_("rejectedAnalysisAlasan", (r.data && r.data.allDetail) || []);
         applyRejectedAlasanFilter_("admin");
-        document.getElementById("rejectedAnalisaBtn").style.display = "inline-block";
+        var _rdw = document.getElementById("rejectedDetailWrap");
+        var _hasDetail = _rdw && _rdw.innerHTML && _rdw.innerHTML.indexOf("Belum ada") < 0 && _rdw.innerHTML.trim().length > 40;
+        document.getElementById("rejectedAnalisaBtn").style.display = _hasDetail ? "inline-block" : "none";
+        if(!_hasDetail){ document.getElementById("rejectedExportRow").style.display = "none"; }
       })
       .withFailureHandler(function(err){
         self.dataset.busy = "0"; self.disabled = false;
@@ -29780,7 +30794,8 @@ function renderKanitAuditWizard(){
       var show = (new Date()).getDate() >= 25;
       ["jadwalLiburNextMonthBtn","kanitJadwalNextMonthBtn"].forEach(function(id){
         var el = document.getElementById(id);
-        if(el && !show) el.style.display = "none";
+        if(!el) return;
+        el.style.setProperty("display", show ? "inline-flex" : "none", "important");
       });
     }
     syncNextMonthBtnVisibility();
@@ -31029,6 +32044,24 @@ function loadAdminBertugas(){
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wirePin);
   else wirePin();
   setTimeout(wirePin, 500);
+})();
+</script>
+
+
+<script>
+(function(){
+  function hideNextMonthIfEarly(){
+    var show = (new Date()).getDate() >= 25;
+    ["jadwalLiburNextMonthBtn","kanitJadwalNextMonthBtn"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      if(show){ el.classList.remove("is-hidden-until-25"); }
+      else { el.classList.add("is-hidden-until-25"); el.style.setProperty("display","none","important"); }
+    });
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", hideNextMonthIfEarly);
+  else hideNextMonthIfEarly();
+  setInterval(hideNextMonthIfEarly, 60000);
 })();
 </script>
 
