@@ -10295,7 +10295,7 @@ button.appr-cab-card:hover{
 #auditApprDetailPane input#apprCatatan{
   background:#F8FAFC !important;
   border:1px solid rgba(255,255,255,0.16) !important;
-  color:#FFFFFF !important;
+  color:#0F172A !important;
   -webkit-text-fill-color:#0F172A !important;
   caret-color:#F0B27A !important;
   font-size:14px !important;
@@ -12305,17 +12305,17 @@ button.admin-topbar-avatar:hover,
 #tab-kasarea .ka-cab,
 #tab-kanitkasarea .ka-cab{
   font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:10.5px;color:#94A3B8!important;white-space:nowrap;
+  font-size:10.5px;color:#0F172A!important;-webkit-text-fill-color:#0F172A!important;white-space:nowrap;
 }
 #tab-kasarea .ka-nama,
 #tab-kanitkasarea .ka-nama{
-  font-weight:600;color:#FFFFFF!important;white-space:nowrap;max-width:160px;
+  font-weight:600;color:#0F172A!important;-webkit-text-fill-color:#0F172A!important;white-space:nowrap;max-width:160px;
   overflow:hidden;text-overflow:ellipsis;
 }
 #tab-kasarea .ka-total,
 #tab-kanitkasarea .ka-total{
   font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-weight:700;color:var(--ka-gold)!important;white-space:nowrap;font-size:11.5px;
+  font-weight:700;color:#0F172A!important;-webkit-text-fill-color:#0F172A!important;white-space:nowrap;font-size:11.5px;
 }
 /* Kolom bulan: lebar seragam */
 #tab-kasarea table.ka-table th:nth-child(n+3):nth-child(-n+11),
@@ -13143,15 +13143,18 @@ button.admin-topbar-avatar:hover,
 .admin-content table.ka-table{
   width:100% !important;
   border-collapse:collapse !important;
-  background:transparent !important;
-  color:#FFFFFF !important;
+  background:#FFFFFF !important;
+  color:#0F172A !important;
   font-size:12px !important;
 }
 .admin-content table.ka-table th,
-.admin-content table.ka-table td,
-.admin-content table.ka-table th *,
-.admin-content table.ka-table td *{
+.admin-content table.ka-table th *{
   color:#FFFFFF !important;
+  -webkit-text-fill-color:#FFFFFF !important;
+}
+.admin-content table.ka-table td,
+.admin-content table.ka-table td *{
+  color:#0F172A !important;
   -webkit-text-fill-color:#0F172A !important;
 }
 .admin-content table.ka-table td.ka-total,
@@ -20767,6 +20770,122 @@ html[data-theme="light"] .compare-box{
 
 
 
+
+/* ========== NUKE: Kas Area forced readable ========== */
+html[data-theme="light"] #tab-kasarea table.ka-table,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table,
+html[data-theme="light"] .admin-content table.ka-table {
+  color: #0F172A !important;
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table td,
+html[data-theme="light"] #tab-kasarea table.ka-table td *,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table td,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table td *,
+html[data-theme="light"] .admin-content table.ka-table td,
+html[data-theme="light"] .admin-content table.ka-table td * {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table thead th,
+html[data-theme="light"] #tab-kasarea table.ka-table thead th *,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table thead th,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table thead th *,
+html[data-theme="light"] .admin-content table.ka-table thead th {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+/* Debit side same issue */
+html[data-theme="light"] #tab-kasarea .ka-debit table td,
+html[data-theme="light"] #tab-kasarea .ka-debit table td *,
+html[data-theme="light"] #tab-kasarea .ka-debit input,
+html[data-theme="light"] #tab-kasarea .ka-debit select {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  opacity: 1 !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-debit table thead th,
+html[data-theme="light"] #tab-kasarea .ka-debit table thead th * {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+/* ========== END NUKE kas area ========== */
+
+/* Kas Area — rapat, bukan gede */
+html[data-theme="light"] #tab-kasarea .ka-head,
+html[data-theme="light"] #tab-kanitkasarea .ka-head {
+  margin-bottom: 8px !important;
+  padding: 8px 10px !important;
+  gap: 8px !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-saldo,
+html[data-theme="light"] #tab-kanitkasarea .ka-saldo {
+  font-size: 15px !important;
+  padding: 6px 10px !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-title,
+html[data-theme="light"] #tab-kanitkasarea .ka-title {
+  font-size: 13px !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-hint,
+html[data-theme="light"] #tab-kanitkasarea .ka-hint,
+html[data-theme="light"] #tab-kasarea .ka-sec-h,
+html[data-theme="light"] #tab-kanitkasarea .ka-sec-h {
+  font-size: 11px !important;
+  padding: 6px 10px !important;
+  line-height: 1.35 !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-layout,
+html[data-theme="light"] #tab-kanitkasarea .ka-layout {
+  gap: 10px !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table th,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table th {
+  padding: 6px 6px !important;
+  font-size: 10px !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table td,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table td {
+  padding: 3px 6px !important;
+  font-size: 12px !important;
+  line-height: 1.25 !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-nama,
+html[data-theme="light"] #tab-kanitkasarea .ka-nama,
+html[data-theme="light"] #tab-kasarea .ka-cab,
+html[data-theme="light"] #tab-kanitkasarea .ka-cab,
+html[data-theme="light"] #tab-kasarea .ka-total,
+html[data-theme="light"] #tab-kanitkasarea .ka-total {
+  font-size: 12px !important;
+}
+html[data-theme="light"] #tab-kasarea button.ka-mark,
+html[data-theme="light"] #tab-kanitkasarea button.ka-mark {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  font-size: 11px !important;
+  border-radius: 5px !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-debit input,
+html[data-theme="light"] #tab-kasarea .ka-debit select,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit input {
+  height: 30px !important;
+  font-size: 12px !important;
+  padding: 0 8px !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-debit label,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit label {
+  font-size: 11px !important;
+  margin-bottom: 2px !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-del,
+html[data-theme="light"] #tab-kanitkasarea .ka-del {
+  height: 26px !important;
+  padding: 0 10px !important;
+  font-size: 11px !important;
+}
 </style>
 </head>
 <body>
@@ -27702,28 +27821,32 @@ function applyRejectedAlasanFilter_(which){
       hint: k ? "kaHintKanit" : null
     };
   }
-  /** Paksa putih di DOM — mengalahkan CSS !important global */
+  /** Teks body gelap. Header tabel tetap putih (latar navy). */
   function kaPaintWhite_(root){
     if(!root) return;
     var nodes = root.querySelectorAll("th,td,span,div,label,p,b,strong,a,button,input,h1,h2,h3,h4");
     for(var i=0;i<nodes.length;i++){
       var el = nodes[i];
       var cls = (typeof el.className === "string") ? el.className : "";
+      if(cls.indexOf("ka-mark") >= 0) continue;
       if(cls.indexOf("ka-del") >= 0){
-        el.style.setProperty("color","#FCA5A5","important");
-        continue;
-      }
-      if(cls.indexOf("ka-total") >= 0 || cls.indexOf("ka-saldo") >= 0){
-        el.style.setProperty("color","#E8A86A","important");
-        continue;
-      }
-      if(el.tagName === "INPUT"){
         el.style.setProperty("color","#FFFFFF","important");
         el.style.setProperty("-webkit-text-fill-color","#FFFFFF","important");
         continue;
       }
-      el.style.setProperty("color","#FFFFFF","important");
-      el.style.setProperty("-webkit-text-fill-color","#FFFFFF","important");
+      if(el.tagName === "TH"){
+        el.style.setProperty("color","#FFFFFF","important");
+        el.style.setProperty("-webkit-text-fill-color","#FFFFFF","important");
+        continue;
+      }
+      if(el.tagName === "INPUT"){
+        el.style.setProperty("color","#0F172A","important");
+        el.style.setProperty("-webkit-text-fill-color","#0F172A","important");
+        el.style.setProperty("background","#FFFFFF","important");
+        continue;
+      }
+      el.style.setProperty("color","#0F172A","important");
+      el.style.setProperty("-webkit-text-fill-color","#0F172A","important");
     }
   }
   function renderKasArea_(data){
