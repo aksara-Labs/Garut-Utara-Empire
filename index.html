@@ -20886,6 +20886,461 @@ html[data-theme="light"] #tab-kanitkasarea .ka-del {
   padding: 0 10px !important;
   font-size: 11px !important;
 }
+
+/* ========== P2: Button system + less orange + Cash Opname + Kelola ========== */
+
+/* --- Unified button system (light) --- */
+html[data-theme="light"] .admin-content button:not(.ka-mark):not(.tab-btn):not(.admin-nav-btn),
+html[data-theme="light"] .admin-content .btn,
+html[data-theme="light"] .admin-content .btn-xs,
+html[data-theme="light"] .admin-content .btn-sm,
+html[data-theme="light"] .admin-content .btn-primary,
+html[data-theme="light"] .admin-content .btn-secondary,
+html[data-theme="light"] .admin-content .btn-outline,
+html[data-theme="light"] .admin-content .gue-btn,
+html[data-theme="light"] .admin-content input[type="button"],
+html[data-theme="light"] .admin-content input[type="submit"] {
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 14px !important;
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] .admin-content button.btn-xs,
+html[data-theme="light"] .admin-content .btn-xs {
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 0 10px !important;
+  font-size: 11px !important;
+}
+/* Primary = hitam */
+html[data-theme="light"] .admin-content button.btn-primary,
+html[data-theme="light"] .admin-content .btn-primary,
+html[data-theme="light"] .admin-content button.primary,
+html[data-theme="light"] #tab-updatedata button.primary,
+html[data-theme="light"] #tab-rejected button.primary,
+html[data-theme="light"] #tab-audit button.primary {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: 1px solid #0F172A !important;
+}
+/* Secondary / outline */
+html[data-theme="light"] .admin-content button.btn-secondary,
+html[data-theme="light"] .admin-content .btn-secondary,
+html[data-theme="light"] .admin-content button.btn-outline,
+html[data-theme="light"] .admin-content .btn-outline {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #CBD5E1 !important;
+}
+/* Kill leftover orange solid primary buttons in content */
+html[data-theme="light"] .admin-content button[style*="#E8A86A"],
+html[data-theme="light"] .admin-content button[style*="#D4894A"],
+html[data-theme="light"] .admin-content button[style*="orange"] {
+  background: #0F172A !important;
+  border-color: #0F172A !important;
+  color: #FFFFFF !important;
+}
+
+/* --- Kas Area: less orange, navy check --- */
+html[data-theme="light"] #tab-kasarea button.ka-mark[data-on="1"],
+html[data-theme="light"] #tab-kanitkasarea button.ka-mark[data-on="1"] {
+  background: rgba(15, 23, 42, 0.08) !important;
+  border-color: #0F172A !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #tab-kasarea button.ka-mark[data-on="0"],
+html[data-theme="light"] #tab-kanitkasarea button.ka-mark[data-on="0"] {
+  border-color: #CBD5E1 !important;
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-red-cell,
+html[data-theme="light"] #tab-kanitkasarea .ka-red-cell {
+  background: rgba(248, 113, 113, 0.06) !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-saldo,
+html[data-theme="light"] #tab-kanitkasarea .ka-saldo {
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-sec-h,
+html[data-theme="light"] #tab-kanitkasarea .ka-sec-h {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  background: #F8FAFC !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-del,
+html[data-theme="light"] #tab-kanitkasarea .ka-del {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 999px !important;
+  height: 28px !important;
+  padding: 0 12px !important;
+  font-size: 11px !important;
+}
+
+/* --- Cash Opname: constrain width, tight gap --- */
+html[data-theme="light"] #tab-cashopname {
+  max-width: 1100px !important;
+}
+html[data-theme="light"] #tab-cashopname .co-grid,
+html[data-theme="light"] #tab-cashopname .co-layout,
+html[data-theme="light"] #tab-cashopname .co-main,
+html[data-theme="light"] #tab-cashopname .co-panels {
+  gap: 8px !important;
+}
+html[data-theme="light"] #tab-cashopname table td,
+html[data-theme="light"] #tab-cashopname table th {
+  padding: 4px 6px !important;
+  font-size: 12px !important;
+}
+html[data-theme="light"] #tab-cashopname input {
+  height: 28px !important;
+  font-size: 12px !important;
+  padding: 0 8px !important;
+}
+
+/* --- Kelola Cabang: match Update Data polish --- */
+html[data-theme="light"] #tab-kelolacabang,
+html[data-theme="light"] #tab-kelolacabang .panel,
+html[data-theme="light"] #tab-kelolacabang .hub-panel,
+html[data-theme="light"] #tab-kelolacabang .card {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] #tab-kelolacabang table th {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+  border: 1px solid #0F172A !important;
+}
+html[data-theme="light"] #tab-kelolacabang table td {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 12px !important;
+  padding: 8px 10px !important;
+  border: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] #tab-kelolacabang table tbody tr:nth-child(even) td {
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] #tab-kelolacabang input,
+html[data-theme="light"] #tab-kelolacabang select {
+  height: 34px !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 8px !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 12px !important;
+  padding: 0 10px !important;
+}
+html[data-theme="light"] #tab-kelolacabang label {
+  color: #475569 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] #tab-kelolacabang h2,
+html[data-theme="light"] #tab-kelolacabang h3,
+html[data-theme="light"] #tab-kelolacabang .section-title {
+  color: #0F172A !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+/* --- Generic content filter bars tighter --- */
+html[data-theme="light"] .admin-content .filter-bar,
+html[data-theme="light"] .admin-content .toolbar,
+html[data-theme="light"] .admin-content .ob-toolbar {
+  gap: 8px !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+html[data-theme="light"] .admin-content .filter-bar select,
+html[data-theme="light"] .admin-content .filter-bar input[type="date"],
+html[data-theme="light"] .admin-content .toolbar select,
+html[data-theme="light"] .admin-content .toolbar input {
+  height: 34px !important;
+  border-radius: 8px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  font-size: 12px !important;
+  padding: 0 10px !important;
+}
+
+/* ========== END P2 ========== */
+
+/* ========== P3: Mobile + empty states ========== */
+
+/* Empty state satu gaya */
+html[data-theme="light"] .admin-content .empty-log,
+html[data-theme="light"] .admin-content .empty-state,
+html[data-theme="light"] .admin-content .empty {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  background: #F8FAFC !important;
+  border: 1px dashed #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 20px 16px !important;
+  text-align: center !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+/* Sticky nama: Jadwal Libur + Kas Area */
+html[data-theme="light"] #tab-jadwallibur table .libur-person-name,
+html[data-theme="light"] #tab-kanitjadwallibur table .libur-person-name,
+html[data-theme="light"] #tab-jadwallibur table td:first-child,
+html[data-theme="light"] #tab-kanitjadwallibur table td:first-child,
+html[data-theme="light"] #tab-jadwallibur table th:first-child,
+html[data-theme="light"] #tab-kanitjadwallibur table th:first-child {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 2 !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  min-width: 120px !important;
+  max-width: 160px !important;
+  box-shadow: 2px 0 6px rgba(15, 23, 42, 0.06) !important;
+}
+html[data-theme="light"] #tab-jadwallibur table th:first-child,
+html[data-theme="light"] #tab-kanitjadwallibur table th:first-child {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  z-index: 3 !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table td.ka-cab,
+html[data-theme="light"] #tab-kasarea table.ka-table td.ka-nama,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table td.ka-cab,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table td.ka-nama {
+  position: sticky !important;
+  z-index: 2 !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table td.ka-cab,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table td.ka-cab {
+  left: 0 !important;
+  min-width: 72px !important;
+  max-width: 96px !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table td.ka-nama,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table td.ka-nama {
+  left: 72px !important;
+  min-width: 110px !important;
+  max-width: 150px !important;
+  box-shadow: 2px 0 6px rgba(15, 23, 42, 0.06) !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table th:first-child,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table th:first-child {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 4 !important;
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table th:nth-child(2),
+html[data-theme="light"] #tab-kanitkasarea table.ka-table th:nth-child(2) {
+  position: sticky !important;
+  left: 72px !important;
+  z-index: 4 !important;
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+}
+
+/* Mobile ≤720px: filter stack full width */
+@media (max-width: 720px) {
+  html[data-theme="light"] .admin-content .filter-bar,
+  html[data-theme="light"] .admin-content .toolbar,
+  html[data-theme="light"] .admin-content .ob-toolbar,
+  html[data-theme="light"] .admin-content .ka-head {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+  html[data-theme="light"] .admin-content .filter-bar > *,
+  html[data-theme="light"] .admin-content .toolbar > *,
+  html[data-theme="light"] .admin-content .ob-toolbar > *,
+  html[data-theme="light"] .admin-content .filter-bar select,
+  html[data-theme="light"] .admin-content .filter-bar input,
+  html[data-theme="light"] .admin-content .toolbar select,
+  html[data-theme="light"] .admin-content .toolbar input,
+  html[data-theme="light"] .admin-content .filter-bar button,
+  html[data-theme="light"] .admin-content .toolbar button {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  html[data-theme="light"] #tab-kasarea .ka-layout,
+  html[data-theme="light"] #tab-kanitkasarea .ka-layout {
+    grid-template-columns: 1fr !important;
+  }
+  html[data-theme="light"] #tab-cashopname {
+    max-width: 100% !important;
+  }
+  html[data-theme="light"] .admin-content table {
+    font-size: 11px !important;
+  }
+  html[data-theme="light"] .admin-content button:not(.ka-mark):not(.tab-btn):not(.admin-nav-btn) {
+    width: auto !important;
+    min-width: 0 !important;
+  }
+  /* Full-width primary actions on mobile when alone in a row */
+  html[data-theme="light"] .admin-content .filter-bar button.btn-primary,
+  html[data-theme="light"] .admin-content .toolbar button.btn-primary,
+  html[data-theme="light"] .admin-content .filter-bar button.primary {
+    width: 100% !important;
+  }
+}
+
+/* Tablet ≤960px: dual panels stack */
+@media (max-width: 960px) {
+  html[data-theme="light"] #tab-kasarea .ka-layout,
+  html[data-theme="light"] #tab-kanitkasarea .ka-layout {
+    grid-template-columns: 1fr !important;
+  }
+  html[data-theme="light"] #tab-cashopname .co-grid,
+  html[data-theme="light"] #tab-cashopname .co-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ========== END P3 ========== */
+
+/* ========== P4: Skeleton, hover, token cleanup ========== */
+
+@keyframes gue-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+html[data-theme="light"] .gue-skeleton,
+html[data-theme="light"] .admin-content .skeleton,
+html[data-theme="light"] .admin-content .loading-block,
+html[data-theme="light"] .audit-loading,
+html[data-theme="light"] .kanit-acp-loading {
+  display: block !important;
+  min-height: 12px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(90deg, #F1F5F9 0%, #E2E8F0 40%, #F1F5F9 80%) !important;
+  background-size: 200% 100% !important;
+  animation: gue-shimmer 1.2s ease-in-out infinite !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] .admin-content .spin,
+html[data-theme="light"] .admin-content .spinner {
+  width: 18px !important;
+  height: 18px !important;
+  border: 2px solid #E2E8F0 !important;
+  border-top-color: #0F172A !important;
+  border-radius: 50% !important;
+  animation: gue-spin 0.7s linear infinite !important;
+}
+@keyframes gue-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Card / panel hover soft */
+html[data-theme="light"] .admin-content .gue-card,
+html[data-theme="light"] .admin-content .card:not(.admin-menu-card),
+html[data-theme="light"] .admin-content .bertugas-card,
+html[data-theme="light"] .admin-content .ob-summary-card,
+html[data-theme="light"] .admin-content .stat-card,
+html[data-theme="light"] .admin-content .kpi-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #FFFFFF !important;
+  border-radius: 12px !important;
+}
+html[data-theme="light"] .admin-content .gue-card:hover,
+html[data-theme="light"] .admin-content .card:not(.admin-menu-card):hover,
+html[data-theme="light"] .admin-content .bertugas-card:hover,
+html[data-theme="light"] .admin-content .ob-summary-card:hover,
+html[data-theme="light"] .admin-content .stat-card:hover,
+html[data-theme="light"] .admin-content .kpi-card:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06) !important;
+  border-color: #CBD5E1 !important;
+}
+
+/* Admin menu cards subtle */
+html[data-theme="light"] .admin-content .admin-menu-card {
+  transition: background 0.12s ease, border-color 0.12s ease !important;
+  border-radius: 12px !important;
+}
+html[data-theme="light"] .admin-content .admin-menu-card:hover {
+  background: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+}
+
+/* Token cleanup: residual gold text → slate on light surfaces */
+html[data-theme="light"] .admin-content .text-gold,
+html[data-theme="light"] .admin-content .gold,
+html[data-theme="light"] .admin-content [class*="gold"]:not(button):not(.ka-mark) {
+  color: #0F172A !important;
+}
+/* Soft surfaces instead of navy tint blocks in content */
+html[data-theme="light"] .admin-content .panel,
+html[data-theme="light"] .admin-content .subpanel.active {
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] .admin-main,
+html[data-theme="light"] .admin-content {
+  background: #F8FAFC !important;
+}
+
+/* Scrollbar soft gray (not pure white / not black) */
+html[data-theme="light"] .admin-content ::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+html[data-theme="light"] .admin-content ::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+html[data-theme="light"] .admin-content ::-webkit-scrollbar-thumb {
+  background: #CBD5E1 !important;
+  border-radius: 999px !important;
+}
+html[data-theme="light"] .admin-content ::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8 !important;
+}
+
+/* Focus ring accessible */
+html[data-theme="light"] .admin-content button:focus-visible,
+html[data-theme="light"] .admin-content input:focus-visible,
+html[data-theme="light"] .admin-content select:focus-visible {
+  outline: 2px solid #0F172A !important;
+  outline-offset: 2px !important;
+}
+
+/* ========== END P4 ========== */
+
+
+
+
+
 </style>
 </head>
 <body>
