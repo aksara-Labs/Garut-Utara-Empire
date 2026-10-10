@@ -17821,6 +17821,196 @@ html[data-theme="light"] #tab-dashboard .admin-hero::after{
   html[data-theme="light"] #tab-dashboard .admin-hero{ min-height:100px !important; padding:14px 16px !important; }
 }
 
+
+html[data-theme="light"] .dash-tgt{ font-size:11px; color:#475569; }
+html[data-theme="light"] .dash-tgt b{ color:#0F172A; }
+html[data-theme="light"] .dash-tgt.ok, html[data-theme="light"] .dash-tgt .ok{ color:#059669 !important; }
+html[data-theme="light"] .dash-tgt.bad, html[data-theme="light"] .dash-tgt .bad{ color:#DC2626 !important; }
+html[data-theme="light"] .dash-tgt.muted{ color:#94A3B8; }
+
+
+/* ========== Dashboard Harian polish (strip + detail) ========== */
+html[data-theme="light"] .kinerja-stat-strip,
+html[data-theme="light"] #tab-kinerjaharian .kinerja-stat-strip,
+html[data-theme="light"] #tab-kanitkinerjaharian .kinerja-stat-strip{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-bottom: 14px !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] .kinerja-stat-item,
+html[data-theme="light"] #tab-kinerjaharian .kinerja-stat-item,
+html[data-theme="light"] #tab-kanitkinerjaharian .kinerja-stat-item{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  min-width: 0 !important;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04) !important;
+}
+html[data-theme="light"] .kinerja-stat-item .k{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] .kinerja-stat-item .v{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin-top: 4px !important;
+}
+
+/* Badge CRITICAL */
+html[data-theme="light"] .kinerja-status-badge{
+  background: #FEF2F2 !important;
+  border: 1px solid #FECACA !important;
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+  border-radius: 999px !important;
+  padding: 3px 10px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] .kinerja-status-badge.ok{
+  background: #ECFDF5 !important;
+  border-color: #A7F3D0 !important;
+  color: #047857 !important;
+  -webkit-text-fill-color: #047857 !important;
+}
+
+/* Benchmark badges */
+html[data-theme="light"] .kinerja-badge{
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+}
+html[data-theme="light"] .kinerja-badge b{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+
+/* Tombol Detail / Tutup */
+html[data-theme="light"] .kh-detail-toggle,
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-toggle,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-toggle{
+  background: #FFFFFF !important;
+  border: 1px solid #0F172A !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-radius: 999px !important;
+  padding: 6px 14px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  height: 32px !important;
+}
+html[data-theme="light"] .kh-detail-toggle:hover,
+html[data-theme="light"] .kh-detail-toggle.is-open{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border-color: #0F172A !important;
+}
+
+/* Detail title */
+html[data-theme="light"] .kh-detail-title{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 12px !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* Detail cards */
+html[data-theme="light"] .kh-detail-card,
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-card,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.04) !important;
+  backdrop-filter: none !important;
+}
+html[data-theme="light"] .kh-detail-card-h{
+  background: #F8FAFC !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .kh-detail-card-h svg{
+  stroke: #0F172A !important;
+}
+
+/* Detail table light */
+html[data-theme="light"] .kh-detail-table,
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table{
+  color: #0F172A !important;
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] .kh-detail-table th{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] .kh-detail-table td{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  background: transparent !important;
+}
+html[data-theme="light"] .kh-detail-table td:first-child,
+html[data-theme="light"] .kh-detail-table .kh-cab{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] .kh-detail-table tbody tr:nth-child(even) td{
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] .kh-detail-table tbody tr:hover td{
+  background: #F1F5F9 !important;
+}
+html[data-theme="light"] .kh-detail-table tfoot td,
+html[data-theme="light"] .kh-detail-table tr.total td,
+html[data-theme="light"] .kh-detail-table .kh-total td{
+  font-weight: 700 !important;
+  background: #F1F5F9 !important;
+  border-top: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+}
+/* GAP negatif merah, positif hijau */
+html[data-theme="light"] .kh-detail-table .kh-gap-neg,
+html[data-theme="light"] .kh-detail-table td.neg{ color: #DC2626 !important; }
+html[data-theme="light"] .kh-detail-table .kh-gap-pos,
+html[data-theme="light"] .kh-detail-table td.pos{ color: #059669 !important; }
+
+html[data-theme="light"] .kinerja-title{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .kinerja-live{
+  color: #64748B !important;
+}
+
+@media (max-width: 900px){
+  html[data-theme="light"] .kinerja-stat-strip{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 520px){
+  html[data-theme="light"] .kinerja-stat-strip{
+    grid-template-columns: 1fr !important;
+  }
+}
+/* ========== END dash harian polish ========== */
+
 /* ========== END dashboard hero+ringkasan ========== */
 
 
@@ -23357,15 +23547,27 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     }catch(e){ return null; }
   }
   
+  function applyKinerjaBulanOpts_(opts){
+    if(!opts || !opts.length) return;
+    ["kinerjaHarianBulan", "kanitKinerjaHarianBulan"].forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el) return;
+      var cur = el.value;
+      el.innerHTML = opts.map(function(o){
+        return '<option value="'+o.ym+'">'+o.label+'</option>';
+      }).join("");
+      var def = opts[opts.length - 1].ym;
+      el.value = cur && opts.some(function(o){ return o.ym === cur; }) ? cur : def;
+    });
+  }
   function fillKinerjaBulanSelects(){
+    // Sementara: Januari 2026 → bulan berjalan (bukan mulai Mei)
     var bulanId = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
     var now = new Date();
     var y = now.getFullYear();
     var m = now.getMonth(); // 0-based
-    // opsi: Jan y … bulan ini (dan backfill 2026 full if needed)
     var opts = [];
-    // Mei 2026 s/d bulan berjalan
-    var startY = 2026, startM = 4; // Mei = index 4
+    var startY = 2026, startM = 0; // Januari 2026
     var cy = startY, cm = startM;
     while (cy < y || (cy === y && cm <= m)) {
       var ym = cy + "-" + String(cm + 1).padStart(2, "0");
@@ -23377,16 +23579,22 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     if (!opts.length) {
       opts.push({ ym: y + "-" + String(m + 1).padStart(2, "0"), label: bulanId[m] + " " + y });
     }
-    ["kinerjaHarianBulan", "kanitKinerjaHarianBulan"].forEach(function(id){
-      var el = document.getElementById(id);
-      if (!el) return;
-      var cur = el.value;
-      el.innerHTML = opts.map(function(o){
-        return '<option value="'+o.ym+'">'+o.label+'</option>';
-      }).join("");
-      var def = opts[opts.length - 1].ym;
-      el.value = cur && opts.some(function(o){ return o.ym === cur; }) ? cur : def;
-    });
+    applyKinerjaBulanOpts_(opts);
+    // Timpa dengan daftar yang benar-benar ada di sheet Bisnis All Month
+    try{
+      if(window.GUE && typeof GUE.api === "function"){
+        GUE.api("getKinerjaBulanList", {}).then(function(r){
+          if(r && r.months && r.months.length) applyKinerjaBulanOpts_(r.months);
+        }).catch(function(){});
+      } else if(google && google.script && google.script.run){
+        google.script.run
+          .withSuccessHandler(function(r){
+            if(r && r.months && r.months.length) applyKinerjaBulanOpts_(r.months);
+          })
+          .withFailureHandler(function(){})
+          .getKinerjaBulanList();
+      }
+    }catch(eApi){}
   }
   function getKinerjaBulanYm_(isKanit){
     var id = isKanit ? "kanitKinerjaHarianBulan" : "kinerjaHarianBulan";
@@ -26401,12 +26609,28 @@ $on("cabangPinSubmit", "click", function(){
       var ge = row.ge===null||row.ge===undefined ? "–" : ((typeof fmt==="function")?fmt(row.ge):row.ge);
       var gb = row.gb===null||row.gb===undefined ? "–" : ((typeof fmt==="function")?fmt(row.gb):row.gb);
       var gg = row.gg===null||row.gg===undefined ? "–" : ((typeof fmt==="function")?fmt(row.gg):row.gg);
-      var tgt = (row.target===null||row.target===undefined) ? "" :
-        (' · target ' + ((typeof fmt==="function")?fmt(row.target):row.target));
+      // Target harian (rumus kanit)
+      var tgtHtml = "";
+      if(row.tutup || row.targetStatus === "TUTUP"){
+        tgtHtml = '<span class="dash-tgt muted">Target harian: – (tutup)</span>';
+      } else if(row.targetStatus === "TERCAPAI"){
+        tgtHtml = '<span class="dash-tgt ok">Target harian: tercapai</span>';
+      } else if(row.targetStatus === "HABIS_HARI"){
+        tgtHtml = '<span class="dash-tgt muted">Target harian: –</span>';
+      } else if(row.target !== null && row.target !== undefined && Number(row.target) > 0){
+        var tStr = (typeof fmt==="function") ? fmt(row.target) : String(row.target);
+        var gap = Number(row.total||0) - Number(row.target||0);
+        var gapStr = (gap>0?"+":"") + ((typeof fmt==="function")?fmt(gap):String(gap));
+        var gapCls = gap>=0 ? "ok" : "bad";
+        tgtHtml = '<span class="dash-tgt">Target harian: <b>'+tStr+'</b> · capaian <span class="'+gapCls+'">'+gapStr+'</span></span>';
+      } else {
+        tgtHtml = '<span class="dash-tgt muted">Target harian: –</span>';
+      }
       return '<div class="dash-selisih-item">'+
-        '<div class="dash-selisih-item-h"><span><b>'+escHtml(row.cabang)+'</b>'+tgt+'</span>'+status+'</div>'+
+        '<div class="dash-selisih-item-h"><span><b>'+escHtml(row.cabang)+'</b></span>'+status+'</div>'+
         '<div class="dash-detail-row">GE '+ge+' · GB '+gb+' · GG '+gg+'</div>'+
         '<div class="dash-detail-total">Total <b>'+tot+'</b></div>'+
+        '<div class="dash-detail-row">'+tgtHtml+'</div>'+
       '</div>';
     }).join("");
     var grand = (typeof fmt==="function") ? fmt(r.omsetKemarin||0) : String(r.omsetKemarin||0);
