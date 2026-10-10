@@ -18258,6 +18258,59 @@ html[data-theme="light"] .ob-cat-meta b{
 html[data-theme="light"] .ob-cat-block .ob-chart{
   min-height: 160px !important;
 }
+
+/* ========== Omset Bulanan KPI summary + export ========== */
+html[data-theme="light"] .ob-summary-top{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 10px !important;
+}
+html[data-theme="light"] .ob-summary-top .ob-summary-card{
+  flex: 1 1 200px !important;
+  min-width: 160px !important;
+}
+html[data-theme="light"] .ob-export-btn{
+  height: 34px !important;
+  padding: 0 14px !important;
+  border-radius: 999px !important;
+  border: 1px solid #0F172A !important;
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] .ob-export-btn:hover{
+  opacity: 0.9 !important;
+}
+html[data-theme="light"] .ob-summary-kpi{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+}
+html[data-theme="light"] .ob-kpi-card .v{
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+}
+@media (max-width: 900px){
+  html[data-theme="light"] .ob-summary-kpi{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 520px){
+  html[data-theme="light"] .ob-summary-kpi{
+    grid-template-columns: 1fr !important;
+  }
+}
+/* ========== END omset kpi export ========== */
+
 /* ========== END omset 4 kat ========== */
 
 /* ========== END omset no-cream ========== */
@@ -28497,39 +28550,98 @@ function applyRejectedAlasanFilter_(which){
 
     var cabangLabel = cabang === "TOTAL_AREA" ? "Total Area (Semua Cabang)" : cabang;
 
-    // Summary: total 4 kategori if available, else gadai only
-    var sumT = 0, sumA = 0, nBln = results.length;
-    if(kategori && kategori.length){
-      kategori.forEach(function(cat){
-        (cat.months||[]).forEach(function(m){
-          sumT += Number(m.target)||0;
-          sumA += Number(m.aktual)||0;
-        });
-        if((cat.months||[]).length > nBln) nBln = cat.months.length;
+    // Siapkan list kategori (fallback Gadai saja)
+    var cats = (kategori && kategori.length) ? kategori : [{ key:"gadai", label:"Gadai", months: results }];
+
+    // Summary per KPI (bukan gabungan)
+    var kpiCards = cats.map(function(cat){
+      var totT = 0, totA = 0, n = (cat.months||[]).length;
+      (cat.months||[]).forEach(function(m){
+        totT += Number(m.target)||0;
+        totA += Number(m.aktual)||0;
       });
-    } else {
-      results.forEach(function(r){ sumT += Number(r.target)||0; sumA += Number(r.aktual)||0; });
-    }
-    var sumAch = sumT > 0 ? Math.round((sumA / sumT) * 100) : 0;
+      var ach = totT > 0 ? Math.round((totA / totT) * 100) : 0;
+      return '<div class="ob-summary-card ob-kpi-card">'+
+        '<div class="k">'+escHtml(cat.label||cat.key)+' · '+n+' bln</div>'+
+        '<div class="v">'+ach+'%</div>'+
+        '<div class="k">T '+fmt(totT)+' · A '+fmt(totA)+'</div>'+
+      '</div>';
+    }).join('');
 
     var summaryHtml =
-      '<div class="ob-summary">'+
+      '<div class="ob-summary-top">'+
         '<div class="ob-summary-card"><div class="k">Cabang / Area</div><div class="v" style="font-size:14px;">'+cabangLabel+'</div></div>'+
-        '<div class="ob-summary-card"><div class="k">Total Target ('+nBln+' bln)</div><div class="v">'+fmt(sumT)+'</div></div>'+
-        '<div class="ob-summary-card"><div class="k">Total Aktual ('+nBln+' bln)</div><div class="v">'+fmt(sumA)+'</div></div>'+
-        '<div class="ob-summary-card ach"><div class="k">Achievement</div><div class="v">'+sumAch+'%</div></div>'+
-      '</div>';
+        '<button type="button" class="btn-xs ob-export-btn" id="obExportBtn">Export Excel</button>'+
+      '</div>'+
+      '<div class="ob-summary ob-summary-kpi">'+kpiCards+'</div>';
 
-    var chartsHtml = '';
-    if(kategori && kategori.length){
-      chartsHtml = kategori.map(function(cat){
-        return chartBlock_(cat.label || cat.key, cat.months || []);
-      }).join('');
-    } else {
-      chartsHtml = chartBlock_('Gadai', results);
-    }
+    var chartsHtml = cats.map(function(cat){
+      return chartBlock_(cat.label || cat.key, cat.months || []);
+    }).join('');
 
     wrap.innerHTML = summaryHtml + '<div class="ob-cat-stack">'+chartsHtml+'</div>';
+
+    // Export Excel (CSV → Excel-friendly)
+    var expBtn = wrap.querySelector("#obExportBtn");
+    if(expBtn){
+      expBtn.addEventListener("click", function(){
+        try{
+          var lines = [];
+          lines.push("Omset Bulanan - "+cabangLabel);
+          lines.push("Sumber: Data_Clean");
+          lines.push("");
+          // Sheet-like: one section per kategori
+          cats.forEach(function(cat){
+            lines.push(cat.label || cat.key);
+            lines.push(["Bulan","Target","Aktual","Achievement %"].join(";"));
+            var tT=0, tA=0;
+            (cat.months||[]).forEach(function(m){
+              var t = Number(m.target)||0, a = Number(m.aktual)||0;
+              tT+=t; tA+=a;
+              var pct = t>0 ? Math.round((a/t)*100) : 0;
+              lines.push([m.bulan, t, a, pct].join(";"));
+            });
+            var pctAll = tT>0 ? Math.round((tA/tT)*100) : 0;
+            lines.push(["TOTAL", tT, tA, pctAll].join(";"));
+            lines.push("");
+          });
+          // Wide pivot: Bulan | Gadai_T | Gadai_A | PP_T | ...
+          lines.push("RINGKASAN GABUNGAN (kolom per KPI)");
+          var header = ["Bulan"];
+          cats.forEach(function(cat){
+            header.push((cat.label||cat.key)+"_Target");
+            header.push((cat.label||cat.key)+"_Aktual");
+            header.push((cat.label||cat.key)+"_%");
+          });
+          lines.push(header.join(";"));
+          var monthSet = [];
+          (cats[0] && cats[0].months || []).forEach(function(m){ monthSet.push(m.bulan); });
+          monthSet.forEach(function(bln, idx){
+            var row = [bln];
+            cats.forEach(function(cat){
+              var m = (cat.months||[])[idx] || {};
+              var t = Number(m.target)||0, a = Number(m.aktual)||0;
+              row.push(t, a, t>0?Math.round((a/t)*100):0);
+            });
+            lines.push(row.join(";"));
+          });
+          var bom = "\uFEFF";
+          var csv = bom + lines.join("\r\n");
+          var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          var stamp = new Date().toISOString().slice(0,10);
+          a.href = url;
+          a.download = "Omset_Bulanan_"+(cabang==="TOTAL_AREA"?"TotalArea":cabang)+"_"+stamp+".csv";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }catch(eExp){
+          alert("Gagal export: "+(eExp && eExp.message ? eExp.message : eExp));
+        }
+      });
+    }
   }
 
   // ---------------- Kanit: Kinerja Harian (cabang sendiri, dikunci) ----------------
