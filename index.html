@@ -7606,7 +7606,7 @@ button.tab-btn.admin-nav-btn{
   }
   .admin-content .harian-table tr.chart-row td,
   .harian-table tr.chart-row td{
-    background:#F1F5F9 !important;
+    background:#FFFFFF !important;
     vertical-align:bottom !important;
   }
   .admin-content .harian-table tr:nth-child(even):not(.total-row):not(.chart-row) td{
@@ -18309,6 +18309,208 @@ html[data-theme="light"] .ob-kpi-card .v{
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ========== Analisa Rejected polish ========== */
+html[data-theme="light"] .rej-top3-grid{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  margin-top: 14px !important;
+}
+@media (max-width: 900px){
+  html[data-theme="light"] .rej-top3-grid{ grid-template-columns: 1fr !important; }
+}
+html[data-theme="light"] .rejected-top3{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+}
+html[data-theme="light"] .rejected-top3-title{
+  color: #0F172A !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+html[data-theme="light"] .rejected-top3-item{
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  padding: 6px 0 !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  color: #0F172A !important;
+  font-size: 12px !important;
+}
+html[data-theme="light"] .rejected-top3-item:last-child{ border-bottom: none !important; }
+html[data-theme="light"] .rej-top3-lab{
+  display: flex !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+  flex: 1 !important;
+}
+html[data-theme="light"] .rej-top3-text{
+  color: #334155 !important;
+  line-height: 1.35 !important;
+  word-break: break-word !important;
+}
+html[data-theme="light"] .rejected-top3-item .rank{
+  color: #64748B !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+}
+html[data-theme="light"] .rejected-top3-item .count{
+  color: #0F172A !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] .rej-pct{
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #64748B !important;
+}
+html[data-theme="light"] .rej-compare-table-wrap{
+  margin-top: 14px !important;
+  overflow-x: auto !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] .rej-compare-table{
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 12px !important;
+}
+html[data-theme="light"] .rej-compare-table th{
+  text-align: left !important;
+  padding: 8px 12px !important;
+  background: #F8FAFC !important;
+  color: #64748B !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .rej-compare-table td{
+  padding: 8px 12px !important;
+  color: #0F172A !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+}
+html[data-theme="light"] .rej-compare-table td.num{ text-align: right !important; font-variant-numeric: tabular-nums !important; }
+html[data-theme="light"] .rej-compare-table .rej-cab{ font-weight: 600 !important; }
+html[data-theme="light"] .rej-month-chart,
+html[data-theme="light"] .rej-compare-chart{
+  max-width: 100% !important;
+}
+html[data-theme="light"] .rej-section{ margin-top: 16px !important; }
+html[data-theme="light"] #rejectedAnalysisMonthChartWrap:empty{ display: none !important; margin: 0 !important; }
+
+/* ========== Omset Harian: chart row putih total ========== */
+html[data-theme="light"] .harian-table tr.chart-row td,
+html[data-theme="light"] .harian-table tr.chart-row td.chart-cell,
+html[data-theme="light"] .harian-table td.chart-cell,
+html[data-theme="light"] .admin-content .harian-table tr.chart-row td,
+html[data-theme="light"] #menuHarianWrap .harian-table tr.chart-row td,
+html[data-theme="light"] #kanitMenuHarianWrap .harian-table tr.chart-row td,
+html[data-theme="light"] .harian-sync-wrap .harian-table tr.chart-row td{
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+}
+html[data-theme="light"] .harian-table thead th,
+html[data-theme="light"] .harian-sync-wrap .harian-table thead th{
+  background: #FFFFFF !important;
+  color: #64748B !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .harian-table tbody tr.total-row td,
+html[data-theme="light"] .harian-table tbody tr.total-row td.label-col,
+html[data-theme="light"] .harian-table td.total-col,
+html[data-theme="light"] .harian-table th.total-col{
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .harian-sync-wrap,
+html[data-theme="light"] #menuHarianWrap .harian-sync-wrap{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
+/* ========== Omset Harian: hilangkan strip abu + label tgl bawah ========== */
+html[data-theme="light"] #menuHarianWrap .ob-summary,
+html[data-theme="light"] #kanitMenuHarianWrap .ob-summary,
+html[data-theme="light"] #menuHarianWrap > .ob-summary,
+html[data-theme="light"] .admin-content #menuHarianWrap .ob-summary{
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  gap: 8px !important;
+}
+html[data-theme="light"] #menuHarianWrap .ob-summary-card,
+html[data-theme="light"] #kanitMenuHarianWrap .ob-summary-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04) !important;
+}
+/* parent panel di sekitar filter/summary jangan abu */
+html[data-theme="light"] #tab-menuharian .panel,
+html[data-theme="light"] #tab-menuharian .subpanel,
+html[data-theme="light"] #tab-kanitmenuharian .panel,
+html[data-theme="light"] #tab-kanitmenuharian .subpanel,
+html[data-theme="light"] #menuHarianWrap,
+html[data-theme="light"] #kanitMenuHarianWrap{
+  background: transparent !important;
+}
+html[data-theme="light"] .harian-chart-day{
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 0 !important;
+}
+html[data-theme="light"] .harian-table td.chart-cell{
+  padding-bottom: 4px !important;
+}
+
+/* ========== Omset Harian: area putih, tanpa strip abu ========== */
+html[data-theme="light"] #tab-menuharian,
+html[data-theme="light"] #tab-kanitmenuharian,
+html[data-theme="light"] #tab-menuharian.panel,
+html[data-theme="light"] #tab-menuharian.subpanel{
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #tab-menuharian .filter-row-compact,
+html[data-theme="light"] #tab-kanitmenuharian .filter-row-compact{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  margin-bottom: 12px !important;
+}
+html[data-theme="light"] #menuHarianWrap,
+html[data-theme="light"] #kanitMenuHarianWrap{
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] #menuHarianWrap .ob-summary{
+  background: transparent !important;
+  margin-bottom: 12px !important;
+}
+html[data-theme="light"] #menuHarianWrap .rejected-top3-title{
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+  color: #0F172A !important;
+}
+/* ========== END harian no gray strip ========== */
+
+/* ========== END harian strip + day ========== */
+
+/* ========== END harian pure white ========== */
+
+/* ========== END analisa rejected ========== */
+
 /* ========== END omset kpi export ========== */
 
 /* ========== END omset 4 kat ========== */
@@ -25475,7 +25677,6 @@ $on("cabangPinSubmit", "click", function(){
       return '<td class="chart-cell">' +
         '<div class="harian-chart-val'+(isMax?" is-max":"")+'">'+(d.total?fmt(d.total):"")+'</div>'+
         '<div class="harian-chart-bar'+(isMax?" is-max":"")+'" style="height:'+h+'px;" title="Tgl '+d.day+': '+fmt(d.total)+'"></div>'+
-        '<div class="harian-chart-day">'+d.day+'</div>'+
       '</td>';
     }).join("");
     var sumGe = 0, sumGb = 0, sumGg = 0;
@@ -27374,14 +27575,48 @@ function loadAdminSummary(force){
 
   // ---------------- Rejected: helper HTML (dipakai admin & Kanit) ----------------
   function rejectedTop3Block_(title, items){
-    if(!items.length){
+    if(!items || !items.length){
       return '<div class="rejected-top3"><div class="rejected-top3-title">'+title+'</div><div class="empty-log">Belum ada data.</div></div>';
     }
     return '<div class="rejected-top3"><div class="rejected-top3-title">'+title+'</div>'+
       items.map(function(it, i){
-        return '<div class="rejected-top3-item"><span><span class="rank">#'+(i+1)+'</span>'+it.label+'</span><span class="count">'+fmt(it.count)+'x</span></div>';
+        var full = String(it.label||"");
+        var short = full.length > 72 ? full.slice(0, 70) + "…" : full;
+        var titleAttr = full.length > 72 ? ' title="'+full.replace(/"/g,"&quot;")+'"' : "";
+        return '<div class="rejected-top3-item"><span class="rej-top3-lab"><span class="rank">#'+(i+1)+'</span><span class="rej-top3-text"'+titleAttr+'>'+short+'</span></span><span class="count">'+fmt(it.count)+'x</span></div>';
       }).join("")+
       '</div>';
+  }
+  function rejectedIsMultiMonth_(startDate, endDate, perBulan){
+    // Grafik per bulan hanya jika rentang beda bulan
+    try{
+      if(startDate && endDate){
+        var s = String(startDate).slice(0,7);
+        var e = String(endDate).slice(0,7);
+        if(s && e) return s !== e;
+      }
+    }catch(e0){}
+    return !!(perBulan && perBulan.length > 1);
+  }
+  function rejectedMonthChartHtml_(perBulan){
+    if(!perBulan || !perBulan.length) return "";
+    var CHART_H = 120, LABEL_PAD = 18;
+    var maxVal = Math.max.apply(null, perBulan.map(function(r){ return r.total; }).concat([1]));
+    var barsHtml = perBulan.map(function(r){
+      var h = Math.round((r.total / maxVal) * (CHART_H - LABEL_PAD));
+      return '<div class="ob-group"><div class="ob-bars">'+
+        '<div class="ob-bar aktual" style="height:'+h+'px;"><span class="ob-bar-val">'+fmt(r.total)+'</span></div>'+
+        '</div></div>';
+    }).join("");
+    var labelsHtml = perBulan.map(function(r){
+      var lab = String(r.bulan||"");
+      var short = lab.indexOf(" ")>=0 ? lab.split(" ")[0].slice(0,3).toUpperCase() : lab.slice(0,7);
+      return '<div class="ob-month-label">'+short+'</div>';
+    }).join("");
+    return '<div class="rej-section">'+
+      '<div class="rejected-top3-title">Total Reject per Bulan</div>'+
+      '<div class="ob-chart rej-month-chart" style="min-height:'+CHART_H+'px">'+barsHtml+'</div>'+
+      '<div class="ob-month-labels">'+labelsHtml+'</div></div>';
   }
 
   function rejectedGadaiDetailTableHtml_(rows){
@@ -27580,37 +27815,25 @@ function applyRejectedAlasanFilter_(which){
       return;
     }
 
-    var CHART_H = 200, LABEL_PAD = 22;
-    var maxVal = Math.max.apply(null, data.perBulan.map(function(r){ return r.total; }).concat([1]));
+    var startD = (typeof window.__rejectedRangeStart === "string") ? window.__rejectedRangeStart : "";
+    var endD = (typeof window.__rejectedRangeEnd === "string") ? window.__rejectedRangeEnd : "";
+    var showMonth = rejectedIsMultiMonth_(startD, endD, data.perBulan || []);
+    var monthChartHtml = showMonth ? rejectedMonthChartHtml_(data.perBulan || []) : "";
 
-    var barsHtml = data.perBulan.map(function(r){
-      var h = Math.round((r.total / maxVal) * (CHART_H - LABEL_PAD));
-      return '<div class="ob-group"><div class="ob-bars">'+
-        '<div class="ob-bar aktual" style="height:'+h+'px;"><span class="ob-bar-val">'+fmt(r.total)+'</span></div>'+
-        '</div></div>';
-    }).join("");
-
-    var labelsHtml = data.perBulan.map(function(r){
-      return '<div class="ob-month-label">'+r.bulan.split(" ")[0].slice(0,3).toUpperCase()+'</div>';
-    }).join("");
-
-    var monthChartHtml = data.perBulan.length
-      ? '<div class="rejected-top3-title" style="margin-top:24px;">Total Reject per Bulan</div><div class="ob-chart">'+barsHtml+'</div><div class="ob-month-labels">'+labelsHtml+'</div>'
-      : '';
-
+    var pctGadai = data.totalRows > 0 ? Math.round((Number(data.totalGadai||0) / Number(data.totalRows)) * 100) : 0;
     var detailWrapId = wrapId + "-detail";
     wrap.innerHTML =
-      '<div class="ob-summary">'+
+      '<div class="ob-summary rej-kpi-row">'+
         '<div class="ob-summary-card"><div class="k">Total Reject</div><div class="v">'+fmt(data.totalRows)+'</div></div>'+
-        '<div class="ob-summary-card ach"><div class="k">Jadi Gadai</div><div class="v">'+fmt(data.totalGadai)+'</div></div>'+
+        '<div class="ob-summary-card ach"><div class="k">Jadi Gadai</div><div class="v">'+fmt(data.totalGadai)+' <span class="rej-pct">'+pctGadai+'%</span></div></div>'+
         '<div class="ob-summary-card clickable" data-detail="sendiri"><div class="k">Gadai Cabang Sendiri</div><div class="v">'+fmt(data.gadaiSendiri)+'</div></div>'+
         '<div class="ob-summary-card clickable" data-detail="beda"><div class="k">Gadai Cabang Beda</div><div class="v">'+fmt(data.gadaiBeda)+'</div></div>'+
       '</div>'+
       '<div id="'+detailWrapId+'"></div>'+
-      '<div style="margin-top:6px;">'+
-        rejectedTop3Block_("Alasan Terbanyak", data.alasanTop)+
-        rejectedTop3Block_("Jenis Terbanyak", data.jenisTop)+
-        rejectedTop3Block_("Spesifikasi Terbanyak", data.spesifikasiTop)+
+      '<div class="rej-top3-grid">'+
+        rejectedTop3Block_("Alasan Terbanyak", data.alasanTop||[])+
+        rejectedTop3Block_("Jenis Terbanyak", data.jenisTop||[])+
+        rejectedTop3Block_("Spesifikasi Terbanyak", data.spesifikasiTop||[])+
       '</div>'+
       (monthChartWrap ? '' : monthChartHtml);
 
@@ -27645,39 +27868,27 @@ function applyRejectedAlasanFilter_(which){
       return;
     }
 
-    var CHART_H = 200, LABEL_PAD = 22;
-    var maxVal = Math.max.apply(null, data.perBulan.map(function(r){ return r.total; }).concat([1]));
+    var startD = (typeof window.__rejectedRangeStart === "string") ? window.__rejectedRangeStart : "";
+    var endD = (typeof window.__rejectedRangeEnd === "string") ? window.__rejectedRangeEnd : "";
+    var showMonth = rejectedIsMultiMonth_(startD, endD, data.perBulan || []);
+    var monthChartHtml = showMonth ? rejectedMonthChartHtml_(data.perBulan || []) : "";
 
-    var barsHtml = data.perBulan.map(function(r){
-      var h = Math.round((r.total / maxVal) * (CHART_H - LABEL_PAD));
-      return '<div class="ob-group"><div class="ob-bars">'+
-        '<div class="ob-bar aktual" style="height:'+h+'px;"><span class="ob-bar-val">'+fmt(r.total)+'</span></div>'+
-        '</div></div>';
-    }).join("");
-
-    var labelsHtml = data.perBulan.map(function(r){
-      return '<div class="ob-month-label">'+r.bulan.split(" ")[0].slice(0,3).toUpperCase()+'</div>';
-    }).join("");
-
-    var monthChartHtml = data.perBulan.length
-      ? '<div class="rejected-top3-title" style="margin-top:24px;">Total Reject per Bulan</div><div class="ob-chart">'+barsHtml+'</div><div class="ob-month-labels">'+labelsHtml+'</div>'
-      : '';
-
+    var pctGadai = data.totalRows > 0 ? Math.round((Number(data.totalGadai||0) / Number(data.totalRows)) * 100) : 0;
     var detailWrapId = wrapId + "-detail";
     wrap.innerHTML =
-      '<div class="ob-summary">'+
+      '<div class="ob-summary rej-kpi-row">'+
         '<div class="ob-summary-card"><div class="k">Total Reject</div><div class="v">'+fmt(data.totalRows)+'</div></div>'+
-        '<div class="ob-summary-card ach"><div class="k">Jadi Gadai</div><div class="v">'+fmt(data.totalGadai)+'</div></div>'+
+        '<div class="ob-summary-card ach"><div class="k">Jadi Gadai</div><div class="v">'+fmt(data.totalGadai)+' <span class="rej-pct">'+pctGadai+'%</span></div></div>'+
         '<div class="ob-summary-card clickable" data-detail="sendiri"><div class="k">Gadai Cabang Sendiri</div><div class="v">'+fmt(data.gadaiSendiri)+'</div></div>'+
         '<div class="ob-summary-card clickable" data-detail="beda"><div class="k">Gadai Cabang Beda</div><div class="v">'+fmt(data.gadaiBeda)+'</div></div>'+
       '</div>'+
       '<div id="'+detailWrapId+'"></div>'+
       '<div class="rejected-top3-title" style="margin-top:22px;">Detail Transaksi</div>'+
       rejectedDetailTransaksiTableHtml_(data.allDetail || [])+
-      '<div style="margin-top:24px;">'+
-        rejectedTop3Block_("Alasan Terbanyak", data.alasanTop)+
-        rejectedTop3Block_("Jenis Terbanyak", data.jenisTop)+
-        rejectedTop3Block_("Spesifikasi Terbanyak", data.spesifikasiTop)+
+      '<div class="rej-top3-grid">'+
+        rejectedTop3Block_("Alasan Terbanyak", data.alasanTop||[])+
+        rejectedTop3Block_("Jenis Terbanyak", data.jenisTop||[])+
+        rejectedTop3Block_("Spesifikasi Terbanyak", data.spesifikasiTop||[])+
       '</div>'+
       (monthChartWrap ? '' : monthChartHtml);
 
@@ -27708,7 +27919,7 @@ function applyRejectedAlasanFilter_(which){
       return;
     }
     var maxVal = Math.max.apply(null, results.map(function(r){ return r.totalRows; }).concat([1]));
-    var CHART_H = 200, LABEL_PAD = 22; // keep label space INSIDE the box, no reliance on overflow
+    var CHART_H = 120, LABEL_PAD = 18;
 
     var barsHtml = results.map(function(r){
       var h = Math.round((r.totalRows / maxVal) * (CHART_H - LABEL_PAD));
@@ -27721,15 +27932,25 @@ function applyRejectedAlasanFilter_(which){
       return '<div class="ob-month-label">'+r.cabang+'</div>';
     }).join("");
 
-    var statsHtml = results.map(function(r){
-      return '<div class="recap-row"><span class="k">'+r.cabang+'</span>'+
-        '<span class="v">'+fmt(r.totalGadai)+' jadi gadai ('+fmt(r.gadaiSendiri)+' sendiri / '+fmt(r.gadaiBeda)+' beda cabang)</span></div>';
+    var tableRows = results.map(function(r){
+      return '<tr>'+
+        '<td class="rej-cab">'+escHtml(r.cabang)+'</td>'+
+        '<td class="num">'+fmt(r.totalRows)+'</td>'+
+        '<td class="num">'+fmt(r.totalGadai)+'</td>'+
+        '<td class="num">'+fmt(r.gadaiSendiri)+'</td>'+
+        '<td class="num">'+fmt(r.gadaiBeda)+'</td>'+
+      '</tr>';
     }).join("");
 
     wrap.innerHTML =
-      '<div class="ob-chart">'+barsHtml+'</div>'+
+      '<div class="ob-chart rej-compare-chart" style="min-height:'+CHART_H+'px">'+barsHtml+'</div>'+
       '<div class="ob-month-labels">'+labelsHtml+'</div>'+
-      '<div style="margin-top:14px;">'+statsHtml+'</div>';
+      '<div class="rej-compare-table-wrap">'+
+        '<table class="rej-compare-table">'+
+          '<thead><tr><th>Cabang</th><th>Total Reject</th><th>Jadi Gadai</th><th>Sendiri</th><th>Beda Cabang</th></tr></thead>'+
+          '<tbody>'+tableRows+'</tbody>'+
+        '</table>'+
+      '</div>';
   }
 
   // ---------------- Rejected: KC/Admin ----------------
@@ -27748,6 +27969,8 @@ function applyRejectedAlasanFilter_(which){
       showMsg(msgEl, "Isi tanggal Dari dulu.", "err");
       return;
     }
+    window.__rejectedRangeStart = startDate || "";
+    window.__rejectedRangeEnd = endDate || startDate || "";
     this.disabled = true;
     var self = this;
     pendingRejectedMain = null;
