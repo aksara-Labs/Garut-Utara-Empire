@@ -17742,6 +17742,85 @@ html[data-theme="light"] #tab-dashboard .admin-section-title{
   }
 }
 
+
+/* Dashboard detail modal table */
+html[data-theme="light"] .dash-vs-table-wrap{ overflow:auto; max-height:55vh; }
+html[data-theme="light"] .dash-vs-table{
+  width:100%; border-collapse:collapse; font-size:12px;
+}
+html[data-theme="light"] .dash-vs-table th{
+  position:sticky; top:0; background:#0F172A; color:#fff;
+  padding:8px 10px; text-align:right; font-weight:600;
+}
+html[data-theme="light"] .dash-vs-table th:first-child{ text-align:left; }
+html[data-theme="light"] .dash-vs-table td{
+  padding:6px 10px; border-bottom:1px solid #E2E8F0;
+  color:#0F172A; text-align:right;
+}
+html[data-theme="light"] .dash-vs-table td:first-child{ text-align:left; font-weight:600; }
+html[data-theme="light"] .dash-vs-table td.pos{ color:#059669; font-weight:600; }
+html[data-theme="light"] .dash-vs-table td.neg{ color:#DC2626; font-weight:600; }
+html[data-theme="light"] .dash-vs-foot{
+  margin-top:10px; padding-top:10px; border-top:1px solid #E2E8F0;
+  font-size:12px; color:#475569;
+}
+html[data-theme="light"] .dash-detail-row{ font-size:11px; color:#64748B; margin-top:4px; }
+html[data-theme="light"] .dash-detail-total{ font-size:13px; color:#0F172A; margin-top:4px; }
+html[data-theme="light"] .dash-card-click{ cursor:pointer; }
+html[data-theme="light"] .dash-card-click:hover{ border-color:#94A3B8 !important; }
+
+/* Hero gedung: foto cover kanan + fade ke kiri (konsep natural) */
+html[data-theme="light"] #tab-dashboard .admin-hero{
+  display:block !important;
+  position:relative !important;
+  overflow:hidden !important;
+  min-height:128px !important;
+  padding:20px 24px !important;
+  background:#FFFFFF !important;
+  border:1px solid #E2E8F0 !important;
+  border-radius:16px !important;
+}
+html[data-theme="light"] #tab-dashboard .admin-hero-text{
+  position:relative !important;
+  z-index:3 !important;
+  max-width:55% !important;
+}
+html[data-theme="light"] #tab-dashboard .admin-hero-art{
+  display:block !important;
+  position:absolute !important;
+  right:0 !important; top:0 !important; bottom:0 !important;
+  width:48% !important;
+  margin:0 !important; padding:0 !important;
+  opacity:1 !important;
+  z-index:1 !important;
+  pointer-events:none !important;
+}
+html[data-theme="light"] #tab-dashboard .admin-hero-art .hero-tower-img,
+html[data-theme="light"] #tab-dashboard .admin-hero-art .hero-tower{
+  width:100% !important;
+  height:100% !important;
+  max-height:none !important;
+  object-fit:cover !important;
+  object-position:center right !important;
+  filter:none !important;
+  opacity:1 !important;
+  display:block !important;
+}
+/* Gradient putih → transparan di atas foto supaya teks tetap kebaca */
+html[data-theme="light"] #tab-dashboard .admin-hero::after{
+  content:"" !important;
+  position:absolute !important;
+  left:40% !important; right:0 !important; top:0 !important; bottom:0 !important;
+  background:linear-gradient(90deg, #FFFFFF 0%, rgba(255,255,255,0.88) 18%, rgba(255,255,255,0.35) 48%, rgba(255,255,255,0.05) 100%) !important;
+  z-index:2 !important;
+  pointer-events:none !important;
+}
+@media (max-width:720px){
+  html[data-theme="light"] #tab-dashboard .admin-hero-text{ max-width:70% !important; }
+  html[data-theme="light"] #tab-dashboard .admin-hero-art{ width:42% !important; opacity:0.85 !important; }
+  html[data-theme="light"] #tab-dashboard .admin-hero{ min-height:100px !important; padding:14px 16px !important; }
+}
+
 /* ========== END dashboard hero+ringkasan ========== */
 
 
@@ -26242,14 +26321,23 @@ $on("cabangPinSubmit", "click", function(){
     var briefHtml = briefBits.length
       ? ('<div class="dash-brief"><span class="dash-brief-title">Perlu tindakan</span>'+briefBits.join('<span style="opacity:0.35">·</span>')+'</div>')
       : '';
+    try{ window._adminSummaryData = r; }catch(eS){}
     wrap.innerHTML =
       briefHtml +
       '<div class="dash-kpi-grid">'+
         '<div class="admin-stat-card"><div class="admin-stat-value">'+sudah+'/'+total+'</div><div class="admin-stat-label">Cabang sudah input</div></div>'+
         '<div class="admin-stat-card"><div class="admin-stat-value">'+pencapaianLabel+'</div><div class="admin-stat-label">Pencapaian target bulan</div><div class="admin-stat-trend"><span class="muted">Gadai, semua cabang</span></div></div>'+
-        '<div class="admin-stat-card"><div class="admin-stat-value'+(String(omsetLabel).length>10?' stat-sm':'')+'">'+omsetLabel+'</div><div class="admin-stat-label">Omset hari kemarin</div><div class="admin-stat-trend"><span class="muted">GE + GB + GG</span></div></div>'+
-        '<div class="admin-stat-card"><div class="admin-stat-value'+(String(vsValue).length>8?' stat-sm':'')+'" style="'+vsColor+'">'+vsValue+(vsPct?('<div style="font-size:13px;margin-top:2px;opacity:0.9">'+vsPct+'</div>'):'')+'</div><div class="admin-stat-label">Vs periode sama</div><div class="admin-stat-trend"><span class="muted">'+vsSub+'</span></div></div>'+
-        '<div class="admin-stat-card dash-selisih-click" id="dashSelisihCard" title="Klik untuk lihat detail" role="button" tabindex="0">'+
+        '<div class="admin-stat-card dash-card-click" id="dashOmsetKemarinCard" title="Klik untuk detail per cabang" role="button" tabindex="0">'+
+          '<div class="admin-stat-value'+(String(omsetLabel).length>10?' stat-sm':'')+'">'+omsetLabel+'</div>'+
+          '<div class="admin-stat-label">Omset hari kemarin</div>'+
+          '<div class="admin-stat-trend"><span class="muted">GE + GB + GG · klik detail</span></div>'+
+        '</div>'+
+        '<div class="admin-stat-card dash-card-click" id="dashVsPeriodeCard" title="Klik untuk detail harian" role="button" tabindex="0">'+
+          '<div class="admin-stat-value'+(String(vsValue).length>8?' stat-sm':'')+'" style="'+vsColor+'">'+vsValue+(vsPct?('<div style="font-size:13px;margin-top:2px;opacity:0.9">'+vsPct+'</div>'):'')+'</div>'+
+          '<div class="admin-stat-label">Vs periode sama</div>'+
+          '<div class="admin-stat-trend"><span class="muted">'+vsSub+' · klik detail</span></div>'+
+        '</div>'+
+        '<div class="admin-stat-card dash-selisih-click dash-card-click" id="dashSelisihCard" title="Klik untuk lihat detail" role="button" tabindex="0">'+
           '<div class="admin-stat-value" id="dashSelisihVal">…</div>'+
           '<div class="admin-stat-label">Cek Selisih</div>'+
           '<div class="admin-stat-trend"><span class="muted" id="dashSelisihSub">Kanit vs Program · klik detail</span></div>'+
@@ -26257,6 +26345,107 @@ $on("cabangPinSubmit", "click", function(){
       '</div>';
     try{ loadDashSelisih(); }catch(e){}
     try{ bindDashSelisihCard_(); }catch(e){}
+    try{ bindDashSummaryCards_(); }catch(e2){}
+  }
+
+  function closeDashDetailModal_(){
+    var ov = document.getElementById("dashDetailOverlay");
+    if(ov) ov.remove();
+  }
+  function openDashDetailModal_(title, sub, bodyHtml){
+    closeDashDetailModal_();
+    var ov = document.createElement("div");
+    ov.id = "dashDetailOverlay";
+    ov.className = "dash-selisih-overlay";
+    ov.innerHTML =
+      '<div class="dash-selisih-modal" role="dialog" aria-label="'+escHtml(title)+'">'+
+        '<div class="dash-selisih-modal-h">'+
+          '<div><div class="dash-selisih-modal-title">'+escHtml(title)+'</div>'+
+          (sub ? ('<div class="dash-selisih-modal-sub">'+escHtml(sub)+'</div>') : '')+
+          '</div>'+
+          '<button type="button" class="dash-selisih-close" id="dashDetailCloseBtn" aria-label="Tutup">×</button>'+
+        '</div>'+
+        '<div class="dash-selisih-modal-body">'+bodyHtml+'</div>'+
+      '</div>';
+    document.body.appendChild(ov);
+    ov.addEventListener("click", function(ev){ if(ev.target === ov) closeDashDetailModal_(); });
+    var btn = document.getElementById("dashDetailCloseBtn");
+    if(btn) btn.addEventListener("click", closeDashDetailModal_);
+  }
+  function bindDashSummaryCards_(){
+    var omsetCard = document.getElementById("dashOmsetKemarinCard");
+    if(omsetCard && !omsetCard._bound){
+      omsetCard._bound = true;
+      omsetCard.addEventListener("click", function(){ showOmsetKemarinDetail_(); });
+      omsetCard.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" ") showOmsetKemarinDetail_(); });
+    }
+    var vsCard = document.getElementById("dashVsPeriodeCard");
+    if(vsCard && !vsCard._bound){
+      vsCard._bound = true;
+      vsCard.addEventListener("click", function(){ showVsPeriodeDetail_(); });
+      vsCard.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" ") showVsPeriodeDetail_(); });
+    }
+  }
+  function showOmsetKemarinDetail_(){
+    var r = window._adminSummaryData || {};
+    var list = r.omsetKemarinDetail || [];
+    var tgl = r.omsetKemarinDate || "kemarin";
+    if(!list.length){
+      openDashDetailModal_("Omset hari kemarin", tgl, '<div class="empty-log">Data detail belum tersedia. Refresh dashboard atau deploy Code.gs terbaru.</div>');
+      return;
+    }
+    var rows = list.map(function(row){
+      var status = row.tutup ? '<span class="status-badge tutup">Tutup</span>' :
+        (row.empty ? '<span class="status-badge no">Belum input</span>' : '<span class="status-badge yes">Ada data</span>');
+      var tot = (typeof fmt==="function") ? fmt(row.total||0) : String(row.total||0);
+      var ge = row.ge===null||row.ge===undefined ? "–" : ((typeof fmt==="function")?fmt(row.ge):row.ge);
+      var gb = row.gb===null||row.gb===undefined ? "–" : ((typeof fmt==="function")?fmt(row.gb):row.gb);
+      var gg = row.gg===null||row.gg===undefined ? "–" : ((typeof fmt==="function")?fmt(row.gg):row.gg);
+      var tgt = (row.target===null||row.target===undefined) ? "" :
+        (' · target ' + ((typeof fmt==="function")?fmt(row.target):row.target));
+      return '<div class="dash-selisih-item">'+
+        '<div class="dash-selisih-item-h"><span><b>'+escHtml(row.cabang)+'</b>'+tgt+'</span>'+status+'</div>'+
+        '<div class="dash-detail-row">GE '+ge+' · GB '+gb+' · GG '+gg+'</div>'+
+        '<div class="dash-detail-total">Total <b>'+tot+'</b></div>'+
+      '</div>';
+    }).join("");
+    var grand = (typeof fmt==="function") ? fmt(r.omsetKemarin||0) : String(r.omsetKemarin||0);
+    openDashDetailModal_("Omset hari kemarin", "Tanggal "+tgl+" · Total semua cabang "+grand, rows);
+  }
+  function showVsPeriodeDetail_(){
+    var r = window._adminSummaryData || {};
+    var daily = r.vsDaily || [];
+    if(!r.vsComparable){
+      openDashDetailModal_("Vs periode sama", "", '<div class="empty-log">Belum bisa dibanding (masih tanggal 1).</div>');
+      return;
+    }
+    if(!daily.length){
+      openDashDetailModal_("Vs periode sama", (r.vsRangeLabel||"")+" · "+(r.vsCurLabel||"")+" vs "+(r.vsPrevLabel||""),
+        '<div class="empty-log">Detail harian belum tersedia. Deploy Code.gs terbaru lalu refresh.</div>');
+      return;
+    }
+    var curShort = String(r.vsCurLabel||"").split(" ")[0];
+    var prevShort = String(r.vsPrevLabel||"").split(" ")[0];
+    var head = '<div class="dash-vs-table-wrap"><table class="dash-vs-table"><thead><tr>'+
+      '<th>Tgl</th><th>'+escHtml(prevShort)+'</th><th>'+escHtml(curShort)+'</th><th>Selisih</th></tr></thead><tbody>';
+    var body = daily.map(function(row){
+      var sel = Number(row.selisih)||0;
+      var cls = sel>0 ? "pos" : (sel<0 ? "neg" : "");
+      var sign = sel>0 ? "+" : "";
+      var prev = (typeof fmt==="function") ? fmt(row.prev||0) : String(row.prev||0);
+      var cur = (typeof fmt==="function") ? fmt(row.cur||0) : String(row.cur||0);
+      var selS = sign + ((typeof fmt==="function") ? fmt(sel) : String(sel));
+      return '<tr><td>'+row.day+'</td><td>'+prev+'</td><td>'+cur+'</td><td class="'+cls+'">'+selS+'</td></tr>';
+    }).join("");
+    var foot = '</tbody></table></div>'+
+      '<div class="dash-vs-foot">Total '+escHtml(r.vsRangeLabel||"")+': '+
+      '<b>'+((typeof fmt==="function")?fmt(r.vsPrevSum||0):(r.vsPrevSum||0))+'</b> → '+
+      '<b>'+((typeof fmt==="function")?fmt(r.vsCurSum||0):(r.vsCurSum||0))+'</b>'+
+      (r.vsSelisih!==undefined ? (' · selisih <b>'+(r.vsSelisih>0?"+":"")+((typeof fmt==="function")?fmt(r.vsSelisih):r.vsSelisih)+'</b>') : '')+
+      '</div>';
+    openDashDetailModal_("Vs periode sama",
+      (r.vsRangeLabel||"")+" "+(r.vsPrevLabel||"")+" vs "+(r.vsCurLabel||""),
+      head + body + foot);
   }
 
   var _dashSelisihResults = null;
