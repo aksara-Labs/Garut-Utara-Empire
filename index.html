@@ -27778,6 +27778,75 @@ function loadAdminSummary(force){
     else sel.value = "";
     try{ console.log("[rejected] alasan options", list.length, list.slice(0,8)); }catch(e){}
   }
+
+  function rebuildRejectedSummaryFromRows_(rows){
+    rows = rows || [];
+    function countMap_(getter){
+      var m = {};
+      rows.forEach(function(r){
+        var k = String(getter(r)||"").trim();
+        if(!k || k==="-" || k.toLowerCase()==="null") return;
+        m[k] = (m[k]||0)+1;
+      });
+      return Object.keys(m).map(function(k){ return { label:k, count:m[k] }; })
+        .sort(function(a,b){ return b.count - a.count; });
+    }
+    var alasanAll = countMap_(function(r){ return r.alasan; });
+    var jenisAll = countMap_(function(r){ return r.jenis; });
+    var spekAll = countMap_(function(r){ return r.spesifikasi; });
+    var totalGadai = 0, gadaiSendiri = 0, gadaiBeda = 0;
+    var gadaiSendiriDetail = [], gadaiBedaDetail = [];
+    rows.forEach(function(r){
+      if(!r.sudahGadai) return;
+      totalGadai++;
+      var cabang = String(r.cabang||"");
+      var cabangGadai = String(r.cabangGadai||"");
+      var detailRow = {
+        id: r.id,
+        noFaktur: r.noFaktur||"",
+        cabangReject: cabang,
+        cabangGadai: cabangGadai,
+        pinjamanReject: r.pinjamanMax||r.pinjamanReject||0,
+        pinjamanGadai: r.pinjamanGadai||0,
+        spesifikasi: r.spesifikasi||"-"
+      };
+      if(cabangGadai && cabang && cabangGadai.indexOf(cabang)!==-1){
+        gadaiSendiri++;
+        gadaiSendiriDetail.push(detailRow);
+      } else if(cabangGadai){
+        gadaiBeda++;
+        gadaiBedaDetail.push(detailRow);
+      } else {
+        // sudah gadai tapi tujuan kosong → hitung sendiri default
+        gadaiSendiri++;
+        gadaiSendiriDetail.push(detailRow);
+      }
+    });
+    var byBulan = {};
+    rows.forEach(function(r){
+      var bl = (r.bulan || (r.tanggal||"").toString().slice(0,7) || "Lainnya");
+      if(!byBulan[bl]) byBulan[bl]=0;
+      byBulan[bl]++;
+    });
+    var perBulan = Object.keys(byBulan).sort().map(function(k){ return { bulan:k, total:byBulan[k] }; });
+    return {
+      allDetail: rows,
+      totalRows: rows.length,
+      totalGadai: totalGadai,
+      gadaiSendiri: gadaiSendiri,
+      gadaiBeda: gadaiBeda,
+      gadaiSendiriDetail: gadaiSendiriDetail,
+      gadaiBedaDetail: gadaiBedaDetail,
+      alasanAll: alasanAll,
+      jenisAll: jenisAll,
+      spesifikasiAll: spekAll,
+      alasanTop: alasanAll.slice(0,3),
+      jenisTop: jenisAll.slice(0,3),
+      spesifikasiTop: spekAll.slice(0,3),
+      perBulan: perBulan
+    };
+  }
+
   function filterRejectedRowsByAlasan_(rows, alasan){
     if(!alasan) return rows || [];
     var a = String(alasan).trim().toLowerCase();
@@ -28148,18 +28217,8 @@ function applyRejectedAlasanFilter_(which){
     var alasan = alasanEl ? (alasanEl.value || "") : "";
     if(alasan && data.allDetail){
       var rows = filterRejectedRowsByAlasan_(data.allDetail, alasan);
-      // rebuild lightweight summary from filtered rows
-      data = Object.assign({}, data, { allDetail: rows, totalRows: rows.length });
-      // perBulan recompute if possible
-      try{
-        var byBulan = {};
-        rows.forEach(function(r){
-          var bl = (r.bulan || (r.tanggal||"").slice(0,7) || "Lainnya");
-          if(!byBulan[bl]) byBulan[bl] = 0;
-          byBulan[bl]++;
-        });
-        data.perBulan = Object.keys(byBulan).sort().map(function(k){ return { bulan: k, total: byBulan[k] }; });
-      }catch(e){}
+      var rebuilt = rebuildRejectedSummaryFromRows_(rows);
+      data = Object.assign({}, data, rebuilt);
     }
     renderRejectedSummary(data, label + (alasan ? " · "+alasan : ""), "rejectedAnalysisWrap", "rejectedAnalysisMonthChartWrap");
     document.getElementById("rejectedExportRow").style.display = "flex";
