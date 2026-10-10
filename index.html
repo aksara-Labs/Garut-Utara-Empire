@@ -281,7 +281,9 @@ html,body{background:#F4F6F9!important;color:#0F172A!important;margin:0;font-fam
   border-radius: 12px !important;
 }
 #tab-dashboard .admin-hero-text{
-  max-width: 100% !important;
+  max-width: 58% !important;
+  position: relative !important;
+  z-index: 2 !important;
 }
 #tab-dashboard .admin-hero-text .greeting{
   font-size: 15px !important;
@@ -295,7 +297,7 @@ html,body{background:#F4F6F9!important;color:#0F172A!important;margin:0;font-fam
   display: none !important; /* hemat ruang */
 }
 #tab-dashboard .admin-hero-art{
-  display: none !important; /* tower tidak perlu di dashboard padat */
+  display: flex !important; /* gedung tampil lagi */
 }
 #tab-dashboard .dash-kpi-grid,
 #tab-dashboard .admin-stats-grid{
@@ -4772,13 +4774,13 @@ button.tab-btn.admin-nav-btn{
     font-size:17px; color:var(--ink); background:transparent; border:none;
     border-bottom:1.5px solid var(--steel);
     padding:6px 2px 9px; outline:none; appearance:none; -webkit-appearance:none;
-    color-scheme:dark;
+    color-scheme:light;
   }
   select{
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2393A8C4' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230F172A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
     background-repeat:no-repeat; background-position:right 4px center; padding-right:20px;
   }
-  select option{ background:var(--navy-900); color:var(--ink); }
+  select option{ background:#FFFFFF; color:#0F172A; }
   select:focus, input:focus{ border-bottom-color:var(--gold); }
 
   .pin-input{
@@ -6826,10 +6828,10 @@ button.tab-btn.admin-nav-btn{
     border-radius:10px !important;
   }
   .admin-content .panel.subpanel input[type="date"]{
-    color-scheme: dark;
+    color-scheme: light;
   }
   .admin-content .panel.subpanel input[type="date"]::-webkit-calendar-picker-indicator{
-    filter:invert(1); opacity:0.85; cursor:pointer;
+    filter:none; opacity:0.85; cursor:pointer;
   }
 
   /* Kartu menu / hub di dalam panel */
@@ -8092,9 +8094,9 @@ button.tab-btn.admin-nav-btn{
     -webkit-appearance:none !important; margin:0 !important;
   }
   #tab-kanitinput input[type=number]{ -moz-appearance:textfield !important; }
-  #tab-dokumen input[type="date"]{ color-scheme:dark; min-height:40px; }
+  #tab-dokumen input[type="date"]{ color-scheme:light; min-height:40px; }
   #tab-dokumen input[type="date"]::-webkit-calendar-picker-indicator{
-    filter:invert(1); opacity:1; cursor:pointer;
+    filter:none; opacity:0.85; cursor:pointer;
   }
   #tab-cashopname .co-card{
     background:rgba(15,23,42,0.92) !important;
@@ -8126,13 +8128,13 @@ button.tab-btn.admin-nav-btn{
   @media(max-width:900px){
     .audit-charts.audit-charts-2{ grid-template-columns:1fr !important; }
   }
-  /* Semua ikon kalender putih */
+  /* Ikon kalender: default gelap (tema terang) */
   input[type="date"]{
-    color-scheme: dark;
+    color-scheme: light;
   }
   input[type="date"]::-webkit-calendar-picker-indicator{
-    filter: invert(1) brightness(1.4);
-    opacity: 1 !important;
+    filter: none;
+    opacity: 0.85 !important;
     cursor: pointer;
   }
 
@@ -17474,6 +17476,279 @@ html[data-theme="light"] .appr-cab-card:hover {
   box-shadow: 0 4px 16px rgba(15,23,42,0.07) !important;
 }
 /* ========== END P4 ========== */
+
+/* ========== FIX: Dropdown terang semua menu ========== */
+html[data-theme="light"],
+html[data-theme="light"] body,
+html[data-theme="light"] .admin-shell,
+html[data-theme="light"] .admin-content {
+  color-scheme: light !important;
+}
+html[data-theme="light"] select,
+html[data-theme="light"] .admin-content select,
+html[data-theme="light"] .panel select,
+html[data-theme="light"] .subpanel select,
+html[data-theme="light"] .filter-bar select,
+html[data-theme="light"] .filter-row-compact select,
+html[data-theme="light"] .toolbar select,
+html[data-theme="light"] .ob-toolbar select,
+html[data-theme="light"] .co-toolbar select,
+html[data-theme="light"] .acp-toolbar select,
+html[data-theme="light"] .approval-filters select,
+html[data-theme="light"] .karyawan-filter-row select,
+html[data-theme="light"] .rejected-filter-compact select,
+html[data-theme="light"] .field select,
+html[data-theme="light"] .login-card select,
+html[data-theme="light"] .auth-card select,
+html[data-theme="light"] #tab-audit select,
+html[data-theme="light"] #tab-kanitaudit select,
+html[data-theme="light"] #tab-cashopname select,
+html[data-theme="light"] #tab-kasarea select,
+html[data-theme="light"] #tab-kelolacabang select,
+html[data-theme="light"] #tab-dokumen select,
+html[data-theme="light"] #tab-updatedata select,
+html[data-theme="light"] #tab-rejected select,
+html[data-theme="light"] #tab-jadwallibur select,
+html[data-theme="light"] #tab-menuharian select,
+html[data-theme="light"] #tab-omsetbulanan select,
+html[data-theme="light"] #auditApprovalView select {
+  background-color: #FFFFFF !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230F172A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 8px !important;
+  color-scheme: light !important;
+  padding: 0 28px 0 10px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+}
+html[data-theme="light"] select option,
+html[data-theme="light"] .admin-content select option,
+html[data-theme="light"] option {
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] select:focus,
+html[data-theme="light"] .admin-content select:focus {
+  outline: 2px solid #0F172A !important;
+  outline-offset: 1px !important;
+  border-color: #0F172A !important;
+}
+/* date inputs ikut terang */
+html[data-theme="light"] input[type="date"],
+html[data-theme="light"] input[type="month"],
+html[data-theme="light"] input[type="time"],
+html[data-theme="light"] .admin-content input[type="date"] {
+  color-scheme: light !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #CBD5E1 !important;
+}
+
+/* ========== END FIX dropdown ========== */
+
+/* ========== FIX: Ikon kalender gelap terbaca ========== */
+html[data-theme="light"] input[type="date"],
+html[data-theme="light"] input[type="month"],
+html[data-theme="light"] input[type="datetime-local"],
+html[data-theme="light"] .admin-content input[type="date"],
+html[data-theme="light"] #tab-dokumen input[type="date"],
+html[data-theme="light"] #tab-cashopname input[type="date"],
+html[data-theme="light"] #tab-rejected input[type="date"],
+html[data-theme="light"] #tab-kanitrejected input[type="date"],
+html[data-theme="light"] #tab-kasarea input[type="date"],
+html[data-theme="light"] #tab-kanitinput input[type="date"] {
+  color-scheme: light !important;
+}
+html[data-theme="light"] input[type="date"]::-webkit-calendar-picker-indicator,
+html[data-theme="light"] input[type="month"]::-webkit-calendar-picker-indicator,
+html[data-theme="light"] input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+html[data-theme="light"] .admin-content input[type="date"]::-webkit-calendar-picker-indicator,
+html[data-theme="light"] #tab-dokumen input[type="date"]::-webkit-calendar-picker-indicator,
+html[data-theme="light"] #tab-cashopname input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: none !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
+  /* pastikan ikon gelap di background putih */
+  background-color: transparent !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+/* Kalau browser masih render terang, paksa tint navy */
+html[data-theme="light"] input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1 !important;
+  filter: brightness(0.2) !important;
+}
+
+/* ========== END FIX calendar icon ========== */
+
+/* ========== DASHBOARD: hero gedung + ringkasan kartu ========== */
+html[data-theme="light"] #tab-dashboard .admin-hero{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 110px !important;
+  padding: 16px 20px !important;
+  margin-bottom: 16px !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+}
+html[data-theme="light"] #tab-dashboard .admin-hero-text{
+  max-width: 58% !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+html[data-theme="light"] #tab-dashboard .admin-hero-text .greeting,
+html[data-theme="light"] #tab-dashboard .admin-hero-text .greeting b{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+}
+html[data-theme="light"] #tab-dashboard .admin-hero-text .greeting b{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #tab-dashboard .admin-hero-art{
+  display: flex !important;
+  position: absolute !important;
+  right: 8px !important;
+  bottom: 0 !important;
+  top: 0 !important;
+  width: min(40%, 260px) !important;
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  z-index: 1 !important;
+}
+html[data-theme="light"] #tab-dashboard .admin-hero-art .hero-tower-img,
+html[data-theme="light"] #tab-dashboard .admin-hero-art .hero-tower{
+  width: 100% !important;
+  height: auto !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: bottom right !important;
+  filter: none !important;
+  opacity: 0.92 !important;
+}
+
+/* Ringkasan: 5 kartu tegas */
+html[data-theme="light"] #adminSummaryWrap .dash-kpi-grid,
+html[data-theme="light"] #tab-dashboard .dash-kpi-grid{
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin: 0 0 14px !important;
+}
+html[data-theme="light"] #adminSummaryWrap .admin-stat-card,
+html[data-theme="light"] #tab-dashboard .admin-stat-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 14px 14px 12px !important;
+  min-height: 88px !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+html[data-theme="light"] #adminSummaryWrap .admin-stat-card:hover,
+html[data-theme="light"] #tab-dashboard .admin-stat-card:hover{
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06) !important;
+}
+html[data-theme="light"] #adminSummaryWrap .admin-stat-value,
+html[data-theme="light"] #tab-dashboard .admin-stat-value{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  margin-bottom: 4px !important;
+}
+html[data-theme="light"] #adminSummaryWrap .admin-stat-value.stat-sm,
+html[data-theme="light"] #tab-dashboard .admin-stat-value.stat-sm{
+  font-size: 16px !important;
+}
+html[data-theme="light"] #adminSummaryWrap .admin-stat-label,
+html[data-theme="light"] #tab-dashboard .admin-stat-label{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  margin-bottom: 2px !important;
+}
+html[data-theme="light"] #adminSummaryWrap .admin-stat-trend,
+html[data-theme="light"] #adminSummaryWrap .admin-stat-trend .muted,
+html[data-theme="light"] #tab-dashboard .admin-stat-trend,
+html[data-theme="light"] #tab-dashboard .admin-stat-trend .muted{
+  color: #94A3B8 !important;
+  -webkit-text-fill-color: #94A3B8 !important;
+  font-size: 11px !important;
+}
+/* Selisih beda = merah, sama = hijau via inline; pastikan default gelap */
+html[data-theme="light"] #adminSummaryWrap #dashSelisihCard{
+  cursor: pointer !important;
+}
+html[data-theme="light"] #tab-dashboard .admin-section-title{
+  color: #0F172A !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  margin: 4px 0 10px !important;
+}
+@media (max-width: 960px){
+  html[data-theme="light"] #adminSummaryWrap .dash-kpi-grid,
+  html[data-theme="light"] #tab-dashboard .dash-kpi-grid{
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+  html[data-theme="light"] #tab-dashboard .admin-hero-art{
+    width: min(36%, 180px) !important;
+    opacity: 0.75 !important;
+  }
+}
+@media (max-width: 640px){
+  html[data-theme="light"] #adminSummaryWrap .dash-kpi-grid,
+  html[data-theme="light"] #tab-dashboard .dash-kpi-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  html[data-theme="light"] #tab-dashboard .admin-hero{
+    min-height: 88px !important;
+    padding: 12px 14px !important;
+  }
+  html[data-theme="light"] #tab-dashboard .admin-hero-text .greeting{
+    font-size: 15px !important;
+  }
+  html[data-theme="light"] #tab-dashboard .admin-hero-art{
+    width: 120px !important;
+    opacity: 0.55 !important;
+  }
+  html[data-theme="light"] #adminSummaryWrap .admin-stat-value{
+    font-size: 18px !important;
+  }
+}
+
+/* ========== END dashboard hero+ringkasan ========== */
+
+
+
+
+
+
 
 /* ========== P5: QA final harden (KC + Kanit) ========== */
 /* Pastikan shell selalu light */
