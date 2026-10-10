@@ -7591,10 +7591,10 @@ button.tab-btn.admin-nav-btn{
   .harian-table tr.total-row td{
     color:#0F172A !important;
     font-weight:700 !important;
-    background:#FFF7ED !important;
+    background:#F8FAFC !important;
   }
   .admin-content .harian-table tr.total-row td.label-col{
-    background:#FFF7ED !important;
+    background:#F8FAFC !important;
     color:#0F172A !important;
   }
   .admin-content .harian-table td.max-day-cell,
@@ -12609,7 +12609,7 @@ button.admin-topbar-avatar:hover,
 }
 #tab-cashopname .co-sum-selisih{
   border-color: #FDBA74 !important;
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   box-shadow: none !important;
 }
 #tab-cashopname .co-sum-selisih.is-ok .co-sum-val,
@@ -15145,7 +15145,7 @@ html[data-theme="light"] .libur-cell:hover {
   border-color: #CBD5E1 !important;
 }
 html[data-theme="light"] .libur-cell.is-minggu {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   color: #9A3412 !important;
   -webkit-text-fill-color: #9A3412 !important;
 }
@@ -15518,7 +15518,7 @@ html[data-theme="light"] #tab-cashopname .co-row:hover {
   background: #F1F5F9 !important;
 }
 html[data-theme="light"] #tab-cashopname .co-row.co-row-active {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   box-shadow: inset 0 0 0 1px #FDBA74 !important;
 }
 html[data-theme="light"] #tab-cashopname #coSaveBtn,
@@ -15529,7 +15529,7 @@ html[data-theme="light"] #tab-cashopname .co-save-ok {
   border-radius: 999px !important;
 }
 html[data-theme="light"] #tab-cashopname .co-sum-selisih {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   border-color: #FDBA74 !important;
   color: #0F172A !important;
 }
@@ -16359,7 +16359,7 @@ html[data-theme="light"] #tab-kanitkasarea td:nth-child(2) {
 html[data-theme="light"] #tab-kasarea .total-row td,
 html[data-theme="light"] #tab-kanitkasarea .total-row td {
   font-weight: 700 !important;
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
 }
 /* ========== END SHARED profil/audit/kas ========== */
 
@@ -16877,7 +16877,7 @@ html[data-theme="light"] #tab-cashopname .co-denom-table input {
   text-align: right !important;
 }
 html[data-theme="light"] #tab-cashopname .co-sum-selisih {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   border: 1px solid #FDBA74 !important;
   color: #0F172A !important;
   border-radius: 12px !important;
@@ -18009,6 +18009,261 @@ html[data-theme="light"] .kinerja-live{
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ========== Omset Harian: tabel banding padat + scroll ========== */
+html[data-theme="light"] .cmp-table-wrap,
+html[data-theme="light"] #menuHarianWrap .cmp-table-wrap,
+html[data-theme="light"] #kanitMenuHarianWrap .cmp-table-wrap{
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  margin-top: 8px !important;
+}
+html[data-theme="light"] .cmp-table,
+html[data-theme="light"] table.cmp-table{
+  table-layout: fixed !important;
+  width: max-content !important;
+  min-width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 10px !important;
+}
+html[data-theme="light"] .cmp-table th,
+html[data-theme="light"] .cmp-table td{
+  min-width: 34px !important;
+  max-width: 40px !important;
+  width: 36px !important;
+  padding: 4px 2px !important;
+  text-align: center !important;
+  font-size: 10px !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] .cmp-table th{
+  background: #F8FAFC !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-weight: 600 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1 !important;
+}
+html[data-theme="light"] .cmp-table .label-col,
+html[data-theme="light"] .cmp-table th.label-col,
+html[data-theme="light"] .cmp-table td.label-col{
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 3 !important;
+  min-width: 44px !important;
+  max-width: 52px !important;
+  width: 48px !important;
+  background: #FFFFFF !important;
+  text-align: left !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  box-shadow: 2px 0 4px rgba(15,23,42,0.06) !important;
+  padding-left: 8px !important;
+}
+html[data-theme="light"] .cmp-table thead .label-col{
+  background: #F8FAFC !important;
+  z-index: 4 !important;
+}
+html[data-theme="light"] .cmp-table .total-col{
+  position: sticky !important;
+  right: 0 !important;
+  z-index: 2 !important;
+  min-width: 48px !important;
+  max-width: 56px !important;
+  background: #F8FAFC !important;
+  font-weight: 700 !important;
+  box-shadow: -2px 0 4px rgba(15,23,42,0.06) !important;
+}
+html[data-theme="light"] .cmp-bars{
+  height: 44px !important;
+  min-width: 20px !important;
+  gap: 1px !important;
+}
+html[data-theme="light"] .cmp-bar{
+  width: 7px !important;
+}
+html[data-theme="light"] .cmp-n{
+  font-size: 7px !important;
+  color: #475569 !important;
+}
+html[data-theme="light"] .cmp-n-a{ color: #2563EB !important; }
+html[data-theme="light"] .cmp-n-b{ color: #C2410C !important; }
+html[data-theme="light"] .cmp-day-lbl{ color: #94A3B8 !important; font-size: 8px !important; }
+html[data-theme="light"] .cmp-row-a td{ color: #1D4ED8 !important; }
+html[data-theme="light"] .cmp-row-b td{ color: #C2410C !important; }
+html[data-theme="light"] .cmp-up{ color: #059669 !important; font-weight: 600 !important; }
+html[data-theme="light"] .cmp-down{ color: #DC2626 !important; font-weight: 600 !important; }
+html[data-theme="light"] .cmp-legend{
+  color: #64748B !important;
+  font-size: 11px !important;
+  flex-wrap: wrap !important;
+}
+html[data-theme="light"] .cmp-sum{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+}
+@media (max-width: 720px){
+  html[data-theme="light"] .cmp-sum{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Tabel utama omset harian: scroll + sticky label */
+html[data-theme="light"] #menuHarianWrap .harian-table-wrap,
+html[data-theme="light"] #kanitMenuHarianWrap .harian-table-wrap{
+  overflow-x: auto !important;
+  max-width: 100% !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+html[data-theme="light"] #menuHarianWrap .harian-table th,
+html[data-theme="light"] #menuHarianWrap .harian-table td,
+html[data-theme="light"] #kanitMenuHarianWrap .harian-table th,
+html[data-theme="light"] #kanitMenuHarianWrap .harian-table td{
+  min-width: 28px !important;
+  padding: 4px 3px !important;
+  font-size: 10px !important;
+}
+html[data-theme="light"] #menuHarianWrap .harian-table .label-col,
+html[data-theme="light"] #kanitMenuHarianWrap .harian-table .label-col{
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 2 !important;
+  background: #FFFFFF !important;
+  min-width: 56px !important;
+  box-shadow: 2px 0 4px rgba(15,23,42,0.06) !important;
+}
+
+/* ========== Omset Harian: hilangkan tint krem/coklat ========== */
+html[data-theme="light"] .harian-sync-wrap,
+html[data-theme="light"] .harian-table-wrap,
+html[data-theme="light"] #menuHarianWrap .harian-sync-wrap,
+html[data-theme="light"] #menuHarianWrap .harian-table-wrap,
+html[data-theme="light"] #kanitMenuHarianWrap .harian-sync-wrap,
+html[data-theme="light"] #kanitMenuHarianWrap .harian-table-wrap,
+html[data-theme="light"] .admin-content .harian-sync-wrap,
+html[data-theme="light"] .admin-content .harian-table-wrap{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  scrollbar-color: #CBD5E1 transparent !important;
+}
+html[data-theme="light"] .harian-sync-wrap::-webkit-scrollbar-thumb,
+html[data-theme="light"] .harian-table-wrap::-webkit-scrollbar-thumb,
+html[data-theme="light"] .admin-content .harian-sync-wrap::-webkit-scrollbar-thumb,
+html[data-theme="light"] .admin-content .harian-table-wrap::-webkit-scrollbar-thumb{
+  background: #CBD5E1 !important;
+}
+
+/* Baris TOTAL & kolom total: abu netral, bukan krem/oranye */
+html[data-theme="light"] .harian-table tr.total-row td,
+html[data-theme="light"] .harian-table tr.total-row td.label-col,
+html[data-theme="light"] .harian-table tr.total-row td.total-col,
+html[data-theme="light"] .admin-content .harian-table tr.total-row td,
+html[data-theme="light"] .harian-table th.total-col,
+html[data-theme="light"] .harian-table td.total-col,
+html[data-theme="light"] .admin-content .harian-table th.total-col,
+html[data-theme="light"] .admin-content .harian-table td.total-col,
+html[data-theme="light"] .cmp-table .total-col,
+html[data-theme="light"] .cmp-table th.total-col,
+html[data-theme="light"] .cmp-table td.total-col{
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+
+/* Header tanggal putih/abu, bukan krem */
+html[data-theme="light"] .harian-table thead th,
+html[data-theme="light"] .admin-content .harian-table thead th{
+  background: #F8FAFC !important;
+  color: #64748B !important;
+}
+
+/* Chart row & body putih polos */
+html[data-theme="light"] .harian-table tr.chart-row td,
+html[data-theme="light"] .harian-table tbody td,
+html[data-theme="light"] .harian-table td.label-col{
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] .harian-table tr.chart-row td.label-col{
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] .harian-table tbody tr:nth-child(even):not(.total-row):not(.chart-row) td{
+  background: #FAFBFC !important;
+}
+html[data-theme="light"] .harian-table tbody tr:nth-child(even):not(.total-row) td.label-col{
+  background: #FAFBFC !important;
+}
+
+/* Ringkasan KPI cards di atas tabel: area bersih putih */
+html[data-theme="light"] #menuHarianWrap .ob-summary,
+html[data-theme="light"] #kanitMenuHarianWrap .ob-summary{
+  background: transparent !important;
+  border: none !important;
+}
+html[data-theme="light"] #menuHarianWrap .ob-summary-card,
+html[data-theme="light"] #kanitMenuHarianWrap .ob-summary-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
+/* ========== Omset Bulanan 4 kategori stack ========== */
+html[data-theme="light"] .ob-cat-stack{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  margin-top: 8px !important;
+}
+html[data-theme="light"] .ob-cat-block{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  padding: 14px 16px 12px !important;
+}
+html[data-theme="light"] .ob-cat-head{
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 8px !important;
+}
+html[data-theme="light"] .ob-cat-title{
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .ob-cat-meta{
+  font-size: 12px !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+html[data-theme="light"] .ob-cat-meta b{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .ob-cat-block .ob-chart{
+  min-height: 160px !important;
+}
+/* ========== END omset 4 kat ========== */
+
+/* ========== END omset no-cream ========== */
+
+/* ========== END omset harian compact ========== */
+
 /* ========== END dash harian polish ========== */
 
 /* ========== END dashboard hero+ringkasan ========== */
@@ -18261,7 +18516,7 @@ html[data-theme="light"] .harian-table tr.chart-row td.label-col {
   -webkit-text-fill-color: #0F172A !important;
 }
 html[data-theme="light"] .harian-table tr.total-row td {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   color: #0F172A !important;
   -webkit-text-fill-color: #0F172A !important;
   font-weight: 700 !important;
@@ -18453,7 +18708,7 @@ html[data-theme="light"] .result-modal-card .k {
 }
 html[data-theme="light"] .result-modal-card .hint-box,
 html[data-theme="light"] .result-modal-card .screenshot-hint {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   border: 1px dashed #FDBA74 !important;
   color: #9A3412 !important;
   -webkit-text-fill-color: #9A3412 !important;
@@ -18515,7 +18770,7 @@ html[data-theme="light"] #tab-cashopname .co-sum-sub {
   font-size: 11px !important;
 }
 html[data-theme="light"] #tab-cashopname .co-sum-selisih {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   border: 1px solid #FDBA74 !important;
   background-image: none !important;
 }
@@ -18642,7 +18897,7 @@ html[data-theme="light"] #tab-cashopname .co-row.co-row-active {
   box-shadow: none !important;
 }
 html[data-theme="light"] #tab-cashopname .co-row.co-row-active {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   box-shadow: inset 0 0 0 1px #FDBA74 !important;
 }
 
@@ -18722,7 +18977,7 @@ html[data-theme="light"] {
   --gue-primary-text: #FFFFFF;
   --gue-danger: #B91C1C;
   --gue-success: #166534;
-  --gue-warning-bg: #FFF7ED;
+  --gue-warning-bg: #F8FAFC;
   --gue-warning-border: #FDBA74;
   --gue-radius: 12px;
   --gue-radius-lg: 16px;
@@ -18938,7 +19193,7 @@ html[data-theme="light"] .date-warning-text * {
 }
 html[data-theme="light"] .result-modal-card .hint-box,
 html[data-theme="light"] .result-modal-card .screenshot-hint {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   border: 1px dashed #FDBA74 !important;
   color: #9A3412 !important;
   -webkit-text-fill-color: #9A3412 !important;
@@ -19137,7 +19392,7 @@ html[data-theme="light"] .admin-content table tbody tr:nth-child(even) td:first-
 
 /* Harian total / max */
 html[data-theme="light"] .admin-content .harian-table tr.total-row td {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   color: #0F172A !important;
   -webkit-text-fill-color: #0F172A !important;
   font-weight: 700 !important;
@@ -20002,7 +20257,7 @@ html[data-theme="light"] .appr-cab-card .acp-badge.belum {
 }
 html[data-theme="light"] .appr-cab-card .appr-status.menunggu,
 html[data-theme="light"] .appr-cab-card .acp-badge.menunggu {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   color: #9A3412 !important;
   -webkit-text-fill-color: #9A3412 !important;
   border-color: #FDBA74 !important;
@@ -20306,7 +20561,7 @@ html[data-theme="light"] #tab-audit .audit-table tbody tr:nth-child(even) td {
 
 /* Loading bar thin */
 html[data-theme="light"] #auditLoading {
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
   border: 1px solid #FDBA74 !important;
   color: #9A3412 !important;
   border-radius: 10px !important;
@@ -21261,7 +21516,7 @@ html[data-theme="light"] .harian-table td.total-col{
 html[data-theme="light"] .harian-table tr.total-row td{
   color: #0F172A !important;
   font-weight: 700 !important;
-  background: #FFF7ED !important;
+  background: #F8FAFC !important;
 }
 html[data-theme="light"] .harian-table td.max-day-cell{
   background: #FEE2E2 !important;
@@ -22209,8 +22464,7 @@ html[data-theme="light"] .admin-content select:focus-visible {
     <!-- Tab: Omset Bulanan (cabang sendiri) -->
     <div class="panel subpanel" id="tab-kanitomsetbulanan">
       <div class="hint" style="margin-top:0;">
-        Data Gadai (Target vs Aktual) per bulan, dari Januari hingga bulan berjalan, untuk cabang ini saja.
-        Sumber data: spreadsheet Data_Clean (dashboard KC), bukan sheet omset harian ini.
+        Gadai · PP · Nasabah · Gaol (Target vs Aktual) per bulan. Sumber: Data_Clean (dashboard KC).
       </div>
       <button id="kanitOmsetBulananLoadBtn" style="margin-top:14px;">Tampilkan</button>
       <div id="kanitOmsetBulananWrap" style="margin-top:20px;"></div>
@@ -22635,8 +22889,7 @@ html[data-theme="light"] .admin-content select:focus-visible {
         <button id="omsetBulananLoadBtn">Tampilkan</button>
       </div>
       <div class="hint" style="margin-top:14px;">
-        Data Gadai (Target vs Aktual) per bulan, dari Januari hingga bulan berjalan.
-        Sumber data: spreadsheet Data_Clean (dashboard KC), bukan sheet omset harian ini.
+        Gadai · PP · Nasabah · Gaol (Target vs Aktual) per bulan. Sumber: Data_Clean (dashboard KC).
       </div>
       <div id="omsetBulananWrap" style="margin-top:20px;"></div>
       <div class="msg" id="omsetBulananMsg"></div>
@@ -23549,12 +23802,24 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
   
   function applyKinerjaBulanOpts_(opts){
     if(!opts || !opts.length) return;
+    var bulanId = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+    function labOf(o){
+      if(o && o.label && String(o.label).indexOf("undefined")===-1) return o.label;
+      var ym = o && o.ym ? String(o.ym) : "";
+      var p = ym.split("-");
+      if(p.length===2){
+        var mi = Number(p[1])-1;
+        if(mi>=0 && mi<12) return bulanId[mi]+" "+p[0];
+      }
+      return ym || "—";
+    }
     ["kinerjaHarianBulan", "kanitKinerjaHarianBulan"].forEach(function(id){
       var el = document.getElementById(id);
       if (!el) return;
       var cur = el.value;
       el.innerHTML = opts.map(function(o){
-        return '<option value="'+o.ym+'">'+o.label+'</option>';
+        var ym = o.ym || "";
+        return '<option value="'+ym+'">'+labOf(o)+'</option>';
       }).join("");
       var def = opts[opts.length - 1].ym;
       el.value = cur && opts.some(function(o){ return o.ym === cur; }) ? cur : def;
@@ -26982,7 +27247,7 @@ function loadAdminSummary(force){
           showMsg(msgEl, r.reason || "Gagal memuat data omset bulanan.", "err");
           return;
         }
-        renderOmsetBulanan(r.results, cabang);
+        renderOmsetBulanan(r.results, cabang, "omsetBulananWrap", r.kategori);
       })
       .withFailureHandler(function(err){
         self.dataset.busy = "0"; self.disabled = false;
@@ -28180,55 +28445,91 @@ function applyRejectedAlasanFilter_(which){
       .getKpiBisnis(session.adminPin, startYm, endYm);
   });
 
-  function renderOmsetBulanan(results, cabang, wrapId){
+  function renderOmsetBulanan(results, cabang, wrapId, kategori){
     var wrap = document.getElementById(wrapId || "omsetBulananWrap");
-    if(!results.length){
+    if(!results) results = [];
+    if(!kategori) kategori = [];
+    // Normalize: if first arg is pack {results, kategori}
+    if(results && !Array.isArray(results) && results.results){
+      kategori = results.kategori || kategori;
+      results = results.results || [];
+    }
+    if(!results.length && !(kategori && kategori.length)){
       wrap.innerHTML = '<div class="empty-log">Belum ada data untuk pilihan ini.</div>';
       return;
     }
 
-    var totalTarget = 0, totalAktual = 0;
-    results.forEach(function(r){ totalTarget += r.target; totalAktual += r.aktual; });
-    var totalAch = totalTarget > 0 ? Math.round((totalAktual / totalTarget) * 100) : 0;
-
-    var maxVal = 0;
-    results.forEach(function(r){ maxVal = Math.max(maxVal, r.target, r.aktual); });
-    if(maxVal <= 0) maxVal = 1;
+    function chartBlock_(title, months){
+      if(!months || !months.length) return '';
+      var totT = 0, totA = 0, maxVal = 1;
+      months.forEach(function(r){
+        totT += Number(r.target)||0;
+        totA += Number(r.aktual)||0;
+        maxVal = Math.max(maxVal, Number(r.target)||0, Number(r.aktual)||0);
+      });
+      var ach = totT > 0 ? Math.round((totA / totT) * 100) : 0;
+      var CHART_H = 160, LABEL_PAD = 20;
+      var barsHtml = months.map(function(r){
+        var tH = Math.round(((Number(r.target)||0) / maxVal) * (CHART_H - LABEL_PAD));
+        var aH = Math.round(((Number(r.aktual)||0) / maxVal) * (CHART_H - LABEL_PAD));
+        return '<div class="ob-group"><div class="ob-bars">'+
+          '<div class="ob-bar target" style="height:'+tH+'px;"><span class="ob-bar-val">'+fmt(r.target)+'</span></div>'+
+          '<div class="ob-bar aktual" style="height:'+aH+'px;"><span class="ob-bar-val">'+fmt(r.aktual)+'</span></div>'+
+          '</div></div>';
+      }).join("");
+      var labelsHtml = months.map(function(r){
+        var a = (Number(r.target)>0) ? Math.round((Number(r.aktual)/Number(r.target))*100) : 0;
+        return '<div class="ob-month-label">'+String(r.bulan).slice(0,3)+'<span class="ob-month-ach">'+a+'%</span></div>';
+      }).join("");
+      return '<div class="ob-cat-block">'+
+        '<div class="ob-cat-head">'+
+          '<span class="ob-cat-title">'+title+'</span>'+
+          '<span class="ob-cat-meta">Target '+fmt(totT)+' · Aktual '+fmt(totA)+' · <b>'+ach+'%</b></span>'+
+        '</div>'+
+        '<div class="ob-legend">'+
+          '<span class="item"><span class="swatch target"></span>Target</span>'+
+          '<span class="item"><span class="swatch aktual"></span>Aktual</span>'+
+        '</div>'+
+        '<div class="ob-chart" style="min-height:'+CHART_H+'px">'+barsHtml+'</div>'+
+        '<div class="ob-month-labels">'+labelsHtml+'</div>'+
+      '</div>';
+    }
 
     var cabangLabel = cabang === "TOTAL_AREA" ? "Total Area (Semua Cabang)" : cabang;
+
+    // Summary: total 4 kategori if available, else gadai only
+    var sumT = 0, sumA = 0, nBln = results.length;
+    if(kategori && kategori.length){
+      kategori.forEach(function(cat){
+        (cat.months||[]).forEach(function(m){
+          sumT += Number(m.target)||0;
+          sumA += Number(m.aktual)||0;
+        });
+        if((cat.months||[]).length > nBln) nBln = cat.months.length;
+      });
+    } else {
+      results.forEach(function(r){ sumT += Number(r.target)||0; sumA += Number(r.aktual)||0; });
+    }
+    var sumAch = sumT > 0 ? Math.round((sumA / sumT) * 100) : 0;
 
     var summaryHtml =
       '<div class="ob-summary">'+
         '<div class="ob-summary-card"><div class="k">Cabang / Area</div><div class="v" style="font-size:14px;">'+cabangLabel+'</div></div>'+
-        '<div class="ob-summary-card"><div class="k">Total Target ('+results.length+' bln)</div><div class="v">'+fmt(totalTarget)+'</div></div>'+
-        '<div class="ob-summary-card"><div class="k">Total Aktual ('+results.length+' bln)</div><div class="v">'+fmt(totalAktual)+'</div></div>'+
-        '<div class="ob-summary-card ach"><div class="k">Achievement</div><div class="v">'+totalAch+'%</div></div>'+
+        '<div class="ob-summary-card"><div class="k">Total Target ('+nBln+' bln)</div><div class="v">'+fmt(sumT)+'</div></div>'+
+        '<div class="ob-summary-card"><div class="k">Total Aktual ('+nBln+' bln)</div><div class="v">'+fmt(sumA)+'</div></div>'+
+        '<div class="ob-summary-card ach"><div class="k">Achievement</div><div class="v">'+sumAch+'%</div></div>'+
       '</div>';
 
-    var legendHtml =
-      '<div class="ob-legend">'+
-        '<span class="item"><span class="swatch target"></span>Target</span>'+
-        '<span class="item"><span class="swatch aktual"></span>Aktual</span>'+
-      '</div>';
+    var chartsHtml = '';
+    if(kategori && kategori.length){
+      chartsHtml = kategori.map(function(cat){
+        return chartBlock_(cat.label || cat.key, cat.months || []);
+      }).join('');
+    } else {
+      chartsHtml = chartBlock_('Gadai', results);
+    }
 
-    var barsHtml = results.map(function(r){
-      var CHART_H = 200, LABEL_PAD = 22; // keep label space INSIDE the box, no reliance on overflow
-      var tH = Math.round((r.target / maxVal) * (CHART_H - LABEL_PAD));
-      var aH = Math.round((r.aktual / maxVal) * (CHART_H - LABEL_PAD));
-      return '<div class="ob-group"><div class="ob-bars">'+
-        '<div class="ob-bar target" style="height:'+tH+'px;"><span class="ob-bar-val">'+fmt(r.target)+'</span></div>'+
-        '<div class="ob-bar aktual" style="height:'+aH+'px;"><span class="ob-bar-val">'+fmt(r.aktual)+'</span></div>'+
-        '</div></div>';
-    }).join("");
-
-    var labelsHtml = results.map(function(r){
-      var ach = r.target > 0 ? Math.round((r.aktual / r.target) * 100) : 0;
-      return '<div class="ob-month-label">'+r.bulan.slice(0,3)+'<span class="ob-month-ach">'+ach+'%</span></div>';
-    }).join("");
-
-    wrap.innerHTML = summaryHtml + legendHtml +
-      '<div class="ob-chart">'+barsHtml+'</div>'+
-      '<div class="ob-month-labels">'+labelsHtml+'</div>';
+    wrap.innerHTML = summaryHtml + '<div class="ob-cat-stack">'+chartsHtml+'</div>';
   }
 
   // ---------------- Kanit: Kinerja Harian (cabang sendiri, dikunci) ----------------
@@ -28297,7 +28598,7 @@ function applyRejectedAlasanFilter_(which){
           showMsg(msgEl, r.reason || "Gagal memuat data.", "err");
           return;
         }
-        renderOmsetBulanan(r.results, session.cabang, "kanitOmsetBulananWrap");
+        renderOmsetBulanan(r.results, session.cabang, "kanitOmsetBulananWrap", r.kategori);
       })
       .withFailureHandler(function(err){
         self.dataset.busy = "0"; self.disabled = false;
