@@ -18509,6 +18509,57 @@ html[data-theme="light"] #menuHarianWrap .rejected-top3-title{
 
 /* ========== END harian pure white ========== */
 
+
+/* ========== Judul analisa rejected tanggal ========== */
+html[data-theme="light"] .rej-analisa-title{
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  margin: 4px 0 12px !important;
+  line-height: 1.4 !important;
+}
+html[data-theme="light"] .rej-analisa-title b{
+  font-weight: 700 !important;
+  color: #0F172A !important;
+}
+
+/* ========== Top3 expand all ========== */
+html[data-theme="light"] .rej-top3-clickable{
+  cursor: pointer !important;
+}
+html[data-theme="light"] .rej-top3-hint{
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  color: #94A3B8 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  margin-left: 6px !important;
+}
+html[data-theme="light"] .rej-top3-more{
+  display: inline-block !important;
+  margin-top: 8px !important;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] .rej-top3-more:hover{
+  border-color: #CBD5E1 !important;
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] .rejected-top3.is-expanded .rej-top3-list.is-all{
+  max-height: 320px !important;
+  overflow-y: auto !important;
+}
+/* ========== END top3 expand ========== */
+
+/* ========== END rej title ========== */
+
 /* ========== END analisa rejected ========== */
 
 /* ========== END omset kpi export ========== */
@@ -27574,19 +27625,84 @@ function loadAdminSummary(force){
   });
 
   // ---------------- Rejected: helper HTML (dipakai admin & Kanit) ----------------
-  function rejectedTop3Block_(title, items){
+  function rejectedTop3Block_(title, items, allItems){
     if(!items || !items.length){
       return '<div class="rejected-top3"><div class="rejected-top3-title">'+title+'</div><div class="empty-log">Belum ada data.</div></div>';
     }
-    return '<div class="rejected-top3"><div class="rejected-top3-title">'+title+'</div>'+
-      items.map(function(it, i){
-        var full = String(it.label||"");
-        var short = full.length > 72 ? full.slice(0, 70) + "…" : full;
-        var titleAttr = full.length > 72 ? ' title="'+full.replace(/"/g,"&quot;")+'"' : "";
-        return '<div class="rejected-top3-item"><span class="rej-top3-lab"><span class="rank">#'+(i+1)+'</span><span class="rej-top3-text"'+titleAttr+'>'+short+'</span></span><span class="count">'+fmt(it.count)+'x</span></div>';
-      }).join("")+
-      '</div>';
+    var fullList = (allItems && allItems.length) ? allItems : items;
+    var canExpand = fullList.length > items.length;
+    var uid = "rejtop_" + Math.random().toString(36).slice(2, 9);
+    function rowHtml_(it, i){
+      var full = String(it.label||"");
+      var short = full.length > 72 ? full.slice(0, 70) + "…" : full;
+      var titleAttr = full.length > 72 ? ' title="'+full.replace(/"/g,"&quot;")+'"' : "";
+      return '<div class="rejected-top3-item"><span class="rej-top3-lab"><span class="rank">#'+(i+1)+'</span><span class="rej-top3-text"'+titleAttr+'>'+short+'</span></span><span class="count">'+fmt(it.count)+'x</span></div>';
+    }
+    var topHtml = items.map(function(it, i){ return rowHtml_(it, i); }).join("");
+    var allHtml = fullList.map(function(it, i){ return rowHtml_(it, i); }).join("");
+    var moreBtn = canExpand
+      ? '<button type="button" class="rej-top3-more" data-uid="'+uid+'">Lihat semua ('+fullList.length+')</button>'
+      : '';
+    return '<div class="rejected-top3" id="'+uid+'">'+
+      '<div class="rejected-top3-title'+(canExpand?' rej-top3-clickable':'')+'" data-uid="'+uid+'" title="'+(canExpand?'Klik untuk lihat semua':'')+'">'+title+(canExpand?' <span class="rej-top3-hint">Top 3 · klik untuk semua</span>':'')+'</div>'+
+      '<div class="rej-top3-list is-top" data-mode="top">'+topHtml+'</div>'+
+      '<div class="rej-top3-list is-all" data-mode="all" style="display:none;">'+allHtml+'</div>'+
+      moreBtn+
+    '</div>';
   }
+  function wireRejectedTop3Expand_(root){
+    if(!root) return;
+    root.querySelectorAll(".rej-top3-more, .rej-top3-clickable").forEach(function(el){
+      if(el._wired) return;
+      el._wired = true;
+      el.addEventListener("click", function(ev){
+        ev.preventDefault();
+        var uid = el.getAttribute("data-uid");
+        var box = uid ? document.getElementById(uid) : el.closest(".rejected-top3");
+        if(!box) return;
+        var top = box.querySelector(".rej-top3-list.is-top");
+        var all = box.querySelector(".rej-top3-list.is-all");
+        var btn = box.querySelector(".rej-top3-more");
+        var expanded = box.classList.contains("is-expanded");
+        if(expanded){
+          box.classList.remove("is-expanded");
+          if(top) top.style.display = "";
+          if(all) all.style.display = "none";
+          if(btn) btn.textContent = "Lihat semua ("+(all ? all.children.length : "")+")";
+        } else {
+          box.classList.add("is-expanded");
+          if(top) top.style.display = "none";
+          if(all) all.style.display = "";
+          if(btn) btn.textContent = "Tutup (tampilkan top 3)";
+        }
+      });
+    });
+  }
+
+  function rejectedFormatTanggalId_(iso){
+    if(!iso) return "";
+    var p = String(iso).slice(0,10).split("-");
+    if(p.length < 3) return String(iso);
+    var y = p[0], m = Number(p[1]), d = Number(p[2]);
+    var mon = ["","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+    if(!m || !d) return String(iso);
+    return d + " " + mon[m] + " " + y;
+  }
+  function rejectedAnalisaTitleHtml_(cabangLabel){
+    var s = (typeof window.__rejectedRangeStart === "string") ? window.__rejectedRangeStart : "";
+    var e = (typeof window.__rejectedRangeEnd === "string") ? window.__rejectedRangeEnd : "";
+    if(!s && !e) return "";
+    if(!e) e = s;
+    var tgl;
+    if(s === e || !e){
+      tgl = rejectedFormatTanggalId_(s);
+    } else {
+      tgl = rejectedFormatTanggalId_(s) + " – " + rejectedFormatTanggalId_(e);
+    }
+    var cab = cabangLabel ? (' · ' + cabangLabel) : "";
+    return '<div class="rej-analisa-title">Analisa Rejected Tanggal: <b>'+tgl+'</b>'+cab+'</div>';
+  }
+
   function rejectedIsMultiMonth_(startDate, endDate, perBulan){
     // Grafik per bulan hanya jika rentang beda bulan
     try{
@@ -27823,6 +27939,7 @@ function applyRejectedAlasanFilter_(which){
     var pctGadai = data.totalRows > 0 ? Math.round((Number(data.totalGadai||0) / Number(data.totalRows)) * 100) : 0;
     var detailWrapId = wrapId + "-detail";
     wrap.innerHTML =
+      rejectedAnalisaTitleHtml_(cabangLabel)+
       '<div class="ob-summary rej-kpi-row">'+
         '<div class="ob-summary-card"><div class="k">Total Reject</div><div class="v">'+fmt(data.totalRows)+'</div></div>'+
         '<div class="ob-summary-card ach"><div class="k">Jadi Gadai</div><div class="v">'+fmt(data.totalGadai)+' <span class="rej-pct">'+pctGadai+'%</span></div></div>'+
@@ -27831,9 +27948,9 @@ function applyRejectedAlasanFilter_(which){
       '</div>'+
       '<div id="'+detailWrapId+'"></div>'+
       '<div class="rej-top3-grid">'+
-        rejectedTop3Block_("Alasan Terbanyak", data.alasanTop||[])+
-        rejectedTop3Block_("Jenis Terbanyak", data.jenisTop||[])+
-        rejectedTop3Block_("Spesifikasi Terbanyak", data.spesifikasiTop||[])+
+        rejectedTop3Block_("Alasan Terbanyak", data.alasanTop||[], data.alasanAll||[])+
+        rejectedTop3Block_("Jenis Terbanyak", data.jenisTop||[], data.jenisAll||[])+
+        rejectedTop3Block_("Spesifikasi Terbanyak", data.spesifikasiTop||[], data.spesifikasiAll||[])+
       '</div>'+
       (monthChartWrap ? '' : monthChartHtml);
 
@@ -27854,6 +27971,7 @@ function applyRejectedAlasanFilter_(which){
         detailEl.dataset.showing = type;
       });
     });
+    try{ wireRejectedTop3Expand_(wrap); }catch(eW){}
   }
 
   // Versi gabungan (dipakai Kanit) -- Kanit cuma ada satu tombol "Tampilkan",
@@ -27876,6 +27994,7 @@ function applyRejectedAlasanFilter_(which){
     var pctGadai = data.totalRows > 0 ? Math.round((Number(data.totalGadai||0) / Number(data.totalRows)) * 100) : 0;
     var detailWrapId = wrapId + "-detail";
     wrap.innerHTML =
+      rejectedAnalisaTitleHtml_(cabangLabel)+
       '<div class="ob-summary rej-kpi-row">'+
         '<div class="ob-summary-card"><div class="k">Total Reject</div><div class="v">'+fmt(data.totalRows)+'</div></div>'+
         '<div class="ob-summary-card ach"><div class="k">Jadi Gadai</div><div class="v">'+fmt(data.totalGadai)+' <span class="rej-pct">'+pctGadai+'%</span></div></div>'+
@@ -27886,9 +28005,9 @@ function applyRejectedAlasanFilter_(which){
       '<div class="rejected-top3-title" style="margin-top:22px;">Detail Transaksi</div>'+
       rejectedDetailTransaksiTableHtml_(data.allDetail || [])+
       '<div class="rej-top3-grid">'+
-        rejectedTop3Block_("Alasan Terbanyak", data.alasanTop||[])+
-        rejectedTop3Block_("Jenis Terbanyak", data.jenisTop||[])+
-        rejectedTop3Block_("Spesifikasi Terbanyak", data.spesifikasiTop||[])+
+        rejectedTop3Block_("Alasan Terbanyak", data.alasanTop||[], data.alasanAll||[])+
+        rejectedTop3Block_("Jenis Terbanyak", data.jenisTop||[], data.jenisAll||[])+
+        rejectedTop3Block_("Spesifikasi Terbanyak", data.spesifikasiTop||[], data.spesifikasiAll||[])+
       '</div>'+
       (monthChartWrap ? '' : monthChartHtml);
 
@@ -27909,6 +28028,7 @@ function applyRejectedAlasanFilter_(which){
         detailEl.dataset.showing = type;
       });
     });
+    try{ wireRejectedTop3Expand_(wrap); }catch(eW2){}
   }
 
   // ---------------- Rejected: perbandingan antar cabang (khusus KC) ----------------
