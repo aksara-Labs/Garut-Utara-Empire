@@ -2622,7 +2622,7 @@ textarea.is-invalid{
    GLOBAL BUTTON UNIFY — outline gold (gaya Pilih file)
    Semua tombol aksi di app: outline, kecil, seragam
    ========================================================= */
-button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.admin-nav-btn):not(.admin-hamburger):not(.theme-toggle):not(.profile-btn):not(.notif-btn):not(.pin-btn):not(.logo-btn):not(.power-btn):not(.omg-bar-wrap),
+button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.admin-nav-btn):not(.admin-hamburger):not(.theme-toggle):not(.profile-btn):not(.notif-btn):not(.pin-btn):not(.logo-btn):not(.power-btn):not(.omg-bar-wrap):not(.doc-hub-card),
 .btn,
 .btn-xs,
 .btn-sm,
@@ -23393,6 +23393,104 @@ html[data-theme="light"] .rej-compare-table tbody tr:nth-child(even) td{
 html[data-theme="light"] .rej-compare-table tbody tr:hover td{
   background: #EFF6FF !important;
 }
+
+/* ========== Pembuatan Dokumen hub polish ========== */
+html[data-theme="light"] #tab-dokumen #docHub{
+  max-width: 920px !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-hint{
+  font-size: 13px !important;
+  color: #64748B !important;
+  margin: 0 0 14px !important;
+  font-weight: 500 !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-grid{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+@media (max-width: 900px){
+  html[data-theme="light"] #tab-dokumen .doc-hub-grid{
+    grid-template-columns: 1fr !important;
+  }
+}
+html[data-theme="light"] #tab-dokumen button.doc-hub-card{
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 72px !important;
+  height: auto !important;
+  max-height: none !important;
+  padding: 14px 16px !important;
+  margin: 0 !important;
+  text-align: left !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  background: #FFFFFF !important;
+  background-image: none !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04) !important;
+  cursor: pointer !important;
+  transition: border-color .15s, box-shadow .15s, background .15s !important;
+  position: relative !important;
+  z-index: 2 !important;
+  white-space: normal !important;
+  font-weight: 500 !important;
+}
+html[data-theme="light"] #tab-dokumen button.doc-hub-card:hover{
+  border-color: #CBD5E1 !important;
+  background: #F8FAFC !important;
+  box-shadow: 0 4px 12px rgba(15,23,42,0.06) !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-badge{
+  flex: 0 0 40px !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 10px !important;
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-body{
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-title{
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  line-height: 1.25 !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-desc{
+  font-size: 12px !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  line-height: 1.35 !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-arrow{
+  flex: 0 0 auto !important;
+  color: #94A3B8 !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] #tab-dokumen button.doc-hub-card *{
+  pointer-events: none !important;
+}
+/* exclude from global gold button */
 </style>
 </head>
 <body>
@@ -24239,32 +24337,31 @@ html[data-theme="light"] .rej-compare-table tbody tr:hover td{
       </div>
 
       <div id="docHub">
-        <div class="admin-section-title">Pembuatan Dokumen</div>
-        <div class="hint" style="margin-bottom:14px;">Pilih jenis dokumen. Form akan terbuka di halaman terpisah.</div>
-        <div class="admin-menu-grid" style="margin-top:8px;">
-          <button type="button" class="admin-menu-card doc-hub-card" data-doc="sn">
-            <div class="admin-menu-icon dark">SN</div>
-            <div class="admin-menu-card-body">
-              <div class="admin-menu-card-title">BA SN Perusahaan</div>
-              <div class="admin-menu-card-desc">Berita acara serial number / IMEI perusahaan</div>
-            </div>
-            <span class="admin-menu-arrow">&rarr;</span>
+        <div class="doc-hub-hint">Pilih jenis dokumen — form terbuka di halaman baru</div>
+        <div class="doc-hub-grid">
+          <button type="button" class="doc-hub-card" data-doc="sn">
+            <span class="doc-hub-badge">SN</span>
+            <span class="doc-hub-body">
+              <span class="doc-hub-title">BA SN Perusahaan</span>
+              <span class="doc-hub-desc">Serial number / IMEI perusahaan</span>
+            </span>
+            <span class="doc-hub-arrow" aria-hidden="true">→</span>
           </button>
-          <button type="button" class="admin-menu-card doc-hub-card" data-doc="ga">
-            <div class="admin-menu-icon accent">GA</div>
-            <div class="admin-menu-card-body">
-              <div class="admin-menu-card-title">BA Pengadaan Barang</div>
-              <div class="admin-menu-card-desc">Berita acara pengadaan + foto bukti</div>
-            </div>
-            <span class="admin-menu-arrow">&rarr;</span>
+          <button type="button" class="doc-hub-card" data-doc="ga">
+            <span class="doc-hub-badge">GA</span>
+            <span class="doc-hub-body">
+              <span class="doc-hub-title">BA Pengadaan Barang</span>
+              <span class="doc-hub-desc">Pengadaan barang + foto bukti</span>
+            </span>
+            <span class="doc-hub-arrow" aria-hidden="true">→</span>
           </button>
-          <button type="button" class="admin-menu-card doc-hub-card" data-doc="sp">
-            <div class="admin-menu-icon dark">SP</div>
-            <div class="admin-menu-card-body">
-              <div class="admin-menu-card-title">Surat Pernyataan</div>
-              <div class="admin-menu-card-desc">Kwitansi manual / pernyataan pengeluaran</div>
-            </div>
-            <span class="admin-menu-arrow">&rarr;</span>
+          <button type="button" class="doc-hub-card" data-doc="sp">
+            <span class="doc-hub-badge">SP</span>
+            <span class="doc-hub-body">
+              <span class="doc-hub-title">Surat Pernyataan</span>
+              <span class="doc-hub-desc">Kwitansi / pernyataan pengeluaran</span>
+            </span>
+            <span class="doc-hub-arrow" aria-hidden="true">→</span>
           </button>
         </div>
       </div>
