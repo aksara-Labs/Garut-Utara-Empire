@@ -2039,8 +2039,7 @@ button.kanit-profile-btn{
   font-size: 12px !important;
   cursor: pointer !important;
 }
-#resultOverlay .recap-extra{ display: none !important; }
-#resultOverlay.expanded .recap-extra{ display: block !important; }
+#resultOverlay .recap-extra{ display: block !important; }
 #resultOverlay .result-actions button,
 #resultDownloadBtn{
   border-radius: 10px !important;
@@ -2163,15 +2162,7 @@ button.kanit-profile-btn{
   cursor: pointer !important;
 }
 /* Detail default TERTUTUP — hemat tinggi */
-#resultOverlay .recap-extra{
-  display: none !important;
-}
-#resultOverlay.expanded .recap-extra{
-  display: block !important;
-  margin-top: 4px !important;
-  padding-top: 4px !important;
-  border-top: 1px dashed rgba(255,255,255,0.1) !important;
-}
+#resultOverlay .recap-extra{ display: block !important; }
 #resultOverlay .result-close{
   width: 28px !important;
   height: 28px !important;
@@ -23532,6 +23523,176 @@ html[data-theme="light"] #tab-dokumen button.doc-hub-card .doc-hub-desc{
   font-size: 12px !important;
   display: block !important;
 }
+
+/* ========== Modal hasil Input Omset — light clean ========== */
+html[data-theme="light"] #resultOverlay.modal-overlay{
+  background: rgba(15, 23, 42, 0.45) !important;
+}
+html[data-theme="light"] #resultOverlay .result-modal-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 24px 48px rgba(15,23,42,0.18) !important;
+  color: #0F172A !important;
+  max-width: 400px !important;
+  width: calc(100% - 32px) !important;
+  max-height: min(88vh, 620px) !important;
+  overflow: auto !important;
+  padding: 20px 20px 16px !important;
+}
+html[data-theme="light"] #resultOverlay .result-close{
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  background: #F1F5F9 !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+}
+html[data-theme="light"] #resultOverlay .result-close:hover{
+  background: #E2E8F0 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] #resultOverlay .stamp{
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  margin-bottom: 8px !important;
+}
+html[data-theme="light"] #resultOverlay .thanks{
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  margin-bottom: 4px !important;
+  line-height: 1.35 !important;
+}
+html[data-theme="light"] #resultOverlay .detail{
+  font-size: 12.5px !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  margin-bottom: 14px !important;
+  line-height: 1.4 !important;
+}
+html[data-theme="light"] #resultOverlay .recap{
+  border-top: 1px solid #F1F5F9 !important;
+  padding-top: 10px !important;
+  margin-top: 4px !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: baseline !important;
+  gap: 12px !important;
+  padding: 6px 0 !important;
+  border-bottom: 1px solid #F8FAFC !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row .k{
+  font-size: 12.5px !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-weight: 500 !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row .v{
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-variant-numeric: tabular-nums !important;
+  text-align: right !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row.total .k,
+html[data-theme="light"] #resultOverlay .recap-row.total .v{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-weight: 800 !important;
+}
+html[data-theme="light"] #resultOverlay .recap-toggle,
+html[data-theme="light"] #resultOverlay #recapToggle{
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+  margin: 8px 0 !important;
+  padding: 6px !important;
+  border: none !important;
+  background: transparent !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+html[data-theme="light"] #resultOverlay .ss-reminder{
+  margin-top: 12px !important;
+  padding: 10px 12px !important;
+  border-radius: 10px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+html[data-theme="light"] #resultOverlay .modal-actions{
+  display: flex !important;
+  gap: 8px !important;
+  margin-top: 14px !important;
+  padding-top: 12px !important;
+  border-top: 1px solid #F1F5F9 !important;
+}
+html[data-theme="light"] #resultOverlay .modal-btn.cancel,
+html[data-theme="light"] #resultOverlay #resultCloseBtn{
+  flex: 1 !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  border-radius: 10px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+html[data-theme="light"] #resultOverlay .modal-btn.confirm,
+html[data-theme="light"] #resultOverlay #resultDownloadBtn{
+  flex: 1 !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  background: #0F172A !important;
+  background-image: none !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+}
+html[data-theme="light"] #resultOverlay #resultDownloadBtn:hover{
+  background: #1E293B !important;
+}
+/* Header tanggal/cabang dari JS stamp often includes bold lines */
+html[data-theme="light"] #resultOverlay .result{
+  padding-right: 28px !important;
+}
 </style>
 </head>
 <body>
@@ -25007,12 +25168,12 @@ html[data-theme="light"] #tab-dokumen button.doc-hub-card .doc-hub-desc{
       <div class="detail" id="detail"></div>
       <div class="recap" id="recap" style="display:none;"></div>
       <div class="ss-reminder" id="ssReminder" style="display:none;">
-        📸 Jangan lupa <b>screenshot</b> hasil ini dan <b>kirim ke grup Kepala Unit</b> ya.
+        Simpan / unduh hasil ini, lalu kirim ke grup Kepala Unit.
       </div>
     </div>
     <div class="modal-actions" id="resultActions">
       <button type="button" class="modal-btn cancel" id="resultCloseBtn">Tutup</button>
-      <button type="button" class="modal-btn confirm" id="resultDownloadBtn">⬇ Download Gambar</button>
+      <button type="button" class="modal-btn confirm" id="resultDownloadBtn">Unduh gambar</button>
     </div>
   </div>
 </div>
@@ -26076,32 +26237,17 @@ $on("cabangPinSubmit", "click", function(){
     }
 
     recapEl.style.display = "block";
-    // Ringkas: total hari ini (all) + proyeksi; detail di-expand
     recapEl.innerHTML =
       '<div class="recap-row total"><span class="k">Total bulan ini</span><span class="v">'+fmt(r.bulan_ini_total)+'</span></div>'+
       '<div class="recap-row total"><span class="k">Proyeksi akhir bln</span><span class="v">'+fmt(r.proyeksi_all_gadai)+'</span></div>'+
       '<div class="recap-row"><span class="k">Rejected hari ini</span><span class="v">'+fmt(r.rejected)+'</span></div>'+
       '<div class="recap-row diff"><span class="k">Selisih target</span><span class="v '+selisihClass+'">'+fmt(Math.abs(selisih))+' ('+selisihLabel+')</span></div>'+
-      '<button type="button" class="recap-toggle" id="recapToggleBtn">Lihat detail ▾</button>'+
-      '<div class="recap-extra" id="recapExtra">'+
-        '<div class="recap-row"><span class="k">Pencapaian GE</span><span class="v">'+fmt(r.ge_total)+'</span></div>'+
-        '<div class="recap-row"><span class="k">Pencapaian GB</span><span class="v">'+fmt(r.gb_total)+'</span></div>'+
-        '<div class="recap-row"><span class="k">Pencapaian GG</span><span class="v">'+fmt(r.gg_total)+'</span></div>'+
-        '<div class="recap-row"><span class="k">Target ('+cabang+', '+r.monthLabel+')</span><span class="v">'+fmt(r.target_bulan_ini)+'</span></div>'+
-        '<div class="recap-row"><span class="k">Bln kemarin'+(r.bulan_kemarin_label ? " (" + r.bulan_kemarin_label + ")" : "")+'</span><span class="v">'+(r.bulan_kemarin_total === null ? "belum ada data" : fmt(r.bulan_kemarin_total))+'</span></div>'+
-        '<div class="recap-row diff"><span class="k">Target/hari</span><span class="v '+targetHarianClass+'">'+targetHarianValue+'</span></div>'+
-      '</div>';
-
-    var tog = document.getElementById("recapToggleBtn");
-    var overlay = document.getElementById("resultOverlay");
-    if(overlay) overlay.classList.remove("expanded");
-    if(tog){
-      tog.onclick = function(){
-        if(!overlay) return;
-        var on = overlay.classList.toggle("expanded");
-        tog.textContent = on ? "Sembunyikan detail ▴" : "Lihat detail ▾";
-      };
-    }
+      '<div class="recap-row"><span class="k">Pencapaian GE</span><span class="v">'+fmt(r.ge_total)+'</span></div>'+
+      '<div class="recap-row"><span class="k">Pencapaian GB</span><span class="v">'+fmt(r.gb_total)+'</span></div>'+
+      '<div class="recap-row"><span class="k">Pencapaian GG</span><span class="v">'+fmt(r.gg_total)+'</span></div>'+
+      '<div class="recap-row"><span class="k">Target ('+cabang+', '+r.monthLabel+')</span><span class="v">'+fmt(r.target_bulan_ini)+'</span></div>'+
+      '<div class="recap-row"><span class="k">Bln kemarin'+(r.bulan_kemarin_label ? " (" + r.bulan_kemarin_label + ")" : "")+'</span><span class="v">'+(r.bulan_kemarin_total === null ? "belum ada data" : fmt(r.bulan_kemarin_total))+'</span></div>'+
+      '<div class="recap-row diff"><span class="k">Target/hari</span><span class="v '+targetHarianClass+'">'+targetHarianValue+'</span></div>';
   }
 
   var modalOverlay = document.getElementById("modalOverlay");
@@ -26123,7 +26269,7 @@ $on("cabangPinSubmit", "click", function(){
   var resultActions = document.getElementById("resultActions");
   var resultModalCard = document.querySelector(".result-modal-card");
 
-  function openResultModal(){ resultBox.classList.add("show"); resultOverlay.classList.add("show"); resultOverlay.classList.remove("expanded"); var tg=document.getElementById("recapToggleBtn"); if(tg) tg.textContent="Lihat detail ▾"; }
+  function openResultModal(){ resultBox.classList.add("show"); resultOverlay.classList.add("show"); }
   function closeResultModal(){ resultOverlay.classList.remove("show"); resultBox.classList.remove("show","ok","err"); }
   resultClose.addEventListener("click", closeResultModal);
   resultCloseBtn.addEventListener("click", closeResultModal);
