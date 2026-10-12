@@ -18941,6 +18941,82 @@ html[data-theme="light"] .todo-empty{
   font-size: 13px !important;
   padding: 12px 4px !important;
 }
+
+/* ========== Omset Minggu summary ========== */
+html[data-theme="light"] .harian-sunday-box{
+  margin: 10px 0 4px !important;
+  padding: 12px 14px !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] .harian-sunday-box.is-closed{
+  background: #FEF2F2 !important;
+  border-color: #FECACA !important;
+}
+html[data-theme="light"] .harian-sunday-title{
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  margin-bottom: 8px !important;
+}
+html[data-theme="light"] .harian-sunday-sub{
+  font-weight: 500 !important;
+  color: #64748B !important;
+  font-size: 11px !important;
+}
+html[data-theme="light"] .harian-sunday-note{
+  font-size: 12.5px !important;
+  color: #991B1B !important;
+}
+html[data-theme="light"] .harian-sunday-grid{
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+}
+@media (max-width: 900px){
+  html[data-theme="light"] .harian-sunday-grid{
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 560px){
+  html[data-theme="light"] .harian-sunday-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+html[data-theme="light"] .harian-sunday-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 8px 10px !important;
+}
+html[data-theme="light"] .harian-sunday-card .k{
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  color: #64748B !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  margin-bottom: 2px !important;
+}
+html[data-theme="light"] .harian-sunday-card .v{
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .harian-sunday-card .v.sm{
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] .harian-table th.harian-day-th.is-sunday{
+  background: #FEF3C7 !important;
+  color: #92400E !important;
+}
+html[data-theme="light"] .harian-table th.harian-day-th.is-sunday .dow{
+  color: #B45309 !important;
+  font-weight: 700 !important;
+}
+/* ========== END omset minggu ========== */
+
 /* ========== END todo notepad ========== */
 
 /* ========== END kpi proj status ========== */
@@ -26174,7 +26250,8 @@ $on("cabangPinSubmit", "click", function(){
     }
     var headerCells = days.map(function(d){
       var dow = dayDow_(d.day);
-      return '<th class="harian-day-th"><span class="day-num">'+String(d.day).padStart(2,"0")+'</span>'+(dow?'<span class="dow">'+dow+'</span>':'')+'</th>';
+      var sunCls = isSundayDay_(d.day) ? ' is-sunday' : '';
+      return '<th class="harian-day-th'+sunCls+'"><span class="day-num">'+String(d.day).padStart(2,"0")+'</span>'+(dow?'<span class="dow">'+dow+'</span>':'')+'</th>';
     }).join("");
     function rowCells(key, isTotalRow){
       return days.map(function(d){
