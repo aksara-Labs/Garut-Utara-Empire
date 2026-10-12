@@ -23693,6 +23693,38 @@ html[data-theme="light"] #resultOverlay #resultDownloadBtn:hover{
 html[data-theme="light"] #resultOverlay .result{
   padding-right: 28px !important;
 }
+
+/* Profil Kanit — input wajib terbaca */
+html[data-theme="light"] #kanitProfileModal .profile-modal,
+html[data-theme="light"] #adminProfileModal .profile-modal{
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] #kanitProfileModal input,
+html[data-theme="light"] #kanitProfileModal input[readonly],
+html[data-theme="light"] #adminProfileModal input,
+html[data-theme="light"] #adminProfileModal input[readonly]{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] #kanitProfileModal label,
+html[data-theme="light"] #adminProfileModal label{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] #kanitProfileModal h3,
+html[data-theme="light"] #adminProfileModal h3{
+  color: #0F172A !important;
+}
+html[data-theme="light"] #kanitProfileModal .sub,
+html[data-theme="light"] #adminProfileModal .sub{
+  color: #64748B !important;
+}
 </style>
 </head>
 <body>
@@ -31802,6 +31834,23 @@ function applyRejectedAlasanFilter_(which){
     if(p) mini.innerHTML = '<img src="'+p+'" alt="">';
     else mini.textContent = (n.charAt(0) || "K").toUpperCase();
   }
+  function fillKanitProfileModalFields(){
+    var n = document.getElementById("kanitProfileNameInput");
+    var j = document.getElementById("kanitProfileJabatanInput");
+    var cab = document.getElementById("kanitProfileCabangInput");
+    var sub = document.getElementById("kanitProfileSub");
+    if(n) n.value = kanitProfileCache.nama || session.nama || "";
+    if(j) j.value = kanitProfileCache.jabatan || "Kepala Unit";
+    if(cab) cab.value = kanitProfileCache.cabang || session.cabang || "";
+    if(sub) sub.textContent = "Sesuai data karyawan " + (session.cabang || "");
+    var photo = document.getElementById("kanitProfilePhoto");
+    if(photo){
+      var key = "kanitPhoto_" + (session.cabang || "");
+      var p = "";
+      try{ p = localStorage.getItem(key) || ""; }catch(e){}
+      setProfilePhotoEl(photo, p, (kanitProfileCache.nama || session.nama || "K").charAt(0));
+    }
+  }
   function loadKanitProfileFromServer(){
     if(!session.cabang || !session.cabangPin) return;
     google.script.run
@@ -31811,6 +31860,11 @@ function applyRejectedAlasanFilter_(which){
         applyKanitMini();
         var g = document.getElementById("kanitGreeting");
         if(g) g.innerHTML = getGreeting() + ", <b>" + r.nama + "</b>";
+        // Isi ulang form profil jika modal sedang terbuka
+        var modal = document.getElementById("kanitProfileModal");
+        if(modal && (modal.classList.contains("show") || modal.style.display === "flex")){
+          fillKanitProfileModalFields();
+        }
       })
       .withFailureHandler(function(){})
       .getKanitProfile(session.cabang, session.cabangPin);
@@ -31821,14 +31875,7 @@ function applyRejectedAlasanFilter_(which){
     var btn = document.getElementById("kanitProfileBtn");
     if(!modal || !btn) return;
     function openModal(){
-      document.getElementById("kanitProfileNameInput").value = kanitProfileCache.nama || "";
-      document.getElementById("kanitProfileJabatanInput").value = kanitProfileCache.jabatan || "Kepala Unit";
-      document.getElementById("kanitProfileCabangInput").value = session.cabang || "";
-      document.getElementById("kanitProfileSub").textContent = "Sesuai data karyawan " + (session.cabang || "");
-      var key = "kanitPhoto_" + (session.cabang || "");
-      var p = "";
-      try{ p = localStorage.getItem(key) || ""; }catch(e){}
-      setProfilePhotoEl(document.getElementById("kanitProfilePhoto"), p, (kanitProfileCache.nama||"K").charAt(0));
+      fillKanitProfileModalFields();
       document.getElementById("kanitProfilePinBox").classList.remove("show");
       clearMsg(document.getElementById("kanitProfileMsg"));
       modal.removeAttribute("hidden");
