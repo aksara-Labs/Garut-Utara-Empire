@@ -6561,11 +6561,11 @@ button.tab-btn.admin-nav-btn{
     font-weight:700 !important;
   }
   .admin-content .libur-kuota-banner{
-    background:#EFF6FF !important;
-    border-color:#BFDBFE !important;
-    color:#1E3A5F !important;
+    background:#F8FAFC !important;
+    border-color:#E2E8F0 !important;
+    color:#334155 !important;
   }
-  .admin-content .libur-kuota-banner b{ color:#B87333 !important; }
+  .admin-content .libur-kuota-banner b{ color:#0F172A !important; }
   .admin-content .libur-cell{ color:#6B7280 !important; }
   .admin-content .libur-cell.st-libur{
     background:rgba(212,137,74,0.2) !important;
@@ -6911,11 +6911,11 @@ button.tab-btn.admin-nav-btn{
     color:#94A3B8 !important;
   }
   .admin-content .libur-kuota-banner{
-    background:rgba(212,137,74,0.15) !important;
-    border:1px solid rgba(212,137,74,0.3) !important;
-    color:#0F172A !important;
+    background:#F8FAFC !important;
+    border:1px solid #E2E8F0 !important;
+    color:#334155 !important;
   }
-  .admin-content .libur-kuota-banner b{ color:#F0C090 !important; }
+  .admin-content .libur-kuota-banner b{ color:#0F172A !important; }
   .admin-content .harian-table tr.total-row td{
     color:#F0C090 !important;
   }
@@ -7187,12 +7187,14 @@ button.tab-btn.admin-nav-btn{
   .libur-person-job{ font-size:11px; color:#64748B; margin-top:1px; }
   .admin-content .libur-table .kuota-pill{
     display:inline-flex !important; margin-top:4px;
-    background:#EFF6FF !important; color:#B87333 !important;
+    background:#F1F5F9 !important; color:#334155 !important;
+    border:1px solid #E2E8F0 !important;
     border-radius:99px; padding:2px 8px; font-size:10px !important;
     font-family:'Inter',sans-serif !important; letter-spacing:0 !important;
   }
   .admin-content .libur-table .kuota-pill.is-empty{
-    background:#FEF2F2 !important; color:#DC2626 !important;
+    background:#FEF2F2 !important; color:#B91C1C !important;
+    border-color:#FECACA !important;
   }
   .admin-content .libur-cell{
     width:34px; height:34px; margin:0 auto;
@@ -7845,15 +7847,15 @@ button.tab-btn.admin-nav-btn{
   /* ===== SIMPEL & JELAS: Jadwal Libur + Cash Opname ===== */
   #jadwalLiburWrap .libur-person-name,
   #kanitJadwalLiburWrap .libur-person-name{
-    color:#FFFFFF !important;
+    color:#0F172A !important;
     -webkit-text-fill-color:#0F172A !important;
     font-size:13px !important;
-    font-weight:700 !important;
+    font-weight:600 !important;
   }
   #jadwalLiburWrap .libur-person-job,
   #kanitJadwalLiburWrap .libur-person-job{
-    color:#F0C090 !important;
-    -webkit-text-fill-color:#F0C090 !important;
+    color:#64748B !important;
+    -webkit-text-fill-color:#64748B !important;
     font-size:11px !important;
   }
   #jadwalLiburWrap .kuota-pill,
@@ -7864,21 +7866,22 @@ button.tab-btn.admin-nav-btn{
     margin-top:4px !important;
     padding:3px 10px !important;
     border-radius:999px !important;
-    background:#C47A3A !important;
-    color:#FFFFFF !important;
-    -webkit-text-fill-color:#0F172A !important;
+    background:#F1F5F9 !important;
+    color:#334155 !important;
+    -webkit-text-fill-color:#334155 !important;
     font-size:11px !important;
-    font-weight:700 !important;
-    border:none !important;
+    font-weight:600 !important;
+    border:1px solid #E2E8F0 !important;
     box-shadow:none !important;
     opacity:1 !important;
   }
   #jadwalLiburWrap .kuota-pill.is-empty,
   #kanitJadwalLiburWrap .kuota-pill.is-empty,
   .libur-table .kuota-pill.is-empty{
-    background:#DC2626 !important;
-    color:#FFFFFF !important;
-    -webkit-text-fill-color:#0F172A !important;
+    background:#FEF2F2 !important;
+    color:#B91C1C !important;
+    -webkit-text-fill-color:#B91C1C !important;
+    border-color:#FECACA !important;
   }
   #jadwalLiburWrap .libur-table td.label-col,
   #kanitJadwalLiburWrap .libur-table td.label-col{
@@ -7940,51 +7943,56 @@ button.tab-btn.admin-nav-btn{
   #tab-dokumen .hint,
   #tab-dokumen .admin-menu-card-desc{ color:#94A3B8 !important; }
   #tab-dokumen .doc-form-card{
-    background:rgba(15,23,42,0.95) !important;
-    border:1px solid rgba(148,163,184,0.35) !important;
+    background:#FFFFFF !important;
+    border:1px solid #E2E8F0 !important;
     border-radius:16px;
-    padding:18px 16px;
+    padding:20px 18px;
     margin-top:12px;
   }
   #tab-dokumen .doc-form-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:12px 14px;
+    gap:14px 16px;
   }
   #tab-dokumen .field label{
-    color:#0F172A !important;
+    color:#64748B !important;
+    -webkit-text-fill-color:#64748B !important;
     font-size:11.5px !important;
     font-weight:600 !important;
-    display:block;
+    display:block !important;
     margin-bottom:5px;
   }
   #tab-dokumen input,
-  #tab-dokumen select{
+  #tab-dokumen select,
+  #tab-dokumen textarea{
     width:100%;
     color:#0F172A !important;
     -webkit-text-fill-color:#0F172A !important;
-    background:#0F172A !important;
-    border:1px solid #64748B !important;
+    background:#FFFFFF !important;
+    border:1px solid #E2E8F0 !important;
     border-radius:10px !important;
     padding:10px 12px !important;
     font-size:13.5px !important;
   }
-  #tab-dokumen input::placeholder{ color:#64748B !important; }
+  #tab-dokumen input::placeholder{ color:#94A3B8 !important; }
   #tab-dokumen .btn-xs{
-    color:#0F172A !important;
-    background:#38BDF8 !important;
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+    background:#0F172A !important;
     border:none !important;
     font-weight:700 !important;
-    padding:10px 16px !important;
+    padding:10px 18px !important;
     border-radius:10px !important;
   }
   #tab-dokumen .btn-xs.secondary{
-    background:transparent !important;
+    background:#FFFFFF !important;
     color:#0F172A !important;
-    border:1px solid #64748B !important;
+    -webkit-text-fill-color:#0F172A !important;
+    border:1px solid #E2E8F0 !important;
   }
   #tab-dokumen .hub-back-btn{
-    color:#F0C090 !important;
+    color:#334155 !important;
+    -webkit-text-fill-color:#334155 !important;
     background:transparent !important;
     border:none !important;
     font-weight:600 !important;
@@ -8040,14 +8048,14 @@ button.tab-btn.admin-nav-btn{
   #tab-dokumen input,
   #tab-dokumen select,
   #tab-dokumen textarea{
-    color:#FFFFFF !important;
+    color:#0F172A !important;
     -webkit-text-fill-color:#0F172A !important;
-    background:#F8FAFC !important;
-    border:1px solid #94A3B8 !important;
+    background:#FFFFFF !important;
+    border:1px solid #E2E8F0 !important;
   }
   #tab-dokumen .doc-form-card{
-    background:#111827 !important;
-    border:1px solid #64748B !important;
+    background:#FFFFFF !important;
+    border:1px solid #E2E8F0 !important;
   }
 
 
@@ -8056,11 +8064,11 @@ button.tab-btn.admin-nav-btn{
     overflow:hidden;
   }
   #tab-dokumen .progress-bar-fill{
-    height:100%; width:0%; background:linear-gradient(90deg,#38BDF8,#818CF8);
+    height:100%; width:0%; background:#0F172A;
     border-radius:999px; transition:width 0.2s linear;
   }
   #tab-dokumen .progress-bar-pct{
-    font-size:12px; color:#E2E8F0; margin-top:4px; font-weight:700;
+    font-size:12px; color:#334155; margin-top:4px; font-weight:700;
   }
 
 
@@ -18503,6 +18511,444 @@ html[data-theme="light"] #menuHarianWrap .rejected-top3-title{
   margin-bottom: 8px !important;
   color: #0F172A !important;
 }
+
+/* ========== Jadwal Libur light: navy/slate, no blue/orange ========== */
+html[data-theme="light"] #jadwalLiburWrap .libur-person-name,
+html[data-theme="light"] #kanitJadwalLiburWrap .libur-person-name,
+html[data-theme="light"] .libur-table .libur-person-name,
+html[data-theme="light"] .admin-content .libur-person-name{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+html[data-theme="light"] #jadwalLiburWrap .libur-person-job,
+html[data-theme="light"] #kanitJadwalLiburWrap .libur-person-job,
+html[data-theme="light"] .libur-table .libur-person-job{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 11px !important;
+}
+html[data-theme="light"] #jadwalLiburWrap .kuota-pill,
+html[data-theme="light"] #kanitJadwalLiburWrap .kuota-pill,
+html[data-theme="light"] .libur-table .kuota-pill,
+html[data-theme="light"] .admin-content .libur-table .kuota-pill{
+  background: #F1F5F9 !important;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  border: 1px solid #E2E8F0 !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #jadwalLiburWrap .kuota-pill.is-empty,
+html[data-theme="light"] #kanitJadwalLiburWrap .kuota-pill.is-empty,
+html[data-theme="light"] .libur-table .kuota-pill.is-empty{
+  background: #FEF2F2 !important;
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+  border-color: #FECACA !important;
+}
+html[data-theme="light"] .libur-kuota-banner,
+html[data-theme="light"] #jadwalLiburWrap .libur-kuota-banner,
+html[data-theme="light"] .admin-content .libur-kuota-banner{
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+}
+html[data-theme="light"] .libur-kuota-banner b,
+html[data-theme="light"] .admin-content .libur-kuota-banner b{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .libur-avatar{
+  background: #334155 !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+html[data-theme="light"] .libur-table thead th.label-col,
+html[data-theme="light"] #jadwalLiburWrap .libur-table th.label-col{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+html[data-theme="light"] .libur-table td.label-col,
+html[data-theme="light"] #jadwalLiburWrap .libur-table td.label-col{
+  background: #FFFFFF !important;
+  border-right: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .libur-cell.st-libur{
+  background: #FEE2E2 !important;
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] .libur-cell.st-cuti{
+  background: #CCFBF1 !important;
+  color: #0F766E !important;
+  -webkit-text-fill-color: #0F766E !important;
+}
+html[data-theme="light"] .libur-cell.st-sakit{
+  background: #FFEDD5 !important;
+  color: #C2410C !important;
+  -webkit-text-fill-color: #C2410C !important;
+}
+
+/* ========== Pembuatan Dokumen: light form polish ========== */
+html[data-theme="light"] #tab-dokumen .doc-form-card,
+html[data-theme="light"] #tab-dokumen .co-card.doc-form-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+  padding: 20px 18px !important;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.04) !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-form-grid{
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px 16px !important;
+}
+@media (min-width: 960px){
+  html[data-theme="light"] #tab-dokumen .doc-form-grid{
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  html[data-theme="light"] #tab-dokumen .doc-form-grid{
+    grid-template-columns: 1fr !important;
+  }
+}
+html[data-theme="light"] #tab-dokumen label,
+html[data-theme="light"] #tab-dokumen .field label,
+html[data-theme="light"] #tab-dokumen .doc-form-card label{
+  display: block !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  margin-bottom: 5px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+html[data-theme="light"] #tab-dokumen input:not([type="file"]):not([type="hidden"]),
+html[data-theme="light"] #tab-dokumen select,
+html[data-theme="light"] #tab-dokumen textarea{
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  min-height: 40px !important;
+}
+html[data-theme="light"] #tab-dokumen input[type="date"]{
+  color-scheme: light !important;
+}
+html[data-theme="light"] #tab-dokumen input[type="file"]{
+  background: #F8FAFC !important;
+  border: 1px dashed #CBD5E1 !important;
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  font-size: 12.5px !important;
+  width: 100% !important;
+}
+html[data-theme="light"] #tab-dokumen .btn-xs:not(.secondary){
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 10px 18px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+}
+html[data-theme="light"] #tab-dokumen .btn-xs.secondary{
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] #tab-dokumen .hub-back-btn{
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  font-size: 13px !important;
+}
+html[data-theme="light"] #tab-dokumen .admin-section-title,
+html[data-theme="light"] #tab-dokumen .doc-form-page > .admin-section-title,
+html[data-theme="light"] #tab-dokumen h3{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #tab-dokumen .hint{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+html[data-theme="light"] #tab-dokumen .progress-bar-wrap{
+  background: #E2E8F0 !important;
+  border-radius: 999px !important;
+  height: 8px !important;
+  overflow: hidden !important;
+}
+html[data-theme="light"] #tab-dokumen .progress-bar-fill{
+  background: #0F172A !important;
+  height: 100% !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-card:hover{
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06) !important;
+}
+
+/* ========== KPI status dari proyeksi ========== */
+html[data-theme="light"] .kpi-proj-status{
+  display: inline-block !important;
+  margin-left: 6px !important;
+  padding: 2px 8px !important;
+  border-radius: 999px !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+  line-height: 1.4 !important;
+}
+html[data-theme="light"] .kpi-proj-ontrack{
+  background: #DCFCE7 !important;
+  color: #166534 !important;
+  -webkit-text-fill-color: #166534 !important;
+  border: 1px solid #BBF7D0 !important;
+}
+html[data-theme="light"] .kpi-proj-watch{
+  background: #FEF9C3 !important;
+  color: #854D0E !important;
+  -webkit-text-fill-color: #854D0E !important;
+  border: 1px solid #FDE68A !important;
+}
+html[data-theme="light"] .kpi-proj-critical{
+  background: #FEE2E2 !important;
+  color: #991B1B !important;
+  -webkit-text-fill-color: #991B1B !important;
+  border: 1px solid #FECACA !important;
+}
+html[data-theme="light"] .kinerja-kpi-card.kpi-st-ontrack{
+  border-color: #BBF7D0 !important;
+}
+html[data-theme="light"] .kinerja-kpi-card.kpi-st-watch{
+  border-color: #FDE68A !important;
+}
+html[data-theme="light"] .kinerja-kpi-card.kpi-st-critical{
+  border-color: #FECACA !important;
+}
+html[data-theme="light"] .kinerja-status-badge{
+  display: none !important;
+}
+
+/* ========== Todo tabs + Notepad ========== */
+html[data-theme="light"] #todoModal .todo-modal-wide{
+  width: min(720px, 96vw) !important;
+  max-height: min(86vh, 640px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] #todoModal .todo-tabs{
+  display: flex !important;
+  gap: 6px !important;
+}
+html[data-theme="light"] #todoModal .todo-tab{
+  border: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+  color: #64748B !important;
+  border-radius: 999px !important;
+  padding: 6px 14px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] #todoModal .todo-tab.is-active{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  border-color: #0F172A !important;
+}
+html[data-theme="light"] #todoModal .todo-modal-head h3,
+html[data-theme="light"] #todoModal .todo-text,
+html[data-theme="light"] #todoModal .todo-sec-title{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #todoModal .todo-item.done .todo-text{
+  color: #94A3B8 !important;
+  -webkit-text-fill-color: #94A3B8 !important;
+}
+html[data-theme="light"] #todoModal .todo-add input,
+html[data-theme="light"] #todoModal #todoInput{
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] #todoModal #todoAddBtn,
+html[data-theme="light"] #todoModal .todo-add button{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] #todoModal .todo-sync-hint{
+  font-size: 11px !important;
+  color: #94A3B8 !important;
+  margin-left: 10px !important;
+}
+html[data-theme="light"] #todoPaneNotes{
+  flex: 1 !important;
+  min-height: 0 !important;
+}
+html[data-theme="light"] .notes-layout{
+  display: grid !important;
+  grid-template-columns: 200px 1fr !important;
+  gap: 12px !important;
+  min-height: 360px !important;
+  max-height: 52vh !important;
+}
+@media (max-width: 640px){
+  html[data-theme="light"] .notes-layout{
+    grid-template-columns: 1fr !important;
+    max-height: none !important;
+  }
+}
+html[data-theme="light"] .notes-sidebar{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  min-height: 0 !important;
+  border-right: 1px solid #E2E8F0 !important;
+  padding-right: 10px !important;
+}
+html[data-theme="light"] .notes-add-btn{
+  width: 100% !important;
+  border: 1px dashed #CBD5E1 !important;
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  border-radius: 10px !important;
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] .notes-list{
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  flex: 1 !important;
+}
+html[data-theme="light"] .notes-item{
+  text-align: left !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  border-radius: 10px !important;
+  padding: 8px 10px !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] .notes-item:hover{
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] .notes-item.is-active{
+  background: #F1F5F9 !important;
+  border-color: #E2E8F0 !important;
+}
+html[data-theme="light"] .notes-item-title{
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #0F172A !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+html[data-theme="light"] .notes-item-preview{
+  font-size: 11px !important;
+  color: #94A3B8 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin-top: 2px !important;
+}
+html[data-theme="light"] .notes-editor{
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+html[data-theme="light"] #notesEditorInner{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+}
+html[data-theme="light"] .note-title-input{
+  width: 100% !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #0F172A !important;
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] .note-body-input{
+  width: 100% !important;
+  flex: 1 !important;
+  min-height: 220px !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 12px !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  color: #0F172A !important;
+  background: #FFFFFF !important;
+  resize: vertical !important;
+  font-family: inherit !important;
+}
+html[data-theme="light"] .notes-editor-foot{
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+html[data-theme="light"] .notes-del-btn{
+  border: 1px solid #FECACA !important;
+  background: #FEF2F2 !important;
+  color: #B91C1C !important;
+  border-radius: 8px !important;
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] .notes-empty,
+html[data-theme="light"] .todo-empty{
+  color: #94A3B8 !important;
+  font-size: 13px !important;
+  padding: 12px 4px !important;
+}
+/* ========== END todo notepad ========== */
+
+/* ========== END kpi proj status ========== */
+
+/* ========== END dokumen form light ========== */
+
+/* ========== END jadwal libur theme ========== */
+
 /* ========== END harian no gray strip ========== */
 
 /* ========== END harian strip + day ========== */
@@ -25420,20 +25866,14 @@ $on("cabangPinSubmit", "click", function(){
     if(showBenchmark === undefined) showBenchmark = true;
     if(!data){ wrap.innerHTML = '<div class="empty-log">Belum ada data.</div>'; return; }
 
-    var isCritical = /critical/i.test(data.status || "");
-    var statusBadge = data.status
-      ? '<span class="kinerja-status-badge' + (isCritical ? '' : ' ok') + '">' + data.status + '</span>'
-      : '';
-
-    // Kalau hasilnya dari cache warm-trigger (bukan baca langsung), kasih
-    // tahu -- soalnya bisa ketinggalan sampai ~10 menit dari input terbaru.
+    // Status keseluruhan di header dihapus — status per KPI dari proyeksi
     var liveNote = isCached
-      ? '<span title="Data dari cache background, bisa ketinggalan sampai ~10 menit. Klik Tampilkan untuk data terbaru.">&middot; dari cache</span>'
+      ? '<span title="Data dari cache background, bisa ketinggalan sampai ~10 menit. Klik refresh untuk data terbaru.">&middot; dari cache</span>'
       : '';
 
     var header =
       '<div class="kinerja-header">' +
-        '<div class="kinerja-title-row"><span class="kinerja-title">' + (data.judul || "Update Kinerja Cabang Harian") + '</span>' + statusBadge + '</div>' +
+        '<div class="kinerja-title-row"><span class="kinerja-title">' + (data.judul || "Update Kinerja Cabang Harian") + '</span></div>' +
         '<div class="kinerja-live"><span class="dot"></span>Data Live &middot; cabang sumber: <b style="color:var(--ink);">' + (data.filterCabang || "Semua Cabang") + '</b> ' + liveNote + '</div>' +
       '</div>';
 
@@ -25480,11 +25920,32 @@ $on("cabangPinSubmit", "click", function(){
         var wProyeksi = Math.max(0, Math.min(100, (nProyeksi / nTarget) * 100));
         var pctNum = parseFloat(String(k.capaianPersen).replace("%","").replace(",", ".")) || wAktual;
         var ringPct = Math.max(0, Math.min(100, pctNum));
-        var estBadge = (k.estimasiAkhirBulanPersen === null || k.estimasiAkhirBulanPersen === undefined) ? "-" : k.estimasiAkhirBulanPersen + "%";
-        return '<div class="kinerja-kpi-card">' +
+        var estNum = (k.estimasiAkhirBulanPersen === null || k.estimasiAkhirBulanPersen === undefined)
+          ? null
+          : (typeof k.estimasiAkhirBulanPersen === "number"
+              ? k.estimasiAkhirBulanPersen
+              : parseFloat(String(k.estimasiAkhirBulanPersen).replace("%","").replace(",",".")) );
+        if(estNum === null || isNaN(estNum)){
+          // fallback: proyeksi / target
+          estNum = nTarget > 0 ? Math.round((nProyeksi / nTarget) * 100) : null;
+        }
+        var estBadge = (estNum === null || isNaN(estNum)) ? "-" : (Math.round(estNum) + "%");
+        // Status dari PROYEKSI (estimasi akhir bulan), bukan pencapaian saat ini
+        var stKey = "watch", stLabel = "WATCH";
+        if(estNum !== null && !isNaN(estNum)){
+          if(estNum >= 100){ stKey = "ontrack"; stLabel = "ON TRACK"; }
+          else if(estNum >= 80){ stKey = "watch"; stLabel = "WATCH"; }
+          else { stKey = "critical"; stLabel = "CRITICAL"; }
+        } else {
+          stKey = "watch"; stLabel = "—";
+        }
+        var ringColor = stKey === "ontrack" ? "#16A34A" : (stKey === "critical" ? "#DC2626" : "#CA8A04");
+        return '<div class="kinerja-kpi-card kpi-st-'+stKey+'">' +
           '<div class="kinerja-kpi-card-head">'+
-            '<span class="label" style="display:inline-flex;align-items:center;gap:7px">'+khCatIconSvg_(k.key)+' '+escHtml(k.label)+'</span>'+
-            '<div class="kinerja-kpi-ring" style="--ring-pct:'+ringPct+'%; --ring-color:#2563EB;"><span>'+k.capaianPersen+'</span></div>'+
+            '<span class="label" style="display:inline-flex;align-items:center;gap:7px">'+khCatIconSvg_(k.key)+' '+escHtml(k.label)+
+              '<span class="kpi-proj-status kpi-proj-'+stKey+'" title="Berdasarkan estimasi capaian akhir bulan (proyeksi)">'+stLabel+'</span>'+
+            '</span>'+
+            '<div class="kinerja-kpi-ring" style="--ring-pct:'+ringPct+'%; --ring-color:'+ringColor+';"><span>'+k.capaianPersen+'</span></div>'+
           '</div>' +
           '<div class="kinerja-kpi-nums">Aktual: <b>' + k.aktual + '</b> &nbsp;|&nbsp; Target: <b>' + k.target + '</b> &nbsp;|&nbsp; Proyeksi: <b>' + k.proyeksi + '</b></div>' +
           '<div class="kpi-tri-bar" title="Aktual / Proyeksi / Target">'+
@@ -34571,143 +35032,405 @@ function loadAdminBertugas(){
 </script>
 
   <div id="todoModal" class="todo-modal" hidden style="display:none !important;">
-    <div class="todo-modal-panel" id="todoModalPanel" onclick="event.stopPropagation()">
+    <div class="todo-modal-panel todo-modal-wide" id="todoModalPanel" onclick="event.stopPropagation()">
       <div class="todo-modal-head">
-        <h3>To-do List</h3>
+        <div class="todo-tabs">
+          <button type="button" class="todo-tab is-active" id="todoTabTodo" onclick="window.__wsTab&&window.__wsTab('todo')">To-do</button>
+          <button type="button" class="todo-tab" id="todoTabNotes" onclick="window.__wsTab&&window.__wsTab('notes')">Notepad</button>
+        </div>
         <button type="button" class="todo-close" id="todoCloseBtn" onclick="window.__todoClose&&window.__todoClose()">×</button>
       </div>
-      <div class="todo-add">
-        <input type="text" id="todoInput" placeholder="Tambah tugas..." maxlength="160" autocomplete="off"
-          onkeydown="if(event.key==='Enter'){event.preventDefault();window.__todoAdd&&window.__todoAdd();}">
-        <button type="button" id="todoAddBtn" onclick="window.__todoAdd&&window.__todoAdd()">Tambah</button>
+
+      <!-- TAB TODO -->
+      <div id="todoPaneTodo">
+        <div class="todo-add">
+          <input type="text" id="todoInput" placeholder="Tambah tugas..." maxlength="160" autocomplete="off"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();window.__todoAdd&&window.__todoAdd();}">
+          <button type="button" id="todoAddBtn" onclick="window.__todoAdd&&window.__todoAdd()">Tambah</button>
+        </div>
+        <div class="todo-section">
+          <div class="todo-sec-title">Belum selesai</div>
+          <div class="todo-list" id="todoListPending"></div>
+        </div>
+        <div class="todo-section">
+          <div class="todo-sec-title">Sudah selesai</div>
+          <div class="todo-list" id="todoListDone"></div>
+        </div>
+        <div class="todo-foot">
+          <button type="button" id="todoClearDone" onclick="window.__todoClearDone&&window.__todoClearDone()">Hapus yang selesai</button>
+          <span class="todo-sync-hint" id="todoSyncHint"></span>
+        </div>
       </div>
-      <div class="todo-section">
-        <div class="todo-sec-title">Belum selesai</div>
-        <div class="todo-list" id="todoListPending"></div>
-      </div>
-      <div class="todo-section">
-        <div class="todo-sec-title">Sudah selesai</div>
-        <div class="todo-list" id="todoListDone"></div>
-      </div>
-      <div class="todo-foot">
-        <button type="button" id="todoClearDone" onclick="window.__todoClearDone&&window.__todoClearDone()">Hapus yang selesai</button>
+
+      <!-- TAB NOTES -->
+      <div id="todoPaneNotes" style="display:none;">
+        <div class="notes-layout">
+          <div class="notes-sidebar">
+            <button type="button" class="notes-add-btn" id="notesAddBtn" onclick="window.__notesAdd&&window.__notesAdd()">+ Catatan baru</button>
+            <div class="notes-list" id="notesList"></div>
+          </div>
+          <div class="notes-editor" id="notesEditor">
+            <div class="notes-empty" id="notesEmpty">Pilih catatan atau buat baru.</div>
+            <div id="notesEditorInner" style="display:none;">
+              <input type="text" id="noteTitleInput" class="note-title-input" placeholder="Judul catatan" maxlength="120"
+                oninput="window.__notesSaveMeta&&window.__notesSaveMeta()">
+              <textarea id="noteBodyInput" class="note-body-input" placeholder="Tulis catatan di sini..."
+                oninput="window.__notesSaveBody&&window.__notesSaveBody()"></textarea>
+              <div class="notes-editor-foot">
+                <button type="button" class="notes-del-btn" onclick="window.__notesDelete&&window.__notesDelete()">Hapus catatan</button>
+                <span class="todo-sync-hint" id="notesSyncHint"></span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
 
 <script>
-/* TODO SYSTEM FINAL — standalone */
+/* TODO + NOTEPAD — sync server (NIK) + local cache */
 (function(){
-  var KEY = "gue_todo_items_v2";
-  function load(){
-    try {
-      var a = JSON.parse(localStorage.getItem(KEY) || "[]");
-      return Array.isArray(a) ? a : [];
-    } catch (e) { return []; }
+  var TODO_KEY = "gue_todo_items_v3";
+  var NOTES_KEY = "gue_notes_items_v1";
+  var ACTIVE_NOTE_KEY = "gue_notes_active_v1";
+  var currentTab = "todo";
+  var activeNoteId = null;
+  var syncTimer = null;
+  var notesSyncTimer = null;
+
+  function sessionNik_(){
+    try{
+      if(window.session && session.nik) return String(session.nik).trim();
+    }catch(e){}
+    return "";
   }
-  function save(list){
-    localStorage.setItem(KEY, JSON.stringify(list));
-    var n = list.filter(function(x){ return !x.done; }).length;
+  function sessionPin_(){
+    try{
+      if(window.session){
+        if(session.adminPin) return String(session.adminPin);
+        if(session.cabangPin) return String(session.cabangPin);
+        if(session.sessionToken) return String(session.sessionToken);
+      }
+    }catch(e){}
+    return "";
+  }
+  function sessionRole_(){
+    try{
+      if(window.session && session.role) return String(session.role);
+      if(window.session && session.adminPin) return "admin";
+      if(window.session && session.cabangPin) return "kanit";
+    }catch(e){}
+    return "";
+  }
+
+  function loadLocalTodos(){
+    try{
+      var a=JSON.parse(localStorage.getItem(TODO_KEY)||"null");
+      if(Array.isArray(a)) return a;
+      // migrasi dari v2 (sebelum sync server)
+      var old=JSON.parse(localStorage.getItem("gue_todo_items_v2")||"[]");
+      if(Array.isArray(old) && old.length){
+        localStorage.setItem(TODO_KEY, JSON.stringify(old));
+        return old;
+      }
+      return [];
+    }catch(e){ return []; }
+  }
+  function saveLocalTodos(list){
+    localStorage.setItem(TODO_KEY, JSON.stringify(list));
+    updateBadge(list);
+  }
+  function loadLocalNotes(){
+    try{ var a=JSON.parse(localStorage.getItem(NOTES_KEY)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; }
+  }
+  function saveLocalNotes(list){
+    localStorage.setItem(NOTES_KEY, JSON.stringify(list));
+  }
+  function updateBadge(list){
+    var n = (list||[]).filter(function(x){ return !x.done; }).length;
     var b = document.getElementById("adminTodoBadge");
-    if (b) {
-      if (n > 0) { b.hidden = false; b.style.display = "inline-flex"; b.textContent = String(n); }
-      else { b.hidden = true; b.style.display = "none"; }
+    if(b){
+      if(n>0){ b.hidden=false; b.style.display="inline-flex"; b.textContent=String(n); }
+      else { b.hidden=true; b.style.display="none"; }
     }
   }
   function esc(s){
-    return String(s == null ? "" : s)
-      .replace(/&/g,"&amp;").replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
   }
-  function uid(){ return "t" + Date.now() + "_" + Math.floor(Math.random()*1e6); }
+  function uid(p){ return (p||"t")+Date.now()+"_"+Math.floor(Math.random()*1e6); }
+  function setHint(id, msg){
+    var el=document.getElementById(id);
+    if(el) el.textContent = msg||"";
+  }
 
-  function render(){
-    var list = load();
-    var pending = list.filter(function(x){ return !x.done; });
-    var done = list.filter(function(x){ return !!x.done; });
-    var pb = document.getElementById("todoListPending");
-    var db = document.getElementById("todoListDone");
+  /* ---- server sync ---- */
+  function pushTodosServer(){
+    var nik=sessionNik_(), pin=sessionPin_();
+    if(!nik || !pin || typeof google==="undefined" || !google.script || !google.script.run){
+      setHint("todoSyncHint", nik?"":"Login ulang agar sinkron ke HP");
+      return;
+    }
+    setHint("todoSyncHint", "Menyimpan…");
+    google.script.run
+      .withSuccessHandler(function(r){
+        setHint("todoSyncHint", (r&&r.status==="OK") ? "Tersimpan ✓" : ((r&&r.reason)||"Gagal simpan"));
+      })
+      .withFailureHandler(function(){ setHint("todoSyncHint", "Gagal jaringan"); })
+      .saveUserTodos(nik, pin, sessionRole_(), loadLocalTodos());
+  }
+  function pushNotesServer(){
+    var nik=sessionNik_(), pin=sessionPin_();
+    if(!nik || !pin || typeof google==="undefined" || !google.script || !google.script.run) return;
+    setHint("notesSyncHint", "Menyimpan…");
+    google.script.run
+      .withSuccessHandler(function(r){
+        setHint("notesSyncHint", (r&&r.status==="OK") ? "Tersimpan ✓" : ((r&&r.reason)||"Gagal simpan"));
+      })
+      .withFailureHandler(function(){ setHint("notesSyncHint", "Gagal jaringan"); })
+      .saveUserNotes(nik, pin, sessionRole_(), loadLocalNotes());
+  }
+  function scheduleTodoSync(){
+    clearTimeout(syncTimer);
+    syncTimer=setTimeout(pushTodosServer, 400);
+  }
+  function scheduleNotesSync(){
+    clearTimeout(notesSyncTimer);
+    notesSyncTimer=setTimeout(pushNotesServer, 500);
+  }
+  function pullFromServer(cb){
+    var nik=sessionNik_(), pin=sessionPin_();
+    if(!nik || !pin || typeof google==="undefined" || !google.script || !google.script.run){
+      if(cb) cb(false);
+      return;
+    }
+    setHint("todoSyncHint", "Memuat…");
+    google.script.run
+      .withSuccessHandler(function(r){
+        if(r && r.status==="OK"){
+          if(Array.isArray(r.todos)) saveLocalTodos(r.todos);
+          if(Array.isArray(r.notes)) saveLocalNotes(r.notes);
+          setHint("todoSyncHint", "Sinkron ✓");
+          if(cb) cb(true);
+        } else {
+          setHint("todoSyncHint", (r&&r.reason)||"Gagal muat");
+          if(cb) cb(false);
+        }
+      })
+      .withFailureHandler(function(){
+        setHint("todoSyncHint", "Offline — pakai cache lokal");
+        if(cb) cb(false);
+      })
+      .getUserWorkspace(nik, pin, sessionRole_());
+  }
+
+  /* ---- TODO UI ---- */
+  function renderTodos(){
+    var list=loadLocalTodos();
+    var pending=list.filter(function(x){return !x.done;});
+    var done=list.filter(function(x){return !!x.done;});
+    var pb=document.getElementById("todoListPending");
+    var db=document.getElementById("todoListDone");
     function row(item){
-      return '<div class="todo-item'+(item.done?" done":"")+' style="display:flex;flex-direction:row;align-items:center;gap:10px;width:100%;box-sizing:border-box;padding:8px 10px;">'+
-        '<input type="checkbox" '+(item.done?"checked":"")+' onchange="window.__todoToggle(\''+item.id+'\', this.checked)" style="flex:0 0 16px;width:16px;height:16px;margin:0;">'+
-        '<span class="todo-text" style="flex:1 1 auto;min-width:0;font-size:13px;line-height:1.4;color:#F5F5F4;white-space:normal;word-break:break-word;">'+esc(item.text)+'</span>'+
-        '<button type="button" class="todo-del-btn" onclick="window.__todoDelete(\''+item.id+'\')" style="flex:0 0 28px;width:28px;height:28px;min-width:28px;max-width:28px;padding:0;margin:0;border-radius:6px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.08);color:#A8A29E;font-size:16px;line-height:28px;text-align:center;cursor:pointer;">×</button>'+
+      return '<div class="todo-item'+(item.done?" done":"")+'">'+
+        '<input type="checkbox" '+(item.done?"checked":"")+' onchange="window.__todoToggle(\''+item.id+'\', this.checked)">'+
+        '<span class="todo-text">'+esc(item.text)+'</span>'+
+        '<button type="button" class="todo-del-btn" onclick="window.__todoDelete(\''+item.id+'\')">×</button>'+
       '</div>';
     }
-    if (pb) pb.innerHTML = pending.length ? pending.map(row).join("") : '<div class="todo-empty">Tidak ada tugas aktif.</div>';
-    if (db) db.innerHTML = done.length ? done.map(row).join("") : '<div class="todo-empty">Belum ada yang selesai.</div>';
+    if(pb) pb.innerHTML = pending.length ? pending.map(row).join("") : '<div class="todo-empty">Tidak ada tugas aktif.</div>';
+    if(db) db.innerHTML = done.length ? done.map(row).join("") : '<div class="todo-empty">Belum ada yang selesai.</div>';
+    updateBadge(list);
   }
-
-  function add(){
-    var inp = document.getElementById("todoInput");
-    if (!inp) return;
-    var text = String(inp.value || "").trim();
-    if (!text) { inp.focus(); return; }
-    var list = load();
-    list.unshift({ id: uid(), text: text, done: false, at: Date.now() });
-    save(list);
-    inp.value = "";
-    render();
+  function addTodo(){
+    var inp=document.getElementById("todoInput");
+    if(!inp) return;
+    var text=String(inp.value||"").trim();
+    if(!text){ inp.focus(); return; }
+    var list=loadLocalTodos();
+    list.unshift({ id:uid("t"), text:text, done:false, at:Date.now() });
+    saveLocalTodos(list); inp.value=""; renderTodos(); scheduleTodoSync();
   }
-  function toggle(id, checked){
-    var list = load();
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id === id) { list[i].done = !!checked; break; }
-    }
-    save(list);
-    render();
+  function toggleTodo(id, checked){
+    var list=loadLocalTodos();
+    for(var i=0;i<list.length;i++){ if(list[i].id===id){ list[i].done=!!checked; break; } }
+    saveLocalTodos(list); renderTodos(); scheduleTodoSync();
   }
-  function del(id){
-    save(load().filter(function(x){ return x.id !== id; }));
-    render();
+  function deleteTodo(id){
+    saveLocalTodos(loadLocalTodos().filter(function(x){return x.id!==id;}));
+    renderTodos(); scheduleTodoSync();
   }
   function clearDone(){
-    save(load().filter(function(x){ return !x.done; }));
-    render();
+    saveLocalTodos(loadLocalTodos().filter(function(x){return !x.done;}));
+    renderTodos(); scheduleTodoSync();
+  }
+
+  /* ---- NOTES UI ---- */
+  function renderNotesList(){
+    var list=loadLocalNotes().slice().sort(function(a,b){ return (b.updatedAt||0)-(a.updatedAt||0); });
+    var box=document.getElementById("notesList");
+    if(!box) return;
+    if(!list.length){
+      box.innerHTML='<div class="todo-empty">Belum ada catatan.</div>';
+      return;
+    }
+    box.innerHTML=list.map(function(n){
+      var active = n.id===activeNoteId ? " is-active" : "";
+      var preview = String(n.body||"").trim().split("\n")[0].slice(0,48);
+      return '<button type="button" class="notes-item'+active+'" onclick="window.__notesOpen(\''+n.id+'\')">'+
+        '<div class="notes-item-title">'+esc(n.title||"Tanpa judul")+'</div>'+
+        '<div class="notes-item-preview">'+esc(preview||"…")+'</div>'+
+      '</button>';
+    }).join("");
+  }
+  function openNote(id){
+    activeNoteId=id;
+    try{ localStorage.setItem(ACTIVE_NOTE_KEY, id||""); }catch(e){}
+    var list=loadLocalNotes();
+    var note=null;
+    for(var i=0;i<list.length;i++){ if(list[i].id===id){ note=list[i]; break; } }
+    var empty=document.getElementById("notesEmpty");
+    var inner=document.getElementById("notesEditorInner");
+    var title=document.getElementById("noteTitleInput");
+    var body=document.getElementById("noteBodyInput");
+    if(!note){
+      if(empty) empty.style.display="";
+      if(inner) inner.style.display="none";
+      renderNotesList();
+      return;
+    }
+    if(empty) empty.style.display="none";
+    if(inner) inner.style.display="flex";
+    if(title) title.value=note.title||"";
+    if(body) body.value=note.body||"";
+    renderNotesList();
+  }
+  function addNote(){
+    var list=loadLocalNotes();
+    var n={ id:uid("n"), title:"Catatan baru", body:"", createdAt:Date.now(), updatedAt:Date.now() };
+    list.unshift(n);
+    saveLocalNotes(list);
+    activeNoteId=n.id;
+    renderNotesList();
+    openNote(n.id);
+    scheduleNotesSync();
+    var title=document.getElementById("noteTitleInput");
+    if(title) setTimeout(function(){ title.focus(); title.select(); }, 40);
+  }
+  function saveNoteMeta(){
+    if(!activeNoteId) return;
+    var title=document.getElementById("noteTitleInput");
+    var list=loadLocalNotes();
+    for(var i=0;i<list.length;i++){
+      if(list[i].id===activeNoteId){
+        list[i].title=String(title&&title.value||"").trim() || "Tanpa judul";
+        list[i].updatedAt=Date.now();
+        break;
+      }
+    }
+    saveLocalNotes(list);
+    renderNotesList();
+    scheduleNotesSync();
+  }
+  function saveNoteBody(){
+    if(!activeNoteId) return;
+    var body=document.getElementById("noteBodyInput");
+    var list=loadLocalNotes();
+    for(var i=0;i<list.length;i++){
+      if(list[i].id===activeNoteId){
+        list[i].body=body?body.value:"";
+        list[i].updatedAt=Date.now();
+        break;
+      }
+    }
+    saveLocalNotes(list);
+    renderNotesList();
+    scheduleNotesSync();
+  }
+  function deleteNote(){
+    if(!activeNoteId) return;
+    if(!confirm("Hapus catatan ini?")) return;
+    var id=activeNoteId;
+    saveLocalNotes(loadLocalNotes().filter(function(x){return x.id!==id;}));
+    activeNoteId=null;
+    openNote(null);
+    scheduleNotesSync();
+  }
+
+  /* ---- tabs / modal ---- */
+  function setTab(tab){
+    currentTab=tab==="notes"?"notes":"todo";
+    var tTodo=document.getElementById("todoTabTodo");
+    var tNotes=document.getElementById("todoTabNotes");
+    var pTodo=document.getElementById("todoPaneTodo");
+    var pNotes=document.getElementById("todoPaneNotes");
+    if(tTodo) tTodo.classList.toggle("is-active", currentTab==="todo");
+    if(tNotes) tNotes.classList.toggle("is-active", currentTab==="notes");
+    if(pTodo) pTodo.style.display = currentTab==="todo"?"":"none";
+    if(pNotes) pNotes.style.display = currentTab==="notes"?"":"none";
+    if(currentTab==="notes"){
+      renderNotesList();
+      if(activeNoteId) openNote(activeNoteId);
+    } else {
+      renderTodos();
+    }
   }
   function open(){
-    var m = document.getElementById("todoModal");
-    if (!m) return;
-    m.hidden = false;
-    m.style.setProperty("display", "flex", "important");
-    render();
-    var inp = document.getElementById("todoInput");
-    if (inp) setTimeout(function(){ inp.focus(); }, 30);
+    var m=document.getElementById("todoModal");
+    if(!m) return;
+    m.hidden=false;
+    m.style.setProperty("display","flex","important");
+    try{ activeNoteId=localStorage.getItem(ACTIVE_NOTE_KEY)||null; }catch(e){}
+    renderTodos();
+    renderNotesList();
+    setTab(currentTab);
+    pullFromServer(function(){
+      renderTodos();
+      renderNotesList();
+      if(currentTab==="notes" && activeNoteId) openNote(activeNoteId);
+    });
+    var inp=document.getElementById("todoInput");
+    if(inp && currentTab==="todo") setTimeout(function(){ inp.focus(); }, 30);
   }
   function close(){
-    var m = document.getElementById("todoModal");
-    if (!m) return;
-    m.hidden = true;
-    m.style.setProperty("display", "none", "important");
+    var m=document.getElementById("todoModal");
+    if(!m) return;
+    m.hidden=true;
+    m.style.setProperty("display","none","important");
   }
 
-  window.__todoAdd = add;
-  window.__todoToggle = toggle;
-  window.__todoDelete = del;
-  window.__todoClearDone = clearDone;
-  window.__todoClose = close;
-  window.__todoOpen = open;
-  window.openTodoModal = open;
-  window.closeTodoModal = close;
+  window.__todoAdd=addTodo;
+  window.__todoToggle=toggleTodo;
+  window.__todoDelete=deleteTodo;
+  window.__todoClearDone=clearDone;
+  window.__todoClose=close;
+  window.__todoOpen=open;
+  window.openTodoModal=open;
+  window.closeTodoModal=close;
+  window.__wsTab=setTab;
+  window.__notesAdd=addNote;
+  window.__notesOpen=openNote;
+  window.__notesSaveMeta=saveNoteMeta;
+  window.__notesSaveBody=saveNoteBody;
+  window.__notesDelete=deleteNote;
 
   function wirePin(){
-    var pin = document.getElementById("adminTodoBtn");
-    if (pin) {
-      pin.setAttribute("onclick", "window.__todoOpen&&window.__todoOpen()");
-      pin.onclick = function(e){ e.preventDefault(); e.stopPropagation(); open(); };
+    var pin=document.getElementById("adminTodoBtn");
+    if(pin){
+      pin.onclick=function(e){ e.preventDefault(); e.stopPropagation(); open(); };
     }
-    var modal = document.getElementById("todoModal");
-    if (modal) {
-      modal.addEventListener("click", function(e){ if (e.target === modal) close(); });
+    var modal=document.getElementById("todoModal");
+    if(modal){
+      modal.addEventListener("click", function(e){ if(e.target===modal) close(); });
     }
-    save(load());
+    updateBadge(loadLocalTodos());
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wirePin);
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wirePin);
   else wirePin();
   setTimeout(wirePin, 500);
 })();
 </script>
+
 
 
 <script>
