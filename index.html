@@ -23105,6 +23105,36 @@ html[data-theme="light"] .admin-content select:focus-visible {
 
 
 
+
+html[data-theme="light"] #menuHarianMingguBtn,
+html[data-theme="light"] #kanitMenuHarianMingguBtn,
+html[data-theme="light"] button.btn-minggu-detail{
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: 4px !important;
+  padding: 0 14px !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  border: 1px solid #CBD5E1 !important;
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: none !important;
+}
+html[data-theme="light"] #menuHarianMingguBtn:hover,
+html[data-theme="light"] #kanitMenuHarianMingguBtn:hover{
+  background: #1E293B !important;
+}
 </style>
 </head>
 <body>
@@ -23763,21 +23793,39 @@ html[data-theme="light"] .admin-content select:focus-visible {
 
     <!-- Menu Harian (rincian GE/GB/GG/Total per tanggal, pilih cabang / Total Area) -->
     <div class="panel subpanel" id="tab-menuharian">
-      <div class="filter-row-compact">
-        <div class="field">
-          <label>Cabang</label>
-          <select id="menuHarianCabang">
-            <option value="TOTAL_AREA">Total Area</option>
-          </select>
+      <div id="menuHarianMainView">
+        <div class="filter-row-compact" style="align-items:flex-end;">
+          <div class="field">
+            <label>Cabang</label>
+            <select id="menuHarianCabang">
+              <option value="TOTAL_AREA">Total Area</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Bulan</label>
+            <select id="menuHarianBulan"></select>
+          </div>
+          <button type="button" id="menuHarianLoadBtn" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
+          <button type="button" id="menuHarianMingguBtn" class="btn-minggu-detail">Detail omset Minggu</button>
         </div>
-        <div class="field">
-          <label>Bulan</label>
-          <select id="menuHarianBulan"></select>
-        </div>
-        <button type="button" id="menuHarianLoadBtn" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
+        <div id="menuHarianWrap" style="margin-top:20px;"></div>
+        <div class="msg" id="menuHarianMsg"></div>
       </div>
-      <div id="menuHarianWrap" style="margin-top:20px;"></div>
-      <div class="msg" id="menuHarianMsg"></div>
+      <div id="menuHarianMingguView" hidden style="display:none;">
+        <div class="minggu-page-head">
+          <button type="button" id="menuHarianMingguBack" class="hub-back-btn">← Kembali</button>
+          <div class="minggu-page-title">Detail omset hari Minggu</div>
+        </div>
+        <div class="filter-row-compact" style="margin-bottom:12px;">
+          <div class="field">
+            <label>Cabang</label>
+            <select id="menuHarianMingguCabang">
+              <option value="TOTAL_AREA">Total Area</option>
+            </select>
+          </div>
+        </div>
+        <div id="menuHarianMingguWrap"><div class="empty-log">Memuat…</div></div>
+      </div>
     </div>
 
 
