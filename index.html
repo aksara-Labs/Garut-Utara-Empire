@@ -23136,6 +23136,134 @@ html[data-theme="light"] #tab-kanitmenuharian #kanitMenuHarianMingguBtn:hover{
   background: #F8FAFC !important;
   border-color: #CBD5E1 !important;
 }
+
+/* ========== Omset Minggu readability polish ========== */
+html[data-theme="light"] .harian-minggu-box{
+  padding: 12px !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  background: #FFF !important;
+}
+html[data-theme="light"] .omg-chart{
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  min-height: 180px !important;
+  padding: 12px 8px 8px !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  margin-bottom: 4px !important;
+  overflow-x: auto !important;
+}
+html[data-theme="light"] .omg-bar-wrap{
+  flex: 1 1 0 !important;
+  min-width: 48px !important;
+  max-width: 80px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 6px !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  min-height: 160px !important;
+}
+html[data-theme="light"] .omg-bar{
+  width: 28px !important;
+  max-width: 32px !important;
+  border-radius: 6px 6px 3px 3px !important;
+  background: #334155 !important;
+  min-height: 6px !important;
+  transition: background 0.15s, transform 0.15s !important;
+}
+html[data-theme="light"] .omg-bar-wrap:hover .omg-bar{
+  background: #1E40AF !important;
+}
+html[data-theme="light"] .omg-bar-wrap.is-active .omg-bar{
+  background: #2563EB !important;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.2) !important;
+}
+html[data-theme="light"] .omg-bar-val{
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  line-height: 1.2 !important;
+}
+html[data-theme="light"] .omg-bar-lab{
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #64748B !important;
+}
+html[data-theme="light"] .omg-bar-wrap.is-active .omg-bar-lab{
+  color: #1D4ED8 !important;
+  font-weight: 700 !important;
+}
+
+/* Tabel detail — rapat, angka dekat label */
+html[data-theme="light"] .omg-detail-head{
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  margin: 12px 0 6px !important;
+}
+html[data-theme="light"] .omg-detail-table-wrap{
+  overflow-x: auto !important;
+  margin-bottom: 8px !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+}
+html[data-theme="light"] .omg-detail-table{
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 12.5px !important;
+  table-layout: auto !important;
+}
+html[data-theme="light"] .omg-detail-table th{
+  padding: 8px 12px !important;
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] .omg-detail-table th:not(:first-child),
+html[data-theme="light"] .omg-detail-table td.num{
+  text-align: right !important;
+  font-variant-numeric: tabular-nums !important;
+  width: 1% !important; /* shrink numeric cols */
+  white-space: nowrap !important;
+  padding-left: 16px !important;
+  padding-right: 12px !important;
+}
+html[data-theme="light"] .omg-detail-table td{
+  padding: 7px 12px !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  color: #0F172A !important;
+  vertical-align: middle !important;
+}
+html[data-theme="light"] .omg-detail-table tbody tr:nth-child(even) td{
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] .omg-detail-table tbody tr:hover td{
+  background: #EFF6FF !important;
+}
+html[data-theme="light"] .omg-detail-table td:first-child{
+  font-weight: 600 !important;
+  color: #334155 !important;
+  width: auto !important;
+}
+html[data-theme="light"] .omg-detail .hint{
+  font-size: 12.5px !important;
+  color: #64748B !important;
+  padding: 8px 0 !important;
+}
+/* ========== END minggu readability ========== */
 </style>
 </head>
 <body>
@@ -26521,12 +26649,12 @@ $on("cabangPinSubmit", "click", function(){
     }
     var maxV = 1;
     months.forEach(function(m){ if((m.sundayTotal||0) > maxV) maxV = m.sundayTotal; });
-    var CH = 110;
+    var CH = 140;
     var bars = months.map(function(m, idx){
-      var h = Math.max(3, Math.round(((m.sundayTotal||0) / maxV) * CH));
+      var h = Math.max(6, Math.round(((m.sundayTotal||0) / maxV) * CH));
       var short = String(m.monthLabel||"").replace(/\s*20\d{2}/,"").trim().slice(0,3);
       return '<button type="button" class="omg-bar-wrap" data-idx="'+idx+'" title="'+escHtml(m.monthLabel)+': '+fmt(m.sundayTotal)+'">'+
-        '<span class="omg-bar-val">'+(m.sundayTotal?fmt(m.sundayTotal):"")+'</span>'+
+        '<span class="omg-bar-val">'+(m.sundayTotal?fmt(m.sundayTotal):"0")+'</span>'+
         '<span class="omg-bar" style="height:'+h+'px;"></span>'+
         '<span class="omg-bar-lab">'+escHtml(short)+'</span>'+
       '</button>';
@@ -26535,7 +26663,7 @@ $on("cabangPinSubmit", "click", function(){
     box.innerHTML =
       '<div class="harian-minggu-box">'+
         '<div class="harian-sunday-title">Tren omset hari Minggu <span class="harian-sunday-sub">· klik bulan untuk detail</span></div>'+
-        '<div class="omg-chart" style="min-height:'+(CH+36)+'px">'+bars+'</div>'+
+        '<div class="omg-chart">'+bars+'</div>'+
         '<div class="omg-detail"><div class="hint">Klik salah satu batang bulan di atas.</div></div>'+
       '</div>';
 
