@@ -23491,6 +23491,47 @@ html[data-theme="light"] #tab-dokumen button.doc-hub-card *{
   pointer-events: none !important;
 }
 /* exclude from global gold button */
+
+/* Doc hub badge text MUST visible */
+html[data-theme="light"] #tab-dokumen .doc-hub-badge,
+html[data-theme="light"] #tab-dokumen button.doc-hub-card .doc-hub-badge{
+  flex: 0 0 42px !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  border-radius: 11px !important;
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  fill: #FFFFFF !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  text-indent: 0 !important;
+  overflow: visible !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-title,
+html[data-theme="light"] #tab-dokumen button.doc-hub-card .doc-hub-title{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  display: block !important;
+}
+html[data-theme="light"] #tab-dokumen .doc-hub-desc,
+html[data-theme="light"] #tab-dokumen button.doc-hub-card .doc-hub-desc{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 12px !important;
+  display: block !important;
+}
 </style>
 </head>
 <body>
@@ -24340,7 +24381,7 @@ html[data-theme="light"] #tab-dokumen button.doc-hub-card *{
         <div class="doc-hub-hint">Pilih jenis dokumen — form terbuka di halaman baru</div>
         <div class="doc-hub-grid">
           <button type="button" class="doc-hub-card" data-doc="sn">
-            <span class="doc-hub-badge">SN</span>
+            <span class="doc-hub-badge" style="color:#fff!important;-webkit-text-fill-color:#fff!important;background:#0F172A!important;display:inline-flex!important;align-items:center;justify-content:center;width:42px;height:42px;border-radius:11px;font-weight:800;font-size:13px;">SN</span>
             <span class="doc-hub-body">
               <span class="doc-hub-title">BA SN Perusahaan</span>
               <span class="doc-hub-desc">Serial number / IMEI perusahaan</span>
@@ -24348,7 +24389,7 @@ html[data-theme="light"] #tab-dokumen button.doc-hub-card *{
             <span class="doc-hub-arrow" aria-hidden="true">→</span>
           </button>
           <button type="button" class="doc-hub-card" data-doc="ga">
-            <span class="doc-hub-badge">GA</span>
+            <span class="doc-hub-badge" style="color:#fff!important;-webkit-text-fill-color:#fff!important;background:#0F172A!important;display:inline-flex!important;align-items:center;justify-content:center;width:42px;height:42px;border-radius:11px;font-weight:800;font-size:13px;">GA</span>
             <span class="doc-hub-body">
               <span class="doc-hub-title">BA Pengadaan Barang</span>
               <span class="doc-hub-desc">Pengadaan barang + foto bukti</span>
@@ -24356,7 +24397,7 @@ html[data-theme="light"] #tab-dokumen button.doc-hub-card *{
             <span class="doc-hub-arrow" aria-hidden="true">→</span>
           </button>
           <button type="button" class="doc-hub-card" data-doc="sp">
-            <span class="doc-hub-badge">SP</span>
+            <span class="doc-hub-badge" style="color:#fff!important;-webkit-text-fill-color:#fff!important;background:#0F172A!important;display:inline-flex!important;align-items:center;justify-content:center;width:42px;height:42px;border-radius:11px;font-weight:800;font-size:13px;">SP</span>
             <span class="doc-hub-body">
               <span class="doc-hub-title">Surat Pernyataan</span>
               <span class="doc-hub-desc">Kwitansi / pernyataan pengeluaran</span>
