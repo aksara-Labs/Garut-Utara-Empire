@@ -26232,22 +26232,75 @@ $on("cabangPinSubmit", "click", function(){
     // Chart + data dalam 1 tabel yang sama → kolom tanggal pasti sejajar.
     var CHART_H = 100;
     var DOW = ["Min","Sen","Sel","Rab","Kam","Jum","Sab"];
-    function dayDow_(dayNum){
-      // data.year/month dari server; fallback parse monthLabel "September 2026"
-      var y = data.year, m = data.month; // month 1-12
+    function harianYm_(){
+      var y = data.year, m = data.month;
       if(!y || !m){
         var ml = String(data.monthLabel||"");
         var parts = ml.split(/\s+/);
         var monNames = {januari:1,februari:2,maret:3,april:4,mei:5,juni:6,juli:7,agustus:8,september:9,oktober:10,november:11,desember:12};
         if(parts.length>=2){
-          m = monNames[parts[0].toLowerCase()] || 0;
+          m = monNames[String(parts[0]).toLowerCase()] || 0;
           y = parseInt(parts[1],10) || 0;
         }
       }
-      if(!y || !m) return "";
-      var dt = new Date(y, m-1, dayNum);
-      return DOW[dt.getDay()] || "";
+      return { y: y||0, m: m||0 };
     }
+    function dayDow_(dayNum){
+      var ym = harianYm_();
+      if(!ym.y || !ym.m) return "";
+      return DOW[new Date(ym.y, ym.m-1, dayNum).getDay()] || "";
+    }
+    function isSundayDay_(dayNum){
+      var ym = harianYm_();
+      if(!ym.y || !ym.m) return false;
+      return new Date(ym.y, ym.m-1, dayNum).getDay() === 0;
+    }
+
+    // Ringkasan omset hari Minggu
+    var cabangCtx = "TOTAL_AREA";
+    try{
+      if(wrapId === "kanitMenuHarianWrap" && typeof session !== "undefined" && session && session.cabang) cabangCtx = session.cabang;
+      else {
+        var selH = document.getElementById("menuHarianCabang");
+        if(selH && selH.value) cabangCtx = selH.value;
+      }
+    }catch(eC){}
+    var isTutupMinggu = (typeof CABANG_TUTUP_MINGGU_LIST !== "undefined")
+      && CABANG_TUTUP_MINGGU_LIST.indexOf(cabangCtx) !== -1
+      && cabangCtx !== "TOTAL_AREA";
+    var sundayDays = days.filter(function(d){ return isSundayDay_(d.day); });
+    var sunTotal = 0, sunGe = 0, sunGb = 0, sunGg = 0;
+    sundayDays.forEach(function(d){
+      sunTotal += Number(d.total)||0;
+      sunGe += Number(d.ge)||0;
+      sunGb += Number(d.gb)||0;
+      sunGg += Number(d.gg)||0;
+    });
+    var sunWithData = sundayDays.filter(function(d){ return (Number(d.total)||0) > 0; }).length;
+    var sunCount = sundayDays.length;
+    var sunAvg = sunWithData > 0 ? Math.round(sunTotal / sunWithData) : 0;
+    var sunPct = data.totalBulan > 0 ? (Math.round((sunTotal / data.totalBulan) * 1000) / 10) : 0;
+    var sunDates = sundayDays.map(function(d){ return d.day; }).join(", ");
+    var sundayHtml = "";
+    if(isTutupMinggu){
+      sundayHtml = '<div class="harian-sunday-box is-closed"><div class="harian-sunday-title">Omset hari Minggu</div><div class="harian-sunday-note">Cabang <b>'+escHtml(cabangCtx)+'</b> libur Minggu — tidak dihitung.</div></div>';
+    } else {
+      sundayHtml =
+        '<div class="harian-sunday-box">'+
+          '<div class="harian-sunday-title">Omset hari Minggu'+(cabangCtx==="TOTAL_AREA"?' <span class="harian-sunday-sub">· cabang buka Minggu</span>':'')+'</div>'+
+          '<div class="harian-sunday-grid">'+
+            '<div class="harian-sunday-card"><div class="k">Total Minggu</div><div class="v">'+fmt(sunTotal)+'</div></div>'+
+            '<div class="harian-sunday-card"><div class="k">Rata-rata / Minggu</div><div class="v">'+fmt(sunAvg)+'</div></div>'+
+            '<div class="harian-sunday-card"><div class="k">Kontribusi</div><div class="v">'+sunPct+'%</div></div>'+
+            '<div class="harian-sunday-card"><div class="k">Minggu terdata</div><div class="v">'+sunWithData+' / '+sunCount+'</div></div>'+
+            '<div class="harian-sunday-card"><div class="k">GE · GB · GG</div><div class="v sm">'+fmt(sunGe)+' · '+fmt(sunGb)+' · '+fmt(sunGg)+'</div></div>'+
+            '<div class="harian-sunday-card"><div class="k">Tanggal Minggu</div><div class="v sm">'+(sunDates||'-')+'</div></div>'+
+          '</div>'+
+        '</div>';
+    }
+    // sisipkan ringkasan minggu setelah kartu summary
+    summaryHtml = summaryHtml + sundayHtml;
+
     var headerCells = days.map(function(d){
       var dow = dayDow_(d.day);
       var sunCls = isSundayDay_(d.day) ? ' is-sunday' : '';
