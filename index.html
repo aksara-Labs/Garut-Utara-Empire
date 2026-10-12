@@ -26440,14 +26440,14 @@ $on("cabangPinSubmit", "click", function(){
     var box=document.getElementById(boxId);
     if(!box) return;
     cabang = cabang || "TOTAL_AREA";
-    if(_omsetMingguCache[cabang]){
-      renderOmsetMingguTren_(_omsetMingguCache[cabang], box, cabang);
+    if(_omsetMingguCache['v2_'+cabang]){
+      renderOmsetMingguTren_(_omsetMingguCache['v2_'+cabang], box, cabang);
       return;
     }
     var run = google.script.run
       .withSuccessHandler(function(r){
         if(r && r.status==="OK" && r.data){
-          _omsetMingguCache[cabang]=r.data;
+          _omsetMingguCache['v2_'+cabang]=r.data;
           renderOmsetMingguTren_(r.data, box, cabang);
         } else {
           box.innerHTML='<div class="empty-log">'+(r&&r.reason?escHtml(r.reason):"Gagal muat tren Minggu")+'</div>';
@@ -26557,12 +26557,51 @@ $on("cabangPinSubmit", "click", function(){
           '</tr>';
         }).join("");
         if(!rows) rows = '<tr><td colspan="5">Tidak ada hari Minggu di bulan ini.</td></tr>';
+
+        // Detail per cabang (Total Area) atau breakdown per Minggu×cabang
+        var cabHtml = "";
+        var byCab = m.byCabang || [];
+        if(byCab.length > 1){
+          // Ringkasan total Minggu per cabang
+          var cabSumRows = byCab.map(function(bc){
+            return '<tr>'+
+              '<td><b>'+escHtml(bc.kode)+'</b></td>'+
+              '<td class="num"><b>'+fmt(bc.sundayTotal)+'</b></td>'+
+              '<td class="num">'+(bc.sundays||[]).length+'</td>'+
+            '</tr>';
+          }).join("");
+          // Matriks: setiap Minggu × tiap cabang
+          var cabCodes = byCab.map(function(bc){ return bc.kode; });
+          var headCab = cabCodes.map(function(k){ return '<th>'+escHtml(k)+'</th>'; }).join("");
+          var matrixRows = (m.sundays||[]).map(function(s){
+            var cells = cabCodes.map(function(k){
+              var v = (s.byCabang && s.byCabang[k]) ? s.byCabang[k].total : 0;
+              return '<td class="num">'+fmt(v)+'</td>';
+            }).join("");
+            return '<tr><td>Minggu, tgl '+s.day+'</td>'+cells+'<td class="num"><b>'+fmt(s.total)+'</b></td></tr>';
+          }).join("");
+          cabHtml =
+            '<div class="omg-detail-head" style="margin-top:16px;">Per cabang — <b>'+escHtml(m.monthLabel)+'</b></div>'+
+            '<div class="omg-detail-table-wrap"><table class="omg-detail-table">'+
+              '<thead><tr><th>Cabang</th><th>Total Minggu</th><th>Jml Minggu</th></tr></thead>'+
+              '<tbody>'+cabSumRows+'</tbody>'+
+            '</table></div>'+
+            '<div class="omg-detail-head" style="margin-top:14px;">Detail Minggu × Cabang</div>'+
+            '<div class="omg-detail-table-wrap"><table class="omg-detail-table">'+
+              '<thead><tr><th>Tanggal</th>'+headCab+'<th>Total</th></tr></thead>'+
+              '<tbody>'+matrixRows+'</tbody>'+
+            '</table></div>';
+        } else if(byCab.length === 1){
+          // Sudah 1 cabang — detail per Minggu cukup; tampilkan label cabang
+          cabHtml = '<div class="hint" style="margin-top:8px;">Cabang: <b>'+escHtml(byCab[0].kode)+'</b></div>';
+        }
+
         panel.innerHTML =
           '<div class="omg-detail-head">Detail Minggu — <b>'+escHtml(m.monthLabel)+'</b> · Total <b>'+fmt(m.sundayTotal)+'</b></div>'+
           '<div class="omg-detail-table-wrap"><table class="omg-detail-table">'+
             '<thead><tr><th>Tanggal</th><th>GE</th><th>GB</th><th>GG</th><th>Total</th></tr></thead>'+
             '<tbody>'+rows+'</tbody>'+
-          '</table></div>';
+          '</table></div>'+cabHtml;
       });
     });
   }
@@ -35555,7 +35594,7 @@ function loadAdminBertugas(){
       if(cab && !cab._wiredMinggu){
         cab._wiredMinggu=true;
         cab.addEventListener("change", function(){
-          delete _omsetMingguCache[cab.value];
+          delete _omsetMingguCache['v2_'+cab.value];
           loadOmsetMingguTrenInto_("menuHarianMingguWrap", cab.value);
         });
       }
