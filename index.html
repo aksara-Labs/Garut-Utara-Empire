@@ -19108,6 +19108,48 @@ html[data-theme="light"] .omg-detail-table td.num{
   text-align: right !important;
   font-variant-numeric: tabular-nums !important;
 }
+
+/* ========== Tombol + halaman omset Minggu ========== */
+html[data-theme="light"] .btn-minggu-detail{
+  margin-left: auto !important;
+  padding: 7px 12px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] .btn-minggu-detail:hover{
+  border-color: #CBD5E1 !important;
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] .minggu-page-head{
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 14px !important;
+}
+html[data-theme="light"] .minggu-page-title{
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] #menuHarianMingguView .hub-back-btn,
+html[data-theme="light"] #kanitMenuHarianMingguView .hub-back-btn{
+  color: #334155 !important;
+  background: transparent !important;
+  border: none !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+}
+/* ========== END tombol minggu page ========== */
+
 /* ========== END tren minggu ========== */
 
 /* ========== END omset minggu ========== */
@@ -23368,20 +23410,25 @@ html[data-theme="light"] .admin-content select:focus-visible {
 
     <!-- Tab: Menu Harian (rincian GE/GB/GG/Total per tanggal, cabang sendiri) -->
     <div class="panel subpanel" id="tab-kanitmenuharian">
-      <div class="hint" style="margin-top:0;">
-        Rincian omset harian (GE/GB/GG/Total) per tanggal dalam 1 bulan untuk cabang ini,
-        lengkap dengan grafik batang supaya kelihatan tanggal berapa omset tertinggi.
-        Pilih bulan dulu, lalu klik Tampilkan.
-      </div>
-      <div class="inline-row" style="margin-top:14px;">
-        <div class="field">
-          <label><span class="no">Bln</span> Pilih bulan</label>
-          <select id="kanitMenuHarianBulan"></select>
+      <div id="kanitMenuHarianMainView">
+        <div class="inline-row" style="margin-top:0;align-items:flex-end;gap:10px;flex-wrap:wrap;">
+          <div class="field">
+            <label>Bulan</label>
+            <select id="kanitMenuHarianBulan"></select>
+          </div>
+          <button type="button" id="kanitMenuHarianLoadBtn" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
+          <button type="button" id="kanitMenuHarianMingguBtn" class="btn-xs secondary btn-minggu-detail">Detail omset Minggu</button>
         </div>
-        <button id="kanitMenuHarianLoadBtn" class="btn-icon-refresh" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.1-5.7"/><path d="M21 3v6h-6"/></svg></button>
+        <div id="kanitMenuHarianWrap" style="margin-top:20px;"></div>
+        <div class="msg" id="kanitMenuHarianMsg"></div>
       </div>
-      <div id="kanitMenuHarianWrap" style="margin-top:20px;"></div>
-      <div class="msg" id="kanitMenuHarianMsg"></div>
+      <div id="kanitMenuHarianMingguView" style="display:none;">
+        <div class="minggu-page-head">
+          <button type="button" id="kanitMenuHarianMingguBack" class="hub-back-btn">← Kembali</button>
+          <div class="minggu-page-title">Detail omset hari Minggu</div>
+        </div>
+        <div id="kanitMenuHarianMingguWrap"><div class="empty-log">Memuat…</div></div>
+      </div>
     </div>
 
     <!-- Tab: Omset Bulanan (cabang sendiri) -->
@@ -26297,6 +26344,78 @@ $on("cabangPinSubmit", "click", function(){
   // (dikunci ke cabang sendiri) -- satu fungsi render, dua sumber data server.
 
   var _omsetMingguCache = {};
+
+  function openOmsetMingguPage_(isKanit){
+    if(isKanit){
+      var main=document.getElementById("kanitMenuHarianMainView");
+      var page=document.getElementById("kanitMenuHarianMingguView");
+      if(main) main.style.display="none";
+      if(page) page.style.display="block";
+      var box=document.getElementById("kanitMenuHarianMingguWrap");
+      if(box){ box.innerHTML='<div class="empty-log">Memuat tren omset Minggu…</div>'; }
+      loadOmsetMingguTrenInto_("kanitMenuHarianMingguWrap", session && session.cabang ? session.cabang : "");
+    } else {
+      var main2=document.getElementById("menuHarianMainView");
+      var page2=document.getElementById("menuHarianMingguView");
+      if(main2) main2.style.display="none";
+      if(page2) page2.style.display="block";
+      // sync cabang options
+      try{
+        var src=document.getElementById("menuHarianCabang");
+        var dst=document.getElementById("menuHarianMingguCabang");
+        if(src && dst){
+          dst.innerHTML=src.innerHTML;
+          dst.value=src.value||"TOTAL_AREA";
+        }
+      }catch(e){}
+      var box2=document.getElementById("menuHarianMingguWrap");
+      if(box2){ box2.innerHTML='<div class="empty-log">Memuat tren omset Minggu…</div>'; }
+      var cab=(document.getElementById("menuHarianMingguCabang")||{}).value || "TOTAL_AREA";
+      loadOmsetMingguTrenInto_("menuHarianMingguWrap", cab);
+    }
+  }
+  function closeOmsetMingguPage_(isKanit){
+    if(isKanit){
+      var main=document.getElementById("kanitMenuHarianMainView");
+      var page=document.getElementById("kanitMenuHarianMingguView");
+      if(page) page.style.display="none";
+      if(main) main.style.display="";
+    } else {
+      var main2=document.getElementById("menuHarianMainView");
+      var page2=document.getElementById("menuHarianMingguView");
+      if(page2) page2.style.display="none";
+      if(main2) main2.style.display="";
+    }
+  }
+  function loadOmsetMingguTrenInto_(boxId, cabang){
+    var box=document.getElementById(boxId);
+    if(!box) return;
+    cabang = cabang || "TOTAL_AREA";
+    if(_omsetMingguCache[cabang]){
+      renderOmsetMingguTren_(_omsetMingguCache[cabang], box, cabang);
+      return;
+    }
+    var run = google.script.run
+      .withSuccessHandler(function(r){
+        if(r && r.status==="OK" && r.data){
+          _omsetMingguCache[cabang]=r.data;
+          renderOmsetMingguTren_(r.data, box, cabang);
+        } else {
+          box.innerHTML='<div class="empty-log">'+(r&&r.reason?escHtml(r.reason):"Gagal muat tren Minggu")+'</div>';
+        }
+      })
+      .withFailureHandler(function(){
+        box.innerHTML='<div class="empty-log">Gagal muat tren Minggu</div>';
+      });
+    if(session && session.adminPin){
+      run.getOmsetMingguTrenAdmin(session.adminPin, cabang);
+    } else if(session && session.cabang && session.cabangPin){
+      run.getOmsetMingguTrenKanit(session.cabang, session.cabangPin);
+    } else {
+      box.innerHTML='<div class="empty-log">Sesi tidak valid</div>';
+    }
+  }
+
   function loadOmsetMingguTren_(wrapId){
     var cabang = "TOTAL_AREA";
     try{
@@ -26368,7 +26487,7 @@ $on("cabangPinSubmit", "click", function(){
       '<div class="harian-minggu-box">'+
         '<div class="harian-sunday-title">Tren omset hari Minggu <span class="harian-sunday-sub">· klik bulan untuk detail</span></div>'+
         '<div class="omg-chart" style="min-height:'+(CH+36)+'px">'+bars+'</div>'+
-        '<div class="omg-detail" id="omgDetailPanel"><div class="hint">Klik salah satu batang bulan di atas.</div></div>'+
+        '<div class="omg-detail"><div class="hint">Klik salah satu batang bulan di atas.</div></div>'+
       '</div>';
 
     box.querySelectorAll(".omg-bar-wrap").forEach(function(btn){
@@ -26377,7 +26496,7 @@ $on("cabangPinSubmit", "click", function(){
         btn.classList.add("is-active");
         var idx = parseInt(btn.getAttribute("data-idx"), 10);
         var m = months[idx];
-        var panel = document.getElementById("omgDetailPanel");
+        var panel = box.querySelector(".omg-detail");
         if(!panel || !m) return;
         var rows = (m.sundays||[]).map(function(s){
           return '<tr>'+
@@ -26505,10 +26624,7 @@ $on("cabangPinSubmit", "click", function(){
         '</div>'+
         '<div class="cmp-result" style="margin-top:10px;"></div>'+
       '</div>';
-    wrap.innerHTML = summaryHtml + syncedHtml +
-      '<div class="harian-minggu-section" id="harianMingguTrenWrap"><div class="empty-log">Memuat tren omset Minggu…</div></div>' +
-      compareHtml;
-    try{ loadOmsetMingguTren_(wrapId); }catch(eM){}
+    wrap.innerHTML = summaryHtml + syncedHtml + compareHtml;
     var srcSel = document.getElementById("menuHarianBulan") || document.getElementById("kanitMenuHarianBulan");
     if(srcSel){
       var opts = srcSel.innerHTML;
@@ -35378,6 +35494,32 @@ function loadAdminBertugas(){
 
 
 <script>
+
+  // Omset Minggu detail page
+  (function(){
+    function wireMinggu(){
+      var b=document.getElementById("menuHarianMingguBtn");
+      if(b && !b._wiredMinggu){ b._wiredMinggu=true; b.addEventListener("click", function(){ openOmsetMingguPage_(false); }); }
+      var back=document.getElementById("menuHarianMingguBack");
+      if(back && !back._wiredMinggu){ back._wiredMinggu=true; back.addEventListener("click", function(){ closeOmsetMingguPage_(false); }); }
+      var cab=document.getElementById("menuHarianMingguCabang");
+      if(cab && !cab._wiredMinggu){
+        cab._wiredMinggu=true;
+        cab.addEventListener("change", function(){
+          delete _omsetMingguCache[cab.value];
+          loadOmsetMingguTrenInto_("menuHarianMingguWrap", cab.value);
+        });
+      }
+      var bk=document.getElementById("kanitMenuHarianMingguBtn");
+      if(bk && !bk._wiredMinggu){ bk._wiredMinggu=true; bk.addEventListener("click", function(){ openOmsetMingguPage_(true); }); }
+      var backk=document.getElementById("kanitMenuHarianMingguBack");
+      if(backk && !backk._wiredMinggu){ backk._wiredMinggu=true; backk.addEventListener("click", function(){ closeOmsetMingguPage_(true); }); }
+    }
+    if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wireMinggu);
+    else wireMinggu();
+    setTimeout(wireMinggu, 800);
+  })();
+
 /* TODO + NOTEPAD — sync server (NIK) + local cache */
 (function(){
   var TODO_KEY = "gue_todo_items_v3";
