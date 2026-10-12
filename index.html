@@ -19015,6 +19015,101 @@ html[data-theme="light"] .harian-table th.harian-day-th.is-sunday .dow{
   color: #B45309 !important;
   font-weight: 700 !important;
 }
+
+/* ========== Tren omset Minggu chart ========== */
+html[data-theme="light"] .harian-minggu-section{
+  margin-top: 14px !important;
+}
+html[data-theme="light"] .harian-minggu-box{
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  background: #FFFFFF !important;
+  padding: 14px 14px 12px !important;
+}
+html[data-theme="light"] .omg-chart{
+  display: flex !important;
+  align-items: flex-end !important;
+  gap: 6px !important;
+  overflow-x: auto !important;
+  padding: 8px 4px 0 !important;
+}
+html[data-theme="light"] .omg-bar-wrap{
+  flex: 1 0 44px !important;
+  max-width: 72px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 4px !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+html[data-theme="light"] .omg-bar{
+  width: 100% !important;
+  max-width: 36px !important;
+  border-radius: 8px 8px 4px 4px !important;
+  background: #0F172A !important;
+  min-height: 3px !important;
+  transition: background 0.15s ease !important;
+}
+html[data-theme="light"] .omg-bar-wrap:hover .omg-bar,
+html[data-theme="light"] .omg-bar-wrap.is-active .omg-bar{
+  background: #2563EB !important;
+}
+html[data-theme="light"] .omg-bar-val{
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  color: #64748B !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] .omg-bar-lab{
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  color: #94A3B8 !important;
+}
+html[data-theme="light"] .omg-bar-wrap.is-active .omg-bar-lab{
+  color: #0F172A !important;
+}
+html[data-theme="light"] .omg-detail{
+  margin-top: 12px !important;
+  border-top: 1px solid #E2E8F0 !important;
+  padding-top: 10px !important;
+}
+html[data-theme="light"] .omg-detail-head{
+  font-size: 13px !important;
+  color: #0F172A !important;
+  margin-bottom: 8px !important;
+}
+html[data-theme="light"] .omg-detail-table-wrap{
+  overflow-x: auto !important;
+}
+html[data-theme="light"] .omg-detail-table{
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 12.5px !important;
+}
+html[data-theme="light"] .omg-detail-table th{
+  text-align: left !important;
+  padding: 8px 10px !important;
+  background: #F8FAFC !important;
+  color: #64748B !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .omg-detail-table td{
+  padding: 8px 10px !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .omg-detail-table td.num{
+  text-align: right !important;
+  font-variant-numeric: tabular-nums !important;
+}
+/* ========== END tren minggu ========== */
+
 /* ========== END omset minggu ========== */
 
 /* ========== END todo notepad ========== */
@@ -26200,6 +26295,110 @@ $on("cabangPinSubmit", "click", function(){
   // ---------------- Menu Harian (rincian GE/GB/GG/Total per tanggal + grafik) ----------------
   // Dipakai bersama oleh Admin (bisa pilih cabang / Total Area) dan Kanit
   // (dikunci ke cabang sendiri) -- satu fungsi render, dua sumber data server.
+
+  var _omsetMingguCache = {};
+  function loadOmsetMingguTren_(wrapId){
+    var cabang = "TOTAL_AREA";
+    try{
+      if(wrapId === "kanitMenuHarianWrap" && session && session.cabang) cabang = session.cabang;
+      else {
+        var sel = document.getElementById("menuHarianCabang");
+        if(sel && sel.value) cabang = sel.value;
+      }
+    }catch(e){}
+    var box = document.getElementById("harianMingguTrenWrap");
+    if(!box) return;
+    var cacheKey = cabang;
+    function paint(data){
+      renderOmsetMingguTren_(data, box, cabang);
+    }
+    if(_omsetMingguCache[cacheKey]){
+      paint(_omsetMingguCache[cacheKey]);
+      return;
+    }
+    var run = google.script.run
+      .withSuccessHandler(function(r){
+        if(r && r.status === "OK" && r.data){
+          _omsetMingguCache[cacheKey] = r.data;
+          paint(r.data);
+        } else {
+          box.innerHTML = '<div class="empty-log">'+(r && r.reason ? escHtml(r.reason) : "Gagal muat tren Minggu")+'</div>';
+        }
+      })
+      .withFailureHandler(function(err){
+        box.innerHTML = '<div class="empty-log">Gagal muat tren Minggu</div>';
+      });
+    if(session && session.adminPin){
+      run.getOmsetMingguTrenAdmin(session.adminPin, cabang);
+    } else if(session && session.cabang && session.cabangPin){
+      run.getOmsetMingguTrenKanit(session.cabang, session.cabangPin);
+    } else {
+      box.innerHTML = '<div class="empty-log">Sesi tidak valid</div>';
+    }
+  }
+  function renderOmsetMingguTren_(data, box, cabang){
+    if(!box) return;
+    if(data.closed){
+      box.innerHTML =
+        '<div class="harian-sunday-box is-closed">'+
+          '<div class="harian-sunday-title">Tren omset hari Minggu</div>'+
+          '<div class="harian-sunday-note">Cabang <b>'+escHtml(cabang)+'</b> libur Minggu — tidak dihitung.</div>'+
+        '</div>';
+      return;
+    }
+    var months = data.months || [];
+    if(!months.length){
+      box.innerHTML = '<div class="empty-log">Belum ada data Minggu.</div>';
+      return;
+    }
+    var maxV = 1;
+    months.forEach(function(m){ if((m.sundayTotal||0) > maxV) maxV = m.sundayTotal; });
+    var CH = 110;
+    var bars = months.map(function(m, idx){
+      var h = Math.max(3, Math.round(((m.sundayTotal||0) / maxV) * CH));
+      var short = String(m.monthLabel||"").replace(/\s*20\d{2}/,"").trim().slice(0,3);
+      return '<button type="button" class="omg-bar-wrap" data-idx="'+idx+'" title="'+escHtml(m.monthLabel)+': '+fmt(m.sundayTotal)+'">'+
+        '<span class="omg-bar-val">'+(m.sundayTotal?fmt(m.sundayTotal):"")+'</span>'+
+        '<span class="omg-bar" style="height:'+h+'px;"></span>'+
+        '<span class="omg-bar-lab">'+escHtml(short)+'</span>'+
+      '</button>';
+    }).join("");
+
+    box.innerHTML =
+      '<div class="harian-minggu-box">'+
+        '<div class="harian-sunday-title">Tren omset hari Minggu <span class="harian-sunday-sub">· klik bulan untuk detail</span></div>'+
+        '<div class="omg-chart" style="min-height:'+(CH+36)+'px">'+bars+'</div>'+
+        '<div class="omg-detail" id="omgDetailPanel"><div class="hint">Klik salah satu batang bulan di atas.</div></div>'+
+      '</div>';
+
+    box.querySelectorAll(".omg-bar-wrap").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        box.querySelectorAll(".omg-bar-wrap").forEach(function(b){ b.classList.remove("is-active"); });
+        btn.classList.add("is-active");
+        var idx = parseInt(btn.getAttribute("data-idx"), 10);
+        var m = months[idx];
+        var panel = document.getElementById("omgDetailPanel");
+        if(!panel || !m) return;
+        var rows = (m.sundays||[]).map(function(s){
+          return '<tr>'+
+            '<td>Minggu, tgl '+s.day+'</td>'+
+            '<td class="num">'+fmt(s.ge)+'</td>'+
+            '<td class="num">'+fmt(s.gb)+'</td>'+
+            '<td class="num">'+fmt(s.gg)+'</td>'+
+            '<td class="num"><b>'+fmt(s.total)+'</b></td>'+
+          '</tr>';
+        }).join("");
+        if(!rows) rows = '<tr><td colspan="5">Tidak ada hari Minggu di bulan ini.</td></tr>';
+        panel.innerHTML =
+          '<div class="omg-detail-head">Detail Minggu — <b>'+escHtml(m.monthLabel)+'</b> · Total <b>'+fmt(m.sundayTotal)+'</b></div>'+
+          '<div class="omg-detail-table-wrap"><table class="omg-detail-table">'+
+            '<thead><tr><th>Tanggal</th><th>GE</th><th>GB</th><th>GG</th><th>Total</th></tr></thead>'+
+            '<tbody>'+rows+'</tbody>'+
+          '</table></div>';
+      });
+    });
+  }
+
   function renderHarianGrid(data, wrapId){
     var wrap = document.getElementById(wrapId);
     if(!data || !data.days || !data.days.length){
@@ -26256,50 +26455,7 @@ $on("cabangPinSubmit", "click", function(){
       return new Date(ym.y, ym.m-1, dayNum).getDay() === 0;
     }
 
-    // Ringkasan omset hari Minggu
-    var cabangCtx = "TOTAL_AREA";
-    try{
-      if(wrapId === "kanitMenuHarianWrap" && typeof session !== "undefined" && session && session.cabang) cabangCtx = session.cabang;
-      else {
-        var selH = document.getElementById("menuHarianCabang");
-        if(selH && selH.value) cabangCtx = selH.value;
-      }
-    }catch(eC){}
-    var isTutupMinggu = (typeof CABANG_TUTUP_MINGGU_LIST !== "undefined")
-      && CABANG_TUTUP_MINGGU_LIST.indexOf(cabangCtx) !== -1
-      && cabangCtx !== "TOTAL_AREA";
-    var sundayDays = days.filter(function(d){ return isSundayDay_(d.day); });
-    var sunTotal = 0, sunGe = 0, sunGb = 0, sunGg = 0;
-    sundayDays.forEach(function(d){
-      sunTotal += Number(d.total)||0;
-      sunGe += Number(d.ge)||0;
-      sunGb += Number(d.gb)||0;
-      sunGg += Number(d.gg)||0;
-    });
-    var sunWithData = sundayDays.filter(function(d){ return (Number(d.total)||0) > 0; }).length;
-    var sunCount = sundayDays.length;
-    var sunAvg = sunWithData > 0 ? Math.round(sunTotal / sunWithData) : 0;
-    var sunPct = data.totalBulan > 0 ? (Math.round((sunTotal / data.totalBulan) * 1000) / 10) : 0;
-    var sunDates = sundayDays.map(function(d){ return d.day; }).join(", ");
-    var sundayHtml = "";
-    if(isTutupMinggu){
-      sundayHtml = '<div class="harian-sunday-box is-closed"><div class="harian-sunday-title">Omset hari Minggu</div><div class="harian-sunday-note">Cabang <b>'+escHtml(cabangCtx)+'</b> libur Minggu — tidak dihitung.</div></div>';
-    } else {
-      sundayHtml =
-        '<div class="harian-sunday-box">'+
-          '<div class="harian-sunday-title">Omset hari Minggu'+(cabangCtx==="TOTAL_AREA"?' <span class="harian-sunday-sub">· cabang buka Minggu</span>':'')+'</div>'+
-          '<div class="harian-sunday-grid">'+
-            '<div class="harian-sunday-card"><div class="k">Total Minggu</div><div class="v">'+fmt(sunTotal)+'</div></div>'+
-            '<div class="harian-sunday-card"><div class="k">Rata-rata / Minggu</div><div class="v">'+fmt(sunAvg)+'</div></div>'+
-            '<div class="harian-sunday-card"><div class="k">Kontribusi</div><div class="v">'+sunPct+'%</div></div>'+
-            '<div class="harian-sunday-card"><div class="k">Minggu terdata</div><div class="v">'+sunWithData+' / '+sunCount+'</div></div>'+
-            '<div class="harian-sunday-card"><div class="k">GE · GB · GG</div><div class="v sm">'+fmt(sunGe)+' · '+fmt(sunGb)+' · '+fmt(sunGg)+'</div></div>'+
-            '<div class="harian-sunday-card"><div class="k">Tanggal Minggu</div><div class="v sm">'+(sunDates||'-')+'</div></div>'+
-          '</div>'+
-        '</div>';
-    }
-    // sisipkan ringkasan minggu setelah kartu summary
-    summaryHtml = summaryHtml + sundayHtml;
+    // Tren omset Minggu digambar terpisah di #harianMingguTrenWrap (klik bulan → detail)
 
     var headerCells = days.map(function(d){
       var dow = dayDow_(d.day);
@@ -26349,7 +26505,10 @@ $on("cabangPinSubmit", "click", function(){
         '</div>'+
         '<div class="cmp-result" style="margin-top:10px;"></div>'+
       '</div>';
-    wrap.innerHTML = summaryHtml + syncedHtml + compareHtml;
+    wrap.innerHTML = summaryHtml + syncedHtml +
+      '<div class="harian-minggu-section" id="harianMingguTrenWrap"><div class="empty-log">Memuat tren omset Minggu…</div></div>' +
+      compareHtml;
+    try{ loadOmsetMingguTren_(wrapId); }catch(eM){}
     var srcSel = document.getElementById("menuHarianBulan") || document.getElementById("kanitMenuHarianBulan");
     if(srcSel){
       var opts = srcSel.innerHTML;
