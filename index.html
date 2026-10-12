@@ -2622,7 +2622,7 @@ textarea.is-invalid{
    GLOBAL BUTTON UNIFY — outline gold (gaya Pilih file)
    Semua tombol aksi di app: outline, kecil, seragam
    ========================================================= */
-button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.admin-nav-btn):not(.admin-hamburger):not(.theme-toggle):not(.profile-btn):not(.notif-btn):not(.pin-btn):not(.logo-btn):not(.power-btn),
+button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.admin-nav-btn):not(.admin-hamburger):not(.theme-toggle):not(.profile-btn):not(.notif-btn):not(.pin-btn):not(.logo-btn):not(.power-btn):not(.omg-bar-wrap),
 .btn,
 .btn-xs,
 .btn-sm,
@@ -2665,7 +2665,7 @@ input[type="submit"]{
   box-sizing: border-box !important;
   font-family: inherit !important;
 }
-button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.admin-nav-btn):not(.admin-hamburger):not(.power-btn):hover,
+button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.admin-nav-btn):not(.admin-hamburger):not(.power-btn):not(.omg-bar-wrap):hover,
 .btn:hover,
 .btn-xs:hover,
 .btn-sm:hover,
@@ -23264,6 +23264,84 @@ html[data-theme="light"] .omg-detail .hint{
   padding: 8px 0 !important;
 }
 /* ========== END minggu readability ========== */
+
+/* Omset Minggu chart — BEBAS dari global button height 32px */
+button.omg-bar-wrap,
+html[data-theme="light"] button.omg-bar-wrap{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  height: auto !important;
+  min-height: 160px !important;
+  max-height: none !important;
+  width: auto !important;
+  min-width: 52px !important;
+  max-width: 88px !important;
+  flex: 1 1 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  cursor: pointer !important;
+  gap: 6px !important;
+}
+button.omg-bar-wrap:hover,
+html[data-theme="light"] button.omg-bar-wrap:hover{
+  background: transparent !important;
+  border: none !important;
+  color: #0F172A !important;
+}
+button.omg-bar-wrap .omg-bar,
+html[data-theme="light"] button.omg-bar-wrap .omg-bar{
+  display: block !important;
+  width: 30px !important;
+  border-radius: 8px 8px 4px 4px !important;
+  background: #334155 !important;
+  min-height: 6px !important;
+  border: none !important;
+  flex-shrink: 0 !important;
+}
+button.omg-bar-wrap.is-active .omg-bar,
+html[data-theme="light"] button.omg-bar-wrap.is-active .omg-bar{
+  background: #2563EB !important;
+}
+button.omg-bar-wrap:hover .omg-bar{
+  background: #1E40AF !important;
+}
+button.omg-bar-wrap .omg-bar-val{
+  display: block !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  line-height: 1.2 !important;
+}
+button.omg-bar-wrap .omg-bar-lab{
+  display: block !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+button.omg-bar-wrap.is-active .omg-bar-lab{
+  color: #1D4ED8 !important;
+  -webkit-text-fill-color: #1D4ED8 !important;
+}
+html[data-theme="light"] .omg-chart{
+  display: flex !important;
+  align-items: flex-end !important;
+  gap: 8px !important;
+  min-height: 180px !important;
+  padding: 8px 4px 4px !important;
+  border: none !important;
+  background: transparent !important;
+}
 </style>
 </head>
 <body>
