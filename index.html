@@ -2613,7 +2613,7 @@ textarea.is-invalid{
    GLOBAL BUTTON UNIFY — outline gold (gaya Pilih file)
    Semua tombol aksi di app: outline, kecil, seragam
    ========================================================= */
-button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.admin-nav-btn):not(.admin-hamburger):not(.theme-toggle):not(.profile-btn):not(.notif-btn):not(.pin-btn):not(.logo-btn):not(.power-btn):not(.omg-bar-wrap):not(.doc-hub-card),
+button:not(.sidebar-item):not(.nav-item):not(.menu-item):not(.tab-btn):not(.admin-nav-btn):not(.admin-hamburger):not(.theme-toggle):not(.profile-btn):not(.notif-btn):not(.pin-btn):not(.logo-btn):not(.power-btn):not(.omg-bar-wrap):not(.doc-hub-card):not(.aytd-tab),
 .btn,
 .btn-xs,
 .btn-sm,
@@ -23725,6 +23725,152 @@ html[data-theme="light"] #kanitProfileModal .sub,
 html[data-theme="light"] #adminProfileModal .sub{
   color: #64748B !important;
 }
+
+/* ========== F1 Audit KPI — acuan YTD (jumlah temuan) ========== */
+html[data-theme="light"] .audit-kpi-grid.audit-kpi-v3{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  margin: 12px 0 14px !important;
+}
+html[data-theme="light"] .aytd-row{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+html[data-theme="light"] .aytd-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  padding: 14px 16px 12px !important;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04) !important;
+}
+html[data-theme="light"] .aytd-head{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  margin-bottom: 6px !important;
+}
+html[data-theme="light"] .aytd-head span{
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #94A3B8 !important;
+}
+html[data-theme="light"] .aytd-head strong{
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .aytd-num{
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  line-height: 1.1 !important;
+  margin-bottom: 10px !important;
+}
+html[data-theme="light"] .aytd-num em{
+  font-style: normal !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #94A3B8 !important;
+  margin-left: 4px !important;
+}
+html[data-theme="light"] .aytd-bars{
+  display: flex !important;
+  align-items: flex-end !important;
+  gap: 3px !important;
+  height: 40px !important;
+}
+html[data-theme="light"] .aytd-bars i{
+  flex: 1 1 0 !important;
+  min-width: 4px !important;
+  border-radius: 3px 3px 1px 1px !important;
+  display: block !important;
+  opacity: 0.9 !important;
+}
+html[data-theme="light"] .aytd-empty{
+  font-size: 12px !important;
+  color: #94A3B8 !important;
+  padding: 12px 0 4px !important;
+}
+html[data-theme="light"] .aytd-tabs{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  padding: 4px 0 !important;
+}
+html[data-theme="light"] .aytd-tab{
+  height: 34px !important;
+  min-height: 34px !important;
+  max-height: 34px !important;
+  padding: 0 16px !important;
+  border-radius: 999px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] .aytd-tab.is-active{
+  background: #2563EB !important;
+  border-color: #2563EB !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+html[data-theme="light"] .aytd-tab:hover:not(.is-active){
+  background: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .aytd-meta{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 10px 12px !important;
+}
+html[data-theme="light"] .aytd-meta-chip{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+html[data-theme="light"] .aytd-meta-chip em{
+  font-style: normal !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  color: #94A3B8 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+}
+html[data-theme="light"] .aytd-meta-chip b{
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+html[data-theme="light"] .aytd-meta-chip span{
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #2563EB !important;
+  font-variant-numeric: tabular-nums !important;
+}
+html[data-theme="light"] .aytd-meta-total span{ color: #64748B !important; }
+@media (max-width: 900px){
+  html[data-theme="light"] .aytd-row{ grid-template-columns: 1fr !important; }
+  html[data-theme="light"] .aytd-meta{ grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 560px){
+  html[data-theme="light"] .aytd-meta{ grid-template-columns: 1fr !important; }
+}
+/* Exclude aytd-tab from gold global button look is partially via height rules above */
 </style>
 </head>
 <body>
@@ -32131,34 +32277,87 @@ function applyRejectedAlasanFilter_(which){
   }
   function fillDataList(id, items){ return fillDatalist(id, items); }
 
+  function miniYtdBars(series, color){
+    series = series || [];
+    var max = 1;
+    series.forEach(function(x){ if((x.value||0) > max) max = x.value; });
+    var bars = series.map(function(x){
+      var h = Math.max(2, Math.round(((x.value||0)/max)*36));
+      if(!(x.value||0)) h = 2;
+      return '<i style="height:'+h+'px;background:'+color+'" title="'+escHtml(String(x.label||''))+': '+(x.value||0)+'"></i>';
+    }).join("");
+    return '<div class="aytd-bars">'+bars+'</div>';
+  }
   function renderAuditKpi(el, d){
     if(!el || !d) return;
     var nPel = d.totalPelanggaran != null ? d.totalPelanggaran : 0;
     var nSup = d.totalSupport != null ? d.totalSupport : 0;
     var nFr = d.totalFraud != null ? d.totalFraud : 0;
+    var nAll = (Number(nPel)||0) + (Number(nSup)||0) + (Number(nFr)||0);
     var pet = (d.petugasTerbanyak && d.petugasTerbanyak.key) ? d.petugasTerbanyak : { key: "-", count: 0 };
     var cab = (d.cabangTerbanyak && d.cabangTerbanyak.key) ? d.cabangTerbanyak : { key: "-", count: 0 };
     var jen = (d.jenisTerbanyak && d.jenisTerbanyak.key) ? d.jenisTerbanyak : { key: "-", count: 0 };
-    var tipeLabel = d.filterTipe && d.filterTipe !== "SEMUA" ? d.filterTipe : "Semua";
-    try {
-      var tf = document.getElementById("auditTipeFilter") || document.getElementById("kanitAuditTipeFilter");
-      if (tf && tf.value) tipeLabel = tf.value === "SEMUA" ? "Semua" : tf.value;
-    } catch (e) {}
+    var ytd = d.trenYtd || {};
     function shortName(s, n){
       s = String(s || "-");
       return s.length > (n||22) ? s.slice(0, n-1) + "…" : s;
     }
-    el.className = "audit-kpi-grid audit-kpi-v2";
+    // current tab from filter
+    var curTipe = "Pelanggaran";
+    try {
+      var tf = document.getElementById("auditTipeFilter") || document.getElementById("kanitAuditTipeFilter");
+      if (tf && tf.value) curTipe = tf.value;
+    } catch (e) {}
+    function tabCls(name){
+      if(name === "SEMUA") return curTipe === "SEMUA" ? " is-active" : "";
+      return curTipe === name ? " is-active" : "";
+    }
+    el.className = "audit-kpi-grid audit-kpi-v3";
     el.innerHTML =
-      '<div class="audit-kpi audit-kpi-pel"><div class="k">Pelanggaran</div><div class="v">'+nPel+'</div></div>'+
-      '<div class="audit-kpi audit-kpi-sup"><div class="k">Support</div><div class="v">'+nSup+'</div></div>'+
-      '<div class="audit-kpi audit-kpi-fr"><div class="k">Fraud</div><div class="v">'+nFr+'</div></div>'+
-      '<div class="audit-kpi"><div class="k">Total</div><div class="v">'+d.total+'</div><div class="s">'+escHtml(tipeLabel)+'</div></div>'+
-      '<div class="audit-kpi-meta">'+
-        '<span class="meta-chip"><em>Cabang</em> '+escHtml(shortName(cab.key,14))+' <b>'+(cab.count||0)+'</b></span>'+
-        '<span class="meta-chip"><em>Jenis</em> '+escHtml(shortName(jen.key,20))+' <b>'+(jen.count||0)+'</b></span>'+
-        '<span class="meta-chip"><em>Petugas</em> '+escHtml(shortName(pet.key,16))+' <b>'+(pet.count||0)+'</b></span>'+
+      '<div class="aytd-row">'+
+        '<div class="aytd-card aytd-pel">'+
+          '<div class="aytd-head"><span>Tren YTD</span><strong>Pelanggaran</strong></div>'+
+          '<div class="aytd-num">'+nPel+' <em>total temuan</em></div>'+
+          miniYtdBars(ytd.pel, "#2563EB")+
+        '</div>'+
+        '<div class="aytd-card aytd-fr">'+
+          '<div class="aytd-head"><span>Tren YTD</span><strong>Fraud</strong></div>'+
+          '<div class="aytd-num">'+nFr+' <em>total temuan</em></div>'+
+          (nFr ? miniYtdBars(ytd.fr, "#94A3B8") : '<div class="aytd-empty">Tidak ada fraud</div>')+
+        '</div>'+
+        '<div class="aytd-card aytd-sup">'+
+          '<div class="aytd-head"><span>Tren YTD</span><strong>Support</strong></div>'+
+          '<div class="aytd-num">'+nSup+' <em>total temuan</em></div>'+
+          miniYtdBars(ytd.sup, "#D97706")+
+        '</div>'+
+      '</div>'+
+      '<div class="aytd-tabs" role="tablist">'+
+        '<button type="button" class="aytd-tab'+tabCls("Pelanggaran")+'" data-audit-tipe="Pelanggaran">Pelanggaran</button>'+
+        '<button type="button" class="aytd-tab'+tabCls("Fraud")+'" data-audit-tipe="Fraud">Fraud</button>'+
+        '<button type="button" class="aytd-tab'+tabCls("Support")+'" data-audit-tipe="Support">Support</button>'+
+        '<button type="button" class="aytd-tab'+tabCls("SEMUA")+'" data-audit-tipe="SEMUA">Semua</button>'+
+      '</div>'+
+      '<div class="aytd-meta">'+
+        '<div class="aytd-meta-chip"><em>Cabang terbanyak</em><b>'+escHtml(shortName(cab.key,16))+'</b><span>'+(cab.count||0)+'</span></div>'+
+        '<div class="aytd-meta-chip"><em>Jenis terbanyak</em><b>'+escHtml(shortName(jen.key,22))+'</b><span>'+(jen.count||0)+'</span></div>'+
+        '<div class="aytd-meta-chip"><em>Petugas terbanyak</em><b>'+escHtml(shortName(pet.key,18))+'</b><span>'+(pet.count||0)+'</span></div>'+
+        '<div class="aytd-meta-chip aytd-meta-total"><em>Total temuan</em><b>'+nAll+'</b><span>semua tipe</span></div>'+
       '</div>';
+
+    // Tab click → set filter + reload
+    el.querySelectorAll(".aytd-tab").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var t = btn.getAttribute("data-audit-tipe") || "Pelanggaran";
+        var tf1 = document.getElementById("auditTipeFilter");
+        var tf2 = document.getElementById("kanitAuditTipeFilter");
+        if(tf1) tf1.value = t;
+        if(tf2) tf2.value = t;
+        var load1 = document.getElementById("auditLoadBtn");
+        var load2 = document.getElementById("kanitAuditLoadBtn");
+        if(load1) load1.click();
+        else if(load2) load2.click();
+      });
+    });
   }
 
   function renderAuditAdmin(d){
