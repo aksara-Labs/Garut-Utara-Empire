@@ -24889,7 +24889,7 @@ html[data-theme="light"] .admin-sidebar-brand{
   padding: 4px 8px 16px !important;
 }
 html[data-theme="light"] .admin-sidebar-brand .brand-logo-img{
-  width: 148px !important;
+  width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
   object-fit: contain !important;
@@ -25179,7 +25179,7 @@ html[data-theme="light"] .admin-sidebar-brand .brand-logo-img,
 .admin-sidebar-brand .brand-logo-img,
 html[data-theme="light"] .brand-logo-img{
   display: block !important;
-  width: 148px !important;
+  width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
   min-height: 28px !important;
@@ -25292,6 +25292,181 @@ html[data-theme="light"] .omg-v2-col{
 }
 html[data-theme="light"] .omg-v2-fill{
   width: 18px !important;
+}
+
+/* Matrix Minggu × Cabang — alignment presisi */
+html[data-theme="light"] .omg-v2-table.omg-v2-matrix{
+  table-layout: fixed !important;
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+html[data-theme="light"] .omg-v2-table.omg-v2-matrix th,
+html[data-theme="light"] .omg-v2-table.omg-v2-matrix td{
+  box-sizing: border-box !important;
+  padding: 8px 10px !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+/* Kolom 1 = Tanggal (kiri) */
+html[data-theme="light"] .omg-v2-table.omg-v2-matrix th:first-child,
+html[data-theme="light"] .omg-v2-table.omg-v2-matrix td:first-child{
+  width: 22% !important;
+  min-width: 110px !important;
+  text-align: left !important;
+}
+/* Kolom cabang + total = kanan, lebar merata */
+html[data-theme="light"] .omg-v2-table.omg-v2-matrix th:not(:first-child),
+html[data-theme="light"] .omg-v2-table.omg-v2-matrix td:not(:first-child){
+  text-align: right !important;
+  font-variant-numeric: tabular-nums !important;
+  width: auto !important;
+}
+html[data-theme="light"] .omg-v2-table.omg-v2-matrix thead th{
+  text-align: inherit !important;
+}
+html[data-theme="light"] .omg-v2-table.omg-v2-matrix thead th:first-child{
+  text-align: left !important;
+}
+html[data-theme="light"] .omg-v2-table.omg-v2-matrix thead th:not(:first-child){
+  text-align: right !important;
+}
+/* Detail main — sama prinsip */
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main{
+  table-layout: fixed !important;
+}
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main th,
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main td{
+  box-sizing: border-box !important;
+  padding: 8px 10px !important;
+}
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main th:first-child,
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main td:first-child{
+  width: 28% !important;
+  text-align: left !important;
+}
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main th:not(:first-child),
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main td:not(:first-child){
+  width: 18% !important;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums !important;
+}
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum{
+  table-layout: fixed !important;
+}
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum th:first-child,
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum td:first-child{
+  width: 34% !important;
+  text-align: left !important;
+}
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum th:not(:first-child),
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum td:not(:first-child){
+  width: 33% !important;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+/* 3 tabel sejajar — maksimalkan lebar */
+html[data-theme="light"] .omg-v2-grid{
+  display: grid !important;
+  grid-template-columns: minmax(240px, 1.1fr) minmax(160px, 0.7fr) minmax(280px, 1.4fr) !important;
+  gap: 12px !important;
+  align-items: start !important;
+  width: 100% !important;
+}
+html[data-theme="light"] .omg-v2-grid.omg-v2-grid-single{
+  grid-template-columns: minmax(280px, 1fr) auto !important;
+}
+html[data-theme="light"] .omg-v2-card{
+  min-width: 0 !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 10px 10px 8px !important;
+  overflow: hidden !important;
+}
+html[data-theme="light"] .omg-v2-card .omg-v2-dhead{
+  margin: 0 0 8px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  line-height: 1.3 !important;
+}
+html[data-theme="light"] .omg-v2-card .omg-v2-table-wrap{
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  max-height: 280px !important;
+  overflow: auto !important;
+}
+html[data-theme="light"] .omg-v2-card .omg-v2-table th,
+html[data-theme="light"] .omg-v2-card .omg-v2-table td{
+  padding: 6px 8px !important;
+  font-size: 11.5px !important;
+}
+html[data-theme="light"] .omg-v2-card .omg-v2-table th{
+  font-size: 10px !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1 !important;
+}
+@media (max-width: 1100px){
+  html[data-theme="light"] .omg-v2-grid{
+    grid-template-columns: 1fr 1fr !important;
+  }
+  html[data-theme="light"] .omg-v2-card-wide{
+    grid-column: 1 / -1 !important;
+  }
+}
+@media (max-width: 720px){
+  html[data-theme="light"] .omg-v2-grid{
+    grid-template-columns: 1fr !important;
+  }
+  html[data-theme="light"] .omg-v2-card-wide{
+    grid-column: auto !important;
+  }
+}
+
+/* Sidebar logo — lebih besar, rapat ke tepi */
+html[data-theme="light"] .admin-sidebar-brand,
+.admin-sidebar-brand{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 2px !important;
+  padding: 6px 10px 10px !important;
+  margin: 0 0 6px !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .admin-sidebar-brand .brand-logo-img,
+.admin-sidebar-brand .brand-logo-img{
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 36px !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+  filter: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html[data-theme="light"] .admin-sidebar-brand-name{
+  display: none !important;
+}
+html[data-theme="light"] .admin-sidebar-brand-sub{
+  margin: 0 !important;
+  padding: 0 2px !important;
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  color: #64748B !important;
+}
+/* Kurangi padding kiri-kanan nav biar brand full width */
+html[data-theme="light"] .admin-sidebar{
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-top: 8px !important;
 }
 </style>
 </head>
@@ -28781,7 +28956,12 @@ $on("cabangPinSubmit", "click", function(){
           return '<tr><td><b>'+escHtml(bc.kode)+'</b></td><td class="num"><b>'+fmt(bc.sundayTotal)+'</b></td><td class="num">'+(bc.sundays||[]).length+'</td></tr>';
         }).join("");
         var cabCodes = byCab.map(function(bc){ return bc.kode; });
-        var headCab = cabCodes.map(function(k){ return '<th>'+escHtml(k)+'</th>'; }).join("");
+        var nCab = cabCodes.length;
+        var colW = nCab > 0 ? (78 / (nCab + 1)) : 18; // sisa 22% untuk tanggal
+        var colgroup = '<colgroup><col style="width:22%">' +
+          cabCodes.map(function(){ return '<col style="width:'+colW+'%">'; }).join("") +
+          '<col style="width:'+colW+'%"></colgroup>';
+        var headCab = cabCodes.map(function(k){ return '<th class="num">'+escHtml(k)+'</th>'; }).join("");
         var matrixRows = (m.sundays||[]).map(function(s){
           var cells = cabCodes.map(function(k){
             var v = (s.byCabang && s.byCabang[k]) ? s.byCabang[k].total : 0;
@@ -28800,23 +28980,36 @@ $on("cabangPinSubmit", "click", function(){
         }).join("");
         var matrixFoot = '<tr class="omg-v2-foot"><td><b>Total</b></td>'+matrixFootCells+'<td class="num"><b>'+fmt(sumCabTot)+'</b></td></tr>';
         cabHtml =
-          '<div class="omg-v2-dhead">Per cabang</div>'+
-          '<div class="omg-v2-table-wrap"><table class="omg-v2-table omg-v2-cab-sum">'+
-            '<thead><tr><th>Cabang</th><th>Total Minggu</th><th>Jml Minggu</th></tr></thead>'+
-            '<tbody>'+cabSumRows+cabFoot+'</tbody></table></div>'+
-          '<div class="omg-v2-dhead">Detail Minggu × Cabang</div>'+
-          '<div class="omg-v2-table-wrap"><table class="omg-v2-table omg-v2-matrix">'+
-            '<thead><tr><th>Tanggal</th>'+headCab+'<th>Total</th></tr></thead>'+
-            '<tbody>'+matrixRows+matrixFoot+'</tbody></table></div>';
+          '<div class="omg-v2-card">'+
+            '<div class="omg-v2-dhead">Per cabang</div>'+
+            '<div class="omg-v2-table-wrap"><table class="omg-v2-table omg-v2-cab-sum">'+
+              '<thead><tr><th>Cabang</th><th>Total</th><th>Jml</th></tr></thead>'+
+              '<tbody>'+cabSumRows+cabFoot+'</tbody></table></div>'+
+          '</div>'+
+          '<div class="omg-v2-card omg-v2-card-wide">'+
+            '<div class="omg-v2-dhead">Minggu × Cabang</div>'+
+            '<div class="omg-v2-table-wrap"><table class="omg-v2-table omg-v2-matrix">'+
+              colgroup+
+              '<thead><tr><th>Tanggal</th>'+headCab+'<th class="num">Total</th></tr></thead>'+
+              '<tbody>'+matrixRows+matrixFoot+'</tbody></table></div>'+
+          '</div>';
       } else if(byCab.length === 1){
-        cabHtml = '<div class="omg-v2-cab">Cabang: <b>'+escHtml(byCab[0].kode)+'</b></div>';
+        cabHtml = '<div class="omg-v2-card"><div class="omg-v2-cab">Cabang: <b>'+escHtml(byCab[0].kode)+'</b></div></div>';
       }
 
-      panel.innerHTML =
-        '<div class="omg-v2-dhead">Detail Minggu — <b>'+escHtml(m.monthLabel)+'</b></div>'+
-        '<div class="omg-v2-table-wrap"><table class="omg-v2-table omg-v2-detail-main">'+
-          '<thead><tr><th>Tanggal</th><th>GE</th><th>GB</th><th>GG</th><th>Total</th></tr></thead>'+
-          '<tbody>'+rows+foot+'</tbody></table></div>'+cabHtml;
+      var mainCard =
+        '<div class="omg-v2-card">'+
+          '<div class="omg-v2-dhead">Detail Minggu — <b>'+escHtml(m.monthLabel)+'</b></div>'+
+          '<div class="omg-v2-table-wrap"><table class="omg-v2-table omg-v2-detail-main">'+
+            '<thead><tr><th>Tanggal</th><th>GE</th><th>GB</th><th>GG</th><th>Total</th></tr></thead>'+
+            '<tbody>'+rows+foot+'</tbody></table></div>'+
+        '</div>';
+
+      if(byCab.length > 1){
+        panel.innerHTML = '<div class="omg-v2-grid">'+mainCard+cabHtml+'</div>';
+      } else {
+        panel.innerHTML = '<div class="omg-v2-grid omg-v2-grid-single">'+mainCard+cabHtml+'</div>';
+      }
     }
 
     box.querySelectorAll(".omg-v2-col").forEach(function(col){
