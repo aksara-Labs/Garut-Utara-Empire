@@ -12236,13 +12236,12 @@ button.admin-topbar-avatar:hover,
 #tab-kanitkasarea .ka-title{flex:1;font-size:14px;font-weight:700;color:#0F172A!important}
 #tab-kasarea .ka-layout,
 #tab-kanitkasarea .ka-layout{
-  display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,0.85fr);
-  gap:14px;align-items:start;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:12px !important;
+  align-items:stretch !important;
 }
-@media(max-width:960px){
-  #tab-kasarea .ka-layout,
-  #tab-kanitkasarea .ka-layout{grid-template-columns:1fr}
-}
+
 #tab-kasarea .ka-kredit,
 #tab-kasarea .ka-debit,
 #tab-kanitkasarea .ka-kredit,
@@ -12252,15 +12251,21 @@ button.admin-topbar-avatar:hover,
 }
 #tab-kasarea .ka-sec-h,
 #tab-kanitkasarea .ka-sec-h{
-  font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;
-  padding:10px 14px;color:var(--ka-gold)!important;
-  background:rgba(232,168,106,0.06);
-  border-bottom:1px solid var(--ka-border);
+  font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
+  padding:6px 10px;color:#64748B!important;
+  background:#F8FAFC;
+  border-bottom:1px solid #E2E8F0;
 }
+
 #tab-kasarea .ka-table-wrap,
 #tab-kanitkasarea .ka-table-wrap{
-  overflow:auto;max-height:min(62vh,560px);background:transparent;
+  overflow:auto;max-height:min(48vh,420px);background:transparent;
 }
+#tab-kasarea .ka-debit .ka-table-wrap,
+#tab-kanitkasarea .ka-debit .ka-table-wrap{
+  max-height:min(28vh,220px);
+}
+
 /* Tabel grid penuh — garis tiap kolom bulan */
 #tab-kasarea table.ka-table,
 #tab-kanitkasarea table.ka-table{
@@ -24884,12 +24889,11 @@ html[data-theme="light"] .admin-sidebar-brand{
   padding: 4px 8px 16px !important;
 }
 html[data-theme="light"] .admin-sidebar-brand .brand-logo-img{
-  width: 100% !important;
-  max-width: 168px !important;
+  width: 148px !important;
+  max-width: 100% !important;
   height: auto !important;
   object-fit: contain !important;
-  /* logo hitam → putih di sidebar gelap */
-  filter: brightness(0) invert(1) !important;
+  filter: none !important;
 }
 html[data-theme="light"] .admin-sidebar-brand-name{
   display: none !important; /* wordmark sudah di logo */
@@ -25096,6 +25100,198 @@ html[data-theme="light"] #tab-kanitkasarea .ka-debit-form{
   html[data-theme="light"] #tab-kanitkasarea .ka-debit-form{
     grid-template-columns: 1fr 1fr !important;
   }
+}
+
+/* Kas Area final — single column, compact, no riwayat */
+html[data-theme="light"] #tab-kasarea .ka-layout,
+html[data-theme="light"] #tab-kanitkasarea .ka-layout,
+#tab-kasarea .ka-layout,
+#tab-kanitkasarea .ka-layout{
+  display: flex !important;
+  flex-direction: column !important;
+  grid-template-columns: none !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-kredit,
+html[data-theme="light"] #tab-kasarea .ka-debit,
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit{
+  width: 100% !important;
+  max-width: 100% !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-debit-form,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit-form,
+html[data-theme="light"] #tab-kasarea .ka-debit-form#kaDebitFormKanit{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  padding: 10px 12px !important;
+  grid-template-columns: none !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-debit-form .field,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit-form .field{
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+html[data-theme="light"] #kaLogSec,
+html[data-theme="light"] #kaLogWrap,
+#kaLogSec, #kaLogWrap{
+  display: none !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table th,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table th{
+  padding: 6px 4px !important;
+  font-size: 10px !important;
+  color: #E2E8F0 !important;
+}
+html[data-theme="light"] #tab-kasarea table.ka-table td,
+html[data-theme="light"] #tab-kanitkasarea table.ka-table td{
+  padding: 3px 4px !important;
+  font-size: 11.5px !important;
+}
+html[data-theme="light"] #tab-kasarea button.ka-mark,
+html[data-theme="light"] #tab-kanitkasarea button.ka-mark{
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  padding: 0 !important;
+  font-size: 11px !important;
+}
+
+/* ===== Sidebar logo MYdashboard (sidebar putih = logo hitam) ===== */
+html[data-theme="light"] .admin-sidebar-brand,
+.admin-sidebar-brand{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 4px !important;
+  padding: 8px 12px 14px !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  margin-bottom: 10px !important;
+}
+html[data-theme="light"] .admin-sidebar-brand .brand-logo-img,
+.admin-sidebar-brand .brand-logo-img,
+html[data-theme="light"] .brand-logo-img{
+  display: block !important;
+  width: 148px !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 28px !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+  border-radius: 0 !important;
+  filter: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+html[data-theme="light"] .admin-sidebar-brand-name{
+  display: none !important; /* wordmark sudah di logo */
+}
+html[data-theme="light"] .admin-sidebar-brand-sub{
+  display: block !important;
+  font-size: 10px !important;
+  color: #64748B !important;
+  margin-left: 2px !important;
+}
+
+/* ===== Omset Minggu detail — layout ketat + tabel presisi ===== */
+html[data-theme="light"] .omg-v2{
+  padding: 14px 16px 16px !important;
+}
+html[data-theme="light"] .omg-v2-chart{
+  min-height: 140px !important;
+  gap: 6px !important;
+  margin-bottom: 4px !important;
+}
+html[data-theme="light"] .omg-v2-detail{
+  margin-top: 12px !important;
+  padding-top: 12px !important;
+}
+html[data-theme="light"] .omg-v2-table-wrap{
+  margin-bottom: 10px !important;
+  border-radius: 10px !important;
+}
+html[data-theme="light"] .omg-v2-table{
+  width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  font-size: 12.5px !important;
+}
+/* Detail minggu: Tanggal | GE | GB | GG | Total */
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main th:nth-child(1),
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main td:nth-child(1){ width: 36% !important; text-align: left !important; }
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main th:nth-child(2),
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main td:nth-child(2),
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main th:nth-child(3),
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main td:nth-child(3),
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main th:nth-child(4),
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main td:nth-child(4),
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main th:nth-child(5),
+html[data-theme="light"] .omg-v2-table.omg-v2-detail-main td:nth-child(5){
+  width: 16% !important;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums !important;
+}
+/* Per cabang: Cabang | Total | Jml */
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum th:nth-child(1),
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum td:nth-child(1){ width: 40% !important; text-align: left !important; }
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum th:nth-child(2),
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum td:nth-child(2),
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum th:nth-child(3),
+html[data-theme="light"] .omg-v2-table.omg-v2-cab-sum td:nth-child(3){
+  width: 30% !important;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums !important;
+}
+html[data-theme="light"] .omg-v2-table th{
+  padding: 8px 12px !important;
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] .omg-v2-table td{
+  padding: 8px 12px !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  color: #0F172A !important;
+  vertical-align: middle !important;
+}
+html[data-theme="light"] .omg-v2-table tbody tr:nth-child(even) td{
+  background: #FAFBFC !important;
+}
+html[data-theme="light"] .omg-v2-table tr.omg-v2-foot td{
+  background: #EEF2FF !important;
+  border-top: 1px solid #E2E8F0 !important;
+  border-bottom: none !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .omg-v2-dhead{
+  margin: 14px 0 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .omg-v2-dhead:first-child{
+  margin-top: 0 !important;
+}
+/* Chart labels more compact */
+html[data-theme="light"] .omg-v2-col{
+  max-width: 56px !important;
+  min-width: 36px !important;
+}
+html[data-theme="light"] .omg-v2-fill{
+  width: 18px !important;
 }
 </style>
 </head>
@@ -28593,22 +28789,32 @@ $on("cabangPinSubmit", "click", function(){
           }).join("");
           return '<tr><td>Minggu, tgl '+s.day+'</td>'+cells+'<td class="num"><b>'+fmt(s.total)+'</b></td></tr>';
         }).join("");
+        var sumCabTot = 0, sumCabCnt = 0;
+        byCab.forEach(function(bc){ sumCabTot += Number(bc.sundayTotal)||0; sumCabCnt += (bc.sundays||[]).length; });
+        var cabFoot = '<tr class="omg-v2-foot"><td><b>Total</b></td><td class="num"><b>'+fmt(sumCabTot)+'</b></td><td class="num"><b>'+sumCabCnt+'</b></td></tr>';
+        // matrix foot
+        var matrixFootCells = cabCodes.map(function(k){
+          var t = 0;
+          byCab.forEach(function(bc){ if(bc.kode===k) t = Number(bc.sundayTotal)||0; });
+          return '<td class="num"><b>'+fmt(t)+'</b></td>';
+        }).join("");
+        var matrixFoot = '<tr class="omg-v2-foot"><td><b>Total</b></td>'+matrixFootCells+'<td class="num"><b>'+fmt(sumCabTot)+'</b></td></tr>';
         cabHtml =
           '<div class="omg-v2-dhead">Per cabang</div>'+
-          '<div class="omg-v2-table-wrap"><table class="omg-v2-table">'+
+          '<div class="omg-v2-table-wrap"><table class="omg-v2-table omg-v2-cab-sum">'+
             '<thead><tr><th>Cabang</th><th>Total Minggu</th><th>Jml Minggu</th></tr></thead>'+
-            '<tbody>'+cabSumRows+'</tbody></table></div>'+
+            '<tbody>'+cabSumRows+cabFoot+'</tbody></table></div>'+
           '<div class="omg-v2-dhead">Detail Minggu × Cabang</div>'+
-          '<div class="omg-v2-table-wrap"><table class="omg-v2-table">'+
+          '<div class="omg-v2-table-wrap"><table class="omg-v2-table omg-v2-matrix">'+
             '<thead><tr><th>Tanggal</th>'+headCab+'<th>Total</th></tr></thead>'+
-            '<tbody>'+matrixRows+'</tbody></table></div>';
+            '<tbody>'+matrixRows+matrixFoot+'</tbody></table></div>';
       } else if(byCab.length === 1){
         cabHtml = '<div class="omg-v2-cab">Cabang: <b>'+escHtml(byCab[0].kode)+'</b></div>';
       }
 
       panel.innerHTML =
         '<div class="omg-v2-dhead">Detail Minggu — <b>'+escHtml(m.monthLabel)+'</b></div>'+
-        '<div class="omg-v2-table-wrap"><table class="omg-v2-table">'+
+        '<div class="omg-v2-table-wrap"><table class="omg-v2-table omg-v2-detail-main">'+
           '<thead><tr><th>Tanggal</th><th>GE</th><th>GB</th><th>GG</th><th>Total</th></tr></thead>'+
           '<tbody>'+rows+foot+'</tbody></table></div>'+cabHtml;
     }
@@ -32870,41 +33076,18 @@ function applyRejectedAlasanFilter_(which){
         ? ('Iuran <b>Rp20.000</b>/bulan. Anda bendahara <b>'+escHtml(b)+'</b> — dapat mengubah centang &amp; debit.')
         : ('Iuran <b>Rp20.000</b>/bulan. Mode <b>lihat saja</b>. Kelola: bendahara cabang <b>'+escHtml(b)+'</b>.');
     }
-    // Riwayat input — hanya KC
+    // Riwayat dihapus permanen — tidak dirender
     try {
       var logSec = document.getElementById("kaLogSec");
       var logWrap = document.getElementById("kaLogWrap");
-      var isKc = (data.role === "kc") || (!ids.isKanit && !!session.adminPin);
-      if (logSec) logSec.style.display = isKc ? "" : "none";
-      if (logWrap && isKc) {
-        var logs = data.logs || [];
-        if (!logs.length) {
-          logWrap.innerHTML = '<div class="empty-log" style="color:#64748B;padding:10px;">Belum ada riwayat. Centang / debit akan tercatat di sini.</div>';
-        } else {
-          var lh = '<table class="ka-table ka-log-table"><thead><tr>'+
-            '<th>Waktu</th><th>Oleh</th><th>Aksi</th><th>Detail</th><th>Nilai</th></tr></thead><tbody>';
-          var lb = logs.map(function(L){
-            var nil = L.nilai;
-            var nilStr = (nil === "" || nil == null) ? "—" : kaFmtRp_(nil);
-            return '<tr>'+
-              '<td class="ka-cab" style="white-space:nowrap;">'+escHtml(L.waktu||"")+'</td>'+
-              '<td class="ka-nama">'+escHtml(L.oleh||"—")+'</td>'+
-              '<td>'+escHtml(L.aksi||"")+'</td>'+
-              '<td>'+escHtml(L.detail||"")+'</td>'+
-              '<td class="ka-total">'+nilStr+'</td></tr>';
-          }).join("");
-          logWrap.innerHTML = lh + lb + '</tbody></table>';
-        }
-      }
+      if (logSec) logSec.style.display = "none";
+      if (logWrap) { logWrap.innerHTML = ""; logWrap.style.display = "none"; }
     } catch (eLog) {}
-
-    kaPaintWhite_(document.getElementById("tab-kasarea"));
-    kaPaintWhite_(document.getElementById("tab-kanitkasarea"));
-    if(wrapK) kaPaintWhite_(wrapK);
-    if(wrapD) kaPaintWhite_(wrapD);
+    // Tidak pakai kaPaintWhite_ (lambat di tabel besar) — andalkan CSS light theme
   }
   var _kaCache = null;
   var _kaCacheAt = 0;
+  var _kaLoading = false;
   function loadKasArea(force){
     var ids = kaIds_();
     var msg = document.getElementById(ids.msg);
@@ -32915,24 +33098,32 @@ function applyRejectedAlasanFilter_(which){
       return;
     }
     var wrapK = document.getElementById(ids.wrapK);
-    if(!force && _kaCache && (Date.now() - _kaCacheAt) < 30000){
+    // Cache 5 menit — tampil instan
+    if(!force && _kaCache && (Date.now() - _kaCacheAt) < 5*60*1000){
       renderKasArea_(_kaCache);
       return;
     }
-    if(wrapK){
-      try{ showSkeleton(wrapK, 6, "table"); }
+    // Ada cache lama → render dulu, refresh background
+    if(_kaCache){
+      try{ renderKasArea_(_kaCache); }catch(e){}
+    } else if(wrapK){
+      try{ showSkeleton(wrapK, 4, "table"); }
       catch(e){ wrapK.innerHTML = '<div class="empty-log">Memuat...</div>'; }
     }
+    if(_kaLoading && !force) return;
+    _kaLoading = true;
     google.script.run
       .withSuccessHandler(function(r){
+        _kaLoading = false;
         if(r && r.status === "OK"){ _kaCache = r; _kaCacheAt = Date.now(); }
         renderKasArea_(r);
         if(r && r.status!=="OK" && typeof showMsg==="function") showMsg(msg, r.reason||"Gagal", "err");
       })
       .withFailureHandler(function(err){
-        if(wrapK){
+        _kaLoading = false;
+        if(!_kaCache && wrapK){
           wrapK.style.visibility = "visible";
-          wrapK.innerHTML = '<div class="empty-log" style="color:#fff;padding:16px;">Gagal memuat: '+(err && err.message ? err.message : err)+'</div>';
+          wrapK.innerHTML = '<div class="empty-log" style="padding:16px;">Gagal memuat: '+(err && err.message ? err.message : err)+'</div>';
         }
         if(typeof showMsg==="function") showMsg(msg, "Koneksi: "+(err.message||err), "err");
       })
@@ -32941,9 +33132,7 @@ function applyRejectedAlasanFilter_(which){
   window.loadKasArea = loadKasArea;
   document.querySelectorAll('.tab-btn[data-tab="kasarea"], .tab-btn[data-tab="kanitkasarea"]').forEach(function(btn){
     btn.addEventListener("click", function(){
-      // Tunggu tab aktif dulu, lalu load ke panel yang benar
-      setTimeout(function(){ try{ loadKasArea(true); }catch(e){} }, 80);
-      setTimeout(function(){ try{ loadKasArea(false); }catch(e){} }, 400);
+      setTimeout(function(){ try{ loadKasArea(false); }catch(e){} }, 60);
     });
   });
   (function wireKasAreaUi_(){
