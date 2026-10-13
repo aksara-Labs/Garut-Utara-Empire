@@ -24178,6 +24178,519 @@ html[data-theme="light"] .aytd-tabs{ display: none !important; }
     flex-wrap: wrap !important;
   }
 }
+
+/* Loading hide hard + meta wrap */
+html[data-theme="light"] #auditLoading[style*="display: none"],
+html[data-theme="light"] #kanitAuditLoading[style*="display: none"],
+html[data-theme="light"] #auditLoading[style*="display:none"],
+html[data-theme="light"] #kanitAuditLoading[style*="display:none"]{
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: none !important;
+}
+html[data-theme="light"] #auditLoading,
+html[data-theme="light"] #kanitAuditLoading,
+html[data-theme="light"] .audit-loading{
+  border: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+  color: #64748B !important;
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  font-size: 12.5px !important;
+  text-align: center !important;
+  margin: 8px 0 !important;
+}
+html[data-theme="light"] .aytd-meta-chip b{
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  line-height: 1.25 !important;
+  word-break: break-word !important;
+}
+html[data-theme="light"] .aytd-meta{
+  align-items: start !important;
+}
+
+/* YTD bars — tinggi HARUS ikut data, bukan rata */
+html[data-theme="light"] .aytd-bars{
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: stretch !important;
+  gap: 4px !important;
+  height: auto !important;
+  min-height: 72px !important;
+  width: 100% !important;
+  border: none !important;
+  padding-top: 4px !important;
+}
+html[data-theme="light"] .aytd-bar-col{
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 3px !important;
+  height: auto !important;
+}
+html[data-theme="light"] .aytd-bar-num{
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #334155 !important;
+  line-height: 1 !important;
+  height: 12px !important;
+}
+html[data-theme="light"] .aytd-bar-num-z{
+  visibility: hidden !important;
+}
+html[data-theme="light"] .aytd-bar-fill{
+  width: 70% !important;
+  max-width: 16px !important;
+  min-width: 6px !important;
+  border-radius: 4px 4px 2px 2px !important;
+  display: block !important;
+  flex: none !important;
+  /* height dari inline style — jangan ditimpa */
+  max-height: none !important;
+  min-height: 0 !important;
+}
+html[data-theme="light"] .aytd-bar-lab{
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  color: #94A3B8 !important;
+  line-height: 1 !important;
+}
+
+/* P1 YTD proportional bars — final override */
+html[data-theme="light"] .aytd-bars{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+  gap: 5px !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 90px !important;
+  padding: 4px 0 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+html[data-theme="light"] .aytd-bar-col{
+  flex: 1 1 0 !important;
+  max-width: 40px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 4px !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+html[data-theme="light"] .aytd-bar-fill{
+  display: block !important;
+  width: 12px !important;
+  border-radius: 4px 4px 2px 2px !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  align-self: center !important;
+  box-sizing: border-box !important;
+}
+html[data-theme="light"] .aytd-bar-num{
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #334155 !important;
+  line-height: 1 !important;
+}
+html[data-theme="light"] .aytd-bar-num-z{
+  opacity: 0 !important;
+}
+html[data-theme="light"] .aytd-bar-lab{
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  color: #94A3B8 !important;
+}
+
+/* P5 empty state */
+html[data-theme="light"] .audit-empty-state{
+  text-align: center !important;
+  padding: 18px 12px !important;
+  color: #64748B !important;
+}
+html[data-theme="light"] .audit-empty-ico{
+  font-size: 22px !important;
+  line-height: 1 !important;
+  margin-bottom: 6px !important;
+  opacity: 0.7 !important;
+}
+html[data-theme="light"] .audit-empty-title{
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  margin-bottom: 4px !important;
+}
+html[data-theme="light"] .audit-empty-desc{
+  font-size: 12px !important;
+  color: #64748B !important;
+  line-height: 1.4 !important;
+}
+html[data-theme="light"] .aytd-empty{
+  padding: 12px 0 !important;
+}
+
+/* P2: loading bar always hidden by default after paint */
+html[data-theme="light"] #auditLoading,
+html[data-theme="light"] #kanitAuditLoading{
+  display: none !important;
+}
+
+/* P3: detail table polish */
+html[data-theme="light"] #tab-audit .audit-table-wrap,
+html[data-theme="light"] #tab-kanitaudit .audit-table-wrap{
+  max-height: 420px !important;
+  overflow: auto !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] #tab-audit .audit-table,
+html[data-theme="light"] #tab-kanitaudit .audit-table{
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  font-size: 12.5px !important;
+}
+html[data-theme="light"] #tab-audit .audit-table thead th,
+html[data-theme="light"] #tab-kanitaudit .audit-table thead th{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  padding: 10px 12px !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] #tab-audit .audit-table tbody td,
+html[data-theme="light"] #tab-kanitaudit .audit-table tbody td{
+  padding: 9px 12px !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  color: #0F172A !important;
+  vertical-align: middle !important;
+}
+html[data-theme="light"] #tab-audit .audit-table tbody tr:nth-child(even) td,
+html[data-theme="light"] #tab-kanitaudit .audit-table tbody tr:nth-child(even) td{
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] #tab-audit .audit-table tbody tr:hover td,
+html[data-theme="light"] #tab-kanitaudit .audit-table tbody tr:hover td{
+  background: #EFF6FF !important;
+}
+html[data-theme="light"] .audit-badge{
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 3px 10px !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  border: 1px solid transparent !important;
+}
+html[data-theme="light"] .audit-badge-pel{
+  background: #FEF2F2 !important;
+  color: #B91C1C !important;
+  border-color: #FECACA !important;
+}
+html[data-theme="light"] .audit-badge-sup{
+  background: #EFF6FF !important;
+  color: #1D4ED8 !important;
+  border-color: #BFDBFE !important;
+}
+html[data-theme="light"] .audit-badge-fr{
+  background: #FFF7ED !important;
+  color: #C2410C !important;
+  border-color: #FED7AA !important;
+}
+
+/* ===== P6–P10 Audit approval / report / hint / mobile ===== */
+html[data-theme="light"] .audit-filter-hint{
+  font-size: 12px !important;
+  color: #64748B !important;
+  margin: 0 0 12px !important;
+  padding: 8px 12px !important;
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+}
+
+/* P6 cabang cards */
+html[data-theme="light"] .appr-cab-card{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  padding: 14px 16px !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  cursor: pointer !important;
+  margin-bottom: 10px !important;
+  transition: border-color .15s, box-shadow .15s !important;
+}
+html[data-theme="light"] .appr-cab-card:hover{
+  border-color: #93C5FD !important;
+  box-shadow: 0 4px 14px rgba(15,23,42,0.06) !important;
+}
+html[data-theme="light"] .appr-cab-left{ min-width: 0 !important; flex: 1 !important; }
+html[data-theme="light"] .appr-cab-code{
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  margin-bottom: 6px !important;
+}
+html[data-theme="light"] .appr-cab-chips{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+}
+html[data-theme="light"] .appr-chip{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 3px 9px !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  border: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .appr-chip b{ color: #0F172A !important; font-weight: 800 !important; }
+html[data-theme="light"] .appr-chip.s-belum{ background:#FEF2F2 !important; color:#B91C1C !important; border-color:#FECACA !important; }
+html[data-theme="light"] .appr-chip.s-wait{ background:#FFFBEB !important; color:#B45309 !important; border-color:#FDE68A !important; }
+html[data-theme="light"] .appr-chip.s-ok{ background:#ECFDF5 !important; color:#047857 !important; border-color:#A7F3D0 !important; }
+html[data-theme="light"] .appr-chip.s-no{ background:#FEF2F2 !important; color:#991B1B !important; border-color:#FECACA !important; }
+html[data-theme="light"] .appr-cab-right{
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-shrink: 0 !important;
+}
+html[data-theme="light"] .appr-status{
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  padding: 5px 12px !important;
+  border-radius: 999px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+  color: #475569 !important;
+}
+html[data-theme="light"] .appr-status.menunggu{ background:#FFFBEB !important; color:#B45309 !important; border-color:#FDE68A !important; }
+html[data-theme="light"] .appr-status.approve{ background:#ECFDF5 !important; color:#047857 !important; border-color:#A7F3D0 !important; }
+html[data-theme="light"] .appr-status.tolak{ background:#FEF2F2 !important; color:#B91C1C !important; border-color:#FECACA !important; }
+html[data-theme="light"] .appr-status.belum{ background:#F1F5F9 !important; color:#64748B !important; }
+html[data-theme="light"] .appr-cab-arrow{
+  font-size: 20px !important;
+  color: #94A3B8 !important;
+  font-weight: 300 !important;
+}
+
+/* P6 detail action buttons — navy outline, uniform */
+html[data-theme="light"] .appr-btn{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 14px !important;
+  border-radius: 10px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  width: auto !important;
+}
+html[data-theme="light"] .appr-btn-ghost,
+html[data-theme="light"] .appr-btn-outline{
+  background: #FFFFFF !important;
+  border: 1px solid #CBD5E1 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] .appr-btn-ok{
+  background: #059669 !important;
+  border: 1px solid #059669 !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="light"] .appr-btn-no{
+  background: #FFFFFF !important;
+  border: 1px solid #FECACA !important;
+  color: #B91C1C !important;
+}
+html[data-theme="light"] .appr-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  padding: 14px !important;
+  margin-bottom: 10px !important;
+}
+html[data-theme="light"] .appr-card-head{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 8px !important;
+}
+html[data-theme="light"] .appr-jenis{
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  margin-bottom: 8px !important;
+}
+html[data-theme="light"] .appr-meta-row{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  font-size: 12px !important;
+  color: #64748B !important;
+  margin-bottom: 10px !important;
+}
+html[data-theme="light"] .appr-meta-row em{
+  font-style: normal !important;
+  color: #94A3B8 !important;
+  margin-right: 4px !important;
+}
+html[data-theme="light"] .appr-card-foot{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding-top: 10px !important;
+  border-top: 1px solid #F1F5F9 !important;
+}
+html[data-theme="light"] .appr-decide{
+  display: flex !important;
+  gap: 8px !important;
+}
+
+/* P7 preview modal */
+html[data-theme="light"] .appr-preview-toast{
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 99999 !important;
+  background: #0F172A !important;
+  color: #fff !important;
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  font-size: 12.5px !important;
+}
+html[data-theme="light"] .appr-preview-modal{
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 100000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+}
+html[data-theme="light"] .appr-preview-backdrop{
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(15,23,42,0.45) !important;
+}
+html[data-theme="light"] .appr-preview-panel{
+  position: relative !important;
+  z-index: 1 !important;
+  width: min(720px, 100%) !important;
+  max-height: 90vh !important;
+  overflow: auto !important;
+  background: #fff !important;
+  border-radius: 16px !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 20px 50px rgba(15,23,42,0.2) !important;
+}
+html[data-theme="light"] .appr-preview-head{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .appr-preview-head strong{
+  color: #0F172A !important;
+  font-size: 14px !important;
+}
+html[data-theme="light"] .appr-preview-body{
+  padding: 16px !important;
+  text-align: center !important;
+}
+html[data-theme="light"] .appr-preview-body img{
+  max-width: 100% !important;
+  border-radius: 8px !important;
+}
+html[data-theme="light"] .appr-preview-msg{
+  color: #64748B !important;
+  font-size: 13px !important;
+}
+html[data-theme="light"] .appr-preview-foot{
+  display: flex !important;
+  gap: 8px !important;
+  justify-content: flex-end !important;
+  padding: 12px 16px !important;
+  border-top: 1px solid #E2E8F0 !important;
+}
+
+/* P8 report: single kirim bar cleaner */
+html[data-theme="light"] #kanitAcpKirimSemua,
+html[data-theme="light"] #tab-kanitauditreport .appr-btn,
+html[data-theme="light"] #tab-kanitauditreport .btn-xs,
+html[data-theme="light"] #tab-kanitauditreport button.btn-outline-gold{
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] #kanitAcpKirimSemua:disabled{
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+}
+
+/* P9 mobile audit */
+@media (max-width: 720px){
+  html[data-theme="light"] .appr-cab-card{
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  html[data-theme="light"] .appr-cab-right{
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+  html[data-theme="light"] .appr-card-foot{
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  html[data-theme="light"] .appr-decide{
+    width: 100% !important;
+  }
+  html[data-theme="light"] .appr-decide .appr-btn{
+    flex: 1 !important;
+  }
+  html[data-theme="light"] .aytd-row{
+    grid-template-columns: 1fr !important;
+  }
+  html[data-theme="light"] .aytd-meta{
+    grid-template-columns: 1fr !important;
+  }
+  html[data-theme="light"] .audit-charts.audit-charts-4{
+    grid-template-columns: 1fr !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -32525,9 +33038,21 @@ function applyRejectedAlasanFilter_(which){
   }
   fillAuditBulanSelects();
 
+  function auditEmptyState(msg){
+    return '<div class="audit-empty-state">'+
+      '<div class="audit-empty-ico" aria-hidden="true">📋</div>'+
+      '<div class="audit-empty-title">Tidak ada temuan</div>'+
+      '<div class="audit-empty-desc">'+escHtml(msg || "Tidak ada temuan untuk filter ini.")+'</div>'+
+    '</div>';
+  }
   function renderHBars(el, arr, cls){
     if(!el) return;
-    if(!arr || !arr.length){ el.innerHTML = '<div class="empty-log">Belum ada data.</div>'; return; }
+    // Filter out pure zero-good noise if all zeros and no labels worth showing
+    arr = (arr || []).filter(function(x){ return x && (Number(x.value)||0) > 0; });
+    if(!arr.length){
+      el.innerHTML = auditEmptyState("Tidak ada temuan untuk filter ini.");
+      return;
+    }
     var html = '<ol class="audit-rank-list">';
     arr.forEach(function(x, idx){
       var lab = String(x.label||"");
@@ -32584,20 +33109,27 @@ function applyRejectedAlasanFilter_(which){
 
   function miniYtdBars(series, color){
     series = series || [];
-    var max = 1;
-    series.forEach(function(x){ if((x.value||0) > max) max = x.value; });
-    if(!series.length){
-      return '<div class="aytd-empty">Belum ada data tren</div>';
+    var last = -1;
+    series.forEach(function(x, i){ if((Number(x.value)||0) > 0) last = i; });
+    if(last < 0){
+      return auditEmptyState("Tidak ada temuan pada tren YTD.");
     }
-    var bars = series.map(function(x){
+    var slice = series.slice(0, last + 1);
+    var max = 1;
+    slice.forEach(function(x){ if((Number(x.value)||0) > max) max = Number(x.value)||0; });
+    var CH = 56;
+    var bars = slice.map(function(x){
       var v = Number(x.value) || 0;
-      var h = v > 0 ? Math.max(6, Math.round((v/max)*48)) : 3;
-      var op = v > 0 ? "1" : "0.22";
-      var num = v > 0 ? '<span class="aytd-bar-num">'+v+'</span>' : '';
-      return '<span class="aytd-bar-wrap" title="'+escHtml(String(x.label||''))+': '+v+'">'+num+
-        '<span class="aytd-bar" style="height:'+h+'px;background:'+color+';opacity:'+op+'"></span></span>';
+      var h = v > 0 ? Math.max(10, Math.round((v / max) * CH)) : 3;
+      var num = v > 0 ? '<span class="aytd-bar-num">'+v+'</span>' : '<span class="aytd-bar-num aytd-bar-num-z">0</span>';
+      // height di attribute style + data-h agar sulit ditimpa CSS
+      return '<span class="aytd-bar-col" title="'+escHtml(String(x.label||""))+': '+v+'">'+
+        num+
+        '<span class="aytd-bar-fill" data-h="'+h+'" style="height:'+h+'px !important;max-height:'+h+'px !important;min-height:'+h+'px !important;background-color:'+color+';"></span>'+
+        '<span class="aytd-bar-lab">'+escHtml(String(x.label||"").slice(0,3))+'</span>'+
+      '</span>';
     }).join("");
-    return '<div class="aytd-bars">'+bars+'</div>';
+    return '<div class="aytd-bars" role="img" aria-label="Tren bulanan">'+bars+'</div>';
   }
   function renderAuditKpi(el, d){
     if(!el || !d) return;
@@ -32643,16 +33175,30 @@ function applyRejectedAlasanFilter_(which){
         '</div>'+
       '</div>'+
       '<div class="aytd-meta">'+
-        '<div class="aytd-meta-chip"><em>Cabang terbanyak</em><b>'+escHtml(shortName(cab.key,16))+'</b><span>'+(cab.count||0)+'</span></div>'+
-        '<div class="aytd-meta-chip"><em>Jenis terbanyak</em><b>'+escHtml(shortName(jen.key,22))+'</b><span>'+(jen.count||0)+'</span></div>'+
-        '<div class="aytd-meta-chip"><em>Petugas terbanyak</em><b>'+escHtml(shortName(pet.key,18))+'</b><span>'+(pet.count||0)+'</span></div>'+
+        '<div class="aytd-meta-chip" title="'+escHtml(cab.key)+'"><em>Cabang terbanyak</em><b>'+escHtml(cab.key||"-")+'</b><span>'+(cab.count||0)+' temuan</span></div>'+
+        '<div class="aytd-meta-chip" title="'+escHtml(jen.key)+'"><em>Jenis terbanyak</em><b>'+escHtml(jen.key||"-")+'</b><span>'+(jen.count||0)+' temuan</span></div>'+
+        '<div class="aytd-meta-chip" title="'+escHtml(pet.key)+'"><em>Petugas terbanyak</em><b>'+escHtml(pet.key||"-")+'</b><span>'+(pet.count||0)+' temuan</span></div>'+
         '<div class="aytd-meta-chip aytd-meta-total"><em>Total temuan</em><b>'+nAll+'</b><span>semua tipe</span></div>'+
       '</div>';
 
   }
 
+  function ensureAuditFilterHint_(scope){
+    var id = scope === "kanit" ? "kanitAuditFilterHint" : "auditFilterHint";
+    var after = scope === "kanit" ? "kanitAuditKpi" : "auditKpi";
+    var el = document.getElementById(id);
+    if(!el){
+      el = document.createElement("div");
+      el.id = id;
+      el.className = "audit-filter-hint";
+      var kpi = document.getElementById(after);
+      if(kpi && kpi.parentNode) kpi.parentNode.insertBefore(el, kpi.nextSibling);
+    }
+    el.textContent = "Ranking & detail mengikuti filter tipe · kartu YTD = semua tipe di periode";
+  }
   function renderAuditAdmin(d){
     renderAuditKpi(document.getElementById("auditKpi"), d);
+    ensureAuditFilterHint_("admin");
     renderVBars(document.getElementById("auditTren"), d.trenBulan);
     renderHBars(document.getElementById("auditCabangChart"), d.cabangPie, "");
     renderHBars(document.getElementById("auditTopPetugas"), d.topPetugas, "green");
@@ -32676,15 +33222,10 @@ function applyRejectedAlasanFilter_(which){
     var body = document.getElementById("auditDetailBody");
     body.innerHTML = (d.detail||[]).map(function(r){
       var tp = r.tipe || "—";
-      var badge = tp === "Support"
-        ? '<span class="appr-chip sup" style="padding:2px 8px;font-size:11px;">Support</span>'
-        : (tp === "Fraud"
-          ? '<span class="appr-chip" style="padding:2px 8px;font-size:11px;background:rgba(232,168,106,0.15);border-color:rgba(232,168,106,0.4);color:#F0C090;">Fraud</span>'
-          : (tp === "Pelanggaran"
-            ? '<span class="appr-chip pel" style="padding:2px 8px;font-size:11px;">Pelanggaran</span>'
-            : escHtml(tp)));
+      var badgeCls = tp === "Support" ? "audit-badge audit-badge-sup" : (tp === "Fraud" ? "audit-badge audit-badge-fr" : "audit-badge audit-badge-pel");
+      var badge = '<span class="'+badgeCls+'">'+escHtml(tp)+'</span>';
       return '<tr><td>'+escHtml(r.cabang)+'</td><td>'+escHtml(r.bulan)+'</td><td>'+escHtml(r.tw)+'</td><td>'+badge+'</td><td>'+escHtml(r.temuan)+'</td><td>'+escHtml(r.petugas)+'</td><td>'+escHtml(r.noFaktur||"-")+'</td><td>'+escHtml(r.keterangan||"-")+'</td></tr>';
-    }).join("") || '<tr><td colspan="8" class="empty-log">Tidak ada temuan untuk filter ini.</td></tr>';
+    }).join("") || '<tr><td colspan="8">'+auditEmptyState("Tidak ada temuan untuk filter ini.")+'</td></tr>';
     var petSel = document.getElementById("auditPetugas");
     if(petSel){
       var cur = petSel.value;
@@ -32695,6 +33236,7 @@ function applyRejectedAlasanFilter_(which){
   }
   function renderAuditKanit(d){
     renderAuditKpi(document.getElementById("kanitAuditKpi"), d);
+    ensureAuditFilterHint_("kanit");
     renderVBars(document.getElementById("kanitAuditTren"), d.trenBulan);
     renderHBars(document.getElementById("kanitAuditCabangChart"), d.cabangPie || [], "");
     renderHBars(document.getElementById("kanitAuditTopTemuan"), d.topTemuan, "orange");
@@ -32718,13 +33260,10 @@ function applyRejectedAlasanFilter_(which){
     var body = document.getElementById("kanitAuditDetailBody");
     body.innerHTML = (d.detail||[]).map(function(r){
       var tp = r.tipe || "—";
-      var badge = tp === "Support"
-        ? '<span class="appr-chip sup" style="padding:2px 8px;font-size:11px;">Support</span>'
-        : (tp === "Fraud"
-          ? '<span class="appr-chip" style="padding:2px 8px;font-size:11px;background:rgba(232,168,106,0.15);border-color:rgba(232,168,106,0.4);color:#F0C090;">Fraud</span>'
-          : '<span class="appr-chip pel" style="padding:2px 8px;font-size:11px;">Pelanggaran</span>');
+      var badgeCls = tp === "Support" ? "audit-badge audit-badge-sup" : (tp === "Fraud" ? "audit-badge audit-badge-fr" : "audit-badge audit-badge-pel");
+      var badge = '<span class="'+badgeCls+'">'+escHtml(tp)+'</span>';
       return '<tr><td>'+escHtml(r.bulan)+'</td><td>'+escHtml(r.tw)+'</td><td>'+badge+'</td><td>'+escHtml(r.temuan)+'</td><td>'+escHtml(r.petugas)+'</td><td>'+escHtml(r.noFaktur||"-")+'</td><td>'+escHtml(r.keterangan||"-")+'</td></tr>';
-    }).join("") || '<tr><td colspan="7" class="empty-log">Tidak ada temuan untuk filter ini.</td></tr>';
+    }).join("") || '<tr><td colspan="7">'+auditEmptyState("Tidak ada temuan untuk filter ini.")+'</td></tr>';
     var petSel = document.getElementById("kanitAuditPetugas");
     if (petSel) {
       var cur = petSel.value;
@@ -32748,16 +33287,21 @@ function applyRejectedAlasanFilter_(which){
       tahun: "2026"
     };
     var key = cKey(["auditAdmin_v3", filters.cabang, filters.bulanMulai, filters.bulanAkhir, filters.petugas, filters.tipe]);
+    var hadCache = false;
     if (!force) {
       var cached = cGet(key);
-      if (cached) { try { renderAuditAdmin(cached); } catch (e) {} }
+      if (cached) {
+        hadCache = true;
+        try { renderAuditAdmin(cached); } catch (e) {}
+      }
     }
-    if (loadEl) loadEl.style.display = "";
+    // P2: jangan tampilkan bar "Memuat dashboard…" — cukup state di tombol
+    if (loadEl) loadEl.style.setProperty("display", "none", "important");
     if (btn) { btn.disabled = true; btn.textContent = "Memuat…"; }
     if (msg) { msg.style.display = "none"; msg.textContent = ""; }
     google.script.run
       .withSuccessHandler(function(r){
-        if (loadEl) loadEl.style.display = "none";
+        if (loadEl) loadEl.style.setProperty("display", "none", "important");
         if (btn) { btn.disabled = false; btn.textContent = "Terapkan"; }
         if (!r || r.status !== "OK") {
           if (msg) showMsg(msg, (r && r.reason) || "Gagal memuat dashboard audit.", "err");
@@ -32765,10 +33309,10 @@ function applyRejectedAlasanFilter_(which){
         }
         cSet(key, r.data);
         renderAuditAdmin(r.data);
-        if (msg) showMsg(msg, "Data audit dimuat · " + (r.data.total || 0) + " baris (" + (filters.tipe || "Semua") + ")", "ok");
+        if (msg) { msg.style.display = "none"; msg.textContent = ""; }
       })
       .withFailureHandler(function(err){
-        if (loadEl) loadEl.style.display = "none";
+        if (loadEl) loadEl.style.setProperty("display", "none", "important");
         if (btn) { btn.disabled = false; btn.textContent = "Terapkan"; }
         if (msg) showMsg(msg, String(err.message || err), "err");
       })
@@ -32788,22 +33332,23 @@ function applyRejectedAlasanFilter_(which){
       tahun: "2026"
     };
     var key = cKey(["auditKanit_v3", session.cabang, filters.bulanMulai, filters.bulanAkhir, filters.petugas, filters.tipe]);
+    var hadCache = false;
     if (!force) {
       var cached = cGet(key);
-      if(cached){ try{ renderAuditKanit(cached); }catch(e){} }
+      if(cached){ hadCache = true; try{ renderAuditKanit(cached); }catch(e){} }
     }
-    if (loadEl) loadEl.style.display = "";
+    if (loadEl) loadEl.style.setProperty("display", "none", "important");
     if (btn) { btn.disabled = true; btn.textContent = "Memuat…"; }
     google.script.run
       .withSuccessHandler(function(r){
-        if (loadEl) loadEl.style.display = "none";
+        if (loadEl) loadEl.style.setProperty("display", "none", "important");
         if (btn) { btn.disabled = false; btn.textContent = "Terapkan"; }
         if(!r || r.status !== "OK"){ if(msg) showMsg(msg, (r&&r.reason)||"Gagal memuat.", "err"); return; }
         cSet(key, r.data);
         renderAuditKanit(r.data);
       })
       .withFailureHandler(function(err){
-        if (loadEl) loadEl.style.display = "none";
+        if (loadEl) loadEl.style.setProperty("display", "none", "important");
         if (btn) { btn.disabled = false; btn.textContent = "Terapkan"; }
         if(msg) showMsg(msg, String(err.message||err), "err");
       })
@@ -32830,18 +33375,27 @@ function applyRejectedAlasanFilter_(which){
 
   
   (function wireAuditFilterAuto(){
+    var tAdmin = null, tKanit = null;
+    function debAdmin(){
+      if(tAdmin) clearTimeout(tAdmin);
+      tAdmin = setTimeout(function(){ try{ loadAuditAdmin(true); }catch(e){} }, 300);
+    }
+    function debKanit(){
+      if(tKanit) clearTimeout(tKanit);
+      tKanit = setTimeout(function(){ try{ loadAuditKanit(true); }catch(e){} }, 300);
+    }
     ["auditCabang","auditBulanMulai","auditBulanAkhir","auditPetugas","auditTipeFilter"].forEach(function(id){
       var el = document.getElementById(id);
       if(el && !el._autoWired){
         el._autoWired = true;
-        el.addEventListener("change", function(){ try{ loadAuditAdmin(true); }catch(e){} });
+        el.addEventListener("change", debAdmin);
       }
     });
     ["kanitAuditBulanMulai","kanitAuditBulanAkhir","kanitAuditPetugas","kanitAuditTipeFilter"].forEach(function(id){
       var el = document.getElementById(id);
       if(el && !el._autoWired){
         el._autoWired = true;
-        el.addEventListener("change", function(){ try{ loadAuditKanit(true); }catch(e){} });
+        el.addEventListener("change", debKanit);
       }
     });
   })();
@@ -33524,34 +34078,50 @@ function renderKanitAuditWizard(){
   function openAcpSuratPreview_(id, asAdmin){
     if(!id) return;
     var tip = document.createElement("div");
+    tip.className = "appr-preview-toast";
     tip.textContent = "Memuat preview…";
-    tip.style.cssText = "position:fixed;bottom:20px;right:20px;z-index:99999;background:#0f172a;color:#fff;padding:10px 14px;border-radius:10px;border:1px solid rgba(232,168,106,.4);font-size:12px;";
     document.body.appendChild(tip);
+    function showPreviewModal(dataUrl, mime, name){
+      var old = document.getElementById("apprPreviewModal");
+      if(old) try{ old.remove(); }catch(e){}
+      var modal = document.createElement("div");
+      modal.id = "apprPreviewModal";
+      modal.className = "appr-preview-modal";
+      var isImg = String(mime||"").indexOf("image/")===0;
+      var bodyHtml = isImg
+        ? '<img src="'+dataUrl+'" alt="preview"/>'
+        : '<p class="appr-preview-msg">Preview PDF dibuka di tab baru. Jika tidak muncul, gunakan tombol di bawah.</p>';
+      modal.innerHTML =
+        '<div class="appr-preview-backdrop" data-close="1"></div>'+
+        '<div class="appr-preview-panel">'+
+          '<div class="appr-preview-head"><strong>'+escHtml(name||"Surat")+'</strong>'+
+            '<button type="button" class="appr-btn appr-btn-ghost" data-close="1">Tutup</button></div>'+
+          '<div class="appr-preview-body">'+bodyHtml+'</div>'+
+          '<div class="appr-preview-foot">'+
+            '<a class="appr-btn appr-btn-outline" href="'+dataUrl+'" target="_blank" rel="noopener">Buka di tab baru</a>'+
+            '<a class="appr-btn appr-btn-outline" href="'+dataUrl+'" download="'+escHtml(name||"surat")+'">Unduh</a>'+
+          '</div>'+
+        '</div>';
+      document.body.appendChild(modal);
+      modal.querySelectorAll("[data-close]").forEach(function(el){
+        el.addEventListener("click", function(){ try{ modal.remove(); }catch(e){} });
+      });
+      if(!isImg){
+        try{ window.open(dataUrl, "_blank"); }catch(e){}
+      }
+    }
     var run = google.script.run
       .withSuccessHandler(function(r){
         try{ tip.remove(); }catch(e){}
         if(!r || r.status!=="OK" || !r.dataUrl){
-          alert((r&&r.reason)||"Gagal preview");
+          alert((r&&r.reason)||"Gagal preview. Coba lagi atau minta file dibuka di Drive.");
           return;
         }
-        var mime = String(r.mimeType||"");
-        if(mime.indexOf("image/")===0){
-          var w = window.open("");
-          if(w){ w.document.write('<img src="'+r.dataUrl+'" style="max-width:100%"/>'); }
-          else {
-            var a=document.createElement("a"); a.href=r.dataUrl; a.target="_blank"; a.click();
-          }
-        } else {
-          var a=document.createElement("a");
-          a.href=r.dataUrl;
-          a.target="_blank";
-          a.download = r.name || "surat.pdf";
-          a.click();
-        }
+        showPreviewModal(r.dataUrl, r.mimeType, r.name);
       })
       .withFailureHandler(function(err){
         try{ tip.remove(); }catch(e){}
-        alert(String(err.message||err));
+        alert("Gagal preview: "+String(err.message||err));
       });
     if(asAdmin){
       run.getAcpSuratPreview(session.adminPin, id);
@@ -34001,6 +34571,8 @@ function renderKanitAuditWizard(){
     if(!btn || btn._wired) return;
     btn._wired = true;
     btn.addEventListener("click", function(){
+      if(window._kanitAcpSending) return;
+
       if(window._kanitAcpSending || btn.disabled) return;
       if(!window._kanitAcpSummaryReady){
         alert("Pilih Audit Summary dulu (wajib).");
@@ -34768,16 +35340,20 @@ function renderKanitAuditWizard(){
             statusCls = "belum";
           }
           return '<div class="appr-cab-card" role="button" tabindex="0" data-key="'+escHtml(k)+'">'+
-            '<div class="appr-cab-code">'+escHtml(g.cabang)+'</div>'+
-            '<div class="appr-cab-chips">'+
-              '<span class="appr-chip"><b>'+total+'</b> temuan</span>'+
-              '<span class="appr-chip s-belum"><b>'+g.nBelum+'</b> belum</span>'+
-              '<span class="appr-chip s-wait"><b>'+g.nMenunggu+'</b> menunggu</span>'+
-              (g.nApprove ? '<span class="appr-chip s-ok"><b>'+g.nApprove+'</b> approve</span>' : '')+
-              (g.nTolak ? '<span class="appr-chip s-no"><b>'+g.nTolak+'</b> tolak</span>' : '')+
+            '<div class="appr-cab-left">'+
+              '<div class="appr-cab-code">'+escHtml(g.cabang)+'</div>'+
+              '<div class="appr-cab-chips">'+
+                '<span class="appr-chip"><b>'+total+'</b> temuan</span>'+
+                (g.nBelum ? '<span class="appr-chip s-belum"><b>'+g.nBelum+'</b> belum</span>' : '')+
+                (g.nMenunggu ? '<span class="appr-chip s-wait"><b>'+g.nMenunggu+'</b> menunggu</span>' : '')+
+                (g.nApprove ? '<span class="appr-chip s-ok"><b>'+g.nApprove+'</b> approve</span>' : '')+
+                (g.nTolak ? '<span class="appr-chip s-no"><b>'+g.nTolak+'</b> tolak</span>' : '')+
+              '</div>'+
             '</div>'+
-            '<span class="appr-status '+statusCls+'">'+escHtml(statusLabel)+'</span>'+
-            '<span class="appr-cab-arrow">›</span>'+
+            '<div class="appr-cab-right">'+
+              '<span class="appr-status '+statusCls+'">'+escHtml(statusLabel)+'</span>'+
+              '<span class="appr-cab-arrow" aria-hidden="true">›</span>'+
+            '</div>'+
           '</div>';
         }).join("");
         wrap.querySelectorAll(".appr-cab-card").forEach(function(card){
