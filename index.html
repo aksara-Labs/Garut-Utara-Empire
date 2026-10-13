@@ -24691,6 +24691,153 @@ html[data-theme="light"] #kanitAcpKirimSemua:disabled{
     grid-template-columns: 1fr !important;
   }
 }
+
+/* YTD 1+4 horizontal + Meta A+C insight cards */
+html[data-theme="light"] .aytd-card.aytd-card-h{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  gap: 12px !important;
+  padding: 14px 16px !important;
+  min-height: 0 !important;
+}
+html[data-theme="light"] .aytd-side{
+  flex: 0 0 auto !important;
+  min-width: 96px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+html[data-theme="light"] .aytd-chart-side{
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: flex-end !important;
+}
+html[data-theme="light"] .aytd-card-h .aytd-num{
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  line-height: 1.05 !important;
+  margin: 4px 0 2px !important;
+}
+html[data-theme="light"] .aytd-sub{
+  font-size: 11px !important;
+  color: #94A3B8 !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] .aytd-bars-spark{
+  position: relative !important;
+  width: 100% !important;
+  min-height: 72px !important;
+  padding-bottom: 2px !important;
+}
+html[data-theme="light"] .aytd-bars-base{
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 18px !important;
+  height: 1px !important;
+  background: #E2E8F0 !important;
+  pointer-events: none !important;
+}
+html[data-theme="light"] .aytd-bar-col.is-peak .aytd-bar-fill{
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.2) !important;
+}
+html[data-theme="light"] .aytd-bar-num.is-peak{
+  color: #1D4ED8 !important;
+  font-weight: 800 !important;
+}
+html[data-theme="light"] .aytd-empty-inline{
+  font-size: 12px !important;
+  color: #94A3B8 !important;
+  padding: 12px 0 !important;
+}
+
+/* Meta insight cards A+C */
+html[data-theme="light"] .aytd-meta.aytd-meta-v2{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+html[data-theme="light"] .aytd-insight{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  padding: 12px 14px !important;
+  min-width: 0 !important;
+}
+html[data-theme="light"] .aytd-insight-top{
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-bottom: 6px !important;
+}
+html[data-theme="light"] .aytd-insight-ico{
+  font-size: 14px !important;
+  line-height: 1 !important;
+}
+html[data-theme="light"] .aytd-insight-label{
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  color: #94A3B8 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+html[data-theme="light"] .aytd-insight-name{
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin-bottom: 6px !important;
+}
+html[data-theme="light"] .aytd-insight-row{
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 6px !important;
+  margin-bottom: 8px !important;
+}
+html[data-theme="light"] .aytd-insight-num{
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  font-variant-numeric: tabular-nums !important;
+}
+html[data-theme="light"] .aytd-insight-unit{
+  font-size: 11px !important;
+  color: #94A3B8 !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] .aytd-insight-track{
+  height: 4px !important;
+  border-radius: 999px !important;
+  background: #F1F5F9 !important;
+  overflow: hidden !important;
+}
+html[data-theme="light"] .aytd-insight-track i{
+  display: block !important;
+  height: 100% !important;
+  border-radius: 999px !important;
+  max-width: 100% !important;
+}
+@media (max-width: 960px){
+  html[data-theme="light"] .aytd-card.aytd-card-h{
+    flex-direction: column !important;
+  }
+  html[data-theme="light"] .aytd-meta.aytd-meta-v2{
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+@media (max-width: 560px){
+  html[data-theme="light"] .aytd-meta.aytd-meta-v2{
+    grid-template-columns: 1fr !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -33109,27 +33256,45 @@ function applyRejectedAlasanFilter_(which){
 
   function miniYtdBars(series, color){
     series = series || [];
-    var last = -1;
-    series.forEach(function(x, i){ if((Number(x.value)||0) > 0) last = i; });
+    var last = -1, peak = 0, peakIdx = -1;
+    series.forEach(function(x, i){
+      var v = Number(x.value)||0;
+      if(v > 0) last = i;
+      if(v > peak){ peak = v; peakIdx = i; }
+    });
     if(last < 0){
-      return auditEmptyState("Tidak ada temuan pada tren YTD.");
+      return '<div class="aytd-empty-inline">Tidak ada data</div>';
     }
     var slice = series.slice(0, last + 1);
-    var max = 1;
-    slice.forEach(function(x){ if((Number(x.value)||0) > max) max = Number(x.value)||0; });
-    var CH = 56;
-    var bars = slice.map(function(x){
+    var max = peak > 0 ? peak : 1;
+    var CH = 48;
+    var bars = slice.map(function(x, i){
       var v = Number(x.value) || 0;
-      var h = v > 0 ? Math.max(10, Math.round((v / max) * CH)) : 3;
-      var num = v > 0 ? '<span class="aytd-bar-num">'+v+'</span>' : '<span class="aytd-bar-num aytd-bar-num-z">0</span>';
-      // height di attribute style + data-h agar sulit ditimpa CSS
-      return '<span class="aytd-bar-col" title="'+escHtml(String(x.label||""))+': '+v+'">'+
+      var h = v > 0 ? Math.max(8, Math.round((v / max) * CH)) : 3;
+      var isPeak = (i === peakIdx && v > 0);
+      var num = v > 0 ? '<span class="aytd-bar-num'+(isPeak?" is-peak":"")+'">'+v+'</span>' : '<span class="aytd-bar-num aytd-bar-num-z">0</span>';
+      return '<span class="aytd-bar-col'+(isPeak?" is-peak":"")+'" title="'+escHtml(String(x.label||""))+': '+v+(isPeak?" · puncak":"")+'">'+
         num+
-        '<span class="aytd-bar-fill" data-h="'+h+'" style="height:'+h+'px !important;max-height:'+h+'px !important;min-height:'+h+'px !important;background-color:'+color+';"></span>'+
+        '<span class="aytd-bar-fill" style="height:'+h+'px !important;min-height:'+h+'px !important;max-height:'+h+'px !important;background-color:'+color+';'+(isPeak?"opacity:1":"opacity:0.72")+'"></span>'+
         '<span class="aytd-bar-lab">'+escHtml(String(x.label||"").slice(0,3))+'</span>'+
       '</span>';
     }).join("");
-    return '<div class="aytd-bars" role="img" aria-label="Tren bulanan">'+bars+'</div>';
+    return '<div class="aytd-bars aytd-bars-spark" role="img"><div class="aytd-bars-base"></div>'+bars+'</div>';
+  }
+  function metaInsightCard(ico, label, name, count, total, accent){
+    var pct = total > 0 ? Math.min(100, Math.round((Number(count)||0) / total * 100)) : 0;
+    return '<div class="aytd-insight" title="'+escHtml(name)+'">'+
+      '<div class="aytd-insight-top">'+
+        '<span class="aytd-insight-ico" aria-hidden="true">'+ico+'</span>'+
+        '<span class="aytd-insight-label">'+escHtml(label)+'</span>'+
+      '</div>'+
+      '<div class="aytd-insight-name">'+escHtml(name || "—")+'</div>'+
+      '<div class="aytd-insight-row">'+
+        '<span class="aytd-insight-num" style="color:'+accent+'">'+(count||0)+'</span>'+
+        '<span class="aytd-insight-unit">temuan</span>'+
+      '</div>'+
+      '<div class="aytd-insight-track"><i style="width:'+pct+'%;background:'+accent+'"></i></div>'+
+    '</div>';
   }
   function renderAuditKpi(el, d){
     if(!el || !d) return;
@@ -33141,46 +33306,30 @@ function applyRejectedAlasanFilter_(which){
     var cab = (d.cabangTerbanyak && d.cabangTerbanyak.key) ? d.cabangTerbanyak : { key: "-", count: 0 };
     var jen = (d.jenisTerbanyak && d.jenisTerbanyak.key) ? d.jenisTerbanyak : { key: "-", count: 0 };
     var ytd = d.trenYtd || {};
-    function shortName(s, n){
-      s = String(s || "-");
-      return s.length > (n||22) ? s.slice(0, n-1) + "…" : s;
-    }
-    // current tab from filter
-    var curTipe = "Pelanggaran";
-    try {
-      var tf = document.getElementById("auditTipeFilter") || document.getElementById("kanitAuditTipeFilter");
-      if (tf && tf.value) curTipe = tf.value;
-    } catch (e) {}
-    function tabCls(name){
-      if(name === "SEMUA") return curTipe === "SEMUA" ? " is-active" : "";
-      return curTipe === name ? " is-active" : "";
-    }
     el.className = "audit-kpi-grid audit-kpi-v3";
+    function ytdCard(cls, title, total, series, color){
+      var chart = (Number(total)>0) ? miniYtdBars(series, color) : '<div class="aytd-empty-inline">Tidak ada data</div>';
+      return '<div class="aytd-card aytd-card-h '+cls+'">'+
+        '<div class="aytd-side">'+
+          '<div class="aytd-head"><span>Tren YTD</span><strong>'+title+'</strong></div>'+
+          '<div class="aytd-num">'+total+'</div>'+
+          '<div class="aytd-sub">total temuan</div>'+
+        '</div>'+
+        '<div class="aytd-chart-side">'+chart+'</div>'+
+      '</div>';
+    }
     el.innerHTML =
       '<div class="aytd-row">'+
-        '<div class="aytd-card aytd-pel">'+
-          '<div class="aytd-head"><span>Tren YTD</span><strong>Pelanggaran</strong></div>'+
-          '<div class="aytd-num">'+nPel+' <em>total temuan</em></div>'+
-          miniYtdBars(ytd.pel, "#2563EB")+
-        '</div>'+
-        '<div class="aytd-card aytd-fr">'+
-          '<div class="aytd-head"><span>Tren YTD</span><strong>Fraud</strong></div>'+
-          '<div class="aytd-num">'+nFr+' <em>total temuan</em></div>'+
-          (nFr ? miniYtdBars(ytd.fr, "#94A3B8") : '<div class="aytd-empty">Tidak ada fraud</div>')+
-        '</div>'+
-        '<div class="aytd-card aytd-sup">'+
-          '<div class="aytd-head"><span>Tren YTD</span><strong>Support</strong></div>'+
-          '<div class="aytd-num">'+nSup+' <em>total temuan</em></div>'+
-          miniYtdBars(ytd.sup, "#D97706")+
-        '</div>'+
+        ytdCard("aytd-pel", "Pelanggaran", nPel, ytd.pel, "#2563EB")+
+        ytdCard("aytd-fr", "Fraud", nFr, ytd.fr, "#64748B")+
+        ytdCard("aytd-sup", "Support", nSup, ytd.sup, "#D97706")+
       '</div>'+
-      '<div class="aytd-meta">'+
-        '<div class="aytd-meta-chip" title="'+escHtml(cab.key)+'"><em>Cabang terbanyak</em><b>'+escHtml(cab.key||"-")+'</b><span>'+(cab.count||0)+' temuan</span></div>'+
-        '<div class="aytd-meta-chip" title="'+escHtml(jen.key)+'"><em>Jenis terbanyak</em><b>'+escHtml(jen.key||"-")+'</b><span>'+(jen.count||0)+' temuan</span></div>'+
-        '<div class="aytd-meta-chip" title="'+escHtml(pet.key)+'"><em>Petugas terbanyak</em><b>'+escHtml(pet.key||"-")+'</b><span>'+(pet.count||0)+' temuan</span></div>'+
-        '<div class="aytd-meta-chip aytd-meta-total"><em>Total temuan</em><b>'+nAll+'</b><span>semua tipe</span></div>'+
+      '<div class="aytd-meta aytd-meta-v2">'+
+        metaInsightCard("🏢", "Cabang terbanyak", cab.key, cab.count, nAll, "#2563EB")+
+        metaInsightCard("📋", "Jenis terbanyak", jen.key, jen.count, nAll, "#0F172A")+
+        metaInsightCard("👤", "Petugas terbanyak", pet.key, pet.count, nAll, "#1D4ED8")+
+        metaInsightCard("Σ", "Total temuan", "Semua tipe", nAll, nAll, "#0F172A")+
       '</div>';
-
   }
 
   function ensureAuditFilterHint_(scope){
