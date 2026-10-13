@@ -24107,6 +24107,77 @@ html[data-theme="light"] .audit-rank-item .ct em{
   font-size: 10.5px !important;
   margin-left: 4px !important;
 }
+
+/* F2/F3 audit layout */
+html[data-theme="light"] .audit-charts.audit-charts-4{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  margin: 12px 0 16px !important;
+  width: 100% !important;
+}
+html[data-theme="light"] .audit-charts.audit-charts-4 .audit-card{
+  min-width: 0 !important;
+  background: #fff !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  padding: 12px !important;
+}
+html[data-theme="light"] .audit-charts.audit-charts-4 .audit-card h4{
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  margin: 0 0 10px !important;
+}
+html[data-theme="light"] .aytd-bar-wrap{
+  flex: 1 1 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+  height: 64px !important;
+}
+html[data-theme="light"] .aytd-bar-num{
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  color: #475569 !important;
+  line-height: 1 !important;
+}
+html[data-theme="light"] .aytd-bars{
+  height: 64px !important;
+  align-items: flex-end !important;
+}
+html[data-theme="light"] .aytd-bar-wrap .aytd-bar{
+  width: 100% !important;
+  max-width: 14px !important;
+  border-radius: 3px 3px 1px 1px !important;
+  display: block !important;
+}
+html[data-theme="light"] .aytd-tabs{ display: none !important; }
+
+/* F3 mobile */
+@media (max-width: 1100px){
+  html[data-theme="light"] .audit-charts.audit-charts-4{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  html[data-theme="light"] .audit-charts.audit-charts-4{
+    grid-template-columns: 1fr !important;
+  }
+  html[data-theme="light"] .aytd-row{
+    grid-template-columns: 1fr !important;
+  }
+  html[data-theme="light"] .aytd-meta{
+    grid-template-columns: 1fr !important;
+  }
+  html[data-theme="light"] #auditFilterRow,
+  html[data-theme="light"] #kanitAuditFilterRow{
+    flex-wrap: wrap !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -24526,15 +24597,14 @@ html[data-theme="light"] .audit-rank-item .ct em{
       <div id="kanitAuditMsg" class="msg" style="display:none;"></div>
       <div id="kanitAuditLoading" class="audit-loading" style="display:none;">Memuat dashboard…</div>
       <div id="kanitAuditKpi" class="audit-kpi-grid"></div>
-      <div class="audit-charts audit-charts-2" style="margin-bottom:12px;">
-        <div class="audit-card"><h4>Tren per bulan <span class="audit-card-hint" id="kanitAuditTrenHint"></span></h4><div id="kanitAuditTren"></div></div>
+      <div class="audit-charts audit-charts-4" id="kanitAuditChartsRow">
         <div class="audit-card"><h4>Per cabang <span class="audit-card-hint" id="kanitAuditCabangHint"></span></h4><div id="kanitAuditCabangChart"></div></div>
-      </div>
-      <div class="audit-charts audit-charts-3">
         <div class="audit-card"><h4>Top petugas <span class="audit-card-hint" id="kanitAuditTopPetugasHint"></span></h4><div id="kanitAuditTopPetugas"></div></div>
         <div class="audit-card"><h4>Top jenis temuan <span class="audit-card-hint" id="kanitAuditTopTemuanHint"></span></h4><div id="kanitAuditTopTemuan"></div></div>
         <div class="audit-card"><h4>Distribusi TW</h4><div id="kanitAuditTw"></div></div>
       </div>
+      <div id="kanitAuditTren" style="display:none;"></div>
+      <span id="kanitAuditTrenHint" style="display:none;"></span>
       <div class="rejected-top3-title">Detail temuan <span class="audit-card-hint" id="kanitAuditDetailHint"></span></div>
       <div class="audit-table-wrap"><table class="audit-table app-table"><thead><tr><th>Bulan</th><th>TW</th><th>Tipe</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="kanitAuditDetailBody"></tbody></table></div>
     </div>
@@ -25278,15 +25348,14 @@ html[data-theme="light"] .audit-rank-item .ct em{
       <div id="auditMsg" class="msg" style="display:none;"></div>
       <div id="auditLoading" class="audit-loading" style="display:none;">Memuat dashboard…</div>
       <div id="auditKpi" class="audit-kpi-grid"></div>
-      <div class="audit-charts audit-charts-2" style="margin-bottom:12px;">
-        <div class="audit-card"><h4>Tren per bulan <span class="audit-card-hint" id="auditTrenHint"></span></h4><div id="auditTren"></div></div>
+      <div class="audit-charts audit-charts-4" id="auditChartsRow">
         <div class="audit-card"><h4>Per cabang <span class="audit-card-hint" id="auditCabangHint"></span></h4><div id="auditCabangChart"></div></div>
-      </div>
-      <div class="audit-charts audit-charts-3">
         <div class="audit-card"><h4>Top petugas <span class="audit-card-hint" id="auditTopPetugasHint"></span></h4><div id="auditTopPetugas"></div></div>
         <div class="audit-card"><h4>Top jenis temuan <span class="audit-card-hint" id="auditTopTemuanHint"></span></h4><div id="auditTopTemuan"></div></div>
         <div class="audit-card"><h4>Distribusi TW</h4><div id="auditTw"></div></div>
       </div>
+      <div id="auditTren" style="display:none;"></div>
+      <span id="auditTrenHint" style="display:none;"></span>
       <div class="rejected-top3-title">Detail temuan <span class="audit-card-hint" id="auditDetailHint"></span></div>
       <div class="audit-table-wrap"><table class="audit-table app-table"><thead><tr><th>Cabang</th><th>Bulan</th><th>TW</th><th>Tipe</th><th>Jenis temuan</th><th>Petugas</th><th>No Faktur</th><th>Keterangan</th></tr></thead><tbody id="auditDetailBody"></tbody></table></div>
       </div><!-- /auditMainView -->
@@ -32522,9 +32591,11 @@ function applyRejectedAlasanFilter_(which){
     }
     var bars = series.map(function(x){
       var v = Number(x.value) || 0;
-      var h = v > 0 ? Math.max(4, Math.round((v/max)*40)) : 3;
-      var op = v > 0 ? "1" : "0.25";
-      return '<span class="aytd-bar" style="height:'+h+'px;background:'+color+';opacity:'+op+'" title="'+escHtml(String(x.label||''))+': '+v+'"></span>';
+      var h = v > 0 ? Math.max(6, Math.round((v/max)*48)) : 3;
+      var op = v > 0 ? "1" : "0.22";
+      var num = v > 0 ? '<span class="aytd-bar-num">'+v+'</span>' : '';
+      return '<span class="aytd-bar-wrap" title="'+escHtml(String(x.label||''))+': '+v+'">'+num+
+        '<span class="aytd-bar" style="height:'+h+'px;background:'+color+';opacity:'+op+'"></span></span>';
     }).join("");
     return '<div class="aytd-bars">'+bars+'</div>';
   }
@@ -32571,12 +32642,6 @@ function applyRejectedAlasanFilter_(which){
           miniYtdBars(ytd.sup, "#D97706")+
         '</div>'+
       '</div>'+
-      '<div class="aytd-tabs" role="tablist">'+
-        '<button type="button" class="aytd-tab'+tabCls("Pelanggaran")+'" data-audit-tipe="Pelanggaran">Pelanggaran</button>'+
-        '<button type="button" class="aytd-tab'+tabCls("Fraud")+'" data-audit-tipe="Fraud">Fraud</button>'+
-        '<button type="button" class="aytd-tab'+tabCls("Support")+'" data-audit-tipe="Support">Support</button>'+
-        '<button type="button" class="aytd-tab'+tabCls("SEMUA")+'" data-audit-tipe="SEMUA">Semua</button>'+
-      '</div>'+
       '<div class="aytd-meta">'+
         '<div class="aytd-meta-chip"><em>Cabang terbanyak</em><b>'+escHtml(shortName(cab.key,16))+'</b><span>'+(cab.count||0)+'</span></div>'+
         '<div class="aytd-meta-chip"><em>Jenis terbanyak</em><b>'+escHtml(shortName(jen.key,22))+'</b><span>'+(jen.count||0)+'</span></div>'+
@@ -32584,20 +32649,6 @@ function applyRejectedAlasanFilter_(which){
         '<div class="aytd-meta-chip aytd-meta-total"><em>Total temuan</em><b>'+nAll+'</b><span>semua tipe</span></div>'+
       '</div>';
 
-    // Tab click → set filter + reload
-    el.querySelectorAll(".aytd-tab").forEach(function(btn){
-      btn.addEventListener("click", function(){
-        var t = btn.getAttribute("data-audit-tipe") || "Pelanggaran";
-        var tf1 = document.getElementById("auditTipeFilter");
-        var tf2 = document.getElementById("kanitAuditTipeFilter");
-        if(tf1) tf1.value = t;
-        if(tf2) tf2.value = t;
-        var load1 = document.getElementById("auditLoadBtn");
-        var load2 = document.getElementById("kanitAuditLoadBtn");
-        if(load1) load1.click();
-        else if(load2) load2.click();
-      });
-    });
   }
 
   function renderAuditAdmin(d){
