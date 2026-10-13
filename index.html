@@ -23871,6 +23871,172 @@ html[data-theme="light"] .aytd-meta-total span{ color: #64748B !important; }
   html[data-theme="light"] .aytd-meta{ grid-template-columns: 1fr !important; }
 }
 /* Exclude aytd-tab from gold global button look is partially via height rules above */
+
+/* ========== F1 Audit KPI v3 — force layout like reference ========== */
+html[data-theme="light"] #auditKpi.audit-kpi-v3,
+html[data-theme="light"] #kanitAuditKpi.audit-kpi-v3,
+html[data-theme="light"] .audit-kpi-grid.audit-kpi-v3{
+  display: flex !important;
+  flex-direction: column !important;
+  grid-template-columns: none !important;
+  gap: 14px !important;
+  margin: 12px 0 16px !important;
+  width: 100% !important;
+}
+html[data-theme="light"] .aytd-row{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+html[data-theme="light"] .aytd-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  box-shadow: none !important;
+  min-width: 0 !important;
+}
+html[data-theme="light"] .aytd-head span{
+  display: block !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #94A3B8 !important;
+  -webkit-text-fill-color: #94A3B8 !important;
+}
+html[data-theme="light"] .aytd-head strong{
+  display: block !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .aytd-num{
+  font-size: 32px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  line-height: 1.15 !important;
+  margin: 8px 0 12px !important;
+}
+html[data-theme="light"] .aytd-num em{
+  font-style: normal !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #94A3B8 !important;
+  -webkit-text-fill-color: #94A3B8 !important;
+  display: inline !important;
+}
+html[data-theme="light"] .aytd-bars{
+  display: flex !important;
+  align-items: flex-end !important;
+  gap: 4px !important;
+  height: 44px !important;
+  width: 100% !important;
+}
+html[data-theme="light"] .aytd-bars i{
+  flex: 1 1 0 !important;
+  border-radius: 3px 3px 1px 1px !important;
+  min-width: 3px !important;
+}
+html[data-theme="light"] .aytd-empty{
+  font-size: 12.5px !important;
+  color: #94A3B8 !important;
+  padding-top: 16px !important;
+}
+
+/* Tabs — pill biru, BUKAN cokelat gold */
+html[data-theme="light"] .aytd-tabs{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html[data-theme="light"] button.aytd-tab,
+html[data-theme="light"] .aytd-tab{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  padding: 0 18px !important;
+  margin: 0 !important;
+  border-radius: 999px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #F1F5F9 !important;
+  background-image: none !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  width: auto !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] button.aytd-tab.is-active,
+html[data-theme="light"] .aytd-tab.is-active{
+  background: #2563EB !important;
+  background-image: none !important;
+  border-color: #2563EB !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+html[data-theme="light"] button.aytd-tab:hover:not(.is-active){
+  background: #E2E8F0 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+/* Meta strip full width below tabs */
+html[data-theme="light"] .aytd-meta{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  width: 100% !important;
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  margin: 0 !important;
+}
+html[data-theme="light"] .aytd-meta-chip em{
+  font-style: normal !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  color: #94A3B8 !important;
+  -webkit-text-fill-color: #94A3B8 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+html[data-theme="light"] .aytd-meta-chip b{
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] .aytd-meta-chip span{
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: #2563EB !important;
+  -webkit-text-fill-color: #2563EB !important;
+}
+
+/* Loading bar — no orange */
+html[data-theme="light"] .audit-loading,
+html[data-theme="light"] #auditLoading{
+  border-color: #E2E8F0 !important;
+  color: #64748B !important;
+  background: #F8FAFC !important;
+}
+
+@media (max-width: 960px){
+  html[data-theme="light"] .aytd-row{ grid-template-columns: 1fr !important; }
+  html[data-theme="light"] .aytd-meta{ grid-template-columns: 1fr 1fr !important; }
+}
 </style>
 </head>
 <body>
