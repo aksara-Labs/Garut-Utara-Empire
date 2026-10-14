@@ -12267,21 +12267,21 @@ button.admin-topbar-avatar:hover,
 #tab-kanitkasarea .ka-debit .ka-table-wrap{
   max-height:none;
 }
-/* Scroll hanya jika sangat panjang (> ~18 baris) */
+/* Tidak pakai max-height — tabel tampil penuh */
 @media (min-width: 881px){
   #tab-kasarea .ka-kredit .ka-table-wrap,
-  #tab-kanitkasarea .ka-kredit .ka-table-wrap{
-    max-height: min(70vh, 720px);
-  }
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap,
   #tab-kasarea .ka-debit .ka-table-wrap,
   #tab-kanitkasarea .ka-debit .ka-table-wrap{
-    max-height: min(70vh, 720px);
+    max-height: none !important;
+    overflow-y: visible !important;
   }
 }
 @media (max-width: 880px){
   #tab-kasarea .ka-table-wrap,
   #tab-kanitkasarea .ka-table-wrap{
-    max-height: min(60vh, 560px);
+    max-height: none !important;
+    overflow-y: visible !important;
   }
 }
 
@@ -25635,7 +25635,7 @@ html[data-theme="light"] #tab-kanitkasarea .ka-sec-h{
 }
 html[data-theme="light"] #tab-kasarea .ka-table-wrap,
 html[data-theme="light"] #tab-kanitkasarea .ka-table-wrap{
-  max-height: min(52vh, 440px) !important;
+  max-height: none !important;
 }
 html[data-theme="light"] #tab-kasarea table.ka-table,
 html[data-theme="light"] #tab-kanitkasarea table.ka-table{
@@ -25868,11 +25868,13 @@ html[data-theme="light"] #tab-kanitkasarea .ka-debit{
 }
 html[data-theme="light"] #tab-kasarea .ka-table-wrap,
 html[data-theme="light"] #tab-kanitkasarea .ka-table-wrap{
-  max-height: min(58vh, 520px) !important;
+  max-height: none !important;
+  overflow-y: visible !important;
 }
 html[data-theme="light"] #tab-kasarea .ka-debit .ka-table-wrap,
 html[data-theme="light"] #tab-kanitkasarea .ka-debit .ka-table-wrap{
-  max-height: min(36vh, 280px) !important;
+  max-height: none !important;
+  overflow-y: visible !important;
 }
 /* Form debit padat di kolom kanan */
 html[data-theme="light"] #tab-kasarea .ka-debit-form,
@@ -27747,6 +27749,31 @@ button.ka-del{
   position: static !important;
   left: auto !important;
   box-shadow: none !important;
+}
+
+/* ===== KAS AREA SCROLL FIX FINAL (spesifisitas tertinggi) ===== */
+html[data-theme="light"] #tab-kasarea .ka-table-wrap,
+html[data-theme="light"] #tab-kanitkasarea .ka-table-wrap,
+html[data-theme="light"] #tab-kasarea .ka-kredit .ka-table-wrap,
+html[data-theme="light"] #tab-kasarea .ka-debit .ka-table-wrap,
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit .ka-table-wrap,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit .ka-table-wrap,
+html body #tab-kasarea .ka-table-wrap,
+html body #tab-kanitkasarea .ka-table-wrap,
+html body #tab-kasarea .ka-kredit .ka-table-wrap,
+html body #tab-kasarea .ka-debit .ka-table-wrap{
+  max-height: none !important;
+  height: auto !important;
+  overflow-y: visible !important;
+  overflow-x: auto !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-kredit,
+html[data-theme="light"] #tab-kasarea .ka-debit,
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit{
+  overflow: visible !important;
+  max-height: none !important;
+  height: auto !important;
 }
 </style>
 </head>
