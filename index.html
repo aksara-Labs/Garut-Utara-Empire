@@ -26834,6 +26834,605 @@ html body .ka-modal button#kaDebitCancel span{
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ========== M5 QA HARDENING ========== */
+html, body{
+  overscroll-behavior-x: none !important;
+}
+body.modal-open{
+  overflow: hidden !important;
+  /* JANGAN touch-action:none — memblokir tap Batal/Close di HP */
+}
+
+@media (max-width: 880px){
+  /* Cegah double horizontal scroll di shell */
+  .admin-shell,
+  .admin-main,
+  .admin-content,
+  #screen-admin-dashboard,
+  #screen-omset-form{
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  /* Touch target minimum ~40px untuk aksi penting */
+  .admin-hamburger,
+  .notif-btn,
+  .profile-chip,
+  #adminTodoBtn{
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+  /* Panel tidak overflow */
+  .panel.subpanel,
+  .subpanel.active{
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  /* Chart canvas parent */
+  canvas{
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  /* Safe bottom padding konten */
+  .admin-content{
+    padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  /* Login full width */
+  #screen-login .auth-card,
+  .login-card,
+  .auth-box{
+    width: min(100%, 400px) !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Modal open lock body */
+#kaDebitModal[style*="display: flex"],
+#todoModal:not([hidden]){
+  overscroll-behavior: contain !important;
+}
+
+/* ===== FIX MOBILE BUGS (debit close, focus, KPI, libur, rejected, hapus) ===== */
+
+/* Hapus focus biru aneh saat klik menu */
+.admin-nav-btn:focus,
+.admin-nav-btn:focus-visible,
+.tab-btn:focus,
+.tab-btn:focus-visible,
+.admin-hamburger:focus,
+.admin-hamburger:focus-visible,
+button.admin-nav-btn:focus,
+button.admin-nav-btn:focus-visible{
+  outline: none !important;
+  box-shadow: none !important;
+}
+.admin-sidebar .admin-nav-btn:focus,
+.admin-sidebar .admin-nav-btn.active:focus{
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Modal debit: pastikan bisa diklik di atas segalanya */
+#kaDebitModal.ka-modal{
+  z-index: 10050 !important;
+  pointer-events: auto !important;
+}
+#kaDebitModal .ka-modal-backdrop{
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+#kaDebitModal .ka-modal-card{
+  pointer-events: auto !important;
+  z-index: 10051 !important;
+}
+#kaDebitModal #kaDebitCancel,
+#kaDebitModal #kaDebitModalClose,
+#kaDebitModal #kaDebitAddBtn{
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 10052 !important;
+  position: relative !important;
+}
+
+/* Tombol Hapus debit — bukan kotak hitam */
+html[data-theme="light"] #tab-kasarea button.ka-del,
+html[data-theme="light"] #tab-kanitkasarea button.ka-del,
+#tab-kasarea button.ka-del,
+#tab-kanitkasarea button.ka-del,
+button.ka-del{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #FEF2F2 !important;
+  background-image: none !important;
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+  border: 1px solid #FECACA !important;
+  border-radius: 8px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 32px !important;
+  padding: 0 10px !important;
+  width: auto !important;
+  min-width: 56px !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-del-td,
+#tab-kasarea .ka-del-td{
+  text-align: center !important;
+  width: 72px !important;
+  padding: 4px !important;
+}
+
+/* Debit table header alignment */
+#tab-kasarea .ka-debit table.ka-table,
+#tab-kanitkasarea .ka-debit table.ka-table{
+  table-layout: fixed !important;
+  width: 100% !important;
+}
+#tab-kasarea .ka-debit table.ka-table th,
+#tab-kanitkasarea .ka-debit table.ka-table th{
+  font-size: 10px !important;
+  padding: 6px 4px !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 880px){
+  /* KPI tidak overflow */
+  .kinerja-kpi-grid,
+  #tab-kinerjaharian .kinerja-kpi-grid,
+  #tab-kanitkinerjaharian .kinerja-kpi-grid,
+  .kinerja-badges{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+  .kinerja-kpi-card,
+  .kinerja-badge,
+  #tab-kinerjaharian .kinerja-kpi-card{
+    min-width: 0 !important;
+    overflow: hidden !important;
+    padding: 8px 8px !important;
+  }
+  .kinerja-kpi-card .val,
+  .kinerja-kpi-card .kpi-val,
+  .kinerja-kpi-card .value{
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+    word-break: break-word !important;
+  }
+  .kinerja-kpi-card .lab,
+  .kinerja-kpi-card .kpi-lab,
+  .kinerja-kpi-card .label,
+  .kinerja-badge{
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    white-space: normal !important;
+  }
+  /* badge terbaik 2 kolom, teks kecil */
+  .kinerja-badges .kinerja-badge{
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+  }
+
+  /* Jadwal libur cell center */
+  .libur-cell,
+  html[data-theme="light"] .libur-cell{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .libur-table td{
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+  .libur-table td .libur-cell{
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Rejected analisa table: jangan numpuk header */
+  .rejected-detail-table,
+  #tab-rejected table,
+  .ob-summary + table,
+  .rejected-branch-table{
+    table-layout: auto !important;
+    width: max-content !important;
+    min-width: 100% !important;
+  }
+  .rejected-detail-table th,
+  .rejected-branch-table th,
+  #tab-rejected th{
+    font-size: 9px !important;
+    padding: 6px 6px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+  .rejected-detail-table-wrap,
+  #tab-rejected .table-scroll,
+  #tab-rejected [class*="table-wrap"]{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+@media (max-width: 480px){
+  .kinerja-kpi-grid,
+  #tab-kinerjaharian .kinerja-kpi-grid,
+  .kinerja-badges{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .kinerja-kpi-card .val{
+    font-size: 14px !important;
+  }
+}
+
+/* Hilangkan bayangan biru tap di mobile */
+html, body, button, a, .admin-nav-btn, .tab-btn{
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+}
+
+/* ===== FIX v2: KPI harian, libur center, debit padat ===== */
+
+/* Dashboard Harian stat strip — padat di HP */
+@media (max-width: 880px){
+  html[data-theme="light"] .kinerja-stat-strip,
+  html[data-theme="light"] #tab-kinerjaharian .kinerja-stat-strip,
+  html[data-theme="light"] #tab-kanitkinerjaharian .kinerja-stat-strip,
+  .kinerja-stat-strip{
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+  html[data-theme="light"] .kinerja-stat-item,
+  .kinerja-stat-item{
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: none !important;
+    padding: 8px 10px !important;
+    overflow: hidden !important;
+  }
+  html[data-theme="light"] .kinerja-stat-item .k,
+  .kinerja-stat-item .k{
+    font-size: 8.5px !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.2 !important;
+    white-space: normal !important;
+  }
+  html[data-theme="light"] .kinerja-stat-item .v,
+  .kinerja-stat-item .v{
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    margin-top: 2px !important;
+    word-break: break-word !important;
+  }
+  html[data-theme="light"] .kinerja-badges,
+  .kinerja-badges{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+  html[data-theme="light"] .kinerja-badge,
+  .kinerja-badge{
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+}
+
+@media (max-width: 480px){
+  html[data-theme="light"] .kinerja-stat-item .v,
+  .kinerja-stat-item .v{
+    font-size: 13px !important;
+  }
+  html[data-theme="light"] .kinerja-stat-item .k,
+  .kinerja-stat-item .k{
+    font-size: 8px !important;
+  }
+}
+
+/* Jadwal Libur — kolom tanggal tetap & cell center */
+@media (max-width: 880px){
+  .libur-table,
+  html[data-theme="light"] .libur-table,
+  .admin-content .libur-table{
+    table-layout: fixed !important;
+  }
+  .libur-table th:not(.label-col),
+  .libur-table td:not(.label-col){
+    width: 32px !important;
+    min-width: 32px !important;
+    max-width: 36px !important;
+    padding: 2px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+  .libur-table th.label-col,
+  .libur-table td.label-col,
+  html[data-theme="light"] .libur-table th.label-col,
+  html[data-theme="light"] .libur-table td.label-col{
+    width: 128px !important;
+    min-width: 120px !important;
+    max-width: 140px !important;
+  }
+  .libur-cell,
+  html[data-theme="light"] .libur-cell,
+  .admin-content .libur-cell{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 26px !important;
+    height: 26px !important;
+    margin: 0 auto !important;
+    border-radius: 6px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Debit table padat — hilangkan ruang kosong */
+#tab-kasarea .ka-debit .ka-table-wrap,
+#tab-kanitkasarea .ka-debit .ka-table-wrap{
+  overflow-x: auto !important;
+}
+#tab-kasarea table.ka-debit-table,
+#tab-kanitkasarea table.ka-debit-table,
+#tab-kasarea .ka-debit table.ka-table,
+#tab-kanitkasarea .ka-debit table.ka-table{
+  table-layout: fixed !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+#tab-kasarea .ka-debit table th,
+#tab-kasarea .ka-debit table td,
+#tab-kanitkasarea .ka-debit table th,
+#tab-kanitkasarea .ka-debit table td{
+  padding: 5px 6px !important;
+  font-size: 11px !important;
+  vertical-align: middle !important;
+}
+#tab-kasarea .ka-debit table th:nth-child(1),
+#tab-kasarea .ka-debit table td:nth-child(1),
+#tab-kanitkasarea .ka-debit table th:nth-child(1),
+#tab-kanitkasarea .ka-debit table td:nth-child(1){
+  width: 36px !important;
+  text-align: center !important;
+}
+#tab-kasarea .ka-debit table th:nth-child(2),
+#tab-kasarea .ka-debit table td:nth-child(2),
+#tab-kanitkasarea .ka-debit table th:nth-child(2),
+#tab-kanitkasarea .ka-debit table td:nth-child(2){
+  width: 88px !important;
+  white-space: nowrap !important;
+}
+#tab-kasarea .ka-debit table th:nth-child(3),
+#tab-kasarea .ka-debit table td:nth-child(3),
+#tab-kanitkasarea .ka-debit table th:nth-child(3),
+#tab-kanitkasarea .ka-debit table td:nth-child(3){
+  width: auto !important;
+  text-align: left !important;
+  word-break: break-word !important;
+}
+#tab-kasarea .ka-debit table th:nth-child(4),
+#tab-kasarea .ka-debit table td:nth-child(4),
+#tab-kanitkasarea .ka-debit table th:nth-child(4),
+#tab-kanitkasarea .ka-debit table td:nth-child(4){
+  width: 96px !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+}
+#tab-kasarea .ka-debit table th:nth-child(5),
+#tab-kasarea .ka-debit table td:nth-child(5),
+#tab-kanitkasarea .ka-debit table th:nth-child(5),
+#tab-kanitkasarea .ka-debit table td:nth-child(5){
+  width: 64px !important;
+  text-align: center !important;
+  padding: 4px !important;
+}
+
+/* KPI Gadai/PP/dll: 1 kolom ke bawah di mobile (seperti awal) */
+@media (max-width: 880px){
+  #tab-kinerjaharian .kinerja-kpi-grid,
+  #tab-kanitkinerjaharian .kinerja-kpi-grid,
+  .kinerja-kpi-grid,
+  .kinerja-kpi-grid.kpi-bisnis-top,
+  div.kinerja-kpi-grid[style]{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  #tab-kinerjaharian .kinerja-kpi-card,
+  #tab-kanitkinerjaharian .kinerja-kpi-card,
+  .kinerja-kpi-card{
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Jadwal libur: person kiri, tanggal center */
+html[data-theme="light"] .libur-person{
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+}
+html[data-theme="light"] .libur-avatar{
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  flex-shrink: 0 !important;
+}
+html[data-theme="light"] .libur-person-name{
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 110px !important;
+}
+html[data-theme="light"] .libur-person-job{
+  font-size: 10px !important;
+  color: #64748B !important;
+  line-height: 1.2 !important;
+}
+html[data-theme="light"] .kuota-pill{
+  display: inline-block !important;
+  font-size: 9px !important;
+  margin-top: 2px !important;
+  padding: 1px 6px !important;
+  border-radius: 999px !important;
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+}
+
+@media (max-width: 880px){
+  .libur-table-wrap{
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .libur-table{
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+  }
+  /* Kolom karyawan */
+  .libur-table th.label-col,
+  .libur-table td.label-col{
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 4 !important;
+    width: 148px !important;
+    min-width: 148px !important;
+    max-width: 148px !important;
+    background: #fff !important;
+    padding: 8px 8px !important;
+    box-shadow: 2px 0 6px rgba(15,23,42,0.06) !important;
+  }
+  .libur-table thead th.label-col{
+    background: #0F172A !important;
+    color: #F8FAFC !important;
+    z-index: 5 !important;
+  }
+  /* Kolom hari: kotak center */
+  .libur-table thead th:not(.label-col){
+    width: 34px !important;
+    min-width: 34px !important;
+    max-width: 34px !important;
+    padding: 6px 0 !important;
+    text-align: center !important;
+  }
+  .libur-table tbody td:not(.label-col){
+    width: 34px !important;
+    min-width: 34px !important;
+    max-width: 34px !important;
+    padding: 4px 0 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+  .libur-cell{
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    border: 1px solid #E2E8F0 !important;
+    background: #FFFFFF !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    box-sizing: border-box !important;
+  }
+  .libur-cell.st-libur{
+    background: #FEF3C7 !important;
+    border-color: #F59E0B !important;
+    color: #B45309 !important;
+  }
+  .libur-cell.st-cuti{
+    background: #E0E7FF !important;
+    border-color: #6366F1 !important;
+    color: #3730A3 !important;
+  }
+  .libur-cell.st-sakit{
+    background: #FEE2E2 !important;
+    border-color: #EF4444 !important;
+    color: #B91C1C !important;
+  }
+}
+
+/* Debit: jangan potong — scroll horizontal + kolom proporsional */
+#tab-kasarea .ka-debit .ka-table-wrap,
+#tab-kanitkasarea .ka-debit .ka-table-wrap{
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  max-width: 100% !important;
+}
+#tab-kasarea table.ka-debit-table,
+#tab-kanitkasarea table.ka-debit-table{
+  table-layout: fixed !important;
+  width: 100% !important;
+  min-width: 320px !important;
+}
+#tab-kasarea .ka-debit table th:nth-child(1),
+#tab-kasarea .ka-debit table td.ka-d-no,
+#tab-kasarea .ka-debit table td:nth-child(1){
+  width: 32px !important;
+  min-width: 32px !important;
+}
+#tab-kasarea .ka-debit table th:nth-child(2),
+#tab-kasarea .ka-debit table td.ka-d-tgl,
+#tab-kasarea .ka-debit table td:nth-child(2){
+  width: 78px !important;
+  min-width: 78px !important;
+}
+#tab-kasarea .ka-debit table th:nth-child(3),
+#tab-kasarea .ka-debit table td.ka-d-item,
+#tab-kasarea .ka-debit table td:nth-child(3){
+  width: auto !important;
+  min-width: 72px !important;
+}
+#tab-kasarea .ka-debit table th:nth-child(4),
+#tab-kasarea .ka-debit table td.ka-d-nom,
+#tab-kasarea .ka-debit table td:nth-child(4){
+  width: 84px !important;
+  min-width: 84px !important;
+  text-align: right !important;
+}
+#tab-kasarea .ka-debit table th:nth-child(5),
+#tab-kasarea .ka-debit table td.ka-del-td,
+#tab-kasarea .ka-debit table td:nth-child(5){
+  width: 58px !important;
+  min-width: 58px !important;
+  padding: 2px !important;
+}
+#tab-kasarea button.ka-del,
+#tab-kanitkasarea button.ka-del{
+  font-size: 10px !important;
+  padding: 0 6px !important;
+  min-width: 48px !important;
+  height: 26px !important;
+}
 </style>
 </head>
 <body>
@@ -33551,7 +34150,7 @@ function applyRejectedAlasanFilter_(which){
 
     // Kartu ringkasan atas (gaya Dashboard Harian) — paling atas
     var bobotMap = (typeof BOBOT_KPI === "object" && BOBOT_KPI) ? BOBOT_KPI : {gadai:25,pp:25,nasabah:25,gaol:25};
-    var cardsHtml = '<div class="kinerja-kpi-grid kpi-bisnis-top" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:0 0 22px 0;">' + metrics.map(function(metric){
+    var cardsHtml = '<div class="kinerja-kpi-grid kpi-bisnis-top" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px;margin:0 0 22px 0;">' + metrics.map(function(metric){
       var tt = data.totals[metric.key] || {aktual:0,target:0};
       var nAktual = Number(tt.aktual) || 0;
       var nTarget = Number(tt.target) || 0;
@@ -34631,14 +35230,16 @@ function applyRejectedAlasanFilter_(which){
     if(wrapD){
       if(!debits.length) wrapD.innerHTML = '<div class="empty-log" style="padding:12px;">Belum ada debit.</div>';
       else {
-        wrapD.innerHTML = '<table class="ka-table"><thead><tr><th>No</th><th>Tanggal</th><th>Item</th><th>Nominal</th>'+(canEdit?'<th></th>':'')+'</tr></thead><tbody>'+
+        wrapD.innerHTML = '<table class="ka-table ka-debit-table"><colgroup>'+
+          '<col style="width:36px"><col style="width:88px"><col><col style="width:96px">'+(canEdit?'<col style="width:64px">':'')+
+          '</colgroup><thead><tr><th>No</th><th>Tgl</th><th>Item</th><th>Nominal</th>'+(canEdit?'<th></th>':'')+'</tr></thead><tbody>'+
           debits.map(function(d){
             return '<tr>'+
-              '<td>'+d.no+'</td>'+
-              '<td>'+escHtml(d.tanggal)+'</td>'+
-              '<td>'+escHtml(d.item)+'</td>'+
-              '<td class="ka-total">'+kaFmtRp_(d.nominal)+'</td>'+
-              (canEdit ? '<td><button type="button" class="ka-del" data-id="'+escHtml(d.id)+'">Hapus</button></td>' : '')+'</tr>';
+              '<td class="ka-d-no">'+d.no+'</td>'+
+              '<td class="ka-d-tgl">'+escHtml(d.tanggal)+'</td>'+
+              '<td class="ka-d-item">'+escHtml(d.item)+'</td>'+
+              '<td class="ka-total ka-d-nom">'+kaFmtRp_(d.nominal)+'</td>'+
+              (canEdit ? '<td class="ka-del-td"><button type="button" class="ka-del" data-id="'+escHtml(d.id)+'" title="Hapus">Hapus</button></td>' : '')+'</tr>';
           }).join("")+'</tbody></table>';
       }
     }
@@ -34834,10 +35435,30 @@ function applyRejectedAlasanFilter_(which){
       var b = document.getElementById(id);
       if(b) b.addEventListener("click", function(){ openKaDebitModal(); });
     });
-    ["kaDebitCancel","kaDebitModalClose","kaDebitModalBackdrop"].forEach(function(id){
-      var el = document.getElementById(id);
-      if(el) el.addEventListener("click", function(){ closeKaDebitModal(); });
-    });
+    window.closeKaDebitModal = closeKaDebitModal;
+    window.openKaDebitModal = openKaDebitModal;
+    function bindClose(el){
+      if(!el || el._kaCloseBound) return;
+      el._kaCloseBound = true;
+      el.addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        closeKaDebitModal();
+        try{ document.body.classList.remove("modal-open"); }catch(err){}
+      }, true);
+    }
+    bindClose(document.getElementById("kaDebitCancel"));
+    bindClose(document.getElementById("kaDebitModalClose"));
+    bindClose(document.getElementById("kaDebitModalBackdrop"));
+    // Delegasi cadangan (tap di HP)
+    document.addEventListener("click", function(e){
+      var t = e.target;
+      if(!t || !t.closest) return;
+      if(t.closest("#kaDebitCancel, #kaDebitModalClose, #kaDebitModalBackdrop")){
+        closeKaDebitModal();
+        try{ document.body.classList.remove("modal-open"); }catch(err){}
+      }
+    }, true);
     document.addEventListener("keydown", function(e){
       if(e.key === "Escape"){
         var m = document.getElementById("kaDebitModal");
@@ -40014,6 +40635,54 @@ function loadAdminBertugas(){
   document.addEventListener("click", function(e){
     var nav = e.target && e.target.closest && e.target.closest('[data-tab="cashopname"]');
     if(nav) setTimeout(setupCoAccordion, 50);
+  }, true);
+})();
+</script>
+
+
+<script>
+/* M5 QA: modal body lock + viewport */
+(function(){
+  function setModalOpen(on){
+    try{ document.body.classList.toggle("modal-open", !!on); }catch(e){}
+  }
+  var _obs;
+  function watchModal(id){
+    var el = document.getElementById(id);
+    if(!el) return;
+    var check = function(){
+      var open = false;
+      if(id === "todoModal"){
+        open = !el.hidden && (el.style.display === "flex" || getComputedStyle(el).display === "flex");
+      } else {
+        open = el.style.display === "flex" || (el.getAttribute("aria-hidden") === "false" && el.style.display !== "none");
+      }
+      if(open) setModalOpen(true);
+      else {
+        // only clear if no other modal open
+        var ka = document.getElementById("kaDebitModal");
+        var td = document.getElementById("todoModal");
+        var kaOpen = ka && ka.style.display === "flex";
+        var tdOpen = td && !td.hidden && (td.style.display === "flex" || getComputedStyle(td).display === "flex");
+        setModalOpen(kaOpen || tdOpen);
+      }
+    };
+    try{
+      var mo = new MutationObserver(check);
+      mo.observe(el, { attributes:true, attributeFilter:["style","hidden","aria-hidden","class"] });
+    }catch(e){}
+    // also hook common open/close
+  }
+  watchModal("kaDebitModal");
+  watchModal("todoModal");
+  // enhance open/close if functions exist
+  var _open = window.openKaDebitModal;
+  // patch after load
+  document.addEventListener("click", function(e){
+    var t = e.target && e.target.closest && e.target.closest("#kaDebitToggle, #kaDebitToggleKanit, #adminTodoBtn");
+    if(t) setTimeout(function(){ setModalOpen(true); }, 0);
+    var c = e.target && e.target.closest && e.target.closest("#kaDebitCancel, #kaDebitModalClose, #kaDebitModalBackdrop, .todo-close");
+    if(c) setTimeout(function(){ setModalOpen(false); }, 50);
   }, true);
 })();
 </script>
