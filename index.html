@@ -12259,11 +12259,30 @@ button.admin-topbar-avatar:hover,
 
 #tab-kasarea .ka-table-wrap,
 #tab-kanitkasarea .ka-table-wrap{
-  overflow:auto;max-height:min(48vh,420px);background:transparent;
+  overflow:auto;
+  max-height:none;
+  background:transparent;
 }
 #tab-kasarea .ka-debit .ka-table-wrap,
 #tab-kanitkasarea .ka-debit .ka-table-wrap{
-  max-height:min(28vh,220px);
+  max-height:none;
+}
+/* Scroll hanya jika sangat panjang (> ~18 baris) */
+@media (min-width: 881px){
+  #tab-kasarea .ka-kredit .ka-table-wrap,
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap{
+    max-height: min(70vh, 720px);
+  }
+  #tab-kasarea .ka-debit .ka-table-wrap,
+  #tab-kanitkasarea .ka-debit .ka-table-wrap{
+    max-height: min(70vh, 720px);
+  }
+}
+@media (max-width: 880px){
+  #tab-kasarea .ka-table-wrap,
+  #tab-kanitkasarea .ka-table-wrap{
+    max-height: min(60vh, 560px);
+  }
 }
 
 /* Tabel grid penuh — garis tiap kolom bulan */
@@ -26190,34 +26209,34 @@ html body #kaDebitModal #kaDebitCancel.btn-xs.secondary{
   #tab-kanitkasarea .ka-table-wrap table{
     min-width: 720px !important;
   }
-  #tab-kasarea .ka-table-wrap td.ka-cab,
-  #tab-kasarea .ka-table-wrap td.ka-nama,
-  #tab-kasarea .ka-table-wrap th:nth-child(1),
-  #tab-kasarea .ka-table-wrap th:nth-child(2),
-  #tab-kanitkasarea .ka-table-wrap td.ka-cab,
-  #tab-kanitkasarea .ka-table-wrap td.ka-nama,
-  #tab-kanitkasarea .ka-table-wrap th:nth-child(1),
-  #tab-kanitkasarea .ka-table-wrap th:nth-child(2){
+  #tab-kasarea .ka-kredit .ka-table-wrap td.ka-cab,
+  #tab-kasarea .ka-kredit .ka-table-wrap td.ka-nama,
+  #tab-kasarea .ka-kredit .ka-table-wrap th:nth-child(1),
+  #tab-kasarea .ka-kredit .ka-table-wrap th:nth-child(2),
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap td.ka-cab,
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap td.ka-nama,
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap th:nth-child(1),
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap th:nth-child(2){
     position: sticky !important;
     z-index: 2 !important;
     background: #FFFFFF !important;
   }
-  #tab-kasarea .ka-table-wrap th:nth-child(1),
-  #tab-kanitkasarea .ka-table-wrap th:nth-child(1),
-  #tab-kasarea .ka-table-wrap td.ka-cab,
-  #tab-kanitkasarea .ka-table-wrap td.ka-cab{
+  #tab-kasarea .ka-kredit .ka-table-wrap th:nth-child(1),
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap th:nth-child(1),
+  #tab-kasarea .ka-kredit .ka-table-wrap td.ka-cab,
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap td.ka-cab{
     left: 0 !important;
   }
-  #tab-kasarea .ka-table-wrap th:nth-child(2),
-  #tab-kanitkasarea .ka-table-wrap th:nth-child(2),
-  #tab-kasarea .ka-table-wrap td.ka-nama,
-  #tab-kanitkasarea .ka-table-wrap td.ka-nama{
+  #tab-kasarea .ka-kredit .ka-table-wrap th:nth-child(2),
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap th:nth-child(2),
+  #tab-kasarea .ka-kredit .ka-table-wrap td.ka-nama,
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap td.ka-nama{
     left: 72px !important;
   }
-  #tab-kasarea .ka-table-wrap thead th:nth-child(1),
-  #tab-kasarea .ka-table-wrap thead th:nth-child(2),
-  #tab-kanitkasarea .ka-table-wrap thead th:nth-child(1),
-  #tab-kanitkasarea .ka-table-wrap thead th:nth-child(2){
+  #tab-kasarea .ka-kredit .ka-table-wrap thead th:nth-child(1),
+  #tab-kasarea .ka-kredit .ka-table-wrap thead th:nth-child(2),
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap thead th:nth-child(1),
+  #tab-kanitkasarea .ka-kredit .ka-table-wrap thead th:nth-child(2){
     background: #0F172A !important;
     color: #F8FAFC !important;
     z-index: 3 !important;
@@ -27583,6 +27602,88 @@ button.ka-del{
     min-width: 0 !important;
     overflow: hidden !important;
   }
+}
+
+/* ===== Kas Area polish: no white gap, align headers, full height ===== */
+
+/* Debit: jangan pakai sticky col cab/nama (itu khusus kredit) */
+#tab-kasarea .ka-debit .ka-table-wrap th:nth-child(1),
+#tab-kasarea .ka-debit .ka-table-wrap th:nth-child(2),
+#tab-kasarea .ka-debit .ka-table-wrap td:nth-child(1),
+#tab-kasarea .ka-debit .ka-table-wrap td:nth-child(2),
+#tab-kanitkasarea .ka-debit .ka-table-wrap th:nth-child(1),
+#tab-kanitkasarea .ka-debit .ka-table-wrap th:nth-child(2),
+#tab-kanitkasarea .ka-debit .ka-table-wrap td:nth-child(1),
+#tab-kanitkasarea .ka-debit .ka-table-wrap td:nth-child(2){
+  position: static !important;
+  left: auto !important;
+  box-shadow: none !important;
+  background: inherit !important;
+}
+#tab-kasarea .ka-debit table thead th,
+#tab-kanitkasarea .ka-debit table thead th{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+  background: #0F172A !important;
+  color: #F8FAFC !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-right: 1px solid rgba(255,255,255,0.08) !important;
+}
+#tab-kasarea .ka-debit table thead th:last-child,
+#tab-kanitkasarea .ka-debit table thead th:last-child{
+  border-right: none !important;
+}
+
+/* Header bar Kredit & Debit sejajar */
+#tab-kasarea .ka-sec-h,
+#tab-kanitkasarea .ka-sec-h{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  padding: 0 12px !important;
+  box-sizing: border-box !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+#tab-kasarea .ka-sec-h.ka-sec-debit,
+#tab-kasarea .ka-debit > .ka-sec-h{
+  /* sama tinggi dengan kredit */
+}
+
+/* Layout desktop: 2 kolom sejajar top */
+@media (min-width: 881px){
+  #tab-kasarea .ka-layout,
+  #tab-kanitkasarea .ka-layout{
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) !important;
+    gap: 14px !important;
+    align-items: start !important;
+  }
+  #tab-kasarea .ka-kredit,
+  #tab-kasarea .ka-debit,
+  #tab-kanitkasarea .ka-kredit,
+  #tab-kanitkasarea .ka-debit{
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+}
+
+/* Debit body cells clean */
+#tab-kasarea .ka-debit table tbody td,
+#tab-kanitkasarea .ka-debit table tbody td{
+  background: #FFFFFF !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+}
+#tab-kasarea .ka-debit table tbody tr:nth-child(even) td,
+#tab-kanitkasarea .ka-debit table tbody tr:nth-child(even) td{
+  background: #F8FAFC !important;
 }
 </style>
 </head>
