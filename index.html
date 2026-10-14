@@ -25812,6 +25812,1028 @@ html[data-theme="light"] #tab-kanitkasarea button.ka-mark{
   align-items: center !important;
   justify-content: center !important;
 }
+
+/* Kas Area — Kredit | Debit sejajar, isi ruang */
+html[data-theme="light"] #tab-kasarea .ka-layout,
+html[data-theme="light"] #tab-kanitkasarea .ka-layout,
+#tab-kasarea .ka-layout,
+#tab-kanitkasarea .ka-layout{
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.65fr) minmax(260px, 0.9fr) !important;
+  gap: 12px !important;
+  align-items: start !important;
+  width: 100% !important;
+  flex-direction: unset !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-kredit,
+html[data-theme="light"] #tab-kasarea .ka-debit,
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit{
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-table-wrap,
+html[data-theme="light"] #tab-kanitkasarea .ka-table-wrap{
+  max-height: min(58vh, 520px) !important;
+}
+html[data-theme="light"] #tab-kasarea .ka-debit .ka-table-wrap,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit .ka-table-wrap{
+  max-height: min(36vh, 280px) !important;
+}
+/* Form debit padat di kolom kanan */
+html[data-theme="light"] #tab-kasarea .ka-debit-form,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit-form{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  padding: 8px 10px !important;
+}
+@media (max-width: 960px){
+  html[data-theme="light"] #tab-kasarea .ka-layout,
+  html[data-theme="light"] #tab-kanitkasarea .ka-layout,
+  #tab-kasarea .ka-layout,
+  #tab-kanitkasarea .ka-layout{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Debit: tabel di atas, form via tombol */
+html[data-theme="light"] .ka-sec-debit-row{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+}
+html[data-theme="light"] .ka-debit-toggle{
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 4px 10px !important;
+  border-radius: 8px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  cursor: pointer !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  line-height: 1.2 !important;
+}
+html[data-theme="light"] .ka-debit-form{
+  display: none;
+  flex-direction: column !important;
+  gap: 6px !important;
+  padding: 10px !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] .ka-debit-form-actions{
+  display: flex !important;
+  gap: 8px !important;
+  margin-top: 4px !important;
+}
+html[data-theme="light"] .ka-debit-form-actions .btn-xs{
+  width: auto !important;
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+}
+html[data-theme="light"] .ka-debit-form-actions .btn-xs.secondary{
+  background: #FFFFFF !important;
+  color: #475569 !important;
+  border: 1px solid #CBD5E1 !important;
+}
+
+/* Modal Input Debit — tengah layar */
+.ka-modal{
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+}
+.ka-modal-backdrop{
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(15, 23, 42, 0.45) !important;
+  backdrop-filter: blur(2px);
+}
+.ka-modal-card{
+  position: relative !important;
+  z-index: 1 !important;
+  width: min(400px, 100%) !important;
+  background: #FFFFFF !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(15,23,42,0.2) !important;
+  border: 1px solid #E2E8F0 !important;
+  overflow: hidden !important;
+}
+.ka-modal-head{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 14px 16px !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+.ka-modal-head h3{
+  margin: 0 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+}
+.ka-modal-close{
+  width: 32px !important;
+  height: 32px !important;
+  border: none !important;
+  background: #F1F5F9 !important;
+  border-radius: 8px !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  color: #64748B !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+}
+.ka-modal-body{
+  padding: 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+.ka-modal-body .field{
+  margin: 0 !important;
+}
+.ka-modal-body label{
+  display: block !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #64748B !important;
+  margin-bottom: 4px !important;
+}
+.ka-modal-body input{
+  width: 100% !important;
+  height: 40px !important;
+  padding: 0 12px !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 10px !important;
+  font-size: 14px !important;
+  color: #0F172A !important;
+  background: #FFFFFF !important;
+  box-sizing: border-box !important;
+}
+.ka-modal-foot{
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  padding: 12px 16px 16px !important;
+  border-top: 1px solid #F1F5F9 !important;
+}
+.ka-modal-foot .btn-xs{
+  width: auto !important;
+  min-width: 88px !important;
+  height: 36px !important;
+  padding: 0 16px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+}
+.ka-modal-foot .btn-xs.secondary{
+  background: #FFFFFF !important;
+  color: #475569 !important;
+  border: 1px solid #CBD5E1 !important;
+}
+.ka-modal-foot #kaDebitAddBtn{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+/* Tombol modal — teks selalu terbaca */
+html[data-theme="light"] .ka-modal-foot #kaDebitAddBtn,
+html[data-theme="light"] .ka-modal #kaDebitAddBtn,
+.ka-modal #kaDebitAddBtn{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: none !important;
+  opacity: 1 !important;
+}
+/* label Simpan dari HTML */
+.ka-modal #kaDebitAddBtn{
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  min-width: 96px !important;
+}
+html[data-theme="light"] .ka-modal-foot .btn-xs.secondary,
+html[data-theme="light"] .ka-modal #kaDebitCancel{
+  background: #FFFFFF !important;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  border: 1px solid #CBD5E1 !important;
+}
+/* Todo modal tabs & primary buttons */
+html[data-theme="light"] #todoModal button,
+html[data-theme="light"] #todoModal .btn-xs,
+html[data-theme="light"] #todoModal .todo-tab{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #todoModal .todo-tab.is-active,
+html[data-theme="light"] #todoModal button.is-active{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+html[data-theme="light"] #todoModal .notes-add-btn{
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] #todoModal .notes-item{
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] #todoModal .notes-item.is-active{
+  background: #EEF2FF !important;
+  border-color: #C7D2FE !important;
+}
+html[data-theme="light"] #todoModal .notes-item-title,
+html[data-theme="light"] #todoModal .notes-item-preview{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #todoModal .note-title-input,
+html[data-theme="light"] #todoModal .note-body-input{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  background: #FFFFFF !important;
+  pointer-events: auto !important;
+  user-select: text !important;
+}
+html[data-theme="light"] #todoModal .notes-del-btn{
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+  background: #FEF2F2 !important;
+}
+/* Tab switcher di todo modal */
+html[data-theme="light"] #todoModal .todo-tabs button,
+html[data-theme="light"] #todoModal [id^="todoTab"]{
+  background: #F1F5F9 !important;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 999px !important;
+  padding: 6px 14px !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] #todoModal .todo-tabs button.is-active,
+html[data-theme="light"] #todoModal [id^="todoTab"].is-active{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border-color: #0F172A !important;
+}
+
+/* FORCE tombol modal debit terbaca — kalahkan global btn-xs */
+html body #kaDebitModal button#kaDebitAddBtn,
+html body #kaDebitModal #kaDebitAddBtn.btn-xs,
+html body #kaDebitModal #kaDebitAddBtn.ka-btn-primary{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #0F172A !important;
+  background-image: none !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: 1.5px solid #0F172A !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  height: 36px !important;
+  min-width: 100px !important;
+  padding: 0 18px !important;
+  border-radius: 10px !important;
+}
+html body #kaDebitModal button#kaDebitCancel,
+html body #kaDebitModal #kaDebitCancel.btn-xs.secondary{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #FFFFFF !important;
+  background-image: none !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1.5px solid #CBD5E1 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  height: 36px !important;
+  min-width: 88px !important;
+  padding: 0 16px !important;
+}
+
+/* ========== M1 MOBILE FOUNDATION ========== */
+/* Breakpoint utama: ≤880px | tipografi: ≤480px */
+
+/* Utility tabel scroll + sticky kolom 1 */
+.table-scroll{
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  border-radius: 12px !important;
+  position: relative !important;
+}
+.table-scroll::after{
+  content: none;
+}
+.table-scroll-hint{
+  display: none;
+  font-size: 11px !important;
+  color: #64748B !important;
+  margin: 0 0 6px !important;
+  font-weight: 500 !important;
+}
+@media (max-width: 880px){
+  .table-scroll-hint{ display: block !important; }
+  .table-scroll table{
+    min-width: 640px !important;
+  }
+  .table-scroll th:first-child,
+  .table-scroll td:first-child{
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 2 !important;
+    background: #FFFFFF !important;
+    box-shadow: 2px 0 6px rgba(15,23,42,0.06) !important;
+  }
+  .table-scroll thead th:first-child{
+    background: #0F172A !important;
+    color: #F8FAFC !important;
+    z-index: 3 !important;
+  }
+  /* Kas Area / jadwal ikut utility jika wrap punya class */
+  #tab-kasarea .ka-table-wrap,
+  #tab-kanitkasarea .ka-table-wrap,
+  #tab-jadwallibur .jadwal-table-wrap,
+  #tab-kanitjadwallibur .jadwal-table-wrap,
+  #tab-rejected .rejected-table-wrap,
+  #tab-kanitrejected .rejected-table-wrap,
+  #tab-kelolacabang .karyawan-table-wrap{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  #tab-kasarea .ka-table-wrap table,
+  #tab-kanitkasarea .ka-table-wrap table{
+    min-width: 720px !important;
+  }
+  #tab-kasarea .ka-table-wrap td.ka-cab,
+  #tab-kasarea .ka-table-wrap td.ka-nama,
+  #tab-kasarea .ka-table-wrap th:nth-child(1),
+  #tab-kasarea .ka-table-wrap th:nth-child(2),
+  #tab-kanitkasarea .ka-table-wrap td.ka-cab,
+  #tab-kanitkasarea .ka-table-wrap td.ka-nama,
+  #tab-kanitkasarea .ka-table-wrap th:nth-child(1),
+  #tab-kanitkasarea .ka-table-wrap th:nth-child(2){
+    position: sticky !important;
+    z-index: 2 !important;
+    background: #FFFFFF !important;
+  }
+  #tab-kasarea .ka-table-wrap th:nth-child(1),
+  #tab-kanitkasarea .ka-table-wrap th:nth-child(1),
+  #tab-kasarea .ka-table-wrap td.ka-cab,
+  #tab-kanitkasarea .ka-table-wrap td.ka-cab{
+    left: 0 !important;
+  }
+  #tab-kasarea .ka-table-wrap th:nth-child(2),
+  #tab-kanitkasarea .ka-table-wrap th:nth-child(2),
+  #tab-kasarea .ka-table-wrap td.ka-nama,
+  #tab-kanitkasarea .ka-table-wrap td.ka-nama{
+    left: 72px !important;
+  }
+  #tab-kasarea .ka-table-wrap thead th:nth-child(1),
+  #tab-kasarea .ka-table-wrap thead th:nth-child(2),
+  #tab-kanitkasarea .ka-table-wrap thead th:nth-child(1),
+  #tab-kanitkasarea .ka-table-wrap thead th:nth-child(2){
+    background: #0F172A !important;
+    color: #F8FAFC !important;
+    z-index: 3 !important;
+  }
+  /* Layout: kredit full width di mobile, debit di bawah */
+  #tab-kasarea .ka-layout,
+  #tab-kanitkasarea .ka-layout{
+    grid-template-columns: 1fr !important;
+  }
+  /* Filter stack */
+  .filter-row-compact,
+  .inline-row,
+  .rejected-filter-compact{
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .filter-row-compact .field,
+  .inline-row .field,
+  .rejected-filter-compact .field{
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .filter-row-compact button,
+  .rejected-filter-compact button{
+    width: auto !important;
+    align-self: flex-start !important;
+  }
+  /* Content padding */
+  .admin-content,
+  #screen-admin-dashboard .admin-content,
+  #screen-omset-form .admin-content{
+    padding: 10px 10px 28px !important;
+  }
+  /* Modal aman di HP */
+  .ka-modal{
+    padding: 12px !important;
+    align-items: flex-end !important;
+  }
+  @media (min-height: 500px){
+    .ka-modal{ align-items: center !important; }
+  }
+  .ka-modal-card{
+    width: 100% !important;
+    max-width: 420px !important;
+  }
+}
+
+@media (max-width: 480px){
+  .admin-topbar-title{ font-size: 13px !important; max-width: 38vw !important; }
+  body, .admin-content{ font-size: 13px !important; }
+  .admin-content h1, .admin-content h2{ font-size: 16px !important; }
+  .ka-modal-body input{ height: 44px !important; font-size: 16px !important; } /* cegah zoom iOS */
+}
+
+/* Tombol primary di modal: selalu kontras, lepas dari global outline emas */
+html body .ka-modal button#kaDebitAddBtn,
+html body #kaDebitModal #kaDebitAddBtn,
+html body #kaDebitModal button.ka-btn-primary{
+  background: #0F172A !important;
+  background-image: none !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: 1.5px solid #0F172A !important;
+  opacity: 1 !important;
+}
+html body .ka-modal button#kaDebitAddBtn span,
+html body #kaDebitModal #kaDebitAddBtn span{
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+html body .ka-modal button#kaDebitCancel,
+html body #kaDebitModal #kaDebitCancel{
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1.5px solid #CBD5E1 !important;
+}
+html body .ka-modal button#kaDebitCancel span{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+
+/* Exclude modal buttons from global gold outline (reinforce) */
+#kaDebitModal button,
+.ka-modal button{
+  letter-spacing: 0.01em !important;
+}
+
+/* ========== M2 MOBILE OPERATIONAL TABLES ========== */
+@media (max-width: 880px){
+
+  /* --- Jadwal Libur: sticky nama, scroll tanggal --- */
+  .libur-table-wrap,
+  #jadwalLiburWrap .libur-table-wrap,
+  #kanitJadwalLiburWrap .libur-table-wrap{
+    max-height: min(62vh, 520px) !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+  }
+  .libur-table-wrap::before,
+  #jadwalLiburWrap::before{
+    content: none;
+  }
+  html[data-theme="light"] .libur-table th.label-col,
+  html[data-theme="light"] .libur-table td.label-col{
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 4 !important;
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    box-shadow: 3px 0 8px rgba(15,23,42,0.08) !important;
+    min-width: 110px !important;
+    max-width: 140px !important;
+  }
+  html[data-theme="light"] .libur-table thead th.label-col{
+    background: #0F172A !important;
+    color: #F8FAFC !important;
+    z-index: 5 !important;
+  }
+  html[data-theme="light"] .libur-table thead th{
+    position: sticky !important;
+    top: 0 !important;
+    background: #0F172A !important;
+    color: #F8FAFC !important;
+    z-index: 3 !important;
+  }
+  html[data-theme="light"] .libur-table thead th.label-col{
+    z-index: 6 !important;
+  }
+  html[data-theme="light"] .libur-table td{
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+  }
+  html[data-theme="light"] .libur-table tr:nth-child(even) td{
+    background: #F8FAFC !important;
+  }
+  html[data-theme="light"] .libur-table tr:nth-child(even) td.label-col{
+    background: #F8FAFC !important;
+  }
+  .libur-cell{
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 9px !important;
+  }
+
+  /* --- Rejected: filter stack + table sticky --- */
+  #tab-rejected .rejected-filter-compact,
+  #tab-kanitrejected .rejected-filter-compact,
+  #tab-rejected .filter-row-compact,
+  #tab-kanitrejected .filter-row-compact{
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+  #tab-rejected .rejected-filter-compact .field,
+  #tab-kanitrejected .rejected-filter-compact .field{
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+  }
+  #tab-rejected .rejected-filter-compact button,
+  #tab-kanitrejected .rejected-filter-compact button{
+    width: auto !important;
+    align-self: flex-start !important;
+  }
+  .rejected-detail-table-wrap,
+  #tab-rejected .rejected-detail-table-wrap,
+  #tab-kanitrejected .rejected-detail-table-wrap{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-height: min(55vh, 480px) !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+  }
+  html[data-theme="light"] .rejected-detail-table th{
+    position: sticky !important;
+    top: 0 !important;
+    background: #0F172A !important;
+    color: #F8FAFC !important;
+    z-index: 2 !important;
+  }
+  html[data-theme="light"] .rejected-detail-table td{
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+  }
+  /* sticky first meaningful col if exists */
+  html[data-theme="light"] .rejected-detail-table th:first-child,
+  html[data-theme="light"] .rejected-detail-table td:first-child{
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 3 !important;
+    background: #FFFFFF !important;
+    box-shadow: 2px 0 6px rgba(15,23,42,0.06) !important;
+  }
+  html[data-theme="light"] .rejected-detail-table th:first-child{
+    background: #0F172A !important;
+    color: #F8FAFC !important;
+    z-index: 4 !important;
+  }
+
+  /* --- Kas Area reinforce sticky 2 cols --- */
+  #tab-kasarea .ka-table-wrap,
+  #tab-kanitkasarea .ka-table-wrap{
+    max-height: min(55vh, 480px) !important;
+  }
+
+  /* --- Kelola Cabang / Karyawan --- */
+  .karyawan-table-wrap,
+  #tab-kelolacabang .karyawan-table-wrap{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+  }
+  html[data-theme="light"] table.karyawan-table thead th{
+    position: sticky !important;
+    top: 0 !important;
+    background: #0F172A !important;
+    color: #F8FAFC !important;
+    z-index: 2 !important;
+  }
+  html[data-theme="light"] table.karyawan-table td{
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+  }
+  html[data-theme="light"] table.karyawan-table th:nth-child(1),
+  html[data-theme="light"] table.karyawan-table td:nth-child(1),
+  html[data-theme="light"] table.karyawan-table th:nth-child(2),
+  html[data-theme="light"] table.karyawan-table td:nth-child(2){
+    position: sticky !important;
+    z-index: 2 !important;
+  }
+  html[data-theme="light"] table.karyawan-table th:nth-child(1),
+  html[data-theme="light"] table.karyawan-table td:nth-child(1){
+    left: 0 !important;
+  }
+  html[data-theme="light"] table.karyawan-table th:nth-child(2),
+  html[data-theme="light"] table.karyawan-table td:nth-child(2){
+    left: 36px !important;
+  }
+  html[data-theme="light"] table.karyawan-table thead th:nth-child(1),
+  html[data-theme="light"] table.karyawan-table thead th:nth-child(2){
+    background: #0F172A !important;
+    color: #F8FAFC !important;
+    z-index: 3 !important;
+  }
+  html[data-theme="light"] table.karyawan-table tbody td:nth-child(1),
+  html[data-theme="light"] table.karyawan-table tbody td:nth-child(2){
+    background: #FFFFFF !important;
+    box-shadow: 2px 0 6px rgba(15,23,42,0.06) !important;
+  }
+
+  /* Filter kelola */
+  #tab-kelolacabang .filter-row-compact,
+  #tab-kelolacabang .inline-row{
+    flex-direction: column !important;
+  }
+}
+
+@media (max-width: 480px){
+  /* Kelola: aksi lebih sentuh-friendly */
+  table.karyawan-table .col-aksi button,
+  table.karyawan-table .btn-aksi{
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+  .libur-cell{
+    width: 26px !important;
+    height: 26px !important;
+  }
+  html[data-theme="light"] .libur-table th.label-col,
+  html[data-theme="light"] .libur-table td.label-col{
+    min-width: 96px !important;
+    max-width: 120px !important;
+    font-size: 11px !important;
+    padding: 6px 8px !important;
+  }
+}
+
+/* Hint geser — inject via CSS on wraps when mobile */
+@media (max-width: 880px){
+  #jadwalLiburWrap > .libur-table-wrap::before,
+  #kanitJadwalLiburWrap > .libur-table-wrap::before,
+  #tab-rejected .rejected-detail-table-wrap::before,
+  #tab-kanitrejected .rejected-detail-table-wrap::before,
+  #tab-kelolacabang .karyawan-table-wrap::before{
+    content: "Geser ke samping untuk kolom lain →";
+    display: block !important;
+    position: sticky !important;
+    left: 0 !important;
+    font-size: 11px !important;
+    color: #64748B !important;
+    padding: 6px 10px !important;
+    background: #F8FAFC !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    z-index: 7 !important;
+  }
+}
+
+/* ========== M3 MOBILE DASHBOARD & CHARTS ========== */
+@media (max-width: 880px){
+
+  /* Dashboard ringkasan: 2 kolom */
+  #tab-dashboard .dash-kpi-grid,
+  #adminSummaryWrap .dash-kpi-grid,
+  #tab-dashboard .admin-stats-grid,
+  .dash-kpi-grid,
+  .admin-stats-grid{
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  #tab-dashboard .admin-stat-card,
+  #adminSummaryWrap .admin-stat-card,
+  .dash-kpi-card{
+    min-width: 0 !important;
+    padding: 10px 12px !important;
+  }
+  .admin-stat-value, .dash-kpi-card .val{
+    font-size: 15px !important;
+    color: #0F172A !important;
+  }
+
+  /* Dashboard Harian KPI */
+  #tab-kinerjaharian .kinerja-kpi-grid,
+  #tab-kanitkinerjaharian .kinerja-kpi-grid,
+  .kinerja-kpi-grid{
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  .kinerja-kpi-card{
+    min-width: 0 !important;
+    padding: 10px !important;
+  }
+
+  /* Omset Bulanan / KPI Bisnis charts full width */
+  #tab-omsetbulanan .chart-wrap,
+  #tab-omsetbulanan canvas,
+  #tab-kanitomsetbulanan .chart-wrap,
+  #tab-kpibisnis .chart-wrap,
+  #tab-kanitpencapaian .chart-wrap,
+  #tab-menuharian .chart-wrap,
+  #tab-kanitmenuharian .chart-wrap{
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  #tab-omsetbulanan .charts-grid,
+  #tab-kpibisnis .kpi-charts,
+  #tab-menuharian .harian-charts{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* Audit: filter stack + ranking 1 kolom + chart full */
+  #tab-audit .filter-row-compact,
+  #tab-kanitaudit .filter-row-compact,
+  #auditFilterRow{
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  #tab-audit .filter-row-compact .field,
+  #tab-kanitaudit .filter-row-compact .field{
+    width: 100% !important;
+  }
+  #tab-audit .audit-charts,
+  #tab-audit .audit-charts-3,
+  #tab-audit .audit-charts-4,
+  #tab-kanitaudit .audit-charts,
+  #tab-kanitaudit .audit-charts-3,
+  #tab-kanitaudit .audit-charts-4,
+  .audit-charts.audit-charts-3,
+  .audit-charts.audit-charts-4{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  #tab-audit .audit-chart-card,
+  #tab-kanitaudit .audit-chart-card,
+  .audit-card{
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+  .audit-rank-list{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .audit-rank-item{
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 10px !important;
+  }
+
+  /* Omset Minggu */
+  #menuHarianMingguPage .omg-chart,
+  .omg-chart{
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 8px 4px 4px !important;
+  }
+  .omg-bar-wrap{
+    min-width: 28px !important;
+  }
+  .omg-detail,
+  #menuHarianMingguPage .omg-detail-grid,
+  .omg-detail-grid{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .omg-detail-table-wrap{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .omg-detail-head{
+    font-size: 13px !important;
+    margin: 0 0 6px !important;
+  }
+
+  /* Bertugas grid */
+  .bertugas-grid{
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* Harian table */
+  .harian-table-wrap,
+  #tab-menuharian .table-wrap,
+  #tab-kanitmenuharian .table-wrap{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+@media (max-width: 480px){
+  /* KPI 1 kolom di HP kecil */
+  #tab-dashboard .dash-kpi-grid,
+  #adminSummaryWrap .dash-kpi-grid,
+  #tab-dashboard .admin-stats-grid,
+  .dash-kpi-grid,
+  .admin-stats-grid,
+  #tab-kinerjaharian .kinerja-kpi-grid,
+  #tab-kanitkinerjaharian .kinerja-kpi-grid,
+  .kinerja-kpi-grid{
+    grid-template-columns: 1fr !important;
+  }
+  .bertugas-grid{
+    grid-template-columns: 1fr !important;
+  }
+  .admin-stat-value, .kinerja-kpi-card .val{
+    font-size: 18px !important;
+  }
+  .omg-bar-val{ font-size: 9px !important; }
+  .omg-bar-lab{ font-size: 9px !important; }
+}
+
+/* ========== M4 MOBILE FORMS & MODALS ========== */
+@media (max-width: 880px){
+
+  /* Cash Opname: 1 kolom + accordion */
+  #tab-cashopname .co-main3,
+  #tab-cashopname .co-layout{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  #tab-cashopname .co-col{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+  #tab-cashopname .co-box{
+    width: 100% !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    background: #FFFFFF !important;
+  }
+  #tab-cashopname .co-box-h{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding: 12px 14px !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    background: #F8FAFC !important;
+    color: #0F172A !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    border-bottom: 1px solid transparent !important;
+  }
+  #tab-cashopname .co-box-h::after{
+    content: "▾" !important;
+    font-size: 12px !important;
+    color: #64748B !important;
+    transition: transform .15s !important;
+  }
+  #tab-cashopname .co-box.co-collapsed .co-box-h::after{
+    transform: rotate(-90deg) !important;
+  }
+  #tab-cashopname .co-box.co-collapsed > *:not(.co-box-h){
+    display: none !important;
+  }
+  #tab-cashopname .co-box:not(.co-collapsed) .co-box-h{
+    border-bottom-color: #E2E8F0 !important;
+  }
+  /* Simpan selalu terbuka */
+  #tab-cashopname .co-box.co-box-flat{
+    order: 99 !important;
+  }
+  #tab-cashopname .co-box.co-box-flat.co-collapsed > *:not(.co-box-h){
+    display: block !important;
+  }
+  #tab-cashopname .co-box.co-box-flat .co-box-h::after{
+    display: none !important;
+  }
+  #tab-cashopname .co-box.co-box-flat .co-box-h{
+    cursor: default !important;
+  }
+  #tab-cashopname .co-sum-row,
+  #tab-cashopname .co-summary{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* Report Audit Kanit */
+  #tab-kanitauditreport,
+  #kanitAuditWizard{
+    max-width: 100% !important;
+    padding-bottom: 88px !important;
+  }
+  #kanitAuditWizard .audit-wiz-nav,
+  #tab-kanitauditreport .audit-wiz-nav{
+    position: sticky !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 20 !important;
+    background: #FFFFFF !important;
+    border-top: 1px solid #E2E8F0 !important;
+    border-bottom: none !important;
+    margin: 12px -4px 0 !important;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    box-shadow: 0 -4px 16px rgba(15,23,42,0.06) !important;
+  }
+  #kanitAuditWizard .audit-wiz-page,
+  #tab-kanitauditreport .audit-item-card{
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  #tab-kanitauditreport input,
+  #tab-kanitauditreport select,
+  #tab-kanitauditreport textarea{
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 44px !important;
+    font-size: 16px !important;
+    box-sizing: border-box !important;
+  }
+  #tab-kanitauditreport .audit-wiz-btns,
+  #kanitAuditWizard .audit-wiz-btns{
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+  #tab-kanitauditreport .audit-wiz-btns .btn-xs,
+  #kanitAuditWizard .audit-wiz-btns .btn-xs{
+    flex: 1 1 auto !important;
+    min-height: 40px !important;
+  }
+
+  /* Modal + keyboard safe */
+  .ka-modal{
+    padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .ka-modal-card{
+    max-height: min(90vh, 640px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  #todoModal.todo-modal,
+  .todo-modal#todoModal{
+    padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+    align-items: flex-end !important;
+  }
+  #todoModal .todo-modal-panel{
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: min(88vh, 720px) !important;
+    border-radius: 16px 16px 0 0 !important;
+    overflow: auto !important;
+  }
+}
+
+@media (max-width: 480px){
+  #tab-cashopname .co-sum-row,
+  #tab-cashopname .co-summary{
+    grid-template-columns: 1fr !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -26295,16 +27317,14 @@ html[data-theme="light"] #tab-kanitkasarea button.ka-mark{
       <div class="ka-layout">
         <div class="ka-kredit">
           <div class="ka-sec-h ka-sec-kredit">Kredit</div>
+          <div class="table-scroll-hint">Geser ke samping untuk lihat bulan →</div>
           <div class="ka-table-wrap" id="kaKreditWrapKanit"><div class="empty-log" style="color:#64748B;padding:12px;">Memuat...</div></div>
           <div class="ka-foot ka-foot-kredit">Total Kredit <span id="kaTotalKreditKanit">Rp0</span></div>
         </div>
         <div class="ka-debit">
-          <div class="ka-sec-h ka-sec-debit">Debit</div>
-          <div class="ka-debit-form" id="kaDebitFormKanit">
-            <div class="field"><label>Tanggal</label><input type="date" id="kaDebitTglKanit"></div>
-            <div class="field"><label>Item</label><input type="text" id="kaDebitItemKanit" placeholder="Contoh: Makan area"></div>
-            <div class="field"><label>Nominal</label><input type="text" inputmode="decimal" id="kaDebitNomKanit" placeholder="0" autocomplete="off"></div>
-            <button type="button" id="kaDebitAddBtnKanit" class="btn-xs">+ Debit</button>
+          <div class="ka-sec-h ka-sec-debit ka-sec-debit-row">
+            <span>Debit</span>
+            <button type="button" id="kaDebitToggleKanit" class="ka-debit-toggle">+ Input</button>
           </div>
           <div class="ka-table-wrap" id="kaDebitWrapKanit"><div class="empty-log" style="color:#64748B;">—</div></div>
           <div class="ka-foot ka-foot-debit">Total Debit <span id="kaTotalDebitKanit">Rp0</span></div>
@@ -26936,16 +27956,14 @@ html[data-theme="light"] #tab-kanitkasarea button.ka-mark{
       <div class="ka-layout">
         <div class="ka-kredit">
           <div class="ka-sec-h ka-sec-kredit">Kredit</div>
+          <div class="table-scroll-hint">Geser ke samping untuk lihat bulan →</div>
           <div class="ka-table-wrap" id="kaKreditWrap"><div class="empty-log">Memuat...</div></div>
           <div class="ka-foot ka-foot-kredit">Total Kredit <span id="kaTotalKredit">Rp0</span></div>
         </div>
         <div class="ka-debit">
-          <div class="ka-sec-h ka-sec-debit">Debit</div>
-          <div class="ka-debit-form">
-            <div class="field"><label>Tanggal</label><input type="date" id="kaDebitTgl"></div>
-            <div class="field"><label>Item</label><input type="text" id="kaDebitItem" placeholder="Contoh: Makan area"></div>
-            <div class="field"><label>Nominal</label><input type="text" inputmode="decimal" id="kaDebitNom" placeholder="0" autocomplete="off"></div>
-            <button type="button" id="kaDebitAddBtn" class="btn-xs">+ Debit</button>
+          <div class="ka-sec-h ka-sec-debit ka-sec-debit-row">
+            <span>Debit</span>
+            <button type="button" id="kaDebitToggle" class="ka-debit-toggle">+ Input</button>
           </div>
           <div class="ka-table-wrap" id="kaDebitWrap"><div class="empty-log">—</div></div>
           <div class="ka-foot ka-foot-debit">Total Debit <span id="kaTotalDebit">Rp0</span></div>
@@ -30770,6 +31788,34 @@ $on("cabangPinSubmit", "click", function(){
     window.closeKanitSidebar = kClose;
   })();
 
+  // M1: tutup sidebar setelah pilih menu (mobile ≤880)
+  document.addEventListener("click", function(e){
+    var t = e.target;
+    if(!t || !t.closest) return;
+    var nav = t.closest(".admin-nav-btn, .tab-btn.admin-nav-btn");
+    if(!nav) return;
+    if(window.innerWidth >= 880) return;
+    try{
+      if(typeof closeAdminSidebar === "function") closeAdminSidebar();
+    }catch(err){}
+    try{
+      if(typeof window.closeKanitSidebar === "function") window.closeKanitSidebar();
+    }catch(err){}
+    // fallback kanit
+    try{
+      var side = document.getElementById("kanitSidebar");
+      var ov = document.getElementById("kanitSidebarOverlay");
+      if(side && side.classList.contains("open")){
+        side.classList.remove("open");
+        side.style.transform = "translate3d(-105%,0,0)";
+        side.style.pointerEvents = "none";
+        if(ov){ ov.classList.remove("open"); ov.style.display="none"; ov.style.pointerEvents="none"; }
+        document.body.style.overflow = "";
+      }
+    }catch(err){}
+  }, true);
+
+
   // ---------------- Dashboard: ringkasan informasi (4 kartu statistik) ----------------
   var adminSummaryLoaded = false;
 
@@ -33604,8 +34650,8 @@ function applyRejectedAlasanFilter_(which){
     if(elTK) elTK.textContent = kaFmtRp_(data.totalKredit);
     if(elTD) elTD.textContent = kaFmtRp_(data.totalDebit);
     if(elT && data.title) elT.textContent = data.title;
-    var form = ids.debitForm ? document.getElementById(ids.debitForm) : document.querySelector("#tab-kasarea .ka-debit-form");
-    if(form) form.style.display = canEdit ? "" : "none";
+    var tog = document.getElementById(ids.isKanit ? "kaDebitToggleKanit" : "kaDebitToggle");
+    if(tog) tog.style.display = canEdit ? "" : "none";
     var hint = ids.hint ? document.getElementById(ids.hint) : null;
     if(hint){
       var b = data.bendaharaCabang || "GRT013";
@@ -33760,28 +34806,64 @@ function applyRejectedAlasanFilter_(which){
       var ref = document.getElementById(id);
       if(ref) ref.addEventListener("click", function(){ loadKasArea(true); });
     });
-    function wireDebitAdd(btnId, tglId, itemId, nomId){
-      var addBtn = document.getElementById(btnId);
-      if(!addBtn) return;
+    function openKaDebitModal(){
+      var m = document.getElementById("kaDebitModal");
+      if(!m) return;
+      var tgl = document.getElementById("kaDebitTgl");
+      var item = document.getElementById("kaDebitItem");
+      var nom = document.getElementById("kaDebitNom");
+      if(tgl && !tgl.value){
+        try{
+          var d = new Date();
+          tgl.value = d.toISOString().slice(0,10);
+        }catch(e){}
+      }
+      if(item) item.value = "";
+      if(nom) nom.value = "";
+      m.style.display = "flex";
+      m.setAttribute("aria-hidden","false");
+      setTimeout(function(){ try{ (item||tgl).focus(); }catch(e){} }, 50);
+    }
+    function closeKaDebitModal(){
+      var m = document.getElementById("kaDebitModal");
+      if(!m) return;
+      m.style.display = "none";
+      m.setAttribute("aria-hidden","true");
+    }
+    ["kaDebitToggle","kaDebitToggleKanit"].forEach(function(id){
+      var b = document.getElementById(id);
+      if(b) b.addEventListener("click", function(){ openKaDebitModal(); });
+    });
+    ["kaDebitCancel","kaDebitModalClose","kaDebitModalBackdrop"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.addEventListener("click", function(){ closeKaDebitModal(); });
+    });
+    document.addEventListener("keydown", function(e){
+      if(e.key === "Escape"){
+        var m = document.getElementById("kaDebitModal");
+        if(m && m.style.display === "flex") closeKaDebitModal();
+      }
+    });
+    var addBtn = document.getElementById("kaDebitAddBtn");
+    if(addBtn){
       addBtn.addEventListener("click", function(){
-        var tgl = (document.getElementById(tglId)||{}).value || "";
-        var item = ((document.getElementById(itemId)||{}).value || "").trim();
-        var nomRaw = ((document.getElementById(nomId)||{}).value || "").replace(/\./g,"").replace(/,/g,"");
+        var tgl = (document.getElementById("kaDebitTgl")||{}).value || "";
+        var item = ((document.getElementById("kaDebitItem")||{}).value || "").trim();
+        var nomRaw = ((document.getElementById("kaDebitNom")||{}).value || "").replace(/\./g,"").replace(/,/g,"");
         var nominal = Number(nomRaw) || 0;
         if(!tgl || !item || nominal <= 0){ alert("Isi tanggal, item, dan nominal (>0)"); return; }
+        addBtn.disabled = true;
         google.script.run
           .withSuccessHandler(function(r){
+            addBtn.disabled = false;
             if(!r||r.status!=="OK"){ alert((r&&r.reason)||"Gagal tambah debit"); return; }
-            var it = document.getElementById(itemId); if(it) it.value = "";
-            var nm = document.getElementById(nomId); if(nm) nm.value = "";
+            closeKaDebitModal();
             loadKasArea(true);
           })
-          .withFailureHandler(function(){ alert("Gagal tambah debit"); })
+          .withFailureHandler(function(){ addBtn.disabled = false; alert("Gagal tambah debit"); })
           .addKasAreaDebit(kaSessionPin_(), { tanggal: tgl, item: item, nominal: nominal });
       });
     }
-    wireDebitAdd("kaDebitAddBtn","kaDebitTgl","kaDebitItem","kaDebitNom");
-    wireDebitAdd("kaDebitAddBtnKanit","kaDebitTglKanit","kaDebitItemKanit","kaDebitNomKanit");
   })();
 
   $on("karyawanBaruToggleBtn", "click", function(){
@@ -38686,8 +39768,10 @@ function loadAdminBertugas(){
     }
     if(empty) empty.style.display="none";
     if(inner) inner.style.display="flex";
-    if(title) title.value=note.title||"";
-    if(body) body.value=note.body||"";
+    // Jangan overwrite saat user sedang mengetik judul/isi
+    var ae=document.activeElement;
+    if(title && ae!==title) title.value=note.title||"";
+    if(body && ae!==body) body.value=note.body||"";
     renderNotesList();
   }
   function addNote(){
@@ -38702,21 +39786,32 @@ function loadAdminBertugas(){
     var title=document.getElementById("noteTitleInput");
     if(title) setTimeout(function(){ title.focus(); title.select(); }, 40);
   }
+  var _notesMetaTimer=null;
   function saveNoteMeta(){
     if(!activeNoteId) return;
-    var title=document.getElementById("noteTitleInput");
+    var titleEl=document.getElementById("noteTitleInput");
+    var raw=String(titleEl&&titleEl.value||"");
     var list=loadLocalNotes();
     for(var i=0;i<list.length;i++){
       if(list[i].id===activeNoteId){
-        list[i].title=String(title&&title.value||"").trim() || "Tanpa judul";
+        list[i].title=raw.trim() || "Tanpa judul";
         list[i].updatedAt=Date.now();
         break;
       }
     }
     saveLocalNotes(list);
-    renderNotesList();
-    scheduleNotesSync();
+    // update sidebar label tanpa rebuild full (hindari hilang fokus)
+    try{
+      var activeBtn=document.querySelector("#notesList .notes-item.is-active .notes-item-title");
+      if(activeBtn) activeBtn.textContent = raw.trim() || "Tanpa judul";
+    }catch(e){}
+    clearTimeout(_notesMetaTimer);
+    _notesMetaTimer=setTimeout(function(){
+      renderNotesList();
+      scheduleNotesSync();
+    }, 400);
   }
+  var _notesBodyTimer=null;
   function saveNoteBody(){
     if(!activeNoteId) return;
     var body=document.getElementById("noteBodyInput");
@@ -38729,8 +39824,18 @@ function loadAdminBertugas(){
       }
     }
     saveLocalNotes(list);
-    renderNotesList();
-    scheduleNotesSync();
+    try{
+      var prev=document.querySelector("#notesList .notes-item.is-active .notes-item-preview");
+      if(prev){
+        var p=String(body&&body.value||"").trim().split("\n")[0].slice(0,48);
+        prev.textContent=p||"…";
+      }
+    }catch(e){}
+    clearTimeout(_notesBodyTimer);
+    _notesBodyTimer=setTimeout(function(){
+      renderNotesList();
+      scheduleNotesSync();
+    }, 500);
   }
   function deleteNote(){
     if(!activeNoteId) return;
@@ -38832,6 +39937,84 @@ function loadAdminBertugas(){
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", hideNextMonthIfEarly);
   else hideNextMonthIfEarly();
   setInterval(hideNextMonthIfEarly, 60000);
+})();
+</script>
+
+
+<!-- Modal Input Debit Kas Area -->
+<div id="kaDebitModal" class="ka-modal" style="display:none;" aria-hidden="true">
+  <div class="ka-modal-backdrop" id="kaDebitModalBackdrop"></div>
+  <div class="ka-modal-card" role="dialog" aria-labelledby="kaDebitModalTitle">
+    <div class="ka-modal-head">
+      <h3 id="kaDebitModalTitle">Input Debit</h3>
+      <button type="button" class="ka-modal-close" id="kaDebitModalClose" aria-label="Tutup">&times;</button>
+    </div>
+    <div class="ka-modal-body">
+      <div class="field"><label>Tanggal</label><input type="date" id="kaDebitTgl"></div>
+      <div class="field"><label>Item</label><input type="text" id="kaDebitItem" placeholder="Contoh: Makan area" autocomplete="off"></div>
+      <div class="field"><label>Nominal</label><input type="text" inputmode="decimal" id="kaDebitNom" placeholder="0" autocomplete="off"></div>
+    </div>
+    <div class="ka-modal-foot">
+      <button type="button" id="kaDebitCancel" class="btn-xs secondary"><span style="color:#0F172A !important;-webkit-text-fill-color:#0F172A !important;font-weight:600;">Batal</span></button>
+      <button type="button" id="kaDebitAddBtn" class="btn-xs ka-btn-primary"><span style="color:#fff !important;-webkit-text-fill-color:#fff !important;font-weight:700;">Simpan</span></button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* M4: Cash Opname accordion (mobile) */
+(function(){
+  function isMobile(){ return window.innerWidth < 880; }
+  function setupCoAccordion(){
+    var tab = document.getElementById("tab-cashopname");
+    if(!tab) return;
+    var boxes = tab.querySelectorAll(".co-box");
+    if(!boxes.length) return;
+    boxes.forEach(function(box, idx){
+      var h = box.querySelector(".co-box-h");
+      if(!h || h._coAcc) return;
+      h._coAcc = true;
+      h.addEventListener("click", function(e){
+        if(!isMobile()) return;
+        if(box.classList.contains("co-box-flat")) return;
+        e.preventDefault();
+        var open = !box.classList.contains("co-collapsed");
+        // optional: one open at a time
+        tab.querySelectorAll(".co-box:not(.co-box-flat)").forEach(function(b){
+          b.classList.add("co-collapsed");
+        });
+        if(open) box.classList.add("co-collapsed");
+        else box.classList.remove("co-collapsed");
+      });
+    });
+    // default: collapse all except Laci on mobile
+    function applyDefault(){
+      if(!isMobile()){
+        boxes.forEach(function(b){ b.classList.remove("co-collapsed"); });
+        return;
+      }
+      boxes.forEach(function(b, i){
+        if(b.classList.contains("co-box-flat")){ b.classList.remove("co-collapsed"); return; }
+        // first non-flat open
+        var first = tab.querySelector(".co-box:not(.co-box-flat)");
+        if(b === first) b.classList.remove("co-collapsed");
+        else b.classList.add("co-collapsed");
+      });
+    }
+    applyDefault();
+    window.addEventListener("resize", function(){
+      clearTimeout(window._coAccT);
+      window._coAccT = setTimeout(applyDefault, 150);
+    });
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", setupCoAccordion);
+  else setupCoAccordion();
+  // re-run when opening cash opname tab
+  document.addEventListener("click", function(e){
+    var nav = e.target && e.target.closest && e.target.closest('[data-tab="cashopname"]');
+    if(nav) setTimeout(setupCoAccordion, 50);
+  }, true);
 })();
 </script>
 
