@@ -22916,34 +22916,48 @@ html[data-theme="light"] #tab-kanitkasarea table.ka-table td.ka-nama {
   color: #0F172A !important;
   -webkit-text-fill-color: #0F172A !important;
 }
-html[data-theme="light"] #tab-kasarea table.ka-table td.ka-cab,
-html[data-theme="light"] #tab-kanitkasarea table.ka-table td.ka-cab {
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table td.ka-cab,
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table td.ka-cab {
   left: 0 !important;
   min-width: 72px !important;
   max-width: 96px !important;
 }
-html[data-theme="light"] #tab-kasarea table.ka-table td.ka-nama,
-html[data-theme="light"] #tab-kanitkasarea table.ka-table td.ka-nama {
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table td.ka-nama,
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table td.ka-nama {
   left: 72px !important;
   min-width: 110px !important;
   max-width: 150px !important;
   box-shadow: 2px 0 6px rgba(15, 23, 42, 0.06) !important;
 }
-html[data-theme="light"] #tab-kasarea table.ka-table th:first-child,
-html[data-theme="light"] #tab-kanitkasarea table.ka-table th:first-child {
+/* Sticky col hanya di tabel KREDIT — jangan kena DEBIT (penyebab kotak putih) */
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table th:first-child,
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table th:first-child {
   position: sticky !important;
   left: 0 !important;
   z-index: 4 !important;
   background: #0F172A !important;
   color: #FFFFFF !important;
 }
-html[data-theme="light"] #tab-kasarea table.ka-table th:nth-child(2),
-html[data-theme="light"] #tab-kanitkasarea table.ka-table th:nth-child(2) {
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table th:nth-child(2),
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table th:nth-child(2) {
   position: sticky !important;
   left: 72px !important;
   z-index: 4 !important;
   background: #0F172A !important;
   color: #FFFFFF !important;
+}
+/* Debit: header normal, tanpa left sticky */
+html[data-theme="light"] #tab-kasarea .ka-debit table.ka-table thead th,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit table.ka-table thead th,
+html[data-theme="light"] #tab-kasarea .ka-debit table.ka-debit-table thead th,
+html[data-theme="light"] #tab-kanitkasarea .ka-debit table.ka-debit-table thead th {
+  position: sticky !important;
+  top: 0 !important;
+  left: auto !important;
+  z-index: 3 !important;
+  background: #0F172A !important;
+  color: #F8FAFC !important;
+  box-shadow: none !important;
 }
 
 /* Mobile ≤720px: filter stack full width */
@@ -25776,10 +25790,10 @@ html[data-theme="light"] #tab-kanitkasarea table.ka-table{
   width: 100% !important;
 }
 /* Cabang sempit */
-html[data-theme="light"] #tab-kasarea table.ka-table th:nth-child(1),
-html[data-theme="light"] #tab-kasarea table.ka-table td:nth-child(1),
-html[data-theme="light"] #tab-kanitkasarea table.ka-table th:nth-child(1),
-html[data-theme="light"] #tab-kanitkasarea table.ka-table td:nth-child(1){
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table th:nth-child(1),
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table td:nth-child(1),
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table th:nth-child(1),
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table td:nth-child(1){
   width: 72px !important;
   max-width: 80px !important;
   white-space: nowrap !important;
@@ -25787,10 +25801,10 @@ html[data-theme="light"] #tab-kanitkasarea table.ka-table td:nth-child(1){
   padding-right: 4px !important;
 }
 /* Nama — sisa ruang, tidak berlebihan */
-html[data-theme="light"] #tab-kasarea table.ka-table th:nth-child(2),
-html[data-theme="light"] #tab-kasarea table.ka-table td:nth-child(2),
-html[data-theme="light"] #tab-kanitkasarea table.ka-table th:nth-child(2),
-html[data-theme="light"] #tab-kanitkasarea table.ka-table td:nth-child(2){
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table th:nth-child(2),
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table td:nth-child(2),
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table th:nth-child(2),
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table td:nth-child(2){
   width: 140px !important;
   max-width: 180px !important;
   white-space: nowrap !important;
@@ -25800,10 +25814,10 @@ html[data-theme="light"] #tab-kanitkasarea table.ka-table td:nth-child(2){
   padding-right: 4px !important;
 }
 /* Bulan Apr–Des (kolom 3–11) — sempit untuk checkbox */
-html[data-theme="light"] #tab-kasarea table.ka-table th:nth-child(n+3):nth-child(-n+11),
-html[data-theme="light"] #tab-kasarea table.ka-table td:nth-child(n+3):nth-child(-n+11),
-html[data-theme="light"] #tab-kanitkasarea table.ka-table th:nth-child(n+3):nth-child(-n+11),
-html[data-theme="light"] #tab-kanitkasarea table.ka-table td:nth-child(n+3):nth-child(-n+11){
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table th:nth-child(n+3):nth-child(-n+11),
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table td:nth-child(n+3):nth-child(-n+11),
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table th:nth-child(n+3):nth-child(-n+11),
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table td:nth-child(n+3):nth-child(-n+11){
   width: 28px !important;
   min-width: 24px !important;
   max-width: 32px !important;
@@ -25811,10 +25825,10 @@ html[data-theme="light"] #tab-kanitkasarea table.ka-table td:nth-child(n+3):nth-
   text-align: center !important;
 }
 /* Total */
-html[data-theme="light"] #tab-kasarea table.ka-table th:last-child,
-html[data-theme="light"] #tab-kasarea table.ka-table td:last-child,
-html[data-theme="light"] #tab-kanitkasarea table.ka-table th:last-child,
-html[data-theme="light"] #tab-kanitkasarea table.ka-table td:last-child{
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table th:last-child,
+html[data-theme="light"] #tab-kasarea .ka-kredit table.ka-table td:last-child,
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table th:last-child,
+html[data-theme="light"] #tab-kanitkasarea .ka-kredit table.ka-table td:last-child{
   width: 88px !important;
   white-space: nowrap !important;
   text-align: right !important;
@@ -27684,6 +27698,55 @@ button.ka-del{
 #tab-kasarea .ka-debit table tbody tr:nth-child(even) td,
 #tab-kanitkasarea .ka-debit table tbody tr:nth-child(even) td{
   background: #F8FAFC !important;
+}
+
+/* KAS AREA: matikan scroll paksa + hilangkan gap putih debit */
+#tab-kasarea .ka-table-wrap,
+#tab-kanitkasarea .ka-table-wrap,
+#tab-kasarea .ka-kredit .ka-table-wrap,
+#tab-kasarea .ka-debit .ka-table-wrap,
+#tab-kanitkasarea .ka-kredit .ka-table-wrap,
+#tab-kanitkasarea .ka-debit .ka-table-wrap{
+  max-height: none !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+}
+/* Kalau baris sangat banyak, baru batasi */
+#tab-kasarea .ka-kredit .ka-table-wrap{
+  max-height: none !important;
+}
+#tab-kasarea .ka-debit .ka-table-wrap{
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+
+/* Debit header: pastikan tidak sticky-left */
+#tab-kasarea .ka-debit table thead th,
+#tab-kanitkasarea .ka-debit table thead th{
+  position: sticky !important;
+  top: 0 !important;
+  left: auto !important;
+  right: auto !important;
+  box-shadow: none !important;
+  background: #0F172A !important;
+  color: #F8FAFC !important;
+  -webkit-text-fill-color: #F8FAFC !important;
+}
+#tab-kasarea .ka-debit table thead th:nth-child(1),
+#tab-kasarea .ka-debit table thead th:nth-child(2),
+#tab-kanitkasarea .ka-debit table thead th:nth-child(1),
+#tab-kanitkasarea .ka-debit table thead th:nth-child(2){
+  position: sticky !important;
+  top: 0 !important;
+  left: auto !important;
+  background: #0F172A !important;
+  box-shadow: none !important;
+}
+#tab-kasarea .ka-debit table tbody td,
+#tab-kanitkasarea .ka-debit table tbody td{
+  position: static !important;
+  left: auto !important;
+  box-shadow: none !important;
 }
 </style>
 </head>
