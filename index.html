@@ -28547,6 +28547,240 @@ html[data-theme="light"] table.libur-table td{
   overflow: hidden !important;
   vertical-align: middle !important;
 }
+
+/* ========== JL V2: Jadwal Libur modern (reset visual) ========== */
+#jadwalLiburWrap .jl-shell,
+#kanitJadwalLiburWrap .jl-shell{
+  font-family: Inter, system-ui, sans-serif;
+}
+#jadwalLiburWrap .jl-banner,
+#kanitJadwalLiburWrap .jl-banner{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px;
+  background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px;
+  padding:10px 14px; margin-bottom:12px; font-size:12.5px; color:#64748B;
+}
+#jadwalLiburWrap .jl-banner b,
+#kanitJadwalLiburWrap .jl-banner b{ color:#0F172A; font-weight:700; }
+#jadwalLiburWrap .jl-pill,
+#kanitJadwalLiburWrap .jl-pill{
+  display:inline-flex; align-items:center; gap:4px;
+  padding:3px 10px; border-radius:99px; font-size:11px; font-weight:700;
+}
+#jadwalLiburWrap .jl-pill-gold,
+#kanitJadwalLiburWrap .jl-pill-gold{ background:rgba(212,137,74,0.12); color:#D4894A; }
+#jadwalLiburWrap .jl-pill-navy,
+#kanitJadwalLiburWrap .jl-pill-navy{ background:#F1F5F9; color:#1E293B; }
+
+#jadwalLiburWrap .jl-legend,
+#kanitJadwalLiburWrap .jl-legend{
+  display:flex; flex-wrap:wrap; gap:14px; margin-bottom:14px;
+  font-size:11.5px; color:#64748B; align-items:center;
+}
+#jadwalLiburWrap .jl-leg,
+#kanitJadwalLiburWrap .jl-leg{ display:inline-flex; align-items:center; gap:6px; }
+#jadwalLiburWrap .jl-dot-kerja,
+#kanitJadwalLiburWrap .jl-dot-kerja{
+  width:8px; height:8px; border-radius:50%; background:#CBD5E1;
+}
+#jadwalLiburWrap .jl-minggu-swatch,
+#kanitJadwalLiburWrap .jl-minggu-swatch{
+  width:18px; height:14px; border-radius:4px;
+  background:#FEF2F2; border:1px solid #FECACA;
+}
+
+#jadwalLiburWrap .jl-table-wrap,
+#kanitJadwalLiburWrap .jl-table-wrap{
+  background:#FFFFFF; border:1px solid #E2E8F0; border-radius:16px;
+  overflow:hidden; box-shadow:0 4px 24px rgba(15,23,42,0.06);
+}
+#jadwalLiburWrap .jl-scroll,
+#kanitJadwalLiburWrap .jl-scroll{
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+}
+#jadwalLiburWrap .jl-table,
+#kanitJadwalLiburWrap .jl-table{
+  width:max-content; min-width:100%;
+  border-collapse:separate; border-spacing:0; font-size:12px;
+  background:#FFFFFF !important; color:#0F172A !important;
+}
+
+#jadwalLiburWrap .jl-table thead th,
+#kanitJadwalLiburWrap .jl-table thead th{
+  position:sticky; top:0; z-index:2;
+  background:#F8FAFC !important;
+  border-bottom:1px solid #E2E8F0 !important;
+  padding:10px 4px 8px !important;
+  text-align:center !important;
+  font-size:11px !important; font-weight:700 !important; color:#0F172A !important;
+  font-family:'JetBrains Mono', ui-monospace, monospace !important;
+  min-width:36px;
+}
+#jadwalLiburWrap .jl-table thead th .dow,
+#kanitJadwalLiburWrap .jl-table thead th .dow{
+  display:block; font-size:9px; font-weight:500;
+  color:#94A3B8 !important; text-transform:uppercase;
+  letter-spacing:0.04em; margin-top:1px;
+  font-family:Inter, system-ui, sans-serif !important;
+}
+#jadwalLiburWrap .jl-table thead th.is-minggu,
+#kanitJadwalLiburWrap .jl-table thead th.is-minggu{
+  background:#FEF2F2 !important; color:#B91C1C !important;
+}
+#jadwalLiburWrap .jl-table thead th.is-minggu .dow,
+#kanitJadwalLiburWrap .jl-table thead th.is-minggu .dow{ color:#EF4444 !important; }
+
+#jadwalLiburWrap .jl-table th.label-col,
+#jadwalLiburWrap .jl-table td.label-col,
+#kanitJadwalLiburWrap .jl-table th.label-col,
+#kanitJadwalLiburWrap .jl-table td.label-col{
+  position:sticky; left:0; z-index:3;
+  background:#FFFFFF !important;
+  border-right:1px solid #E2E8F0 !important;
+  min-width:168px; max-width:200px;
+  text-align:left !important; padding:10px 14px !important;
+}
+#jadwalLiburWrap .jl-table thead th.label-col,
+#kanitJadwalLiburWrap .jl-table thead th.label-col{
+  z-index:4; background:#F8FAFC !important;
+  font-size:10px !important; font-weight:700 !important; letter-spacing:0.05em;
+  text-transform:uppercase; color:#94A3B8 !important;
+  font-family:Inter, system-ui, sans-serif !important;
+}
+
+#jadwalLiburWrap .jl-table tbody tr:nth-child(even) td,
+#kanitJadwalLiburWrap .jl-table tbody tr:nth-child(even) td{ background:#FAFBFC !important; }
+#jadwalLiburWrap .jl-table tbody tr:nth-child(even) td.label-col,
+#kanitJadwalLiburWrap .jl-table tbody tr:nth-child(even) td.label-col{ background:#FAFBFC !important; }
+#jadwalLiburWrap .jl-table tbody tr:hover td,
+#kanitJadwalLiburWrap .jl-table tbody tr:hover td{ background:#F1F5F9 !important; }
+#jadwalLiburWrap .jl-table tbody tr:hover td.label-col,
+#kanitJadwalLiburWrap .jl-table tbody tr:hover td.label-col{ background:#F1F5F9 !important; }
+
+#jadwalLiburWrap .jl-table td,
+#kanitJadwalLiburWrap .jl-table td{
+  padding:6px 2px !important; text-align:center !important;
+  border-bottom:1px solid #F1F5F9 !important; vertical-align:middle !important;
+  background:#FFFFFF !important; color:#0F172A !important;
+}
+#jadwalLiburWrap .jl-table td.is-minggu,
+#kanitJadwalLiburWrap .jl-table td.is-minggu{ background:#FEF2F2 !important; }
+
+#jadwalLiburWrap .jl-person,
+#kanitJadwalLiburWrap .jl-person{ display:flex; align-items:center; gap:10px; }
+#jadwalLiburWrap .jl-av,
+#kanitJadwalLiburWrap .jl-av{
+  width:32px; height:32px; border-radius:50%;
+  background:#1E293B; color:#F8FAFC;
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:700; flex-shrink:0;
+}
+#jadwalLiburWrap .jl-person-meta,
+#kanitJadwalLiburWrap .jl-person-meta{ min-width:0; }
+#jadwalLiburWrap .jl-person-name,
+#kanitJadwalLiburWrap .jl-person-name{
+  font-weight:700; font-size:13px; color:#0F172A !important;
+  line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+#jadwalLiburWrap .jl-person-sub,
+#kanitJadwalLiburWrap .jl-person-sub{ display:flex; align-items:center; gap:6px; margin-top:2px; flex-wrap:wrap; }
+#jadwalLiburWrap .jl-person-job,
+#kanitJadwalLiburWrap .jl-person-job{
+  font-size:11px; color:#64748B !important;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+#jadwalLiburWrap .jl-kuota,
+#kanitJadwalLiburWrap .jl-kuota{
+  font-size:10px; font-weight:700; padding:1px 6px; border-radius:99px;
+  background:#F1F5F9; color:#1E293B !important;
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+}
+#jadwalLiburWrap .jl-kuota.is-full,
+#kanitJadwalLiburWrap .jl-kuota.is-full{ background:#FEE2E2; color:#DC2626 !important; }
+
+#jadwalLiburWrap .jl-cell,
+#kanitJadwalLiburWrap .jl-cell,
+#jadwalLiburWrap .libur-cell,
+#kanitJadwalLiburWrap .libur-cell{
+  display:inline-flex !important; align-items:center; justify-content:center;
+  width:28px; height:28px; border-radius:8px;
+  font-size:11px; font-weight:800; cursor:pointer;
+  transition:transform .1s, box-shadow .1s; user-select:none;
+  background:transparent !important; color:transparent !important;
+  border:none !important; box-shadow:none !important;
+}
+#jadwalLiburWrap .jl-cell:hover,
+#kanitJadwalLiburWrap .jl-cell:hover,
+#jadwalLiburWrap .libur-cell:hover,
+#kanitJadwalLiburWrap .libur-cell:hover{
+  transform:scale(1.08); box-shadow:0 2px 8px rgba(15,23,42,0.12);
+}
+#jadwalLiburWrap .jl-cell.st-libur,
+#kanitJadwalLiburWrap .jl-cell.st-libur,
+#jadwalLiburWrap .libur-cell.st-libur,
+#kanitJadwalLiburWrap .libur-cell.st-libur{
+  background:#FEE2E2 !important; color:#DC2626 !important;
+}
+#jadwalLiburWrap .jl-cell.st-cuti,
+#kanitJadwalLiburWrap .jl-cell.st-cuti,
+#jadwalLiburWrap .libur-cell.st-cuti,
+#kanitJadwalLiburWrap .libur-cell.st-cuti{
+  background:#CCFBF1 !important; color:#0F766E !important; cursor:default;
+}
+#jadwalLiburWrap .jl-cell.st-cuti-pending,
+#kanitJadwalLiburWrap .jl-cell.st-cuti-pending,
+#jadwalLiburWrap .libur-cell.st-cuti-pending,
+#kanitJadwalLiburWrap .libur-cell.st-cuti-pending{
+  background:#FEF3C7 !important; color:#B45309 !important; cursor:default;
+}
+#jadwalLiburWrap .jl-cell.st-empty:hover,
+#kanitJadwalLiburWrap .jl-cell.st-empty:hover,
+#jadwalLiburWrap .libur-cell:not(.st-libur):not(.st-cuti):not(.st-cuti-pending):hover,
+#kanitJadwalLiburWrap .libur-cell:not(.st-libur):not(.st-cuti):not(.st-cuti-pending):hover{
+  background:#F1F5F9 !important; color:#94A3B8 !important;
+}
+
+#jadwalLiburWrap .libur-kuota-banner,
+#kanitJadwalLiburWrap .libur-kuota-banner,
+#jadwalLiburWrap .libur-legend,
+#kanitJadwalLiburWrap .libur-legend{ display:none !important; }
+
+.libur-action-popup{
+  position:fixed; z-index:10060;
+  min-width:160px; padding:10px;
+  background:#FFFFFF !important; border:1px solid #E2E8F0 !important;
+  border-radius:12px !important;
+  box-shadow:0 12px 40px rgba(15,23,42,0.18) !important;
+  display:none;
+}
+.libur-action-popup.show{ display:block !important; }
+.libur-action-popup .pap-title{
+  font-size:11px; font-weight:700; color:#94A3B8 !important;
+  text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;
+}
+.libur-action-popup button{
+  display:block; width:100%; text-align:left;
+  padding:9px 12px; margin:0 0 4px; border-radius:8px;
+  border:1px solid #E2E8F0; background:#F8FAFC;
+  font-size:13px; font-weight:600; color:#0F172A; cursor:pointer;
+  font-family:inherit;
+}
+.libur-action-popup button:hover{ background:#F1F5F9; border-color:#CBD5E1; }
+.libur-action-popup button.danger{ color:#DC2626; }
+.libur-action-popup button.danger:hover{ background:#FEF2F2; border-color:#FECACA; }
+
+@media (max-width:640px){
+  #jadwalLiburWrap .jl-table th.label-col,
+  #jadwalLiburWrap .jl-table td.label-col,
+  #kanitJadwalLiburWrap .jl-table th.label-col,
+  #kanitJadwalLiburWrap .jl-table td.label-col{ min-width:130px; padding:8px 10px !important; }
+  #jadwalLiburWrap .jl-av, #kanitJadwalLiburWrap .jl-av{ width:28px; height:28px; font-size:10px; }
+  #jadwalLiburWrap .jl-person-name, #kanitJadwalLiburWrap .jl-person-name{ font-size:12px; }
+  #jadwalLiburWrap .jl-table thead th, #kanitJadwalLiburWrap .jl-table thead th{ min-width:32px; padding:8px 2px !important; }
+  #jadwalLiburWrap .jl-cell, #kanitJadwalLiburWrap .jl-cell,
+  #jadwalLiburWrap .libur-cell, #kanitJadwalLiburWrap .libur-cell{ width:26px; height:26px; font-size:10px; }
+}
+/* ========== END JL V2 ========== */
+
 </style>
 </head>
 <body>
@@ -29523,7 +29757,7 @@ html[data-theme="light"] table.libur-table td{
         <button type="button" id="jadwalLiburNextMonthBtn" class="btn-xs secondary" style="display:none;">Input bulan depan</button>
         <button type="button" id="btnOpenApprovalCuti" class="btn-xs" style="margin-left:auto;">Approval Cuti</button>
       </div>
-      <div class="hint" id="jadwalLiburModeHint" style="display:none;margin-top:8px;">Cabang tutup Minggu: hanya input <b>Cuti</b> / <b>Sakit</b> (oleh KC). Libur Minggu otomatis.</div>
+      <div class="hint" id="jadwalLiburModeHint" style="display:none;margin-top:8px;">Cabang tutup Minggu: hanya input <b>Cuti</b> (oleh KC). Libur Minggu otomatis.</div>
       <div id="jadwalLiburWrap" style="margin-top:16px;"></div>
       <div class="libur-unsaved-note" id="jadwalLiburUnsaved" style="display:none;">Ada perubahan libur yang belum disimpan.</div>
       <button id="jadwalLiburSaveBtn" style="margin-top:12px; display:none;">Simpan Perubahan Libur</button>
@@ -31452,7 +31686,7 @@ $on("cabangPinSubmit", "click", function(){
     karyawanFilterJabatanSel.innerHTML = '<option value="SEMUA">Semua jabatan</option>' + JABATAN_LIST.map(function(j){ return '<option value="'+j+'">'+j+'</option>'; }).join("");
     karyawanBaruCabangSel.innerHTML = CABANG_LIST.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join("");
     karyawanBaruJabatanSel.innerHTML = JABATAN_LIST.map(function(j){ return '<option value="'+j+'">'+j+'</option>'; }).join("");
-    if(jadwalLiburCabangSel) jadwalLiburCabangSel.innerHTML = CABANG_LIST.map(function(c){ return '<option value="'+c+'">'+c+(CABANG_TUTUP_MINGGU_LIST.indexOf(c)!==-1?" (Cuti/Sakit)":"")+'</option>'; }).join("");
+    if(jadwalLiburCabangSel) jadwalLiburCabangSel.innerHTML = CABANG_LIST.map(function(c){ return '<option value="'+c+'">'+c+(CABANG_TUTUP_MINGGU_LIST.indexOf(c)!==-1?" (Cuti saja)":"")+'</option>'; }).join("");
     if(approvalCutiCabangSel) approvalCutiCabangSel.innerHTML = '<option value="">Semua Cabang</option>' + CABANG_LIST.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join("");
   }
 
@@ -32372,8 +32606,12 @@ $on("cabangPinSubmit", "click", function(){
 
   function setLiburDirty(dirty){
     kanitLiburDirty = dirty;
-    document.getElementById("kanitJadwalLiburUnsaved").classList.toggle("show", dirty);
-    document.getElementById("kanitJadwalLiburSaveBtn").style.display = dirty ? "" : "none";
+    try{
+      var ku = document.getElementById("kanitJadwalLiburUnsaved");
+      var ks = document.getElementById("kanitJadwalLiburSaveBtn");
+      if(ku) ku.classList.toggle("show", dirty);
+      if(ks) ks.style.display = dirty ? "" : "none";
+    }catch(e){}
   }
 
   // Render grid libur. `editable` true untuk Kanit (klik sel bisa ubah),
@@ -32400,7 +32638,8 @@ $on("cabangPinSubmit", "click", function(){
     var headerCells = "";
     for(var d=1; d<=data.jumlahHari; d++){
       var dow = data.hariMingguArr[d-1];
-      headerCells += '<th class="'+(dow===0?'dow-min':'')+'">'+String(d).padStart(2,"0")+'<span class="dow">'+DOW_ID[dow]+'</span></th>';
+      var isMin = dow === 0;
+      headerCells += '<th class="'+(isMin?'is-minggu':'')+'">'+String(d).padStart(2,"0")+'<span class="dow">'+DOW_ID[dow]+'</span></th>';
     }
 
     var JAB_ORDER = ["kepala unit","kasir","gudang","pramuniaga terbang","pramuniaga","training"];
@@ -32409,7 +32648,7 @@ $on("cabangPinSubmit", "click", function(){
       for(var i=0;i<JAB_ORDER.length;i++){ if(s.indexOf(JAB_ORDER[i])>=0) return i; }
       return 99;
     }
-    var AV_COLORS = ["#334155","#475569","#64748B","#1E293B","#0F172A","#3F4A5A","#526277"];
+    var AV_COLORS = ["#1E293B","#334155","#475569","#64748B","#0F172A","#3F4A5A","#526277"];
     var sortedKar = data.karyawan.slice().filter(function(k){
       var jab = String(k.jabatan||"").toLowerCase();
       return jab.indexOf("kepala cabang") < 0;
@@ -32418,55 +32657,65 @@ $on("cabangPinSubmit", "click", function(){
       if(ra !== rb) return ra - rb;
       return String(a.nama||"").localeCompare(String(b.nama||""));
     });
+
     var rowsHtml = sortedKar.map(function(k, idx){
       var cutiSet = {};
       (k.hariCuti||[]).forEach(function(d){ cutiSet[d] = true; });
-      var sakitSet = {};
-      (k.hariSakit||[]).forEach(function(d){ sakitSet[d] = true; });
       var cells = "";
       for(var d=1; d<=data.jumlahHari; d++){
         var isMinggu = data.hariMingguArr[d-1] === 0;
-        var isSakit = !!sakitSet[d];
         var isCuti = !!cutiSet[d];
         var isLibur = editable ? !!(kanitLiburState[k.id] && kanitLiburState[k.id][d]) : ((k.hariLibur||[]).indexOf(d) !== -1);
-        var stateCls = isSakit ? "st-sakit" : (isCuti ? "st-cuti" : (isLibur ? "st-libur" : ""));
-        var title = isSakit ? "Sakit" : (isCuti ? "Cuti" : (isLibur ? "Libur" : "Kerja"));
-        var letter = isSakit ? "S" : (isCuti ? "C" : (isLibur ? "L" : ""));
-        cells += '<td><div class="libur-cell '+(isMinggu?'is-minggu':'')+' '+stateCls+'" data-kar="'+escAttr(k.id)+'" data-day="'+d+'" title="'+escAttr(title)+'">'+letter+'</div></td>';
+        var stateCls = isCuti ? "st-cuti" : (isLibur ? "st-libur" : "");
+        var title = isCuti ? "Cuti" : (isLibur ? "Libur" : "Kerja");
+        var letter = isCuti ? "C" : (isLibur ? "L" : "");
+        var emptyCls = (!isCuti && !isLibur) ? " st-empty" : "";
+        cells += '<td class="'+(isMinggu?"is-minggu":"")+'">'+
+          '<span class="jl-cell libur-cell '+stateCls+emptyCls+'" data-kar="'+escHtml(k.id)+'" data-day="'+d+'" title="'+title+'">'+letter+'</span>'+
+        '</td>';
       }
-      var kuota = (typeof k.kuota === "number") ? k.kuota : (data.kuotaLibur || 0);
+      var kuota = Number(data.kuotaLibur) || 0;
       var pakai = editable
-        ? Object.keys(kanitLiburState[k.id] || {}).length
+        ? Object.keys(kanitLiburState[k.id]||{}).length
         : (k.hariLibur || []).length;
       var sisa = Math.max(0, kuota - pakai);
       var kuotaHtml = data.modeCutiSakitOnly ? "" :
-        '<span class="kuota-pill'+(sisa<=0?" is-empty":"")+'">'+pakai+'/'+kuota+' · sisa '+sisa+'</span>';
+        '<span class="jl-kuota kuota-pill'+(sisa<=0?" is-full is-empty":"")+'">L '+pakai+'/'+kuota+'</span>';
       var initial = escHtml(String(k.nama||"?").trim().charAt(0).toUpperCase());
       var av = AV_COLORS[idx % AV_COLORS.length];
-      var person = '<div class="libur-person">'+
-        '<div class="libur-avatar" style="background:'+av+'">'+initial+'</div>'+
-        '<div class="libur-person-meta"><div class="libur-person-name">'+escHtml(k.nama)+'</div>'+
-        '<div class="libur-person-job">'+escHtml(k.jabatan||"")+'</div>'+kuotaHtml+'</div></div>';
+      var person = '<div class="jl-person libur-person">'+
+        '<div class="jl-av libur-avatar" style="background:'+av+'">'+initial+'</div>'+
+        '<div class="jl-person-meta libur-person-meta">'+
+          '<div class="jl-person-name libur-person-name">'+escHtml(k.nama)+'</div>'+
+          '<div class="jl-person-sub"><span class="jl-person-job libur-person-job">'+escHtml(k.jabatan||"")+'</span>'+kuotaHtml+'</div>'+
+        '</div></div>';
       return '<tr><td class="label-col">'+person+'</td>'+cells+'</tr>';
     }).join("");
 
-    var kuotaHead = data.modeCutiSakitOnly ? "" :
-      '<div class="libur-kuota-banner">Kuota libur bulan ini: <b>'+(data.kuotaLibur||0)+'</b> hari '+
-      '<span style="opacity:0.75">(Minggu + tgl merah, cuti bersama tidak dihitung)</span></div>';
+    var modeLabel = data.modeCutiSakitOnly
+      ? '<span class="jl-pill jl-pill-gold">Mode Cuti saja</span>'
+      : '<span class="jl-pill jl-pill-gold">Mode normal</span>';
+    var kuotaBanner = data.modeCutiSakitOnly
+      ? '<div class="jl-banner">'+modeLabel+'<span class="jl-pill jl-pill-navy">'+sortedKar.length+' karyawan</span></div>'
+      : '<div class="jl-banner"><span>Kuota libur bulan ini: <b>'+(data.kuotaLibur||0)+'</b> hari</span>'+modeLabel+'<span class="jl-pill jl-pill-navy">'+sortedKar.length+' karyawan</span></div>';
 
     wrap.innerHTML =
-      kuotaHead+
-      '<div class="libur-table-wrap"><table class="libur-table"><thead><tr><th class="label-col">👤 Karyawan</th>'+headerCells+'</tr></thead><tbody>'+rowsHtml+'</tbody></table></div>'+
-      '<div class="libur-legend">'+
-        '<span><span class="dot kerja"></span>Kerja</span>'+
-        '<span><span class="dot libur"></span>Libur (manual)</span>'+
-        '<span><span class="dot cuti"></span>Cuti (disetujui)</span>'+
-      '</div>';
+      '<div class="jl-shell">'+
+      kuotaBanner+
+      '<div class="jl-legend">'+
+        '<span class="jl-leg"><span class="jl-dot-kerja"></span> Kerja</span>'+
+        '<span class="jl-leg"><span class="jl-cell st-libur" style="width:22px;height:22px;cursor:default;transform:none;box-shadow:none;">L</span> Libur</span>'+
+        '<span class="jl-leg"><span class="jl-cell st-cuti" style="width:22px;height:22px;cursor:default;transform:none;box-shadow:none;">C</span> Cuti</span>'+
+        '<span class="jl-leg"><span class="jl-minggu-swatch"></span> Minggu</span>'+
+      '</div>'+
+      '<div class="jl-table-wrap"><div class="jl-scroll">'+
+      '<table class="jl-table libur-table"><thead><tr><th class="label-col">Karyawan</th>'+headerCells+'</tr></thead><tbody>'+rowsHtml+'</tbody></table>'+
+      '</div></div></div>';
 
     if(editable){
-      wrap.querySelectorAll(".libur-cell").forEach(function(cell){
+      wrap.querySelectorAll(".libur-cell, .jl-cell").forEach(function(cell){
         cell.addEventListener("click", function(ev){
-          if(cell.classList.contains("st-cuti")) return; // cuti approved terkunci
+          if(cell.classList.contains("st-cuti") || cell.classList.contains("st-cuti-pending")) return;
           openKanitLiburActionPopup(cell, ev);
         });
       });
@@ -32510,7 +32759,7 @@ $on("cabangPinSubmit", "click", function(){
   var _liburKuotaBulan = 0;
   function applyLiburCell_(kar, day, on){
     if(!kanitLiburState[kar]) kanitLiburState[kar] = {};
-    var cell = document.querySelector('.libur-cell[data-kar="'+kar+'"][data-day="'+day+'"]');
+    var cell = document.querySelector('.libur-cell[data-kar="'+kar+'"][data-day="'+day+'"], .jl-cell[data-kar="'+kar+'"][data-day="'+day+'"]');
     if(on){
       var pakai = Object.keys(kanitLiburState[kar]).length;
       if(_liburKuotaBulan > 0 && pakai >= _liburKuotaBulan){
@@ -32519,24 +32768,25 @@ $on("cabangPinSubmit", "click", function(){
         return;
       }
       kanitLiburState[kar][day] = true;
-      if(cell){ cell.classList.add("st-libur"); cell.classList.remove("st-cuti-pending"); cell.textContent = "L"; cell.title = "Libur"; }
+      if(cell){ cell.classList.add("st-libur"); cell.classList.remove("st-cuti-pending","st-empty"); cell.textContent = "L"; cell.title = "Libur"; }
     } else {
       delete kanitLiburState[kar][day];
-      if(cell){ cell.classList.remove("st-libur"); cell.textContent = ""; cell.title = "Kerja"; }
+      if(cell){ cell.classList.remove("st-libur"); cell.classList.add("st-empty"); cell.textContent = ""; cell.title = "Kerja"; }
     }
     setLiburDirty(true);
     // refresh kuota pill text
     try{
-      document.querySelectorAll('.libur-table tbody tr').forEach(function(tr){
-        var firstCell = tr.querySelector('.libur-cell');
+      document.querySelectorAll('.jl-table tbody tr, .libur-table tbody tr').forEach(function(tr){
+        var firstCell = tr.querySelector('.libur-cell, .jl-cell');
         if(!firstCell) return;
         var kid = firstCell.getAttribute('data-kar');
-        var pill = tr.querySelector('.kuota-pill');
+        var pill = tr.querySelector('.jl-kuota, .kuota-pill');
         if(!pill || !kid) return;
         var p = Object.keys(kanitLiburState[kid]||{}).length;
         var s = Math.max(0, _liburKuotaBulan - p);
-        pill.textContent = p+"/"+_liburKuotaBulan+" · sisa "+s;
+        pill.textContent = "L "+p+"/"+_liburKuotaBulan;
         pill.classList.toggle("is-empty", s<=0);
+        pill.classList.toggle("is-full", s<=0);
       });
     }catch(e){}
   }
@@ -32555,7 +32805,7 @@ $on("cabangPinSubmit", "click", function(){
           return;
         }
         showMsg(msgEl, "Cuti tgl "+String(day).padStart(2,"0")+" diajukan, menunggu approval Kepala Cabang.", "ok");
-        var cell = document.querySelector('.libur-cell[data-kar="'+kar+'"][data-day="'+day+'"]');
+        var cell = document.querySelector('.libur-cell[data-kar="'+kar+'"][data-day="'+day+'"], .jl-cell[data-kar="'+kar+'"][data-day="'+day+'"]');
         if(cell && !cell.classList.contains("st-cuti")){
           cell.classList.add("st-cuti-pending");
           cell.textContent = "?";
@@ -40122,64 +40372,44 @@ function renderKanitAuditWizard(){
     var actCuti = document.getElementById("kanitLiburActCuti");
     var actSakit = document.getElementById("kanitLiburActSakit");
     // Sakit: HANYA KC, semua cabang
-    if(actSakit) actSakit.style.display = isAdmin ? "" : "none";
+    if(actSakit) actSakit.style.display = "none"; // Sakit dihapus
     if(modeCS){
-      // cabang tutup Minggu: tidak ada rotasi libur, hanya Cuti/Sakit oleh KC
+      // cabang tutup Minggu: hanya Cuti oleh KC
       if(actLibur) actLibur.style.display = "none";
       if(actHapus) actHapus.style.display = "none";
       if(actCuti) actCuti.style.display = isAdmin ? "" : "none";
     } else if(isAdmin){
-      // KC di cabang normal: Libur + Sakit (cuti diajukan Kanit)
+      // KC di cabang normal: Libur saja (cuti diajukan Kanit)
       if(actCuti) actCuti.style.display = "none";
     }
   };
 
-  // Handle sakit + admin cuti for GRT013
-  (function(){
-    var popup = document.getElementById("kanitLiburActionPopup");
-    if(!popup) return;
-    // ensure sakit button exists
-    if(!document.getElementById("kanitLiburActSakit")){
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.id = "kanitLiburActSakit";
-      btn.setAttribute("data-act", "sakit");
-      btn.textContent = "Sakit";
-      btn.style.display = "none";
-      popup.appendChild(btn);
-    }
-  })();
+  // Sakit dihapus dari UI grid
 
-  // extend popup click handler for sakit / admin cuti
+
+  // extend popup: KC input Cuti di mode tutup Minggu saja (Sakit dihapus)
   $on("kanitLiburActionPopup", "click", function(e){
     var btn = e.target.closest("button[data-act]");
     if(!btn || ! _liburPopupTarget) return;
     var act = btn.getAttribute("data-act");
     var isAdmin = !!(session.adminPin && !session.cabangPin);
-    if(act === "sakit"){
-      if(!isAdmin) return;
-    } else if(act === "cuti" && isAdmin && adminLiburModeCutiSakit){
-      // ok: KC input cuti di cabang tutup Minggu
-    } else {
-      return;
-    }
+    if(!(act === "cuti" && isAdmin && adminLiburModeCutiSakit)) return;
     var kar = _liburPopupTarget.kar, day = _liburPopupTarget.day;
     closeKanitLiburActionPopup();
     var bulan = adminLiburBulan || document.getElementById("jadwalLiburBulan").value;
     var ym = monthLabelToYm_(bulan);
     if(!ym) return;
     var tgl = ym.y + "-" + String(ym.m).padStart(2,"0") + "-" + String(day).padStart(2,"0");
-    var jenis = act === "sakit" ? "Sakit" : "Cuti";
     var msgEl = document.getElementById("jadwalLiburMsg");
-    showMsg(msgEl, "Menyimpan "+jenis+"...", "ok");
+    showMsg(msgEl, "Menyimpan Cuti...", "ok");
     google.script.run
       .withSuccessHandler(function(r){
         if(!r || r.status !== "OK"){ showMsg(msgEl, (r&&r.reason)||"Gagal", "err"); return; }
-        showMsg(msgEl, jenis+" tersimpan.", "ok");
+        showMsg(msgEl, "Cuti tersimpan.", "ok");
         loadAdminJadwalLibur();
       })
       .withFailureHandler(function(err){ showMsg(msgEl, String(err.message||err), "err"); })
-      .markCutiSakitAdmin(session.adminPin, adminLiburCabang, kar, tgl, jenis);
+      .markCutiSakitAdmin(session.adminPin, adminLiburCabang, kar, tgl, "Cuti");
   }, true);
 
   // Dashboard: karyawan bertugas
