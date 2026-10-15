@@ -28290,6 +28290,72 @@ html[data-theme="light"] .admin-sidebar{
   overflow: hidden !important;
   pointer-events: none !important;
 }
+
+/* ===== Cash Opname: 4 kolom sejajar + simpan bersih ===== */
+#tab-cashopname .co-main4{
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  align-items: start !important;
+  margin-top: 10px !important;
+}
+#tab-cashopname .co-main4 > .co-box{
+  margin: 0 !important;
+  min-width: 0 !important;
+}
+/* Kas kecil: tanpa scroll, muat penuh */
+#tab-cashopname .co-kk-rows,
+#tab-cashopname #coKkBody,
+#tab-cashopname .co-box .co-rows.co-kk-rows{
+  max-height: none !important;
+  overflow: visible !important;
+  overflow-y: visible !important;
+}
+/* Simpan bar: tanpa blok abu */
+#tab-cashopname .co-save-bar{
+  margin-top: 12px !important;
+  padding: 10px 0 4px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 10px 14px !important;
+}
+#tab-cashopname .co-save-bar .co-sign{
+  display: flex !important;
+  gap: 16px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+#tab-cashopname .co-save-bar .co-sign .col{
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+#tab-cashopname .co-save-bar .co-save-btn{
+  min-width: 110px !important;
+}
+#tab-cashopname .co-box-flat,
+#tab-cashopname .co-box:has(.co-sign){
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+@media (max-width: 1100px){
+  #tab-cashopname .co-main4{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  #tab-cashopname .co-main4{
+    grid-template-columns: 1fr !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -29336,62 +29402,50 @@ html[data-theme="light"] .admin-sidebar{
           </div>
         </div>
 
-        <div class="co-main3">
-          <div class="co-col">
-            <div class="co-box">
-              <div class="co-box-h"><span>Laci</span><span id="coTotalLaci">Rp 0</span></div>
-              <div class="co-rows" id="coLaciBody"></div>
-              <span id="coTotalLaciLbl" hidden>Rp 0</span>
+        <div class="co-main4">
+          <div class="co-box">
+            <div class="co-box-h"><span>Laci</span><span id="coTotalLaci">Rp 0</span></div>
+            <div class="co-rows" id="coLaciBody"></div>
+            <span id="coTotalLaciLbl" hidden>Rp 0</span>
+          </div>
+          <div class="co-box">
+            <div class="co-box-h"><span>Brankas</span><span id="coTotalBrankas">Rp 0</span></div>
+            <div class="co-rows" id="coBrankasBody"></div>
+            <span id="coTotalBrankasLbl" hidden>Rp 0</span>
+          </div>
+          <div class="co-box">
+            <div class="co-box-h"><span>Kas Kecil</span><span id="coTotalKk">Rp 0</span></div>
+            <div class="co-fields3">
+              <div class="field"><label>Awal</label><input type="text" id="coKkAwal" value="0" readonly><div id="coKkAwalHint" class="co-hint"></div></div>
+              <div class="field"><label>Pakai</label><input type="text" id="coKkPakai" value="0" readonly></div>
+              <div class="field"><label>Sisa</label><div id="coKkSisa" class="co-mono">Rp 0</div></div>
             </div>
-            <div class="co-box">
-              <div class="co-box-h">Materai</div>
-              <div class="co-fields3">
-                <div class="field"><label>Terpakai</label><input type="text" inputmode="decimal" id="coMateraiPakai" value="" placeholder="—" autocomplete="off"></div>
-                <div class="field"><label>Nilai</label><div id="coMateraiNilai" class="co-mono">Rp 0</div></div>
-                <div class="field"><label>Sisa</label><input type="text" id="coMateraiSisa" value="25" readonly></div>
-              </div>
+            <div class="co-rows co-kk-rows" id="coKkBody"></div>
+            <span id="coTotalKkFoot" hidden>Rp 0</span>
+          </div>
+          <div class="co-box co-box-materai-catatan">
+            <div class="co-box-h">Materai</div>
+            <div class="co-fields3">
+              <div class="field"><label>Terpakai</label><input type="text" inputmode="decimal" id="coMateraiPakai" value="" placeholder="—" autocomplete="off"></div>
+              <div class="field"><label>Nilai</label><div id="coMateraiNilai" class="co-mono">Rp 0</div></div>
+              <div class="field"><label>Sisa</label><input type="text" id="coMateraiSisa" value="25" readonly></div>
+            </div>
+            <div class="co-box-h" style="margin-top:8px;border-top:1px solid #E2E8F0;padding-top:8px">Catatan</div>
+            <div style="padding:4px 8px 8px">
+              <textarea id="coCatatan" rows="2" placeholder="Temuan..." style="width:100%;min-height:44px;resize:vertical;box-sizing:border-box"></textarea>
             </div>
           </div>
+        </div>
 
-          <div class="co-col">
-            <div class="co-box">
-              <div class="co-box-h"><span>Brankas</span><span id="coTotalBrankas">Rp 0</span></div>
-              <div class="co-rows" id="coBrankasBody"></div>
-              <span id="coTotalBrankasLbl" hidden>Rp 0</span>
-            </div>
-            <div class="co-box">
-              <div class="co-box-h">Catatan</div>
-              <div style="padding:6px 8px">
-                <textarea id="coCatatan" rows="2" placeholder="Temuan..." style="width:100%;min-height:44px;resize:vertical;box-sizing:border-box"></textarea>
-              </div>
-            </div>
+        <div class="co-save-bar">
+          <div class="co-sign">
+            <div class="col"><div class="lab">Kasir</div><div class="name" id="coSignKasir">—</div></div>
+            <div class="col"><div class="lab">KC</div><div class="name" id="coSignKc">Syahrul Zuniardin</div></div>
           </div>
-
-          <div class="co-col">
-            <div class="co-box">
-              <div class="co-box-h"><span>Kas Kecil</span><span id="coTotalKk">Rp 0</span></div>
-              <div class="co-fields3">
-                <div class="field"><label>Awal</label><input type="text" id="coKkAwal" value="0" readonly><div id="coKkAwalHint" class="co-hint"></div></div>
-                <div class="field"><label>Pakai</label><input type="text" id="coKkPakai" value="0" readonly></div>
-                <div class="field"><label>Sisa</label><div id="coKkSisa" class="co-mono">Rp 0</div></div>
-              </div>
-              <div class="co-rows co-kk-rows" id="coKkBody"></div>
-              <span id="coTotalKkFoot" hidden>Rp 0</span>
-            </div>
-            <div class="co-box co-box-flat">
-              <div class="co-box-h co-box-h-flat">Simpan</div>
-              <div class="co-flat-body" style="padding:4px 0">
-                <div class="co-sign">
-                  <div class="col"><div class="lab">Kasir</div><div class="name" id="coSignKasir">—</div></div>
-                  <div class="col"><div class="lab">KC</div><div class="name" id="coSignKc">Syahrul Zuniardin</div></div>
-                </div>
-                <button type="button" id="coSaveBtn" class="co-save-btn">Simpan</button>
-                <div class="msg" id="coMsg"></div>
-                <div style="margin-top:6px"><button type="button" id="coShowHistBtn" class="btn-xs secondary">Riwayat</button></div>
-                <div id="coHistory" style="display:none"></div>
-              </div>
-            </div>
-          </div>
+          <button type="button" id="coSaveBtn" class="co-save-btn">Simpan</button>
+          <button type="button" id="coShowHistBtn" class="btn-xs secondary">Riwayat</button>
+          <div class="msg" id="coMsg"></div>
+          <div id="coHistory" style="display:none"></div>
         </div>
       </div>
     </div>
