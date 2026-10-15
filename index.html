@@ -28629,6 +28629,7 @@ html[data-theme="light"] table.libur-table td{
 #jadwalLiburWrap .jl-table thead th.is-minggu .dow,
 #kanitJadwalLiburWrap .jl-table thead th.is-minggu .dow{ color:#EF4444 !important; }
 
+/* Header KARYAWAN — soft, bukan navy solid */
 #jadwalLiburWrap .jl-table th.label-col,
 #jadwalLiburWrap .jl-table td.label-col,
 #kanitJadwalLiburWrap .jl-table th.label-col,
@@ -28636,14 +28637,15 @@ html[data-theme="light"] table.libur-table td{
   position:sticky; left:0; z-index:3;
   background:#FFFFFF !important;
   border-right:1px solid #E2E8F0 !important;
-  min-width:168px; max-width:200px;
+  min-width:180px; max-width:220px;
   text-align:left !important; padding:10px 14px !important;
 }
 #jadwalLiburWrap .jl-table thead th.label-col,
 #kanitJadwalLiburWrap .jl-table thead th.label-col{
-  z-index:4; background:#F8FAFC !important;
-  font-size:10px !important; font-weight:700 !important; letter-spacing:0.05em;
-  text-transform:uppercase; color:#94A3B8 !important;
+  z-index:4;
+  background:#F1F5F9 !important;
+  font-size:10px !important; font-weight:700 !important; letter-spacing:0.06em;
+  text-transform:uppercase; color:#64748B !important;
   font-family:Inter, system-ui, sans-serif !important;
 }
 
@@ -28670,33 +28672,53 @@ html[data-theme="light"] table.libur-table td{
 #jadwalLiburWrap .jl-av,
 #kanitJadwalLiburWrap .jl-av{
   width:32px; height:32px; border-radius:50%;
-  background:#1E293B; color:#F8FAFC;
+  background:#1E293B !important; color:#F8FAFC !important;
   display:flex; align-items:center; justify-content:center;
   font-size:11px; font-weight:700; flex-shrink:0;
 }
 #jadwalLiburWrap .jl-person-meta,
 #kanitJadwalLiburWrap .jl-person-meta{ min-width:0; }
+
+/* Nama tegas hitam */
 #jadwalLiburWrap .jl-person-name,
-#kanitJadwalLiburWrap .jl-person-name{
-  font-weight:700; font-size:13px; color:#0F172A !important;
-  line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+#kanitJadwalLiburWrap .jl-person-name,
+#jadwalLiburWrap .libur-person-name,
+#kanitJadwalLiburWrap .libur-person-name{
+  font-weight:700 !important; font-size:13px !important;
+  color:#0F172A !important; -webkit-text-fill-color:#0F172A !important;
+  line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  opacity:1 !important;
 }
 #jadwalLiburWrap .jl-person-sub,
-#kanitJadwalLiburWrap .jl-person-sub{ display:flex; align-items:center; gap:6px; margin-top:2px; flex-wrap:wrap; }
+#kanitJadwalLiburWrap .jl-person-sub{ display:flex; align-items:center; gap:6px; margin-top:3px; flex-wrap:wrap; }
 #jadwalLiburWrap .jl-person-job,
-#kanitJadwalLiburWrap .jl-person-job{
-  font-size:11px; color:#64748B !important;
+#kanitJadwalLiburWrap .jl-person-job,
+#jadwalLiburWrap .libur-person-job,
+#kanitJadwalLiburWrap .libur-person-job{
+  font-size:11px !important; color:#64748B !important;
+  -webkit-text-fill-color:#64748B !important;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  opacity:1 !important; font-weight:500 !important;
 }
 #jadwalLiburWrap .jl-kuota,
-#kanitJadwalLiburWrap .jl-kuota{
-  font-size:10px; font-weight:700; padding:1px 6px; border-radius:99px;
-  background:#F1F5F9; color:#1E293B !important;
+#kanitJadwalLiburWrap .jl-kuota,
+#jadwalLiburWrap .kuota-pill,
+#kanitJadwalLiburWrap .kuota-pill{
+  font-size:10px !important; font-weight:700 !important; padding:2px 7px; border-radius:99px;
+  background:#F1F5F9 !important; color:#1E293B !important;
+  -webkit-text-fill-color:#1E293B !important;
   font-family:'JetBrains Mono', ui-monospace, monospace;
+  opacity:1 !important;
 }
 #jadwalLiburWrap .jl-kuota.is-full,
-#kanitJadwalLiburWrap .jl-kuota.is-full{ background:#FEE2E2; color:#DC2626 !important; }
+#kanitJadwalLiburWrap .jl-kuota.is-full,
+#jadwalLiburWrap .kuota-pill.is-empty,
+#kanitJadwalLiburWrap .kuota-pill.is-empty{
+  background:#FEE2E2 !important; color:#DC2626 !important;
+  -webkit-text-fill-color:#DC2626 !important;
+}
 
+/* Cell chip + tanda + pada sel kosong */
 #jadwalLiburWrap .jl-cell,
 #kanitJadwalLiburWrap .jl-cell,
 #jadwalLiburWrap .libur-cell,
@@ -28704,10 +28726,40 @@ html[data-theme="light"] table.libur-table td{
   display:inline-flex !important; align-items:center; justify-content:center;
   width:28px; height:28px; border-radius:8px;
   font-size:11px; font-weight:800; cursor:pointer;
-  transition:transform .1s, box-shadow .1s; user-select:none;
-  background:transparent !important; color:transparent !important;
-  border:none !important; box-shadow:none !important;
+  transition:transform .1s, box-shadow .1s, background .12s, color .12s, border-color .12s;
+  user-select:none;
+  background:transparent !important;
+  border:1px solid transparent !important;
+  box-shadow:none !important;
+  color:transparent !important;
+  -webkit-text-fill-color:transparent !important;
 }
+/* Sel kosong: selalu tampil + soft */
+#jadwalLiburWrap .jl-cell.st-empty,
+#kanitJadwalLiburWrap .jl-cell.st-empty,
+#jadwalLiburWrap .libur-cell.st-empty,
+#kanitJadwalLiburWrap .libur-cell.st-empty,
+#jadwalLiburWrap .libur-cell:not(.st-libur):not(.st-cuti):not(.st-cuti-pending),
+#kanitJadwalLiburWrap .libur-cell:not(.st-libur):not(.st-cuti):not(.st-cuti-pending){
+  color:#CBD5E1 !important;
+  -webkit-text-fill-color:#CBD5E1 !important;
+  background:#F8FAFC !important;
+  border:1px dashed #E2E8F0 !important;
+}
+#jadwalLiburWrap .jl-cell.st-empty:hover,
+#kanitJadwalLiburWrap .jl-cell.st-empty:hover,
+#jadwalLiburWrap .libur-cell.st-empty:hover,
+#kanitJadwalLiburWrap .libur-cell.st-empty:hover,
+#jadwalLiburWrap .libur-cell:not(.st-libur):not(.st-cuti):not(.st-cuti-pending):hover,
+#kanitJadwalLiburWrap .libur-cell:not(.st-libur):not(.st-cuti):not(.st-cuti-pending):hover{
+  background:#EEF2FF !important;
+  border-color:#A5B4FC !important;
+  color:#4F46E5 !important;
+  -webkit-text-fill-color:#4F46E5 !important;
+  transform:scale(1.08);
+  box-shadow:0 2px 8px rgba(99,102,241,0.15);
+}
+
 #jadwalLiburWrap .jl-cell:hover,
 #kanitJadwalLiburWrap .jl-cell:hover,
 #jadwalLiburWrap .libur-cell:hover,
@@ -28719,30 +28771,58 @@ html[data-theme="light"] table.libur-table td{
 #jadwalLiburWrap .libur-cell.st-libur,
 #kanitJadwalLiburWrap .libur-cell.st-libur{
   background:#FEE2E2 !important; color:#DC2626 !important;
+  -webkit-text-fill-color:#DC2626 !important;
+  border:1px solid #FECACA !important;
 }
+#jadwalLiburWrap .jl-cell.st-libur::before,
+#kanitJadwalLiburWrap .jl-cell.st-libur::before,
+#jadwalLiburWrap .libur-cell.st-libur::before,
+#kanitJadwalLiburWrap .libur-cell.st-libur::before{ content:none !important; }
+
 #jadwalLiburWrap .jl-cell.st-cuti,
 #kanitJadwalLiburWrap .jl-cell.st-cuti,
 #jadwalLiburWrap .libur-cell.st-cuti,
 #kanitJadwalLiburWrap .libur-cell.st-cuti{
-  background:#CCFBF1 !important; color:#0F766E !important; cursor:default;
+  background:#CCFBF1 !important; color:#0F766E !important;
+  -webkit-text-fill-color:#0F766E !important;
+  border:1px solid #99F6E4 !important; cursor:default;
 }
+#jadwalLiburWrap .jl-cell.st-cuti::before,
+#kanitJadwalLiburWrap .jl-cell.st-cuti::before,
+#jadwalLiburWrap .libur-cell.st-cuti::before,
+#kanitJadwalLiburWrap .libur-cell.st-cuti::before{ content:none !important; }
+
 #jadwalLiburWrap .jl-cell.st-cuti-pending,
 #kanitJadwalLiburWrap .jl-cell.st-cuti-pending,
 #jadwalLiburWrap .libur-cell.st-cuti-pending,
 #kanitJadwalLiburWrap .libur-cell.st-cuti-pending{
-  background:#FEF3C7 !important; color:#B45309 !important; cursor:default;
+  background:#FEF3C7 !important; color:#B45309 !important;
+  -webkit-text-fill-color:#B45309 !important;
+  border:1px solid #FDE68A !important; cursor:default;
 }
-#jadwalLiburWrap .jl-cell.st-empty:hover,
-#kanitJadwalLiburWrap .jl-cell.st-empty:hover,
-#jadwalLiburWrap .libur-cell:not(.st-libur):not(.st-cuti):not(.st-cuti-pending):hover,
-#kanitJadwalLiburWrap .libur-cell:not(.st-libur):not(.st-cuti):not(.st-cuti-pending):hover{
-  background:#F1F5F9 !important; color:#94A3B8 !important;
-}
+#jadwalLiburWrap .jl-cell.st-cuti-pending::before,
+#kanitJadwalLiburWrap .jl-cell.st-cuti-pending::before,
+#jadwalLiburWrap .libur-cell.st-cuti-pending::before,
+#kanitJadwalLiburWrap .libur-cell.st-cuti-pending::before{ content:none !important; }
 
 #jadwalLiburWrap .libur-kuota-banner,
 #kanitJadwalLiburWrap .libur-kuota-banner,
 #jadwalLiburWrap .libur-legend,
 #kanitJadwalLiburWrap .libur-legend{ display:none !important; }
+
+/* Tombol simpan: default sembunyi, hanya .show / style inline dari JS */
+#jadwalLiburSaveBtn,
+#kanitJadwalLiburSaveBtn{
+  display:none;
+}
+#jadwalLiburSaveBtn[style*="display: block"],
+#jadwalLiburSaveBtn[style*="display:block"],
+#jadwalLiburSaveBtn[style*="display: inline"],
+#kanitJadwalLiburSaveBtn[style*="display: block"],
+#kanitJadwalLiburSaveBtn[style*="display:block"],
+#kanitJadwalLiburSaveBtn[style*="display: inline"]{
+  /* JS mengontrol tampilan */
+}
 
 .libur-action-popup{
   position:fixed; z-index:10060;
@@ -28772,9 +28852,9 @@ html[data-theme="light"] table.libur-table td{
   #jadwalLiburWrap .jl-table th.label-col,
   #jadwalLiburWrap .jl-table td.label-col,
   #kanitJadwalLiburWrap .jl-table th.label-col,
-  #kanitJadwalLiburWrap .jl-table td.label-col{ min-width:130px; padding:8px 10px !important; }
+  #kanitJadwalLiburWrap .jl-table td.label-col{ min-width:140px; padding:8px 10px !important; }
   #jadwalLiburWrap .jl-av, #kanitJadwalLiburWrap .jl-av{ width:28px; height:28px; font-size:10px; }
-  #jadwalLiburWrap .jl-person-name, #kanitJadwalLiburWrap .jl-person-name{ font-size:12px; }
+  #jadwalLiburWrap .jl-person-name, #kanitJadwalLiburWrap .jl-person-name{ font-size:12px !important; }
   #jadwalLiburWrap .jl-table thead th, #kanitJadwalLiburWrap .jl-table thead th{ min-width:32px; padding:8px 2px !important; }
   #jadwalLiburWrap .jl-cell, #kanitJadwalLiburWrap .jl-cell,
   #jadwalLiburWrap .libur-cell, #kanitJadwalLiburWrap .libur-cell{ width:26px; height:26px; font-size:10px; }
@@ -32668,7 +32748,7 @@ $on("cabangPinSubmit", "click", function(){
         var isLibur = editable ? !!(kanitLiburState[k.id] && kanitLiburState[k.id][d]) : ((k.hariLibur||[]).indexOf(d) !== -1);
         var stateCls = isCuti ? "st-cuti" : (isLibur ? "st-libur" : "");
         var title = isCuti ? "Cuti" : (isLibur ? "Libur" : "Kerja");
-        var letter = isCuti ? "C" : (isLibur ? "L" : "");
+        var letter = isCuti ? "C" : (isLibur ? "L" : "+");
         var emptyCls = (!isCuti && !isLibur) ? " st-empty" : "";
         cells += '<td class="'+(isMinggu?"is-minggu":"")+'">'+
           '<span class="jl-cell libur-cell '+stateCls+emptyCls+'" data-kar="'+escHtml(k.id)+'" data-day="'+d+'" title="'+title+'">'+letter+'</span>'+
@@ -32719,6 +32799,15 @@ $on("cabangPinSubmit", "click", function(){
           openKanitLiburActionPopup(cell, ev);
         });
       });
+      setLiburDirty(false);
+    } else {
+      // view-only: pastikan tombol simpan tidak muncul
+      try{
+        var sb = document.getElementById("jadwalLiburSaveBtn");
+        var un = document.getElementById("jadwalLiburUnsaved");
+        if(sb) sb.style.display = "none";
+        if(un) un.style.display = "none";
+      }catch(e){}
     }
   }
 
@@ -32771,7 +32860,7 @@ $on("cabangPinSubmit", "click", function(){
       if(cell){ cell.classList.add("st-libur"); cell.classList.remove("st-cuti-pending","st-empty"); cell.textContent = "L"; cell.title = "Libur"; }
     } else {
       delete kanitLiburState[kar][day];
-      if(cell){ cell.classList.remove("st-libur"); cell.classList.add("st-empty"); cell.textContent = ""; cell.title = "Kerja"; }
+      if(cell){ cell.classList.remove("st-libur"); cell.classList.add("st-empty"); cell.textContent = "+"; cell.title = "Kerja"; }
     }
     setLiburDirty(true);
     // refresh kuota pill text
