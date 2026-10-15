@@ -28356,6 +28356,197 @@ html[data-theme="light"] .admin-sidebar{
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ===== Cash Opname polish: input netral, simpan kanan, hint bawah ===== */
+/* Input qty: tanpa orange focus ring */
+#tab-cashopname input.co-qty,
+#tab-cashopname .co-rows input,
+#tab-cashopname .co-rows input[type="text"],
+#tab-cashopname .co-rows input[type="number"],
+#tab-cashopname input.co-qty:focus,
+#tab-cashopname .co-rows input:focus{
+  border: 1px solid #E2E8F0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  ring: none !important;
+}
+#tab-cashopname .co-rows input:focus{
+  border-color: #94A3B8 !important;
+  box-shadow: 0 0 0 1px #CBD5E1 !important;
+}
+/* Hint kas kecil di bawah tabel */
+#tab-cashopname .co-kk-hint-bottom,
+#tab-cashopname #coKkAwalHint{
+  display: block !important;
+  padding: 6px 8px 8px !important;
+  font-size: 11px !important;
+  color: #64748B !important;
+  line-height: 1.35 !important;
+}
+/* Simpan bar: kanan bawah, bersih */
+#tab-cashopname .co-save-bar{
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-top: 14px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+#tab-cashopname .co-save-bar .msg{
+  flex: 1 !important;
+  text-align: left !important;
+  margin: 0 !important;
+}
+#tab-cashopname .co-save-bar .co-save-btn{
+  min-width: 120px !important;
+  height: 40px !important;
+  border-radius: 999px !important;
+  margin: 0 !important;
+}
+/* Sembunyikan sisa UI kasir/kc/tampilkan jika masih ke-render */
+#tab-cashopname .co-sign,
+#tab-cashopname #coShowHistBtn:not([hidden]){
+  display: none !important;
+}
+#tab-cashopname #coShowHistBtn[hidden]{
+  display: none !important;
+}
+
+/* ===== BUGFIX batch: scrollbar, kelola hub, libur cell ===== */
+
+/* 1) Scrollbar netral — tanpa orange */
+*{
+  scrollbar-color: #CBD5E1 #F1F5F9 !important;
+}
+*::-webkit-scrollbar{
+  width: 8px !important;
+  height: 8px !important;
+}
+*::-webkit-scrollbar-track{
+  background: #F1F5F9 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+*::-webkit-scrollbar-thumb{
+  background: #CBD5E1 !important;
+  border-radius: 8px !important;
+  border: 2px solid #F1F5F9 !important;
+  box-shadow: none !important;
+}
+*::-webkit-scrollbar-thumb:hover{
+  background: #94A3B8 !important;
+}
+.admin-content,
+.admin-content *{
+  scrollbar-color: #CBD5E1 transparent !important;
+}
+.admin-content *::-webkit-scrollbar-thumb{
+  background: #CBD5E1 !important;
+  border-color: transparent !important;
+}
+
+/* 2) Kelola Cabang hub cards — rapih, terbaca */
+html[data-theme="light"] #kelolaCabangHub .admin-menu-grid,
+html[data-theme="light"] #tab-kelolacabang .admin-menu-grid{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  margin: 8px 0 16px !important;
+}
+html[data-theme="light"] #kelolaCabangHub .admin-menu-card,
+html[data-theme="light"] #tab-kelolacabang .admin-menu-card,
+html[data-theme="light"] #kelolaCabangHub button.admin-menu-card{
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 14px 16px !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.06) !important;
+  color: #0F172A !important;
+  min-height: 72px !important;
+  overflow: hidden !important;
+}
+html[data-theme="light"] #kelolaCabangHub .admin-menu-card:hover{
+  border-color: #CBD5E1 !important;
+  background: #F8FAFC !important;
+  transform: none !important;
+}
+html[data-theme="light"] #kelolaCabangHub .admin-menu-icon{
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+html[data-theme="light"] #kelolaCabangHub .admin-menu-icon.dark{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="light"] #kelolaCabangHub .admin-menu-icon.accent{
+  background: #E2E8F0 !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] #kelolaCabangHub .admin-menu-card-title{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+html[data-theme="light"] #kelolaCabangHub .admin-menu-card-desc{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+html[data-theme="light"] #kelolaCabangHub .admin-menu-arrow{
+  color: #94A3B8 !important;
+}
+@media (max-width: 900px){
+  html[data-theme="light"] #kelolaCabangHub .admin-menu-grid{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 4) Libur cells tidak nabrak garis tabel */
+html[data-theme="light"] .libur-cell,
+html[data-theme="light"] .admin-content .libur-cell,
+.libur-table td .libur-cell{
+  width: 22px !important;
+  height: 22px !important;
+  max-width: 22px !important;
+  max-height: 22px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  font-size: 10px !important;
+  line-height: 22px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  vertical-align: middle !important;
+}
+html[data-theme="light"] .libur-table td,
+html[data-theme="light"] table.libur-table td{
+  padding: 2px !important;
+  overflow: hidden !important;
+  vertical-align: middle !important;
+}
 </style>
 </head>
 <body>
@@ -29416,11 +29607,12 @@ html[data-theme="light"] .admin-sidebar{
           <div class="co-box">
             <div class="co-box-h"><span>Kas Kecil</span><span id="coTotalKk">Rp 0</span></div>
             <div class="co-fields3">
-              <div class="field"><label>Awal</label><input type="text" id="coKkAwal" value="0" readonly><div id="coKkAwalHint" class="co-hint"></div></div>
+              <div class="field"><label>Awal</label><input type="text" id="coKkAwal" value="0" readonly></div>
               <div class="field"><label>Pakai</label><input type="text" id="coKkPakai" value="0" readonly></div>
               <div class="field"><label>Sisa</label><div id="coKkSisa" class="co-mono">Rp 0</div></div>
             </div>
             <div class="co-rows co-kk-rows" id="coKkBody"></div>
+            <div id="coKkAwalHint" class="co-hint co-kk-hint-bottom"></div>
             <span id="coTotalKkFoot" hidden>Rp 0</span>
           </div>
           <div class="co-box co-box-materai-catatan">
@@ -29438,13 +29630,12 @@ html[data-theme="light"] .admin-sidebar{
         </div>
 
         <div class="co-save-bar">
-          <div class="co-sign">
-            <div class="col"><div class="lab">Kasir</div><div class="name" id="coSignKasir">—</div></div>
-            <div class="col"><div class="lab">KC</div><div class="name" id="coSignKc">Syahrul Zuniardin</div></div>
-          </div>
-          <button type="button" id="coSaveBtn" class="co-save-btn">Simpan</button>
-          <button type="button" id="coShowHistBtn" class="btn-xs secondary">Riwayat</button>
           <div class="msg" id="coMsg"></div>
+          <button type="button" id="coSaveBtn" class="co-save-btn">Simpan</button>
+          <!-- hidden stubs biar JS lama tidak error -->
+          <span id="coSignKasir" hidden>—</span>
+          <span id="coSignKc" hidden></span>
+          <button type="button" id="coShowHistBtn" hidden></button>
           <div id="coHistory" style="display:none"></div>
         </div>
       </div>
@@ -36824,7 +37015,19 @@ function applyRejectedAlasanFilter_(which){
     btn.addEventListener("click", function(e){
       e.stopPropagation();
       var open = panel.classList.toggle("open");
-      if(open) loadAdminNotifications();
+      if(open){
+        // Badge hilang saat panel dibuka
+        var badge = document.getElementById("adminNotifBadge");
+        if(badge){ badge.style.display = "none"; badge.textContent = "0"; }
+        loadAdminNotifications();
+        // Tandai sudah dibaca di server jika ada
+        try{
+          if(session.adminPin && google.script && google.script.run){
+            google.script.run.withFailureHandler(function(){})
+              .markAdminNotificationsRead(session.adminPin);
+          }
+        }catch(err){}
+      }
     });
     document.addEventListener("click", function(e){
       if(!panel.classList.contains("open")) return;
