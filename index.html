@@ -29229,8 +29229,15 @@ html[data-theme="light"] table.libur-table td{
         <input type="hidden" id="kanitRejectedSingleDate">
         <button type="button" id="kanitRejectedSingleDateBtn" style="display:none !important;width:0;height:0;padding:0;margin:0;border:0;overflow:hidden;" aria-hidden="true"></button>
       </div>
-      <div id="kanitRejectedWrap" style="margin-top:20px;"></div>
       <div class="msg" id="kanitRejectedMsg"></div>
+      <div id="kanitRejectedDetailWrap" style="margin-top:20px;"></div>
+      <div id="kanitRejectedWrap" style="display:none;" aria-hidden="true"></div>
+      <button type="button" id="kanitRejectedAnalisaBtn" class="btn-xs secondary" style="display:none; margin-top:16px;" hidden>Analisa</button>
+      <div class="inline-row" id="kanitRejectedExportRow" style="display:none; margin-top:14px;">
+        <button type="button" id="kanitRejectedExportExcelBtn" class="secondary">⬇ Export Excel</button>
+      </div>
+      <div id="kanitRejectedAnalysisWrap" style="margin-top:20px;"></div>
+      <div id="kanitRejectedMonthChartWrap" style="margin-top:20px;"></div>
     </div>
 
     <!-- Tab: Jadwal Libur & Cuti (klik tanggal → Libur / Cuti) -->
@@ -29665,7 +29672,6 @@ html[data-theme="light"] table.libur-table td{
 
       <div class="inline-row" id="rejectedExportRow" style="display:none; margin-top:14px;">
         <button type="button" id="rejectedExportExcelBtn" class="secondary">⬇ Export Excel</button>
-        <button type="button" id="rejectedExportPdfBtn" class="secondary">⬇ Export PDF</button>
       </div>
 
       <div id="rejectedAnalysisWrap" style="margin-top:20px;"></div>
@@ -34817,21 +34823,24 @@ function loadAdminSummary(force){
 
 function applyRejectedAlasanFilter_(which){
     var cache = window.__rejectedCache[which];
-    if(!cache || !cache.data) return;
-    var alasan = "";
+    if(!cache || !cache.data) return false;
+    var hasDetail = false;
     if(which === "admin"){
       var s = document.getElementById("rejectedAnalysisAlasan");
-      alasan = s ? s.value : "";
+      var alasan = s ? s.value : "";
       var rows = filterRejectedRowsByAlasan_(cache.data.allDetail, alasan);
       var data2 = Object.assign({}, cache.data, { allDetail: rows });
-      renderRejectedDetailTable(data2, "rejectedDetailWrap", cache.label);
+      hasDetail = !!renderRejectedDetailTable(data2, "rejectedDetailWrap", cache.label);
+      setRejectedAnalisaVisible_("admin", hasDetail);
     } else {
       var s2 = document.getElementById("kanitRejectedAlasan");
-      alasan = s2 ? s2.value : "";
-      var rows2 = filterRejectedRowsByAlasan_(cache.data.allDetail, alasan);
+      var alasan2 = s2 ? s2.value : "";
+      var rows2 = filterRejectedRowsByAlasan_(cache.data.allDetail, alasan2);
       var data3 = Object.assign({}, cache.data, { allDetail: rows2 });
-      renderRejectedDetailTable(data3, "kanitRejectedWrap", cache.label);
+      hasDetail = !!renderRejectedDetailTable(data3, "kanitRejectedDetailWrap", cache.label);
+      setRejectedAnalisaVisible_("kanit", hasDetail);
     }
+    return hasDetail;
   }
 
 
@@ -34873,13 +34882,31 @@ function applyRejectedAlasanFilter_(which){
   // begitu klik "Tampilkan", tanpa perlu klik "Analisa" lagi.
   function renderRejectedDetailTable(data, wrapId, cabangLabel){
     var wrap = document.getElementById(wrapId);
-    if(!wrap) return;
+    if(!wrap) return false;
     var rows = (data && data.allDetail) || [];
     if(!rows.length){
       wrap.innerHTML = '<div class="rejected-top3-title">Detail Transaksi</div><div class="empty-log">Belum ada data reject untuk '+cabangLabel+'.</div>';
-      return;
+      return false;
     }
-    wrap.innerHTML = '<div class="rejected-top3-title">Detail Transaksi</div>' + rejectedDetailTransaksiTableHtml_(rows);
+    var tableHtml = rejectedDetailTransaksiTableHtml_(rows);
+    if(!tableHtml || tableHtml.indexOf("<tr>") < 0){
+      wrap.innerHTML = '<div class="rejected-top3-title">Detail Transaksi</div><div class="empty-log">Belum ada data reject untuk '+cabangLabel+'.</div>';
+      return false;
+    }
+    wrap.innerHTML = '<div class="rejected-top3-title">Detail Transaksi</div>' + tableHtml;
+    return true;
+  }
+
+  function setRejectedAnalisaVisible_(role, hasDetail){
+    var analisaId = role === "kanit" ? "kanitRejectedAnalisaBtn" : "rejectedAnalisaBtn";
+    var exportId = role === "kanit" ? "kanitRejectedExportRow" : "rejectedExportRow";
+    var btn = document.getElementById(analisaId);
+    var row = document.getElementById(exportId);
+    if(btn){
+      if(hasDetail){ btn.style.display = "inline-block"; btn.removeAttribute("hidden"); }
+      else { btn.style.display = "none"; btn.setAttribute("hidden", "hidden"); }
+    }
+    if(row && !hasDetail) row.style.display = "none";
   }
 
   // Kartu ringkasan + top3 + grafik bulanan, TANPA tabel Detail Transaksi
@@ -35065,8 +35092,9 @@ function applyRejectedAlasanFilter_(which){
     var self = this;
     pendingRejectedMain = null;
     pendingRejectedCompare = null;
-    document.getElementById("rejectedAnalisaBtn").style.display = "none";
-    document.getElementById("rejectedExportRow").style.display = "none";
+    setRejectedAnalisaVisible_("admin", false);
+    var _er0 = document.getElementById("rejectedExportRow");
+    if(_er0) _er0.style.display = "none";
     document.getElementById("rejectedDetailWrap").innerHTML = '<div class="empty-log">Memuat data reject...</div>';
     document.getElementById("rejectedAnalysisWrap").innerHTML = "";
     document.getElementById("rejectedCompareSection").style.display = "none";
@@ -35086,14 +35114,14 @@ function applyRejectedAlasanFilter_(which){
         }
         pendingRejectedMain = r;
         clearMsg(msgEl);
-        // Detail + isi dropdown alasan
         window.__rejectedCache.admin = { data: r.data, label: cabangLabelForEmpty };
         fillRejectedAlasanSelect_("rejectedAnalysisAlasan", (r.data && r.data.allDetail) || []);
-        applyRejectedAlasanFilter_("admin");
-        var _rdw = document.getElementById("rejectedDetailWrap");
-        var _hasDetail = _rdw && _rdw.innerHTML && _rdw.innerHTML.indexOf("Belum ada") < 0 && _rdw.innerHTML.trim().length > 40;
-        document.getElementById("rejectedAnalisaBtn").style.display = _hasDetail ? "inline-block" : "none";
-        if(!_hasDetail){ document.getElementById("rejectedExportRow").style.display = "none"; }
+        var _hasDetail = !!applyRejectedAlasanFilter_("admin");
+        setRejectedAnalisaVisible_("admin", _hasDetail);
+        if(!_hasDetail){
+          var er = document.getElementById("rejectedExportRow");
+          if(er) er.style.display = "none";
+        }
       })
       .withFailureHandler(function(err){
         self.dataset.busy = "0"; self.disabled = false;
@@ -35137,13 +35165,18 @@ function applyRejectedAlasanFilter_(which){
   // semua yang dibutuhkan (Detail Transaksi, Ringkasan, Top3, per bulan),
   // jadi export langsung dari data yang sudah ada di memori, gak perlu
   // panggil server lagi.
-  function rejectedExportFilenameBase_(cabangLabel, startDate, endDate){
-    var safeLabel = String(cabangLabel).replace(/[^a-zA-Z0-9]+/g, "_");
-    return "Rejected_" + safeLabel + "_" + (startDate || "awal") + "_sd_" + (endDate || "akhir");
+  function rejectedExportFilenameBase_(cabangLabel, startDate, endDate, role, alasan){
+    var safeLabel = String(cabangLabel || "").replace(/[^a-zA-Z0-9]+/g, "_");
+    var prefix = (role === "kanit") ? "Rejected_Kanit_" : "Rejected_KC_";
+    var name = prefix + safeLabel + "_" + (startDate || "awal") + "_sd_" + (endDate || "akhir");
+    if(alasan){
+      var safeAlasan = String(alasan).replace(/[^a-zA-Z0-9]+/g, "_").slice(0, 40);
+      if(safeAlasan) name += "_" + safeAlasan;
+    }
+    return name;
   }
 
-  // Helper: kasih format angka ribuan (1.234) ke sel numerik di sebuah range
-  // kolom pada sheet, biar gampang dibaca (bukan cuma angka mentah nempel).
+  // Helper: format angka ribuan di sheet
   function applyNumberFormat_(ws, colIndexes, rowStart, rowEnd){
     for(var r = rowStart; r <= rowEnd; r++){
       colIndexes.forEach(function(c){
@@ -35154,33 +35187,73 @@ function applyRejectedAlasanFilter_(which){
     }
   }
 
-  function exportRejectedToExcel(data, cabangLabel, startDate, endDate, isTotalArea){
+  /**
+   * Export Excel Rejected — beda struktur KC vs Kanit.
+   * opts: { role:"kc"|"kanit", isTotalArea, alasan, exportedAt }
+   * Kanit: Ringkasan + Gadai Beda + Detail mentah
+   * KC:    Ringkasan + (Rincian per Cabang jika Total Area) + Gadai Beda + Detail mentah
+   */
+  function exportRejectedToExcel(data, cabangLabel, startDate, endDate, opts){
     if(typeof XLSX === "undefined"){
       alert("Gagal memuat modul Export Excel. Coba lagi dalam beberapa saat.");
       return;
     }
+    opts = opts || {};
+    var role = opts.role === "kanit" ? "kanit" : "kc";
+    var isTotalArea = !!opts.isTotalArea;
+    var alasan = opts.alasan ? String(opts.alasan) : "";
+    var exportedAt = opts.exportedAt || "";
+    try{
+      if(!exportedAt){
+        var now = new Date();
+        exportedAt = now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")
+          +" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+      }
+    }catch(eT){ exportedAt = ""; }
 
     var wb = XLSX.utils.book_new();
     var periodeLabel = (startDate || "-") + " s/d " + (endDate || "-");
+    var roleLabel = role === "kanit" ? "Kanit (cabang)" : "KC (area)";
 
-    // Sheet 1: Ringkasan -- cuma angka besar, ringkas, gampang dilihat sekilas.
+    // —— Sheet Ringkasan (meta + KPI) ——
     var ringkasanRows = [
-      ["Analisis Rejected - " + cabangLabel],
+      ["Analisis Rejected"],
+      ["Peran", roleLabel],
+      ["Cabang / cakupan", cabangLabel],
       ["Periode", periodeLabel],
+      ["Filter alasan", alasan || "(Semua alasan)"],
+      ["Waktu export", exportedAt],
+      ["Jumlah baris detail", (data.allDetail && data.allDetail.length) || data.totalRows || 0],
       [],
-      ["Total Reject", data.totalRows],
-      ["Jadi Gadai", data.totalGadai],
-      ["Gadai Cabang Sendiri", data.gadaiSendiri],
-      ["Gadai Cabang Beda", data.gadaiBeda]
+      ["Total Reject", data.totalRows || 0],
+      ["Jadi Gadai", data.totalGadai || 0],
+      ["Gadai Cabang Sendiri", data.gadaiSendiri || 0],
+      ["Gadai Cabang Beda", data.gadaiBeda || 0]
     ];
+    // Top alasan/jenis/spek ringkas di Ringkasan (tanpa sheet terpisah)
+    function appendTopBlock_(title, items){
+      ringkasanRows.push([]);
+      ringkasanRows.push([title]);
+      ringkasanRows.push(["Kategori", "Jumlah"]);
+      var list = (items && items.length) ? items.slice(0, 10) : [];
+      if(!list.length) ringkasanRows.push(["(tidak ada data)", ""]);
+      else list.forEach(function(it){ ringkasanRows.push([it.label, it.count]); });
+    }
+    appendTopBlock_("Alasan (top)", data.alasanAll || data.alasanTop);
+    appendTopBlock_("Jenis (top)", data.jenisAll || data.jenisTop);
+    appendTopBlock_("Spesifikasi (top)", data.spesifikasiAll || data.spesifikasiTop);
+    if(data.perBulan && data.perBulan.length){
+      ringkasanRows.push([]);
+      ringkasanRows.push(["Per bulan"]);
+      ringkasanRows.push(["Bulan", "Total"]);
+      data.perBulan.forEach(function(r){ ringkasanRows.push([r.bulan, r.total]); });
+    }
     var wsRingkasan = XLSX.utils.aoa_to_sheet(ringkasanRows);
-    wsRingkasan["!cols"] = [{ wch: 26 }, { wch: 20 }];
-    applyNumberFormat_(wsRingkasan, [1], 3, 6);
+    wsRingkasan["!cols"] = [{ wch: 28 }, { wch: 22 }];
     XLSX.utils.book_append_sheet(wb, wsRingkasan, "Ringkasan");
 
-    // Sheet 2 (khusus Total Area): rincian per cabang, tabel sendiri biar
-    // kebaca sebagai satu tabel utuh, bukan nempel di bawah ringkasan.
-    if(isTotalArea && data.perCabang && data.perCabang.length){
+    // —— KC saja: Rincian per Cabang (Total Area) ——
+    if(role === "kc" && isTotalArea && data.perCabang && data.perCabang.length){
       var perCabangRows = [
         ["Cabang", "Total Reject", "Jadi Gadai", "Gadai Sendiri", "Gadai Beda"]
       ];
@@ -35194,7 +35267,7 @@ function applyRejectedAlasanFilter_(which){
       XLSX.utils.book_append_sheet(wb, wsPerCabang, "Rincian per Cabang");
     }
 
-    // Sheet 3: Gadai Beda Cabang - Tujuan Perpindahan
+    // —— Gadai Beda - Tujuan (KC + Kanit) ——
     var tujuanRows = [["Cabang Tujuan", "Jumlah"]];
     (data.gadaiBedaTujuan && data.gadaiBedaTujuan.length ? data.gadaiBedaTujuan : [{label:"Belum ada data", count:""}])
       .forEach(function(it){ tujuanRows.push([it.label, it.count]); });
@@ -35203,38 +35276,15 @@ function applyRejectedAlasanFilter_(which){
     applyNumberFormat_(wsTujuan, [1], 1, tujuanRows.length - 1);
     XLSX.utils.book_append_sheet(wb, wsTujuan, "Gadai Beda - Tujuan");
 
-    // Sheet 4-6: Alasan / Jenis / Spesifikasi -- masing-masing tabel sendiri.
-    function listSheet_(sheetName, colLabel, items){
-      var rows = [[colLabel, "Jumlah"]];
-      (items && items.length ? items : [{label:"Belum ada data", count:""}]).forEach(function(it){ rows.push([it.label, it.count]); });
-      var ws = XLSX.utils.aoa_to_sheet(rows);
-      ws["!cols"] = [{ wch: 40 }, { wch: 12 }];
-      applyNumberFormat_(ws, [1], 1, rows.length - 1);
-      XLSX.utils.book_append_sheet(wb, ws, sheetName);
-    }
-    listSheet_("Alasan", "Alasan", data.alasanAll);
-    listSheet_("Jenis", "Jenis", data.jenisAll);
-    listSheet_("Spesifikasi", "Spesifikasi", data.spesifikasiAll);
-
-    // Sheet 7: Total Reject per Bulan
-    var bulanRows = [["Bulan", "Total"]];
-    (data.perBulan.length ? data.perBulan : [{bulan:"Belum ada data", total:""}]).forEach(function(r){ bulanRows.push([r.bulan, r.total]); });
-    var wsBulan = XLSX.utils.aoa_to_sheet(bulanRows);
-    wsBulan["!cols"] = [{ wch: 20 }, { wch: 12 }];
-    applyNumberFormat_(wsBulan, [1], 1, bulanRows.length - 1);
-    XLSX.utils.book_append_sheet(wb, wsBulan, "Per Bulan");
-
-    // Sheet 8: Detail Transaksi — data MENTAH penuh dari sheet "Rejectd All Month"
-    // (semua kolom A..AB / header asli), difilter sesuai cabang+tanggal+alasan.
+    // —— Detail Transaksi: data MENTAH dari Rejectd All Month ——
     var detailHeader = (data.detailHeaders && data.detailHeaders.length)
       ? data.detailHeaders.slice()
-      : ["ID", "Tanggal Input", "Jam Input"]; // fallback minimal
+      : ["ID", "Tanggal Input", "Jam Input", "Cabang", "Alasan", "Nama Nasabah", "No. HP", "Jenis", "Merk", "Tipe", "Spesifikasi", "Pinjaman Max", "No. Faktur", "Cabang Gadai", "Pinjaman Gadai", "Keterangan"];
     var detailRows = [detailHeader];
     var nCols = detailHeader.length;
     (data.allDetail || []).forEach(function(r){
       var cells = (r.rawCells && r.rawCells.length) ? r.rawCells.slice() : null;
       if(!cells){
-        // fallback lama kalau backend belum deploy
         cells = [
           r.id, r.tanggal || "", r.jam || "", "", r.cabang || "", "",
           r.alasan || "", r.namaNasabah || "", r.noHp || "", r.jenis || "",
@@ -35249,15 +35299,13 @@ function applyRejectedAlasanFilter_(which){
     });
     var wsDetail = XLSX.utils.aoa_to_sheet(detailRows);
     wsDetail["!cols"] = detailHeader.map(function(h){
-      var w = Math.min(36, Math.max(10, String(h || "").length + 2));
-      return { wch: w };
+      return { wch: Math.min(36, Math.max(10, String(h || "").length + 2)) };
     });
-    // Autofilter full width
     var lastColLetter = XLSX.utils.encode_col(Math.max(0, nCols - 1));
     wsDetail["!autofilter"] = { ref: "A1:" + lastColLetter + "1" };
     XLSX.utils.book_append_sheet(wb, wsDetail, "Detail Transaksi");
 
-    XLSX.writeFile(wb, rejectedExportFilenameBase_(cabangLabel, startDate, endDate) + ".xlsx");
+    XLSX.writeFile(wb, rejectedExportFilenameBase_(cabangLabel, startDate, endDate, role, alasan) + ".xlsx");
   }
 
   function exportRejectedToPdf(data, cabangLabel, startDate, endDate, isTotalArea){
@@ -35413,12 +35461,24 @@ function applyRejectedAlasanFilter_(which){
     var label = isTotalArea ? "Total Area (Semua Cabang)" : pendingRejectedMain.cabang;
     var startDate = document.getElementById("rejectedAnalysisStart").value || null;
     var endDate = document.getElementById("rejectedAnalysisEnd").value || null;
+    var alasanEl = document.getElementById("rejectedAnalysisAlasan");
+    var alasan = alasanEl ? (alasanEl.value || "") : "";
+    var data = pendingRejectedMain.data || {};
+    if(alasan && data.allDetail){
+      var rows = filterRejectedRowsByAlasan_(data.allDetail, alasan);
+      var rebuilt = rebuildRejectedSummaryFromRows_(rows);
+      data = Object.assign({}, data, rebuilt);
+    }
     var self = this;
     self.disabled = true;
     self.textContent = "Menyiapkan...";
     setTimeout(function(){
       try{
-        exportRejectedToExcel(pendingRejectedMain.data, label, startDate, endDate, isTotalArea);
+        exportRejectedToExcel(data, label, startDate, endDate, {
+          role: "kc",
+          isTotalArea: isTotalArea,
+          alasan: alasan
+        });
       } catch(err){
         alert("Gagal membuat file Excel: " + (err.message || err));
       }
@@ -36095,6 +36155,8 @@ function applyRejectedAlasanFilter_(which){
     document.getElementById("kanitRejectedLoadBtn").click();
   });
 
+  var pendingRejectedKanit = null;
+
   $on("kanitRejectedLoadBtn", "click", function(){
     var msgEl = document.getElementById("kanitRejectedMsg");
     clearMsg(msgEl);
@@ -36103,28 +36165,90 @@ function applyRejectedAlasanFilter_(which){
     var endDate = document.getElementById("kanitRejectedEnd").value || null;
     if(startDate && !endDate) endDate = startDate;
     if(!startDate){ showMsg(msgEl, "Isi tanggal Dari dulu.", "err"); return; }
+    window.__rejectedRangeStart = startDate || "";
+    window.__rejectedRangeEnd = endDate || startDate || "";
     this.disabled = true;
     var self = this;
-    document.getElementById("kanitRejectedWrap").innerHTML = '<div class="empty-log">Memuat data reject...</div>';
+    pendingRejectedKanit = null;
+    setRejectedAnalisaVisible_("kanit", false);
+    var detailWrap = document.getElementById("kanitRejectedDetailWrap");
+    if(detailWrap) detailWrap.innerHTML = '<div class="empty-log">Memuat data reject...</div>';
+    var analysisWrap = document.getElementById("kanitRejectedAnalysisWrap");
+    if(analysisWrap) analysisWrap.innerHTML = "";
+    var monthWrap = document.getElementById("kanitRejectedMonthChartWrap");
+    if(monthWrap) monthWrap.innerHTML = "";
+    var exportRow = document.getElementById("kanitRejectedExportRow");
+    if(exportRow) exportRow.style.display = "none";
     google.script.run
       .withSuccessHandler(function(r){
         self.dataset.busy = "0"; self.disabled = false;
         if(!r || r.status !== "OK"){
-          document.getElementById("kanitRejectedWrap").innerHTML = "";
+          if(detailWrap) detailWrap.innerHTML = "";
+          setRejectedAnalisaVisible_("kanit", false);
           showMsg(msgEl, (r && r.reason) || "Gagal memuat data.", "err");
           return;
         }
+        pendingRejectedKanit = r;
+        clearMsg(msgEl);
         window.__rejectedCache.kanit = { data: r.data, label: session.cabang };
         fillRejectedAlasanSelect_("kanitRejectedAlasan", (r.data && r.data.allDetail) || []);
-        // Sama dengan KC: detail transaksi langsung + filter alasan
-        applyRejectedAlasanFilter_("kanit");
+        var hasDetail = !!applyRejectedAlasanFilter_("kanit");
+        setRejectedAnalisaVisible_("kanit", hasDetail);
       })
       .withFailureHandler(function(err){
         self.dataset.busy = "0"; self.disabled = false;
-        document.getElementById("kanitRejectedWrap").innerHTML = "";
+        if(detailWrap) detailWrap.innerHTML = "";
+        setRejectedAnalisaVisible_("kanit", false);
         showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err");
       })
       .getRejectedAnalysisKanit(session.cabang, session.cabangPin, startDate, endDate);
+  });
+
+  $on("kanitRejectedAnalisaBtn", "click", function(){
+    if(!pendingRejectedKanit) return;
+    var label = session.cabang || (pendingRejectedKanit.cabang || "Cabang");
+    var data = pendingRejectedKanit.data || {};
+    var alasanEl = document.getElementById("kanitRejectedAlasan");
+    var alasan = alasanEl ? (alasanEl.value || "") : "";
+    if(alasan && data.allDetail){
+      var rows = filterRejectedRowsByAlasan_(data.allDetail, alasan);
+      var rebuilt = rebuildRejectedSummaryFromRows_(rows);
+      data = Object.assign({}, data, rebuilt);
+    }
+    renderRejectedSummary(data, label + (alasan ? " · "+alasan : ""), "kanitRejectedAnalysisWrap", "kanitRejectedMonthChartWrap");
+    var exportRow = document.getElementById("kanitRejectedExportRow");
+    if(exportRow) exportRow.style.display = "flex";
+  });
+
+  $on("kanitRejectedExportExcelBtn", "click", function(){
+    if(!pendingRejectedKanit) return;
+    var label = session.cabang || (pendingRejectedKanit.cabang || "Cabang");
+    var startDate = document.getElementById("kanitRejectedStart").value || null;
+    var endDate = document.getElementById("kanitRejectedEnd").value || null;
+    var alasanEl = document.getElementById("kanitRejectedAlasan");
+    var alasan = alasanEl ? (alasanEl.value || "") : "";
+    var data = pendingRejectedKanit.data || {};
+    if(alasan && data.allDetail){
+      var rows = filterRejectedRowsByAlasan_(data.allDetail, alasan);
+      var rebuilt = rebuildRejectedSummaryFromRows_(rows);
+      data = Object.assign({}, data, rebuilt);
+    }
+    var self = this;
+    self.disabled = true;
+    self.textContent = "Menyiapkan...";
+    setTimeout(function(){
+      try{
+        exportRejectedToExcel(data, label, startDate, endDate, {
+          role: "kanit",
+          isTotalArea: false,
+          alasan: alasan
+        });
+      } catch(err){
+        alert("Gagal membuat file Excel: " + (err.message || err));
+      }
+      self.dataset.busy = "0"; self.disabled = false;
+      self.textContent = "⬇ Export Excel";
+    }, 10);
   });
 
   $on("adminChangeSubmit", "click", function(){
