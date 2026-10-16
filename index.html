@@ -3604,6 +3604,50 @@ button.tab-btn.admin-nav-btn{
 }
 
 
+
+/* ===== SIDEBAR SOLID: tidak tembus / bocor konten di belakang ===== */
+.admin-sidebar,
+#adminSidebar,
+#kanitSidebar {
+  background: #0B1626 !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  isolation: isolate !important;
+  contain: paint !important;
+}
+html[data-theme="light"] .admin-sidebar,
+html[data-theme="light"] #adminSidebar,
+html[data-theme="light"] #kanitSidebar {
+  background: #FFFFFF !important;
+  background-image: none !important;
+  border-right: 1px solid #E2E8F0 !important;
+}
+/* Saat tertutup di mobile: benar-benar hilang (bukan cuma digeser) */
+@media (max-width: 879px) {
+  .admin-sidebar:not(.open),
+  #adminSidebar:not(.open),
+  #kanitSidebar:not(.open) {
+    transform: translate3d(-110%, 0, 0) !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+  }
+  .admin-sidebar.open,
+  #adminSidebar.open,
+  #kanitSidebar.open {
+    transform: translate3d(0, 0, 0) !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    z-index: 6000 !important;
+  }
+}
+/* Shell clip supaya tidak ada konten yang “numpang” di belakang sidebar */
+.admin-shell {
+  overflow: hidden !important;
+}
+
 /* Hamburger + mobile sidebar MUST work */
 .admin-hamburger,
 #adminHamburgerBtn,
@@ -8268,7 +8312,6 @@ body:has(#screen-landing.active) .sheet{
   border-color:rgba(71,85,105,0.35) !important;
 }
 .admin-content button.auth-primary-btn,
-.admin-content #rejectedAnalysisLoadBtn,
 .admin-content #auditLoadBtn,
 .admin-content #coSaveBtn,
 .admin-content button.btn-xs:not(.secondary):not(.hub-back-btn){
@@ -8276,6 +8319,17 @@ body:has(#screen-landing.active) .sheet{
   color:#0B0B0B !important;
   border:none !important;
   box-shadow:0 6px 16px rgba(184,115,51,0.25) !important;
+}
+/* Rejected Tampilkan: jangan pakai gradient hybrid — ikut outline Analisa */
+.admin-content #rejectedAnalysisLoadBtn,
+.admin-content #kanitRejectedLoadBtn{
+  background:#FFFFFF !important;
+  background-image:none !important;
+  color:#0F172A !important;
+  -webkit-text-fill-color:#0F172A !important;
+  border:1px solid #E2E8F0 !important;
+  border-radius:999px !important;
+  box-shadow:none !important;
 }
 .admin-content button.secondary,
 .admin-content .btn-xs.secondary{
@@ -11723,6 +11777,41 @@ button.admin-topbar-avatar{
 }
 .admin-topbar, .admin-topbar-right{ z-index: 240 !important; pointer-events: auto !important; }
 
+
+
+/* ===== SCROLLBAR CLEAN: tanpa garis abu di tepi ===== */
+html, body, .admin-main, .admin-content, .admin-sidebar, .screen {
+  scrollbar-width: thin !important;
+  scrollbar-color: #CBD5E1 transparent !important;
+}
+*::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+*::-webkit-scrollbar-track {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+*::-webkit-scrollbar-thumb {
+  background: #CBD5E1 !important;
+  border-radius: 999px !important;
+  border: none !important;
+  background-clip: padding-box !important;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8 !important;
+}
+*::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+html[data-theme="light"] ::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #CBD5E1 !important;
+  border: none !important;
+}
 
 /* ===== Profil chip + scrollbar stabil (jangan diutak-atik) ===== */
 html, body, .admin-main, .admin-content, .admin-sidebar,
@@ -20874,30 +20963,76 @@ html[data-theme="light"] .admin-content .harian-table tr:nth-child(odd):not(.tot
 /* ========== END FIX label-col navy ========== */
 
 /* ========== FIX: Rejected buttons theme + no refresh ========== */
-/* Tampilkan = primary hitam, bukan oranye */
-html[data-theme="light"] #rejectedAnalysisLoadBtn,
-html[data-theme="light"] #kanitRejectedLoadBtn,
+/* Tampilkan = style sama Analisa (outline putih). Spesifisitas tinggi biar
+   mengalahkan rule hybrid gradient .admin-content button.auth-primary-btn */
+html[data-theme="light"] .admin-content #rejectedAnalysisLoadBtn,
+html[data-theme="light"] .admin-content #kanitRejectedLoadBtn,
 html[data-theme="light"] #tab-rejected .auth-primary-btn,
-html[data-theme="light"] #tab-kanitrejected .auth-primary-btn {
-  background: #0F172A !important;
-  color: #FFFFFF !important;
-  -webkit-text-fill-color: #FFFFFF !important;
-  border: 1px solid #0F172A !important;
-  border-radius: 999px !important;
+html[data-theme="light"] #tab-kanitrejected .auth-primary-btn,
+html[data-theme="light"] .admin-content button#rejectedAnalysisLoadBtn.auth-primary-btn,
+html[data-theme="light"] .admin-content button#kanitRejectedLoadBtn.auth-primary-btn {
+  background: #FFFFFF !important;
   background-image: none !important;
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 999px !important;
   height: 36px !important;
   padding: 0 16px !important;
   font-weight: 600 !important;
   width: auto !important;
   max-width: 160px !important;
+  box-shadow: none !important;
 }
-html[data-theme="light"] #rejectedAnalysisLoadBtn:hover,
-html[data-theme="light"] #kanitRejectedLoadBtn:hover {
-  background: #1E293B !important;
+html[data-theme="light"] .admin-content #rejectedAnalysisLoadBtn:hover,
+html[data-theme="light"] .admin-content #kanitRejectedLoadBtn:hover {
+  background: #F8FAFC !important;
+  background-image: none !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  box-shadow: none !important;
 }
 
-/* Analisa + Export: ghost, hanya tampil via JS saat ada detail */
-html[data-theme="light"] #rejectedAnalisaBtn {
+/* Analisa + Export: sejajar, tanpa kartu abu.
+   PENTING: jangan force display:flex di base — biar [hidden]/display:none dari JS menang.
+   Hanya layout flex saat row terlihat. */
+html[data-theme="light"] .rej-actions-row,
+.rej-actions-row {
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 16px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.rej-actions-row[hidden],
+.rej-actions-row.rej-hide,
+#rejectedActionsRow[hidden],
+#rejectedActionsRow.rej-hide {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+.rej-actions-row:not([hidden]):not(.rej-hide),
+#rejectedActionsRow:not([hidden]):not(.rej-hide) {
+  display: flex !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+/* Sembunyikan tombol individual saat hidden / display none */
+#rejectedAnalisaBtn[hidden],
+#rejectedExportExcelBtn[hidden],
+#rejectedAnalisaBtn.rej-hide,
+#rejectedExportExcelBtn.rej-hide {
+  display: none !important;
+  visibility: hidden !important;
+}
+html[data-theme="light"] #rejectedAnalisaBtn,
+html[data-theme="light"] #rejectedExportExcelBtn {
   background: #FFFFFF !important;
   color: #0F172A !important;
   -webkit-text-fill-color: #0F172A !important;
@@ -20907,19 +21042,8 @@ html[data-theme="light"] #rejectedAnalisaBtn {
   padding: 0 16px !important;
   font-weight: 600 !important;
   background-image: none !important;
-}
-html[data-theme="light"] #rejectedExportExcelBtn,
-html[data-theme="light"] #rejectedExportPdfBtn,
-html[data-theme="light"] #rejectedExportRow button {
-  background: #FFFFFF !important;
-  color: #0F172A !important;
-  -webkit-text-fill-color: #0F172A !important;
-  border: 1px solid #E2E8F0 !important;
-  border-radius: 999px !important;
-  height: 36px !important;
-  padding: 0 14px !important;
-  font-weight: 600 !important;
-  background-image: none !important;
+  margin: 0 !important;
+  width: auto !important;
 }
 
 /* Sembunyikan tombol refresh / phantom di filter rejected */
@@ -20942,106 +21066,79 @@ html[data-theme="light"] #tab-kanitrejected button[id*="efresh"] {
   pointer-events: none !important;
 }
 
-/* Export row gap */
-html[data-theme="light"] #rejectedExportRow {
-  gap: 8px !important;
-  align-items: center !important;
-}
+/* Export row gap removed — now .rej-actions-row */
 
-/* Force hide Analisa/Export until JS unlocks */
-#rejectedAnalisaBtn.rej-hide,
-#kanitRejectedAnalisaBtn.rej-hide,
-#rejectedExportRow.rej-hide,
-#kanitRejectedExportRow.rej-hide,
-#rejectedAnalisaBtn[hidden],
-#kanitRejectedAnalisaBtn[hidden],
-#rejectedExportRow[hidden],
-#kanitRejectedExportRow[hidden]{
-  display: none !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  height: 0 !important;
-  margin: 0 !important;
+/* Override: rej-actions-row must NOT look like filter card (jangan force display di sini) */
+html[data-theme="light"] .admin-content .rej-actions-row,
+html[data-theme="light"] .rej-actions-row {
+  background: transparent !important;
+  border: none !important;
   padding: 0 !important;
-  overflow: hidden !important;
-  border: 0 !important;
+  margin-bottom: 0 !important;
+  box-shadow: none !important;
 }
+/* Pastikan [hidden] selalu menang atas rule filter-row global */
+html[data-theme="light"] .admin-content .rej-actions-row[hidden],
+html[data-theme="light"] .admin-content #rejectedActionsRow[hidden] {
+  display: none !important;
+}
+/* ========== END FIX rejected buttons ========== */
 
-/* Modern rejected loading card */
-.rej-loading{
+/* ========== Modern Rejected Loader (circular arc like reference) ========== */
+.rej-loader{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  padding: 28px 20px;
-  margin: 12px 0 0;
+  gap: 18px;
+  padding: 48px 24px;
+  margin: 12px 0 8px;
   border-radius: 16px;
-  background: rgba(255,255,255,0.72);
-  border: 1px solid rgba(226,232,240,0.95);
-  box-shadow: 0 8px 28px rgba(15,23,42,0.06);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  min-height: 120px;
+  background: #0B0B0B;
+  min-height: 180px;
+  box-sizing: border-box;
 }
-html[data-theme="dark"] .rej-loading{
-  background: rgba(22,27,34,0.75);
-  border-color: rgba(255,255,255,0.08);
-}
-.rej-loading-orbit{
-  width: 42px;
-  height: 42px;
+.rej-loader-ring{
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  border: 3px solid rgba(15,23,42,0.08);
-  border-top-color: #0F172A;
-  border-right-color: #64748B;
-  animation: rejSpin 0.85s linear infinite;
+  background: conic-gradient(from 0deg, transparent 0%, transparent 35%, #FFFFFF 70%, #FFFFFF 100%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+  animation: rej-spin 0.85s linear infinite;
+  flex-shrink: 0;
 }
-html[data-theme="dark"] .rej-loading-orbit{
-  border-color: rgba(255,255,255,0.1);
-  border-top-color: #F8FAFC;
-  border-right-color: #94A3B8;
+/* Fallback for browsers without mask support */
+@supports not ((-webkit-mask: radial-gradient(black, black)) or (mask: radial-gradient(black, black))) {
+  .rej-loader-ring{
+    background: transparent;
+    border: 4px solid rgba(255,255,255,0.12);
+    border-top-color: #FFFFFF;
+    border-right-color: rgba(255,255,255,0.55);
+    -webkit-mask: none;
+    mask: none;
+  }
 }
-@keyframes rejSpin{ to { transform: rotate(360deg); } }
-.rej-loading-title{
-  font-size: 13px;
+.rej-loader-text{
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-size: 12px;
   font-weight: 700;
-  color: #0F172A;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.28em;
+  color: #FFFFFF;
+  -webkit-text-fill-color: #FFFFFF;
+  text-transform: uppercase;
+  margin: 0;
+  padding-left: 0.28em; /* optical center for letter-spacing */
 }
-html[data-theme="dark"] .rej-loading-title{ color: #F1F5F9; }
-.rej-loading-sub{
-  font-size: 11.5px;
-  color: #64748B;
-  font-weight: 500;
+@keyframes rej-spin{
+  to{ transform: rotate(360deg); }
 }
-.rej-skel{
-  width: 100%;
-  max-width: 520px;
-  display: grid;
-  gap: 8px;
-  margin-top: 4px;
+html[data-theme="light"] .rej-loader{
+  background: #0B0B0B;
+  border: 1px solid #1E293B;
 }
-.rej-skel-bar{
-  height: 10px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #E2E8F0 0%, #F8FAFC 45%, #E2E8F0 90%);
-  background-size: 200% 100%;
-  animation: rejShimmer 1.25s ease-in-out infinite;
-}
-html[data-theme="dark"] .rej-skel-bar{
-  background: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.14) 45%, rgba(255,255,255,0.06) 90%);
-  background-size: 200% 100%;
-}
-.rej-skel-bar.w80{ width: 80%; }
-.rej-skel-bar.w60{ width: 60%; }
-.rej-skel-bar.w95{ width: 95%; }
-@keyframes rejShimmer{
-  0%{ background-position: 100% 0; }
-  100%{ background-position: -100% 0; }
-}
+/* ========== END modern rejected loader ========== */
 
-/* ========== END FIX rejected buttons ========== */
 
 /* ========== FIX: Jadwal Libur compact + next-month btn ========== */
 /* Sembunyikan input bulan depan kecuali tgl >= 25 (JS + CSS fallback) */
@@ -28961,17 +29058,17 @@ html[data-theme="light"] table.libur-table td{
 
 <!-- Modal Profil Admin -->
 <div class="profile-modal-overlay" id="adminProfileModal" style="display:none !important;" hidden>
-  <div class="profile-modal">
-    <h3>Profil Admin</h3>
+  <div class="profile-modal profile-modal-v2">
+    <h3>Profil Kepala Cabang</h3>
     <div class="sub">Nama, jabatan &amp; foto</div>
     <div class="profile-photo-wrap">
       <div class="profile-photo" id="adminProfilePhoto">S</div>
       <div class="profile-photo-actions">
-        <label class="btn-xs" style="cursor:pointer; display:inline-block;">
+        <label class="btn-xs profile-btn-neutral" style="cursor:pointer; display:inline-flex; align-items:center;">
           Ganti foto
           <input type="file" id="adminProfilePhotoInput" accept="image/*" style="display:none;">
         </label>
-        <button type="button" id="adminProfilePhotoClear" class="btn-xs secondary">Hapus foto</button>
+        <button type="button" id="adminProfilePhotoClear" class="btn-xs profile-btn-neutral">Hapus foto</button>
       </div>
     </div>
     <div class="field">
@@ -28980,9 +29077,9 @@ html[data-theme="light"] table.libur-table td{
     </div>
     <div class="field">
       <label>Jabatan</label>
-      <input type="text" id="adminProfileJabatanInput" placeholder="Kepala Admin" maxlength="40">
+      <input type="text" id="adminProfileJabatanInput" placeholder="Kepala Cabang" maxlength="40">
     </div>
-    <button type="button" id="adminProfileTogglePin" class="btn-xs secondary">Ganti PIN</button>
+    <button type="button" id="adminProfileTogglePin" class="btn-xs profile-btn-neutral profile-btn-block">Ganti PIN</button>
     <div class="profile-pin-box" id="adminProfilePinBox">
       <div class="field">
         <label>PIN lama</label>
@@ -28996,13 +29093,13 @@ html[data-theme="light"] table.libur-table td{
         <label>Ulangi PIN baru</label>
         <input type="password" inputmode="numeric" maxlength="6" class="pin-input" id="adminNewPin2" placeholder="••••••">
       </div>
-      <button type="button" id="adminChangeSubmit" class="btn-xs">Simpan PIN</button>
+      <button type="button" id="adminChangeSubmit" class="btn-xs profile-btn-primary">Simpan PIN</button>
     </div>
     <div class="msg" id="adminChangeMsg"></div>
     <div class="profile-modal-actions">
-      <button type="button" id="adminProfileSaveName" class="btn-xs">Simpan Profil</button>
-      <button type="button" id="adminProfileClose" class="btn-xs secondary">Tutup</button>
-      <button type="button" id="adminProfileLogout" class="btn-xs secondary" style="margin-left:auto;border-color:var(--err);color:var(--err);">Keluar</button>
+      <button type="button" id="adminProfileSaveName" class="btn-xs profile-btn-primary">Simpan Profil</button>
+      <button type="button" id="adminProfileClose" class="btn-xs profile-btn-neutral">Tutup</button>
+      <button type="button" id="adminProfileLogout" class="btn-xs profile-btn-danger">Keluar</button>
     </div>
   </div>
 </div>
@@ -29323,15 +29420,8 @@ html[data-theme="light"] table.libur-table td{
         <input type="hidden" id="kanitRejectedSingleDate">
         <button type="button" id="kanitRejectedSingleDateBtn" style="display:none !important;width:0;height:0;padding:0;margin:0;border:0;overflow:hidden;" aria-hidden="true"></button>
       </div>
+      <div id="kanitRejectedWrap" style="margin-top:20px;"></div>
       <div class="msg" id="kanitRejectedMsg"></div>
-      <div id="kanitRejectedDetailWrap" style="margin-top:20px;"></div>
-      <div id="kanitRejectedWrap" style="display:none;" aria-hidden="true"></div>
-      <button type="button" id="kanitRejectedAnalisaBtn" class="btn-xs secondary rej-hide" style="display:none; margin-top:16px;" hidden>Analisa</button>
-      <div class="inline-row rej-hide" id="kanitRejectedExportRow" style="display:none; margin-top:14px;" hidden>
-        <button type="button" id="kanitRejectedExportExcelBtn" class="secondary">⬇ Export Excel</button>
-      </div>
-      <div id="kanitRejectedAnalysisWrap" style="margin-top:20px;"></div>
-      <div id="kanitRejectedMonthChartWrap" style="margin-top:20px;"></div>
     </div>
 
     <!-- Tab: Jadwal Libur & Cuti (klik tanggal → Libur / Cuti) -->
@@ -29762,10 +29852,9 @@ html[data-theme="light"] table.libur-table td{
            baru muncul setelah "Analisa" diklik. -->
       <div id="rejectedDetailWrap" style="margin-top:20px;"></div>
 
-      <button type="button" id="rejectedAnalisaBtn" class="btn-xs secondary rej-hide" style="display:none; margin-top:16px;" hidden>Analisa</button>
-
-      <div class="inline-row rej-hide" id="rejectedExportRow" style="display:none; margin-top:14px;" hidden>
-        <button type="button" id="rejectedExportExcelBtn" class="secondary">⬇ Export Excel</button>
+      <div class="rej-actions-row rej-hide" id="rejectedActionsRow" style="display:none; margin-top:16px;" hidden>
+        <button type="button" id="rejectedAnalisaBtn" class="btn-xs secondary rej-hide" style="display:none;" hidden>Analisa</button>
+        <button type="button" id="rejectedExportExcelBtn" class="btn-xs secondary rej-hide" style="display:none;" hidden>⬇ Export Excel</button>
       </div>
 
       <div id="rejectedAnalysisWrap" style="margin-top:20px;"></div>
@@ -31912,7 +32001,39 @@ $on("cabangPinSubmit", "click", function(){
     document.getElementById("omsetBulananWrap").innerHTML = "";
     document.getElementById("rejectedDetailWrap").innerHTML = "";
     document.getElementById("rejectedAnalysisWrap").innerHTML = "";
-    setRejectedAnalisaVisible_("admin", false);
+    (function(){
+      function hideRejBtn_(el){
+        if(!el) return;
+        el.style.display = "none";
+        el.hidden = true;
+        el.classList.add("rej-hide");
+      }
+      function showRejBtn_(el, disp){
+        if(!el) return;
+        el.style.display = disp || "inline-flex";
+        el.hidden = false;
+        el.classList.remove("rej-hide");
+      }
+      function hideRejRow_(){
+        var row = document.getElementById("rejectedActionsRow");
+        if(row){ row.style.display = "none"; row.hidden = true; row.classList.add("rej-hide"); }
+        hideRejBtn_(document.getElementById("rejectedAnalisaBtn"));
+        hideRejBtn_(document.getElementById("rejectedExportExcelBtn"));
+      }
+      window.__hideRejectedActions = hideRejRow_;
+      window.__showRejectedAnalisa = function(){
+        var row = document.getElementById("rejectedActionsRow");
+        if(row){ row.style.display = "flex"; row.hidden = false; row.classList.remove("rej-hide"); }
+        showRejBtn_(document.getElementById("rejectedAnalisaBtn"), "inline-flex");
+        hideRejBtn_(document.getElementById("rejectedExportExcelBtn"));
+      };
+      window.__showRejectedExport = function(){
+        var row = document.getElementById("rejectedActionsRow");
+        if(row){ row.style.display = "flex"; row.hidden = false; row.classList.remove("rej-hide"); }
+        showRejBtn_(document.getElementById("rejectedExportExcelBtn"), "inline-flex");
+      };
+      hideRejRow_();
+    })();
     document.getElementById("rejectedCompareSection").style.display = "none";
     document.getElementById("rejectedCompareWrap").innerHTML = "";
     document.getElementById("rejectedAnalysisMonthChartWrap").innerHTML = "";
@@ -34742,55 +34863,6 @@ function loadAdminSummary(force){
   
   // ---- Rejected: filter alasan (KC + Kanit) ----
   window.__rejectedCache = window.__rejectedCache || {};
-
-  function rejectedLoadingHtml_(label){
-    label = label || "Menyiapkan data reject";
-    return '<div class="rej-loading" role="status" aria-live="polite">'
-      + '<div class="rej-loading-orbit" aria-hidden="true"></div>'
-      + '<div class="rej-loading-title">'+label+'</div>'
-      + '<div class="rej-loading-sub">Sedang mengambil data dari server…</div>'
-      + '<div class="rej-skel" aria-hidden="true">'
-      +   '<div class="rej-skel-bar w95"></div>'
-      +   '<div class="rej-skel-bar w80"></div>'
-      +   '<div class="rej-skel-bar w60"></div>'
-      + '</div>'
-      + '</div>';
-  }
-
-  function setRejectedAnalisaVisible_(role, hasDetail){
-    var analisaId = role === "kanit" ? "kanitRejectedAnalisaBtn" : "rejectedAnalisaBtn";
-    var exportId = role === "kanit" ? "kanitRejectedExportRow" : "rejectedExportRow";
-    var btn = document.getElementById(analisaId);
-    var row = document.getElementById(exportId);
-    if(btn){
-      if(hasDetail){
-        btn.classList.remove("rej-hide");
-        btn.removeAttribute("hidden");
-        btn.style.display = "inline-block";
-      } else {
-        btn.classList.add("rej-hide");
-        btn.setAttribute("hidden", "hidden");
-        btn.style.display = "none";
-      }
-    }
-    // Export selalu disembunyikan di sini; hanya dibuka setelah klik Analisa
-    if(row){
-      row.classList.add("rej-hide");
-      row.setAttribute("hidden", "hidden");
-      row.style.display = "none";
-    }
-  }
-
-  function showRejectedExport_(role){
-    var exportId = role === "kanit" ? "kanitRejectedExportRow" : "rejectedExportRow";
-    var row = document.getElementById(exportId);
-    if(!row) return;
-    row.classList.remove("rej-hide");
-    row.removeAttribute("hidden");
-    row.style.display = "flex";
-  }
-
-
   function collectRejectedAlasan_(rows){
     var set = {};
     (rows||[]).forEach(function(r){
@@ -34965,29 +35037,21 @@ function loadAdminSummary(force){
 
 function applyRejectedAlasanFilter_(which){
     var cache = window.__rejectedCache[which];
-    if(!cache || !cache.data) return false;
-    var has = false;
+    if(!cache || !cache.data) return;
+    var alasan = "";
     if(which === "admin"){
       var s = document.getElementById("rejectedAnalysisAlasan");
-      var alasan = s ? s.value : "";
+      alasan = s ? s.value : "";
       var rows = filterRejectedRowsByAlasan_(cache.data.allDetail, alasan);
       var data2 = Object.assign({}, cache.data, { allDetail: rows });
-      has = !!renderRejectedDetailTable(data2, "rejectedDetailWrap", cache.label);
-      // jangan buka export di sini
-      var btn = document.getElementById("rejectedAnalisaBtn");
-      if(btn){
-        if(has){ btn.classList.remove("rej-hide"); btn.removeAttribute("hidden"); btn.style.display="inline-block"; }
-        else { btn.classList.add("rej-hide"); btn.setAttribute("hidden","hidden"); btn.style.display="none"; }
-      }
+      renderRejectedDetailTable(data2, "rejectedDetailWrap", cache.label);
     } else {
       var s2 = document.getElementById("kanitRejectedAlasan");
-      var alasan2 = s2 ? s2.value : "";
-      var rows2 = filterRejectedRowsByAlasan_(cache.data.allDetail, alasan2);
+      alasan = s2 ? s2.value : "";
+      var rows2 = filterRejectedRowsByAlasan_(cache.data.allDetail, alasan);
       var data3 = Object.assign({}, cache.data, { allDetail: rows2 });
-      has = !!renderRejectedDetailTable(data3, "kanitRejectedDetailWrap", cache.label);
-      setRejectedAnalisaVisible_("kanit", has);
+      renderRejectedDetailTable(data3, "kanitRejectedWrap", cache.label);
     }
-    return has;
   }
 
 
@@ -35029,19 +35093,13 @@ function applyRejectedAlasanFilter_(which){
   // begitu klik "Tampilkan", tanpa perlu klik "Analisa" lagi.
   function renderRejectedDetailTable(data, wrapId, cabangLabel){
     var wrap = document.getElementById(wrapId);
-    if(!wrap) return false;
+    if(!wrap) return;
     var rows = (data && data.allDetail) || [];
     if(!rows.length){
       wrap.innerHTML = '<div class="rejected-top3-title">Detail Transaksi</div><div class="empty-log">Belum ada data reject untuk '+cabangLabel+'.</div>';
-      return false;
+      return;
     }
-    var tableHtml = rejectedDetailTransaksiTableHtml_(rows);
-    if(!tableHtml || tableHtml.indexOf("<tr>") < 0){
-      wrap.innerHTML = '<div class="rejected-top3-title">Detail Transaksi</div><div class="empty-log">Belum ada data reject untuk '+cabangLabel+'.</div>';
-      return false;
-    }
-    wrap.innerHTML = '<div class="rejected-top3-title">Detail Transaksi</div>' + tableHtml;
-    return true;
+    wrap.innerHTML = '<div class="rejected-top3-title">Detail Transaksi</div>' + rejectedDetailTransaksiTableHtml_(rows);
   }
 
   // Kartu ringkasan + top3 + grafik bulanan, TANPA tabel Detail Transaksi
@@ -35209,6 +35267,14 @@ function applyRejectedAlasanFilter_(which){
   var pendingRejectedMain = null;
   var pendingRejectedCompare = null;
 
+
+  function rejectedLoadingHtml_(){
+    return '<div class="rej-loader" role="status" aria-live="polite" aria-label="Memuat data">'
+      + '<div class="rej-loader-ring" aria-hidden="true"></div>'
+      + '<div class="rej-loader-text">Loading...</div>'
+      + '</div>';
+  }
+
   $on("rejectedAnalysisLoadBtn", "click", function(){
     var msgEl = document.getElementById("rejectedAnalysisMsg");
     clearMsg(msgEl);
@@ -35227,13 +35293,21 @@ function applyRejectedAlasanFilter_(which){
     var self = this;
     pendingRejectedMain = null;
     pendingRejectedCompare = null;
-    setRejectedAnalisaVisible_("admin", false); // sembunyikan Analisa + Export selama load
-    document.getElementById("rejectedDetailWrap").innerHTML = rejectedLoadingHtml_("Memuat data reject");
+    if(window.__hideRejectedActions){ window.__hideRejectedActions(); }
+    else {(function(){
+      var row = document.getElementById("rejectedActionsRow");
+      if(row){ row.style.display = "none"; row.hidden = true; row.classList.add("rej-hide"); }
+      var exp = document.getElementById("rejectedExportExcelBtn");
+      if(exp){ exp.style.display = "none"; exp.hidden = true; exp.classList.add("rej-hide"); }
+      var an = document.getElementById("rejectedAnalisaBtn");
+      if(an){ an.style.display = "none"; an.hidden = true; an.classList.add("rej-hide"); }
+    })();}
+    document.getElementById("rejectedDetailWrap").innerHTML = rejectedLoadingHtml_();
     document.getElementById("rejectedAnalysisWrap").innerHTML = "";
     document.getElementById("rejectedCompareSection").style.display = "none";
     document.getElementById("rejectedCompareWrap").innerHTML = "";
     document.getElementById("rejectedAnalysisMonthChartWrap").innerHTML = "";
-    clearMsg(msgEl); // jangan double "Memuat..." di banner hijau
+    clearMsg(msgEl);
 
     var cabangLabelForEmpty = cabang === "TOTAL_AREA" ? "Total Area (Semua Cabang)" : cabang;
 
@@ -35247,21 +35321,29 @@ function applyRejectedAlasanFilter_(which){
         }
         pendingRejectedMain = r;
         clearMsg(msgEl);
+        // Detail + isi dropdown alasan
         window.__rejectedCache.admin = { data: r.data, label: cabangLabelForEmpty };
         fillRejectedAlasanSelect_("rejectedAnalysisAlasan", (r.data && r.data.allDetail) || []);
         applyRejectedAlasanFilter_("admin");
-        var rowsN = (r.data && r.data.allDetail && r.data.allDetail.length) || 0;
-        var alasanEl = document.getElementById("rejectedAnalysisAlasan");
-        var alasanVal = alasanEl ? (alasanEl.value || "") : "";
-        if(alasanVal && r.data && r.data.allDetail){
-          rowsN = filterRejectedRowsByAlasan_(r.data.allDetail, alasanVal).length;
+        var _rdw = document.getElementById("rejectedDetailWrap");
+        var _hasDetail = _rdw && _rdw.innerHTML && _rdw.innerHTML.indexOf("Belum ada") < 0 && _rdw.innerHTML.trim().length > 40;
+        if(_hasDetail){
+          if(window.__showRejectedAnalisa) window.__showRejectedAnalisa();
+          else {
+            var row = document.getElementById("rejectedActionsRow");
+            var an = document.getElementById("rejectedAnalisaBtn");
+            var exp = document.getElementById("rejectedExportExcelBtn");
+            if(row){ row.style.display = "flex"; row.hidden = false; row.classList.remove("rej-hide"); }
+            if(an){ an.style.display = "inline-flex"; an.hidden = false; an.classList.remove("rej-hide"); }
+            if(exp){ exp.style.display = "none"; exp.hidden = true; exp.classList.add("rej-hide"); }
+          }
+        } else {
+          if(window.__hideRejectedActions) window.__hideRejectedActions();
         }
-        setRejectedAnalisaVisible_("admin", rowsN > 0); // Export tetap hidden sampai Analisa
       })
       .withFailureHandler(function(err){
         self.dataset.busy = "0"; self.disabled = false;
         document.getElementById("rejectedDetailWrap").innerHTML = "";
-        setRejectedAnalisaVisible_("admin", false);
         showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err");
       })
       .getRejectedAnalysisAdmin(session.adminPin, cabang, startDate, endDate);
@@ -35286,7 +35368,13 @@ function applyRejectedAlasanFilter_(which){
       data = Object.assign({}, data, rebuilt);
     }
     renderRejectedSummary(data, label + (alasan ? " · "+alasan : ""), "rejectedAnalysisWrap", "rejectedAnalysisMonthChartWrap");
-    showRejectedExport_("admin");
+    if(window.__showRejectedExport) window.__showRejectedExport();
+    else {
+      var exp = document.getElementById("rejectedExportExcelBtn");
+      if(exp){ exp.style.display = "inline-flex"; exp.hidden = false; exp.classList.remove("rej-hide"); }
+      var row = document.getElementById("rejectedActionsRow");
+      if(row){ row.style.display = "flex"; row.hidden = false; row.classList.remove("rej-hide"); }
+    }
 
     document.getElementById("rejectedCompareSection").style.display = "block";
     if(pendingRejectedCompare){
@@ -35301,17 +35389,13 @@ function applyRejectedAlasanFilter_(which){
   // semua yang dibutuhkan (Detail Transaksi, Ringkasan, Top3, per bulan),
   // jadi export langsung dari data yang sudah ada di memori, gak perlu
   // panggil server lagi.
-  function rejectedExportFilenameBase_(cabangLabel, startDate, endDate, role, alasan){
-    var safeLabel = String(cabangLabel || "").replace(/[^a-zA-Z0-9]+/g, "_");
-    var prefix = (role === "kanit") ? "Rejected_Kanit_" : "Rejected_KC_";
-    var name = prefix + safeLabel + "_" + (startDate || "awal") + "_sd_" + (endDate || "akhir");
-    if(alasan){
-      var safeAlasan = String(alasan).replace(/[^a-zA-Z0-9]+/g, "_").slice(0, 40);
-      if(safeAlasan) name += "_" + safeAlasan;
-    }
-    return name;
+  function rejectedExportFilenameBase_(cabangLabel, startDate, endDate){
+    var safeLabel = String(cabangLabel).replace(/[^a-zA-Z0-9]+/g, "_");
+    return "Rejected_" + safeLabel + "_" + (startDate || "awal") + "_sd_" + (endDate || "akhir");
   }
 
+  // Helper: kasih format angka ribuan (1.234) ke sel numerik di sebuah range
+  // kolom pada sheet, biar gampang dibaca (bukan cuma angka mentah nempel).
   function applyNumberFormat_(ws, colIndexes, rowStart, rowEnd){
     for(var r = rowStart; r <= rowEnd; r++){
       colIndexes.forEach(function(c){
@@ -35322,67 +35406,36 @@ function applyRejectedAlasanFilter_(which){
     }
   }
 
-  /** Export Excel: role kc|kanit via opts (object) atau boolean isTotalArea (legacy) */
-  function exportRejectedToExcel(data, cabangLabel, startDate, endDate, optsOrFlag){
+  function exportRejectedToExcel(data, cabangLabel, startDate, endDate, isTotalArea){
     if(typeof XLSX === "undefined"){
       alert("Gagal memuat modul Export Excel. Coba lagi dalam beberapa saat.");
       return;
     }
-    var opts = {};
-    if(optsOrFlag && typeof optsOrFlag === "object") opts = optsOrFlag;
-    else opts = { isTotalArea: !!optsOrFlag, role: "kc" };
-
-    var role = opts.role === "kanit" ? "kanit" : "kc";
-    var isTotalArea = !!opts.isTotalArea;
-    var alasan = opts.alasan ? String(opts.alasan) : "";
-    var exportedAt = "";
-    try{
-      var now = new Date();
-      exportedAt = now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")
-        +" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
-    }catch(eT){}
 
     var wb = XLSX.utils.book_new();
     var periodeLabel = (startDate || "-") + " s/d " + (endDate || "-");
-    var roleLabel = role === "kanit" ? "Kanit (cabang)" : "KC (area)";
 
+    // Sheet 1: Ringkasan -- cuma angka besar, ringkas, gampang dilihat sekilas.
     var ringkasanRows = [
-      ["Analisis Rejected"],
-      ["Peran", roleLabel],
-      ["Cabang / cakupan", cabangLabel],
+      ["Analisis Rejected - " + cabangLabel],
       ["Periode", periodeLabel],
-      ["Filter alasan", alasan || "(Semua alasan)"],
-      ["Waktu export", exportedAt],
-      ["Jumlah baris detail", (data.allDetail && data.allDetail.length) || data.totalRows || 0],
       [],
-      ["Total Reject", data.totalRows || 0],
-      ["Jadi Gadai", data.totalGadai || 0],
-      ["Gadai Cabang Sendiri", data.gadaiSendiri || 0],
-      ["Gadai Cabang Beda", data.gadaiBeda || 0]
+      ["Total Reject", data.totalRows],
+      ["Jadi Gadai", data.totalGadai],
+      ["Gadai Cabang Sendiri", data.gadaiSendiri],
+      ["Gadai Cabang Beda", data.gadaiBeda]
     ];
-    function appendTopBlock_(title, items){
-      ringkasanRows.push([]);
-      ringkasanRows.push([title]);
-      ringkasanRows.push(["Kategori", "Jumlah"]);
-      var list = (items && items.length) ? items.slice(0, 10) : [];
-      if(!list.length) ringkasanRows.push(["(tidak ada data)", ""]);
-      else list.forEach(function(it){ ringkasanRows.push([it.label, it.count]); });
-    }
-    appendTopBlock_("Alasan (top)", data.alasanAll || data.alasanTop);
-    appendTopBlock_("Jenis (top)", data.jenisAll || data.jenisTop);
-    appendTopBlock_("Spesifikasi (top)", data.spesifikasiAll || data.spesifikasiTop);
-    if(data.perBulan && data.perBulan.length){
-      ringkasanRows.push([]);
-      ringkasanRows.push(["Per bulan"]);
-      ringkasanRows.push(["Bulan", "Total"]);
-      data.perBulan.forEach(function(r){ ringkasanRows.push([r.bulan, r.total]); });
-    }
     var wsRingkasan = XLSX.utils.aoa_to_sheet(ringkasanRows);
-    wsRingkasan["!cols"] = [{ wch: 28 }, { wch: 22 }];
+    wsRingkasan["!cols"] = [{ wch: 26 }, { wch: 20 }];
+    applyNumberFormat_(wsRingkasan, [1], 3, 6);
     XLSX.utils.book_append_sheet(wb, wsRingkasan, "Ringkasan");
 
-    if(role === "kc" && isTotalArea && data.perCabang && data.perCabang.length){
-      var perCabangRows = [["Cabang", "Total Reject", "Jadi Gadai", "Gadai Sendiri", "Gadai Beda"]];
+    // Sheet 2 (khusus Total Area): rincian per cabang, tabel sendiri biar
+    // kebaca sebagai satu tabel utuh, bukan nempel di bawah ringkasan.
+    if(isTotalArea && data.perCabang && data.perCabang.length){
+      var perCabangRows = [
+        ["Cabang", "Total Reject", "Jadi Gadai", "Gadai Sendiri", "Gadai Beda"]
+      ];
       data.perCabang.forEach(function(c){
         perCabangRows.push([c.cabang, c.totalRows, c.totalGadai, c.gadaiSendiri, c.gadaiBeda]);
       });
@@ -35393,6 +35446,7 @@ function applyRejectedAlasanFilter_(which){
       XLSX.utils.book_append_sheet(wb, wsPerCabang, "Rincian per Cabang");
     }
 
+    // Sheet 3: Gadai Beda Cabang - Tujuan Perpindahan
     var tujuanRows = [["Cabang Tujuan", "Jumlah"]];
     (data.gadaiBedaTujuan && data.gadaiBedaTujuan.length ? data.gadaiBedaTujuan : [{label:"Belum ada data", count:""}])
       .forEach(function(it){ tujuanRows.push([it.label, it.count]); });
@@ -35401,32 +35455,46 @@ function applyRejectedAlasanFilter_(which){
     applyNumberFormat_(wsTujuan, [1], 1, tujuanRows.length - 1);
     XLSX.utils.book_append_sheet(wb, wsTujuan, "Gadai Beda - Tujuan");
 
-    var detailHeader = (data.detailHeaders && data.detailHeaders.length)
-      ? data.detailHeaders.slice()
-      : ["ID", "Tanggal", "Jam", "Cabang", "Nama Nasabah", "No. HP", "Barang", "Jenis", "Alasan Reject", "Pinjaman Max", "Status Gadai"];
+    // Sheet 4-6: Alasan / Jenis / Spesifikasi -- masing-masing tabel sendiri.
+    function listSheet_(sheetName, colLabel, items){
+      var rows = [[colLabel, "Jumlah"]];
+      (items && items.length ? items : [{label:"Belum ada data", count:""}]).forEach(function(it){ rows.push([it.label, it.count]); });
+      var ws = XLSX.utils.aoa_to_sheet(rows);
+      ws["!cols"] = [{ wch: 40 }, { wch: 12 }];
+      applyNumberFormat_(ws, [1], 1, rows.length - 1);
+      XLSX.utils.book_append_sheet(wb, ws, sheetName);
+    }
+    listSheet_("Alasan", "Alasan", data.alasanAll);
+    listSheet_("Jenis", "Jenis", data.jenisAll);
+    listSheet_("Spesifikasi", "Spesifikasi", data.spesifikasiAll);
+
+    // Sheet 7: Total Reject per Bulan
+    var bulanRows = [["Bulan", "Total"]];
+    (data.perBulan.length ? data.perBulan : [{bulan:"Belum ada data", total:""}]).forEach(function(r){ bulanRows.push([r.bulan, r.total]); });
+    var wsBulan = XLSX.utils.aoa_to_sheet(bulanRows);
+    wsBulan["!cols"] = [{ wch: 20 }, { wch: 12 }];
+    applyNumberFormat_(wsBulan, [1], 1, bulanRows.length - 1);
+    XLSX.utils.book_append_sheet(wb, wsBulan, "Per Bulan");
+
+    // Sheet 8: Detail Transaksi (tabel mentah per transaksi)
+    var detailHeader = ["ID", "Tanggal", "Jam", "Cabang", "Nama Nasabah", "No. HP", "Barang", "Jenis", "Alasan Reject", "Pinjaman Max", "Status Gadai"];
     var detailRows = [detailHeader];
-    var nCols = detailHeader.length;
     (data.allDetail || []).forEach(function(r){
-      var cells = (r.rawCells && r.rawCells.length) ? r.rawCells.slice() : null;
-      if(!cells){
-        cells = [
-          r.id, r.tanggal || "", r.jam || "", r.cabang || "", r.namaNasabah || "", r.noHp || "",
-          r.barang || "", r.jenis || "", r.alasan || "", r.pinjamanMax || "", r.sudahGadai ? "Sudah Tergadai" : "Belum Tergadai"
-        ];
-      }
-      while(cells.length < nCols) cells.push("");
-      if(cells.length > nCols) cells = cells.slice(0, nCols);
-      detailRows.push(cells);
+      detailRows.push([
+        r.id, r.tanggal || "-", r.jam || "-", r.cabang, r.namaNasabah, r.noHp,
+        r.barang, r.jenis, r.alasan, r.pinjamanMax, r.sudahGadai ? "Sudah Tergadai" : "Belum Tergadai"
+      ]);
     });
     var wsDetail = XLSX.utils.aoa_to_sheet(detailRows);
-    wsDetail["!cols"] = detailHeader.map(function(h){
-      return { wch: Math.min(36, Math.max(10, String(h || "").length + 2)) };
-    });
-    var lastColLetter = XLSX.utils.encode_col(Math.max(0, nCols - 1));
-    wsDetail["!autofilter"] = { ref: "A1:" + lastColLetter + "1" };
+    wsDetail["!cols"] = [
+      { wch: 10 }, { wch: 12 }, { wch: 8 }, { wch: 10 }, { wch: 22 }, { wch: 15 },
+      { wch: 22 }, { wch: 14 }, { wch: 20 }, { wch: 14 }, { wch: 16 }
+    ];
+    applyNumberFormat_(wsDetail, [9], 1, detailRows.length - 1);
+    wsDetail["!autofilter"] = { ref: "A1:K1" };
     XLSX.utils.book_append_sheet(wb, wsDetail, "Detail Transaksi");
 
-    XLSX.writeFile(wb, rejectedExportFilenameBase_(cabangLabel, startDate, endDate, role, alasan) + ".xlsx");
+    XLSX.writeFile(wb, rejectedExportFilenameBase_(cabangLabel, startDate, endDate) + ".xlsx");
   }
 
   function exportRejectedToPdf(data, cabangLabel, startDate, endDate, isTotalArea){
@@ -35582,24 +35650,12 @@ function applyRejectedAlasanFilter_(which){
     var label = isTotalArea ? "Total Area (Semua Cabang)" : pendingRejectedMain.cabang;
     var startDate = document.getElementById("rejectedAnalysisStart").value || null;
     var endDate = document.getElementById("rejectedAnalysisEnd").value || null;
-    var alasanEl = document.getElementById("rejectedAnalysisAlasan");
-    var alasan = alasanEl ? (alasanEl.value || "") : "";
-    var data = pendingRejectedMain.data || {};
-    if(alasan && data.allDetail){
-      var rows = filterRejectedRowsByAlasan_(data.allDetail, alasan);
-      var rebuilt = rebuildRejectedSummaryFromRows_(rows);
-      data = Object.assign({}, data, rebuilt);
-    }
     var self = this;
     self.disabled = true;
     self.textContent = "Menyiapkan...";
     setTimeout(function(){
       try{
-        exportRejectedToExcel(data, label, startDate, endDate, {
-          role: "kc",
-          isTotalArea: isTotalArea,
-          alasan: alasan
-        });
+        exportRejectedToExcel(pendingRejectedMain.data, label, startDate, endDate, isTotalArea);
       } catch(err){
         alert("Gagal membuat file Excel: " + (err.message || err));
       }
@@ -36276,8 +36332,6 @@ function applyRejectedAlasanFilter_(which){
     document.getElementById("kanitRejectedLoadBtn").click();
   });
 
-  var pendingRejectedKanit = null;
-
   $on("kanitRejectedLoadBtn", "click", function(){
     var msgEl = document.getElementById("kanitRejectedMsg");
     clearMsg(msgEl);
@@ -36286,92 +36340,29 @@ function applyRejectedAlasanFilter_(which){
     var endDate = document.getElementById("kanitRejectedEnd").value || null;
     if(startDate && !endDate) endDate = startDate;
     if(!startDate){ showMsg(msgEl, "Isi tanggal Dari dulu.", "err"); return; }
-    window.__rejectedRangeStart = startDate || "";
-    window.__rejectedRangeEnd = endDate || startDate || "";
     this.disabled = true;
     var self = this;
-    pendingRejectedKanit = null;
-    setRejectedAnalisaVisible_("kanit", false);
-    var detailWrap = document.getElementById("kanitRejectedDetailWrap");
-    if(detailWrap) detailWrap.innerHTML = rejectedLoadingHtml_("Memuat data reject");
-    var analysisWrap = document.getElementById("kanitRejectedAnalysisWrap");
-    if(analysisWrap) analysisWrap.innerHTML = "";
-    var monthWrap = document.getElementById("kanitRejectedMonthChartWrap");
-    if(monthWrap) monthWrap.innerHTML = "";
+    document.getElementById("kanitRejectedWrap").innerHTML = rejectedLoadingHtml_();
+    clearMsg(msgEl);
     google.script.run
       .withSuccessHandler(function(r){
         self.dataset.busy = "0"; self.disabled = false;
         if(!r || r.status !== "OK"){
-          if(detailWrap) detailWrap.innerHTML = "";
-          setRejectedAnalisaVisible_("kanit", false);
+          document.getElementById("kanitRejectedWrap").innerHTML = "";
           showMsg(msgEl, (r && r.reason) || "Gagal memuat data.", "err");
           return;
         }
-        pendingRejectedKanit = r;
-        clearMsg(msgEl);
         window.__rejectedCache.kanit = { data: r.data, label: session.cabang };
         fillRejectedAlasanSelect_("kanitRejectedAlasan", (r.data && r.data.allDetail) || []);
-        var hasDetail = !!applyRejectedAlasanFilter_("kanit");
-        setRejectedAnalisaVisible_("kanit", hasDetail);
+        // Sama dengan KC: detail transaksi langsung + filter alasan
+        applyRejectedAlasanFilter_("kanit");
       })
       .withFailureHandler(function(err){
         self.dataset.busy = "0"; self.disabled = false;
-        if(detailWrap) detailWrap.innerHTML = "";
-        setRejectedAnalisaVisible_("kanit", false);
+        document.getElementById("kanitRejectedWrap").innerHTML = "";
         showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err");
       })
       .getRejectedAnalysisKanit(session.cabang, session.cabangPin, startDate, endDate);
-  });
-
-  $on("kanitRejectedAnalisaBtn", "click", function(){
-    if(!pendingRejectedKanit) return;
-    var label = session.cabang || (pendingRejectedKanit.cabang || "Cabang");
-    var data = pendingRejectedKanit.data || {};
-    var alasanEl = document.getElementById("kanitRejectedAlasan");
-    var alasan = alasanEl ? (alasanEl.value || "") : "";
-    if(alasan && data.allDetail){
-      var rows = filterRejectedRowsByAlasan_(data.allDetail, alasan);
-      var rebuilt = rebuildRejectedSummaryFromRows_(rows);
-      data = Object.assign({}, data, rebuilt);
-    }
-    renderRejectedSummary(data, label + (alasan ? " · "+alasan : ""), "kanitRejectedAnalysisWrap", "kanitRejectedMonthChartWrap");
-    showRejectedExport_("kanit");
-  });
-
-  $on("kanitRejectedExportExcelBtn", "click", function(){
-    if(!pendingRejectedKanit) return;
-    var label = session.cabang || (pendingRejectedKanit.cabang || "Cabang");
-    var startDate = document.getElementById("kanitRejectedStart").value || null;
-    var endDate = document.getElementById("kanitRejectedEnd").value || null;
-    var alasanEl = document.getElementById("kanitRejectedAlasan");
-    var alasan = alasanEl ? (alasanEl.value || "") : "";
-    var data = pendingRejectedKanit.data || {};
-    if(alasan && data.allDetail){
-      var rows = filterRejectedRowsByAlasan_(data.allDetail, alasan);
-      var rebuilt = rebuildRejectedSummaryFromRows_(rows);
-      data = Object.assign({}, data, rebuilt);
-    }
-    var self = this;
-    self.disabled = true;
-    self.textContent = "Menyiapkan...";
-    setTimeout(function(){
-      try{
-        if(typeof exportRejectedToExcel === "function"){
-          exportRejectedToExcel(data, label, startDate, endDate, {
-            role: "kanit",
-            isTotalArea: false,
-            alasan: alasan
-          });
-        } else {
-          // fallback signature lama
-          exportRejectedToExcel(data, label, startDate, endDate, false);
-        }
-      } catch(err){
-        alert("Gagal membuat file Excel: " + (err.message || err));
-      }
-      self.dataset.busy = "0"; self.disabled = false;
-      self.textContent = "⬇ Export Excel";
-    }, 10);
   });
 
   $on("adminChangeSubmit", "click", function(){
@@ -43791,6 +43782,172 @@ html body #omsetForm .omset-input-wrap{
 }
 
 
+
+/* ===== PROFIL KC/ADMIN — samakan layout dengan Kanit V2 ===== */
+html[data-theme="light"] #adminProfileModal .profile-modal-v2,
+#adminProfileModal .profile-modal-v2,
+html[data-theme="light"] #adminProfileModal .profile-modal,
+#adminProfileModal .profile-modal{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(15,23,42,0.14) !important;
+  padding: 20px 20px 16px !important;
+  width: min(360px, calc(100vw - 32px)) !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] #adminProfileModal h3,
+#adminProfileModal h3{
+  margin: 0 0 2px !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #adminProfileModal .sub,
+#adminProfileModal .sub{
+  margin: 0 0 16px !important;
+  font-size: 12px !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+html[data-theme="light"] #adminProfileModal .profile-photo-wrap,
+#adminProfileModal .profile-photo-wrap{
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 16px !important;
+}
+html[data-theme="light"] #adminProfileModal .profile-photo,
+#adminProfileModal .profile-photo{
+  width: 64px !important;
+  height: 64px !important;
+  border-radius: 50% !important;
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: 2px solid #E2E8F0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #adminProfileModal .profile-photo-actions,
+#adminProfileModal .profile-photo-actions{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+html[data-theme="light"] #adminProfileModal .field,
+#adminProfileModal .field{ margin-bottom: 12px !important; }
+html[data-theme="light"] #adminProfileModal .field label,
+#adminProfileModal .field label{
+  display: block !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  margin-bottom: 5px !important;
+}
+html[data-theme="light"] #adminProfileModal .field input,
+#adminProfileModal .field input{
+  width: 100% !important;
+  height: 40px !important;
+  border-radius: 10px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  padding: 0 12px !important;
+  font-size: 13px !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #adminProfileModal .profile-btn-neutral,
+#adminProfileModal .profile-btn-neutral,
+html[data-theme="light"] #adminProfileModal .btn-xs.profile-btn-neutral,
+#adminProfileModal button.profile-btn-neutral,
+#adminProfileModal label.profile-btn-neutral{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 34px !important;
+  padding: 0 12px !important;
+  border-radius: 8px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] #adminProfileModal .profile-btn-neutral:hover,
+#adminProfileModal .profile-btn-neutral:hover{
+  background: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+}
+html[data-theme="light"] #adminProfileModal .profile-btn-block,
+#adminProfileModal .profile-btn-block{
+  width: 100% !important;
+  margin: 4px 0 8px !important;
+  height: 38px !important;
+}
+html[data-theme="light"] #adminProfileModal .profile-btn-primary,
+#adminProfileModal .profile-btn-primary{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 38px !important;
+  padding: 0 14px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] #adminProfileModal .profile-btn-danger,
+#adminProfileModal .profile-btn-danger{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 34px !important;
+  padding: 0 12px !important;
+  border-radius: 8px !important;
+  border: 1px solid #FECACA !important;
+  background: #FEF2F2 !important;
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  margin-left: auto !important;
+  cursor: pointer !important;
+}
+html[data-theme="light"] #adminProfileModal .profile-modal-actions,
+#adminProfileModal .profile-modal-actions{
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: 14px !important;
+  padding-top: 12px !important;
+  border-top: 1px solid #F1F5F9 !important;
+}
+html[data-theme="light"] #adminProfileModal .profile-pin-box,
+#adminProfileModal .profile-pin-box{
+  border-top: 1px solid #E2E8F0 !important;
+  margin-top: 10px !important;
+  padding-top: 12px !important;
+}
+
 /* ===== PROFIL KANIT V2 — navy/white, teks terbaca, tanpa orange ===== */
 html[data-theme="light"] #kanitProfileModal .profile-modal-v2,
 #kanitProfileModal .profile-modal-v2,
@@ -44635,3 +44792,7 @@ html[data-theme="light"] #tab-kanitinput .omset-log-v2 .empty-log,
   }
 }
 
+
+<!-- MARKER-TEST-123 -->
+
+<!-- WRITE_TEST_XYZ -->
