@@ -13366,13 +13366,13 @@ button.admin-topbar-avatar:hover,
   border:1px solid var(--app-line) !important;
   background:var(--app-surface) !important;
   scrollbar-width:thin;
-  scrollbar-color:rgba(232,168,106,0.35) transparent;
+  scrollbar-color:#CBD5E1 #F1F5F9 !important;
 }
 .admin-content .harian-table-wrap::-webkit-scrollbar,
 .admin-content .harian-sync-wrap::-webkit-scrollbar{ height:6px; width:6px; }
 .admin-content .harian-table-wrap::-webkit-scrollbar-thumb,
 .admin-content .harian-sync-wrap::-webkit-scrollbar-thumb{
-  background:rgba(232,168,106,0.35); border-radius:99px;
+  background:#CBD5E1 !important; border-radius:99px;
 }
 .admin-content .harian-table th,
 .admin-content .harian-table td{
@@ -13402,7 +13402,7 @@ button.admin-topbar-avatar:hover,
   border:1px solid var(--app-line) !important;
   background:var(--app-surface) !important;
   scrollbar-width:thin;
-  scrollbar-color:rgba(232,168,106,0.35) transparent;
+  scrollbar-color:#CBD5E1 #F1F5F9 !important;
 }
 .admin-content .libur-table th,
 .admin-content .libur-table td{
@@ -29095,33 +29095,36 @@ html[data-theme="light"] table.libur-table td{
 
     <!-- Tab: Input Omset & Rejected -->
     <div class="panel subpanel active" id="tab-kanitinput">
-      <form id="omsetForm">
+      <form id="omsetForm" class="omset-form-lite">
         <div class="field">
-          <label><span class="no">02</span> Tanggal</label>
+          <label>Tanggal</label>
           <input type="date" id="tanggal" min="2026-05-01" max="2027-01-31" required>
         </div>
 
         <div class="triple">
           <div class="field">
             <label><span class="tag">GE</span></label>
-            <input type="number" id="ge" min="0" step="1" placeholder="0" required>
+            <input type="number" id="ge" min="0" step="1" placeholder="" inputmode="numeric" required>
           </div>
           <div class="field">
             <label><span class="tag">GB</span></label>
-            <input type="number" id="gb" min="0" step="1" placeholder="0" required>
+            <input type="number" id="gb" min="0" step="1" placeholder="" inputmode="numeric" required>
           </div>
           <div class="field">
             <label><span class="tag">GG</span></label>
-            <input type="number" id="gg" min="0" step="1" placeholder="0" required>
+            <input type="number" id="gg" min="0" step="1" placeholder="" inputmode="numeric" required>
           </div>
         </div>
+        <div class="omset-live-total" id="omsetLiveTotal">Total Gadai: <b>—</b></div>
 
-        <div class="field" style="margin-top:20px;">
-          <label><span class="tag tag-rejected">Rejected</span> Jumlah pengajuan ditolak hari ini</label>
-          <input type="number" id="rejected" min="0" step="1" placeholder="0" required>
+        <div class="field" style="margin-top:14px;">
+          <label>Rejected <span class="omset-hint">(ditolak hari ini)</span></label>
+          <input type="number" id="rejected" min="0" step="1" placeholder="" inputmode="numeric" required>
         </div>
 
-        <button type="submit" id="submitBtn">Kirim</button>
+        <div class="omset-actions">
+          <button type="submit" id="submitBtn">Kirim</button>
+        </div>
       </form>
 
       <div style="text-align:center; margin-top:16px;">
@@ -30118,17 +30121,17 @@ html[data-theme="light"] table.libur-table td{
       <div id="kelolaCabangHub">
       <div class="admin-menu-grid" style="margin-top:4px;">
         <button type="button" class="admin-menu-card" id="cabangDaftarCard">
-          <div class="admin-menu-icon dark"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
+          <div class="admin-menu-icon dark"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFFFF" stroke-width="2"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
           <div class="admin-menu-card-body"><div class="admin-menu-card-title">Daftar Cabang &amp; PIN</div><div class="admin-menu-card-desc">Lihat dan kelola seluruh data cabang &amp; PIN</div></div>
           <span class="admin-menu-arrow">&rarr;</span>
         </button>
         <button type="button" class="admin-menu-card" id="cabangTambahCard">
-          <div class="admin-menu-icon accent"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+          <div class="admin-menu-icon accent"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0F172A" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
           <div class="admin-menu-card-body"><div class="admin-menu-card-title">Tambah Cabang</div><div class="admin-menu-card-desc">Tambah cabang baru ke dalam sistem</div></div>
           <span class="admin-menu-arrow">&rarr;</span>
         </button>
         <button type="button" class="admin-menu-card" id="cabangKaryawanCard">
-          <div class="admin-menu-icon dark"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 2.9-6.2 6.5-6.2s6.5 2.6 6.5 6.2"/><circle cx="17.5" cy="8.5" r="2.6"/><path d="M16 13.8c2.6.4 4.5 2.5 4.5 5.3"/></svg></div>
+          <div class="admin-menu-icon dark"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFFFF" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 2.9-6.2 6.5-6.2s6.5 2.6 6.5 6.2"/><circle cx="17.5" cy="8.5" r="2.6"/><path d="M16 13.8c2.6.4 4.5 2.5 4.5 5.3"/></svg></div>
           <div class="admin-menu-card-body"><div class="admin-menu-card-title">Kelola Karyawan</div><div class="admin-menu-card-desc">Kelola data karyawan di seluruh cabang</div></div>
           <span class="admin-menu-arrow">&rarr;</span>
         </button>
@@ -30295,7 +30298,7 @@ html[data-theme="light"] table.libur-table td{
       <div class="detail" id="detail"></div>
       <div class="recap" id="recap" style="display:none;"></div>
       <div class="ss-reminder" id="ssReminder" style="display:none;">
-        Simpan / unduh hasil ini, lalu kirim ke grup Kepala Unit.
+        Unduh gambar bila perlu dikirim ke grup.
       </div>
     </div>
     <div class="modal-actions" id="resultActions">
@@ -31425,16 +31428,16 @@ $on("cabangPinSubmit", "click", function(){
 
     recapEl.style.display = "block";
     recapEl.innerHTML =
-      '<div class="recap-row total"><span class="k">Total bulan ini</span><span class="v">'+fmt(r.bulan_ini_total)+'</span></div>'+
-      '<div class="recap-row total"><span class="k">Proyeksi akhir bln</span><span class="v">'+fmt(r.proyeksi_all_gadai)+'</span></div>'+
-      '<div class="recap-row"><span class="k">Rejected hari ini</span><span class="v">'+fmt(r.rejected)+'</span></div>'+
-      '<div class="recap-row diff"><span class="k">Selisih target</span><span class="v '+selisihClass+'">'+fmt(Math.abs(selisih))+' ('+selisihLabel+')</span></div>'+
       '<div class="recap-row"><span class="k">Pencapaian GE</span><span class="v">'+fmt(r.ge_total)+'</span></div>'+
       '<div class="recap-row"><span class="k">Pencapaian GB</span><span class="v">'+fmt(r.gb_total)+'</span></div>'+
       '<div class="recap-row"><span class="k">Pencapaian GG</span><span class="v">'+fmt(r.gg_total)+'</span></div>'+
-      '<div class="recap-row"><span class="k">Target ('+cabang+', '+r.monthLabel+')</span><span class="v">'+fmt(r.target_bulan_ini)+'</span></div>'+
-      '<div class="recap-row"><span class="k">Bln kemarin'+(r.bulan_kemarin_label ? " (" + r.bulan_kemarin_label + ")" : "")+'</span><span class="v">'+(r.bulan_kemarin_total === null ? "belum ada data" : fmt(r.bulan_kemarin_total))+'</span></div>'+
-      '<div class="recap-row diff"><span class="k">Target/hari</span><span class="v '+targetHarianClass+'">'+targetHarianValue+'</span></div>';
+      '<div class="recap-row total"><span class="k">Pencapaian All Gadai (GE+GB+GG)</span><span class="v">'+fmt(r.bulan_ini_total)+'</span></div>'+
+      '<div class="recap-row"><span class="k">Rejected hari ini</span><span class="v">'+fmt(r.rejected)+'</span></div>'+
+      '<div class="recap-row"><span class="k">Target All Gadai ('+cabang+', '+r.monthLabel+')</span><span class="v">'+fmt(r.target_bulan_ini)+'</span></div>'+
+      '<div class="recap-row diff"><span class="k">Selisih Target Bulan Ini</span><span class="v '+selisihClass+'">'+fmt(Math.abs(selisih))+' ('+selisihLabel+')</span></div>'+
+      '<div class="recap-row"><span class="k">Pencapaian bulan kemarin'+(r.bulan_kemarin_label ? " (" + r.bulan_kemarin_label + ")" : "")+'</span><span class="v">'+(r.bulan_kemarin_total === null || r.bulan_kemarin_total === undefined ? "belum ada data" : fmt(r.bulan_kemarin_total))+'</span></div>'+
+      '<div class="recap-row total"><span class="k">Proyeksi All Gadai (estimasi akhir bulan)</span><span class="v">'+fmt(r.proyeksi_all_gadai)+'</span></div>'+
+      '<div class="recap-row diff"><span class="k">Target Harian (supaya kejar target bulanan)</span><span class="v '+targetHarianClass+'">'+targetHarianValue+'</span></div>';
   }
 
   var modalOverlay = document.getElementById("modalOverlay");
@@ -31504,7 +31507,7 @@ $on("cabangPinSubmit", "click", function(){
     requestAnimationFrame(function(){
       setTimeout(function(){
         html2canvas(resultModalCard, {
-          backgroundColor: "#0D1E36",
+          backgroundColor: "#FFFFFF",
           scale: 2,
           useCORS: true,
           scrollY: 0,
@@ -31557,7 +31560,7 @@ $on("cabangPinSubmit", "click", function(){
     ssReminderEl.style.display = "none";
     thanksEl.textContent = "";
     submitBtn.disabled = true;
-    submitBtn.textContent = "Mengirim...";
+    submitBtn.textContent = "Mengirim…";
 
     google.script.run
       .withSuccessHandler(function(r){
@@ -31588,7 +31591,7 @@ $on("cabangPinSubmit", "click", function(){
         }
         openResultModal();
         submitBtn.disabled = false;
-        submitBtn.textContent = "Kirim ke Google Sheets";
+        submitBtn.textContent = "Kirim";
       })
       .withFailureHandler(function(err){
         resultBox.classList.add("err");
@@ -31597,7 +31600,7 @@ $on("cabangPinSubmit", "click", function(){
         detailEl.textContent = "Terjadi kesalahan koneksi: " + (err.message || err);
         openResultModal();
         submitBtn.disabled = false;
-        submitBtn.textContent = "Kirim ke Google Sheets";
+        submitBtn.textContent = "Kirim";
       })
       .submitOmset({ cabang: cabang, tanggal: tanggal, ge: ge, gb: gb, gg: gg, rejected: rejected, pin: session.cabangPin });
   }
@@ -31610,6 +31613,25 @@ $on("cabangPinSubmit", "click", function(){
       if(el && (el.value === "0" || el.value === 0)) el.value = "";
     });
   })();
+  // Live total GE+GB+GG
+  (function wireOmsetLiveTotal(){
+    function upd(){
+      var el = document.getElementById("omsetLiveTotal");
+      if(!el) return;
+      var ge = Number((document.getElementById("ge")||{}).value);
+      var gb = Number((document.getElementById("gb")||{}).value);
+      var gg = Number((document.getElementById("gg")||{}).value);
+      var any = (document.getElementById("ge")||{}).value !== "" || (document.getElementById("gb")||{}).value !== "" || (document.getElementById("gg")||{}).value !== "";
+      var t = (isNaN(ge)?0:ge) + (isNaN(gb)?0:gb) + (isNaN(gg)?0:gg);
+      el.innerHTML = any ? ('Total Gadai: <b>'+t+'</b>') : 'Total Gadai: <b>—</b>';
+    }
+    ["ge","gb","gg"].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el){ el.addEventListener("input", upd); el.addEventListener("change", upd); }
+    });
+    upd();
+  })();
+
 
   form.addEventListener("submit", function(ev){
     ev.preventDefault();
@@ -31975,34 +31997,34 @@ $on("cabangPinSubmit", "click", function(){
     var detailBody = details.map(function(cat){
       var tot = kpiByKey[cat.key] || {};
       var rows = cat.rows || [];
-      // Inline putih — CSS global panel (#111827 / biru) tidak bisa mengalahkan
-      var st = 'style="color:#FFFFFF !important;background:transparent !important"';
-      var stH = 'style="color:#64748B !important;background:transparent !important;font-weight:700"';
+      // Light mode solid white cards — teks gelap terbaca
+      var st = 'style="color:#0F172A !important;background:#FFFFFF !important"';
+      var stH = 'style="color:#64748B !important;background:#F8FAFC !important;font-weight:700"';
       var body = rows.map(function(r){
         var gapN = parseNum(r.gap);
-        var gapColor = gapN < 0 ? "#FCA5A5" : (gapN > 0 ? "#86EFAC" : "#FFFFFF");
+        var gapColor = gapN < 0 ? "#DC2626" : (gapN > 0 ? "#16A34A" : "#0F172A");
         return '<tr>'+
           '<td class="kh-cab" '+st+'>'+escHtml(r.cabang)+'</td>'+
           '<td '+st+'>'+escHtml(r.target)+'</td>'+
           '<td '+st+'>'+escHtml(r.aktual)+'</td>'+
           '<td '+st+'>'+escHtml(r.persen)+'</td>'+
           '<td '+st+'>'+escHtml(r.proyeksi)+'</td>'+
-          '<td style="color:'+gapColor+' !important;background:transparent !important">'+escHtml(r.gap)+'</td>'+
+          '<td style="color:'+gapColor+' !important;background:#FFFFFF !important;font-weight:700">'+escHtml(r.gap)+'</td>'+
         '</tr>';
       }).join("");
       var gapTotN = parseNum(tot.gap);
-      var gapTotColor = gapTotN < 0 ? "#FCA5A5" : (gapTotN > 0 ? "#86EFAC" : "#FFFFFF");
+      var gapTotColor = gapTotN < 0 ? "#DC2626" : (gapTotN > 0 ? "#16A34A" : "#0F172A");
       body += '<tr class="kh-total-row">'+
-        '<td class="kh-cab" '+st+'>TOTAL</td>'+
-        '<td '+st+'>'+escHtml(tot.target||"-")+'</td>'+
-        '<td '+st+'>'+escHtml(tot.aktual||"-")+'</td>'+
-        '<td '+st+'>'+escHtml(tot.capaianPersen||"-")+'</td>'+
-        '<td '+st+'>'+escHtml(tot.proyeksi||"-")+'</td>'+
-        '<td style="color:'+gapTotColor+' !important;background:transparent !important">'+escHtml(tot.gap||"-")+'</td>'+
+        '<td class="kh-cab" style="color:#0F172A !important;background:#F1F5F9 !important;font-weight:800">TOTAL</td>'+
+        '<td style="color:#0F172A !important;background:#F1F5F9 !important;font-weight:700">'+escHtml(tot.target||"-")+'</td>'+
+        '<td style="color:#0F172A !important;background:#F1F5F9 !important;font-weight:700">'+escHtml(tot.aktual||"-")+'</td>'+
+        '<td style="color:#0F172A !important;background:#F1F5F9 !important;font-weight:700">'+escHtml(tot.capaianPersen||"-")+'</td>'+
+        '<td style="color:#0F172A !important;background:#F1F5F9 !important;font-weight:700">'+escHtml(tot.proyeksi||"-")+'</td>'+
+        '<td style="color:'+gapTotColor+' !important;background:#F1F5F9 !important;font-weight:800">'+escHtml(tot.gap||"-")+'</td>'+
       '</tr>';
-      return '<div class="kh-detail-card" style="background:transparent !important;border:1px solid rgba(255,255,255,0.14)">'+
-        '<div class="kh-detail-card-h" style="color:#FFFFFF !important;background:transparent !important">'+khCatIconSvg_(cat.key)+'<span style="color:#FFFFFF !important">'+escHtml(cat.label||"")+'</span></div>'+
-        '<div class="kh-detail-table-wrap" style="background:transparent !important"><table class="kh-detail-table" style="color:#FFFFFF !important;background:transparent !important">'+
+      return '<div class="kh-detail-card" style="background:#FFFFFF !important;border:1px solid #E2E8F0;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(15,23,42,0.06)">'+
+        '<div class="kh-detail-card-h" style="color:#0F172A !important;background:#F8FAFC !important;border-bottom:1px solid #E2E8F0">'+khCatIconSvg_(cat.key)+'<span style="color:#0F172A !important">'+escHtml(cat.label||"")+'</span></div>'+
+        '<div class="kh-detail-table-wrap" style="background:#FFFFFF !important"><table class="kh-detail-table" style="color:#0F172A !important;background:#FFFFFF !important;width:100%">'+
           '<thead><tr>'+
             '<th '+stH+'>Cabang</th><th '+stH+'>Target</th><th '+stH+'>Aktual</th><th '+stH+'>%</th><th '+stH+'>Proyeksi</th><th '+stH+'>Gap</th>'+
           '</tr></thead>'+
@@ -42678,6 +42700,451 @@ html[data-theme="light"] #jadwalLiburWrap .jl-table tbody td.label-col{
   padding-right:0 !important;
 }
 /* ========== END JL8 ========== */
+
+/* ===== Dashboard Harian detail: kartu putih solid (bisa dibaca) ===== */
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-panel,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-panel{
+  background: transparent !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-title,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-title{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-card,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-card{
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.06) !important;
+  backdrop-filter: none !important;
+  overflow: hidden !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-card-h,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-card-h{
+  background: #F8FAFC !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-card-h svg,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-card-h svg{
+  stroke: #0F172A !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table-wrap,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table-wrap{
+  background: #FFFFFF !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table{
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table thead,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table thead,
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table tbody,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table tbody,
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table tr,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table tr{
+  background: transparent !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table th,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table th{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  background: #F8FAFC !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table td,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table td{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  background: #FFFFFF !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table tbody tr:nth-child(even) td,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table tbody tr:nth-child(even) td{
+  background: #F8FAFC !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table tbody tr:hover td,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table tbody tr:hover td{
+  background: #F1F5F9 !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table .kh-total-row td,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table .kh-total-row td{
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-weight: 700 !important;
+  border-top: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table .kh-cab,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table .kh-cab,
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table td:first-child,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table td:first-child{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-weight: 600 !important;
+}
+/* Tombol Tutup detail */
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-toggle,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-toggle{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-toggle:hover,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-toggle:hover{
+  background: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+/* ===== FINAL: scrollbar netral + icon kelola putih ===== */
+html, body, *,
+.admin-content,
+.admin-content *,
+.harian-table-wrap,
+.harian-sync-wrap,
+.libur-table-wrap,
+.jl-table-wrap,
+.jl-scroll,
+.table-scroll,
+.gue-table-wrap{
+  scrollbar-color: #CBD5E1 #F1F5F9 !important;
+}
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb,
+.admin-content *::-webkit-scrollbar-thumb,
+.harian-table-wrap::-webkit-scrollbar-thumb,
+.harian-sync-wrap::-webkit-scrollbar-thumb,
+.libur-table-wrap::-webkit-scrollbar-thumb,
+.jl-scroll::-webkit-scrollbar-thumb{
+  background: #CBD5E1 !important;
+  background-color: #CBD5E1 !important;
+  border-radius: 8px !important;
+  border: 2px solid #F1F5F9 !important;
+  box-shadow: none !important;
+}
+*::-webkit-scrollbar-track,
+.admin-content *::-webkit-scrollbar-track{
+  background: #F1F5F9 !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+*::-webkit-scrollbar-thumb:hover{
+  background: #94A3B8 !important;
+}
+
+/* Icon kelola cabang: stroke putih di kotak gelap */
+html[data-theme="light"] #kelolaCabangHub .admin-menu-icon.dark,
+html[data-theme="light"] #kelolaCabangHub .admin-menu-icon.dark svg,
+html[data-theme="light"] #tab-kelolacabang .admin-menu-icon.dark,
+html[data-theme="light"] #tab-kelolacabang .admin-menu-icon.dark svg{
+  color: #FFFFFF !important;
+  fill: none !important;
+}
+html[data-theme="light"] #kelolaCabangHub .admin-menu-icon.dark svg *,
+html[data-theme="light"] #tab-kelolacabang .admin-menu-icon.dark svg *{
+  stroke: #FFFFFF !important;
+  fill: none !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="light"] #kelolaCabangHub .admin-menu-icon.accent svg *,
+html[data-theme="light"] #tab-kelolacabang .admin-menu-icon.accent svg *{
+  stroke: #0F172A !important;
+  fill: none !important;
+}
+
+/* ===== OMSET PIPELINE LIGHT — form + konfirmasi + hasil ===== */
+
+/* Form */
+html[data-theme="light"] #tab-kanitinput.panel,
+html[data-theme="light"] #tab-kanitinput{
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+html[data-theme="light"] #omsetForm.omset-form-lite,
+html[data-theme="light"] #omsetForm{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+  padding: 18px 18px 16px !important;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.06) !important;
+  max-width: 480px !important;
+}
+html[data-theme="light"] #tab-kanitinput label{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  margin-bottom: 6px !important;
+}
+html[data-theme="light"] #tab-kanitinput .omset-hint{
+  color: #94A3B8 !important;
+  font-weight: 500 !important;
+  font-size: 11px !important;
+}
+html[data-theme="light"] #tab-kanitinput .tag{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border-radius: 6px !important;
+  padding: 2px 8px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] #tab-kanitinput input[type="date"],
+html[data-theme="light"] #tab-kanitinput input[type="number"],
+html[data-theme="light"] #tab-kanitinput input[type="text"]{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  height: 42px !important;
+  padding: 0 12px !important;
+  font-size: 14px !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #tab-kanitinput input:focus{
+  border-color: #94A3B8 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(15,23,42,0.06) !important;
+}
+/* Hide number spinners */
+html[data-theme="light"] #tab-kanitinput input[type=number]::-webkit-outer-spin-button,
+html[data-theme="light"] #tab-kanitinput input[type=number]::-webkit-inner-spin-button{
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+html[data-theme="light"] #tab-kanitinput input[type=number]{
+  -moz-appearance: textfield !important;
+  appearance: textfield !important;
+}
+html[data-theme="light"] #tab-kanitinput .triple{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+html[data-theme="light"] .omset-live-total{
+  margin-top: 10px !important;
+  font-size: 13px !important;
+  color: #64748B !important;
+}
+html[data-theme="light"] .omset-live-total b{
+  color: #0F172A !important;
+  font-size: 15px !important;
+}
+html[data-theme="light"] .omset-actions{
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-top: 16px !important;
+}
+html[data-theme="light"] #tab-kanitinput #submitBtn{
+  width: auto !important;
+  min-width: 110px !important;
+  height: 40px !important;
+  padding: 0 20px !important;
+  border-radius: 10px !important;
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #tab-kanitinput #submitBtn:hover{
+  background: #1E293B !important;
+}
+html[data-theme="light"] #tab-kanitinput .log{
+  margin-top: 20px !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  padding: 14px !important;
+}
+html[data-theme="light"] #tab-kanitinput .log h2,
+html[data-theme="light"] #tab-kanitinput .log-header{
+  color: #0F172A !important;
+}
+
+/* Modal konfirmasi — putih */
+html[data-theme="light"] #modalOverlay .modal-card,
+html[data-theme="light"] .modal-overlay .modal-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(15,23,42,0.15) !important;
+  color: #0F172A !important;
+  max-width: 400px !important;
+}
+html[data-theme="light"] #modalOverlay .modal-eyebrow{
+  color: #94A3B8 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+}
+html[data-theme="light"] #modalOverlay .modal-title{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+}
+html[data-theme="light"] #modalOverlay .modal-row,
+html[data-theme="light"] #modalOverlay .modal-fields .modal-row{
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  padding: 8px 0 !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+}
+html[data-theme="light"] #modalOverlay .modal-fields .k{
+  color: #64748B !important;
+  font-size: 12px !important;
+}
+html[data-theme="light"] #modalOverlay .modal-fields .v{
+  color: #0F172A !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+}
+html[data-theme="light"] #modalOverlay .modal-btn.cancel{
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 10px 16px !important;
+  width: auto !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] #modalOverlay .modal-btn.confirm{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 10px 16px !important;
+  width: auto !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] #modalOverlay .date-warning{
+  background: #FFFBEB !important;
+  border: 1px solid #FDE68A !important;
+  border-radius: 10px !important;
+  color: #92400E !important;
+  padding: 10px 12px !important;
+  margin: 10px 0 !important;
+}
+
+/* Modal hasil — putih + detail seperti laporan */
+html[data-theme="light"] #resultOverlay .result-modal-card,
+html[data-theme="light"] .result-modal-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(15,23,42,0.15) !important;
+  color: #0F172A !important;
+  max-width: 420px !important;
+}
+html[data-theme="light"] #resultOverlay .result .stamp.letterhead .lh-eyebrow{
+  color: #64748B !important;
+  font-size: 10px !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] #resultOverlay .result .stamp.letterhead .lh-line{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] #resultOverlay .thanks{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  margin: 10px 0 8px !important;
+}
+html[data-theme="light"] #resultOverlay .detail{
+  color: #64748B !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  margin-bottom: 12px !important;
+}
+html[data-theme="light"] #resultOverlay .recap{
+  border-top: 1px solid #E2E8F0 !important;
+  margin-top: 8px !important;
+  padding-top: 4px !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  padding: 10px 0 !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  background: transparent !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row .k{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  flex: 1 !important;
+  line-height: 1.35 !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row .v{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row.total .k,
+html[data-theme="light"] #resultOverlay .recap-row.total .v{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-weight: 800 !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row.diff .v.pos{
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row.diff .v.neg{
+  color: #16A34A !important;
+  -webkit-text-fill-color: #16A34A !important;
+}
+html[data-theme="light"] #resultOverlay .ss-reminder{
+  color: #94A3B8 !important;
+  font-size: 11px !important;
+  margin-top: 10px !important;
+}
+html[data-theme="light"] #resultOverlay .modal-btn.cancel,
+html[data-theme="light"] #resultOverlay .result-close{
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  border: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] #resultOverlay .modal-btn.confirm,
+html[data-theme="light"] #resultOverlay #resultDownloadBtn{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  width: auto !important;
+  padding: 10px 16px !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] #resultOverlay .result-close{
+  background: transparent !important;
+  border: none !important;
+  color: #94A3B8 !important;
+  font-size: 16px !important;
+}
 </style>
 </body>
 </html>
