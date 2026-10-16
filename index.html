@@ -8072,7 +8072,6 @@ button.tab-btn.admin-nav-btn{
     .audit-charts.audit-charts-3{ grid-template-columns:1fr !important; }
   }
   #tab-kanitinput label,
-  #tab-kanitinput .tag,
   #tab-kanitinput .hint,
   #tab-kanitinput .field label,
   #tab-kanitinput h2,
@@ -8080,6 +8079,11 @@ button.tab-btn.admin-nav-btn{
   #tab-kanitinput .empty-log{
     color:#0F172A !important;
     -webkit-text-fill-color:#0F172A !important;
+  }
+  /* .tag sengaja dikecualikan — teks putih di bg gelap */
+  #tab-kanitinput .tag{
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
   }
   #tab-kanitinput input,
   #tab-kanitinput select{
@@ -29103,15 +29107,15 @@ html[data-theme="light"] table.libur-table td{
 
         <div class="triple">
           <div class="field">
-            <label><span class="tag">GE</span></label>
+            <label><span class="tag" style="background:#0F172A!important;color:#FFFFFF!important;-webkit-text-fill-color:#FFFFFF!important;display:inline-flex!important;align-items:center;justify-content:center;min-width:36px;height:24px;padding:0 10px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:0.04em;line-height:1;">GE</span></label>
             <input type="number" id="ge" min="0" step="1" placeholder="" inputmode="numeric" required>
           </div>
           <div class="field">
-            <label><span class="tag">GB</span></label>
+            <label><span class="tag" style="background:#0F172A!important;color:#FFFFFF!important;-webkit-text-fill-color:#FFFFFF!important;display:inline-flex!important;align-items:center;justify-content:center;min-width:36px;height:24px;padding:0 10px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:0.04em;line-height:1;">GB</span></label>
             <input type="number" id="gb" min="0" step="1" placeholder="" inputmode="numeric" required>
           </div>
           <div class="field">
-            <label><span class="tag">GG</span></label>
+            <label><span class="tag" style="background:#0F172A!important;color:#FFFFFF!important;-webkit-text-fill-color:#FFFFFF!important;display:inline-flex!important;align-items:center;justify-content:center;min-width:36px;height:24px;padding:0 10px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:0.04em;line-height:1;">GG</span></label>
             <input type="number" id="gg" min="0" step="1" placeholder="" inputmode="numeric" required>
           </div>
         </div>
@@ -43145,6 +43149,54 @@ html[data-theme="light"] #resultOverlay .result-close{
   color: #94A3B8 !important;
   font-size: 16px !important;
 }
+
+
+/* ===== FIX v2 Input Omset GE/GB/GG + laporan padat ===== */
+html[data-theme="light"] #tab-kanitinput .tag,
+html[data-theme="light"] #tab-kanitinput label .tag,
+#tab-kanitinput .tag,
+#tab-kanitinput label .tag,
+#tab-kanitinput .triple .tag,
+#tab-kanitinput .triple label .tag{
+  background: #0F172A !important;
+  background-color: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 36px !important;
+  height: 24px !important;
+  padding: 0 10px !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  font-family: Inter, system-ui, sans-serif !important;
+}
+/* laporan padat */
+html[data-theme="light"] #resultOverlay .result-modal-card,
+#resultOverlay .result-modal-card,
+.result-modal-card{
+  padding: 12px 14px 10px !important;
+  width: min(380px, calc(100vw - 20px)) !important;
+  max-height: min(92vh, 680px) !important;
+}
+html[data-theme="light"] #resultOverlay .recap-row,
+#resultOverlay .recap-row{
+  padding: 4px 0 !important;
+  font-size: 11.5px !important;
+  line-height: 1.25 !important;
+}
+html[data-theme="light"] #resultOverlay .thanks,
+#resultOverlay .thanks{ margin: 6px 0 2px !important; font-size: 13px !important; }
+html[data-theme="light"] #resultOverlay .detail,
+#resultOverlay .detail{ margin: 0 0 6px !important; font-size: 11px !important; }
+
 </style>
 </body>
 </html>
