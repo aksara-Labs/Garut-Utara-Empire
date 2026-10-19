@@ -4611,13 +4611,13 @@ html[data-theme="light"] #kanitSidebar {
     margin-bottom:4px; white-space:nowrap; line-height:1;
     max-width:40px; overflow:hidden; text-overflow:ellipsis;
   }
-  .harian-chart-val.is-max{ color:var(--err); font-weight:700; }
+  .harian-chart-val.is-max{ color:#0F172A; font-weight:700; }
   .harian-chart-bar{
     width:18px; border-radius:4px 4px 0 0;
     background:linear-gradient(180deg, #5B9AE8, #2B6CB0);
     min-height:2px;
   }
-  .harian-chart-bar.is-max{ background:linear-gradient(180deg, #E2685C, #C0392B); }
+  .harian-chart-bar.is-max{ background:#0F172A; }
   .harian-chart-day{
     font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--ink-soft);
     margin-top:5px; line-height:1;
@@ -7658,13 +7658,13 @@ html[data-theme="light"] #kanitSidebar {
     font-size:10px !important;
     font-weight:600 !important;
   }
-  .harian-chart-val.is-max{ color:#FCA5A5 !important; }
+  .harian-chart-val.is-max{ color:#0F172A !important; }
   .harian-chart-bar{
     background:linear-gradient(180deg,#64748B,#475569) !important;
     border-radius:4px 4px 0 0 !important;
   }
   .harian-chart-bar.is-max{
-    background:linear-gradient(180deg,#F87171,#EF4444) !important;
+    background:#0F172A !important;
   }
   /* summary cards omset harian */
   .admin-content .ob-summary-card{
@@ -32687,14 +32687,11 @@ $on("cabangPinSubmit", "click", function(){
     days.forEach(function(d){ sumGe0 += d.ge||0; sumGb0 += d.gb||0; sumGg0 += d.gg||0; });
     var achCls = achPct >= 100 ? "is-ok" : "is-low";
     var summaryHtml =
-      '<div class="ob-summary ob-summary-v2">'+
-        '<div class="ob-summary-card"><div class="k">Total GE</div><div class="v">'+fmt(sumGe0)+'</div></div>'+
-        '<div class="ob-summary-card"><div class="k">Total GB</div><div class="v">'+fmt(sumGb0)+'</div></div>'+
-        '<div class="ob-summary-card"><div class="k">Total GG</div><div class="v">'+fmt(sumGg0)+'</div></div>'+
-        '<div class="ob-summary-card highlight"><div class="k">Total Bulan</div><div class="v">'+fmt(data.totalBulan)+'</div></div>'+
-        '<div class="ob-summary-card"><div class="k">Target</div><div class="v">'+fmt(data.target)+'</div></div>'+
+      '<div class="ob-summary ob-summary-v2 ob-summary-focus">'+
+        '<div class="ob-summary-card highlight"><div class="k">Total Bulan</div><div class="v">'+fmt(data.totalBulan)+'</div><div class="s">GE '+fmt(sumGe0)+' · GB '+fmt(sumGb0)+' · GG '+fmt(sumGg0)+'</div></div>'+
+        '<div class="ob-summary-card"><div class="k">Target Bulan</div><div class="v">'+fmt(data.target)+'</div></div>'+
         '<div class="ob-summary-card ach '+achCls+'"><div class="k">Pencapaian</div><div class="v">'+achPct+'%</div></div>'+
-        '<div class="ob-summary-card"><div class="k">Tertinggi</div><div class="v">'+(maxDayObj ? ('Tgl '+maxDayObj.day+' · '+fmt(maxDayObj.total)) : '—')+'</div></div>'+
+        '<div class="ob-summary-card"><div class="k">Hari Tertinggi</div><div class="v">'+(maxDayObj ? ("Tgl "+maxDayObj.day) : "—")+'</div><div class="s">'+(maxDayObj ? fmt(maxDayObj.total) : "")+'</div></div>'+
       '</div>';
 
     // Chart + data dalam 1 tabel yang sama → kolom tanggal pasti sejajar.
@@ -32738,24 +32735,140 @@ $on("cabangPinSubmit", "click", function(){
         return '<td'+cls+'>'+fmt(v)+'</td>';
       }).join("");
     }
-    var chartCells = days.map(function(d){
-      var h = maxTotal > 0 ? Math.max(2, Math.round((d.total / maxTotal) * CHART_H)) : 2;
-      var isMax = maxTotal > 0 && d.total === maxTotal;
-      return '<td class="chart-cell">' +
-        '<div class="harian-chart-val'+(isMax?" is-max":"")+'">'+(d.total?fmt(d.total):"")+'</div>'+
-        '<div class="harian-chart-bar'+(isMax?" is-max":"")+'" style="height:'+h+'px;" title="Tgl '+d.day+': '+fmt(d.total)+'"></div>'+
+    // Target harian — model "sisa target ÷ sisa hari kerja"
+    // - Hari libur Minggu (cabang tutup): target 0
+    // - Hari sudah lewat: target = dasar (pace ideal bulan)
+    // - Hari ini & ke depan: target = (target bulan − aktual s/d kemarin) ÷ sisa hari kerja
+    //   → tidak menumpuk hutang dari hari yang belum direalisasi
+    var nDaysChart = days.length || 1;
+    var ymForSun = (typeof harianYm_ === "function") ? harianYm_() : { y: data.year||0, m: data.month||0 };
+    function isSundayNum_(dayNum){
+      if(!ymForSun.y || !ymForSun.m) return false;
+      return new Date(ymForSun.y, ymForSun.m - 1, dayNum).getDay() === 0;
+    }
+    var cabangNow = "";
+    try{
+      if(wrapId === "kanitMenuHarianWrap") cabangNow = (session && session.cabang) || "";
+      else cabangNow = ((document.getElementById("menuHarianCabang")||{}).value) || "";
+    }catch(e){}
+    var tutupMingguCabang = !!(cabangNow && cabangNow !== "TOTAL_AREA" && CABANG_TUTUP_MINGGU_LIST.indexOf(cabangNow) !== -1);
+    function isWorkDay_(dayNum){
+      return !(tutupMingguCabang && isSundayNum_(dayNum));
+    }
+    var workDayNums = [];
+    days.forEach(function(d){ if(isWorkDay_(d.day)) workDayNums.push(d.day); });
+    var workDays = workDayNums.length || nDaysChart;
+    var baseDailyTarget = (data.target > 0) ? (data.target / workDays) : 0;
+    var byDayTotal = {};
+    days.forEach(function(d){ byDayTotal[d.day] = d.total || 0; });
+    // "Hari ini" di zona lokal browser (WIB kalau device user WIB)
+    var now = new Date();
+    var todayY = now.getFullYear(), todayM = now.getMonth()+1, todayD = now.getDate();
+    var viewingCurrentMonth = (ymForSun.y === todayY && ymForSun.m === todayM);
+    var dayTargets = [];
+    // Setiap hari kerja: target = (target bulan − aktual sebelum hari itu) ÷ sisa hari kerja
+    // Hari belum lewat: aktual "palsu" 0 tidak dihitung — sisa dihitung dari hari ini
+    days.forEach(function(d){
+      if(!isWorkDay_(d.day)){
+        dayTargets.push({ base: 0, carryIn: 0, target: 0, off: true, mode: "off" });
+        return;
+      }
+      var base = Math.round(baseDailyTarget);
+      var tgt = base;
+      var mode = "sisa";
+      if(data.target > 0 && workDayNums.length){
+        var actualBefore = 0;
+        var remainWork = 0;
+        var cutoff = d.day; // hitung aktual ketat < d
+        // Jika hari ini di masa depan (bulan berjalan), kunci ke "as of today"
+        if(viewingCurrentMonth && d.day > todayD){
+          cutoff = todayD; // aktual hanya s/d kemarin (hari < today)
+        }
+        for(var i = 0; i < workDayNums.length; i++){
+          var wd = workDayNums[i];
+          if(wd < cutoff) actualBefore += byDayTotal[wd] || 0;
+        }
+        // sisa hari kerja: dari d ke akhir; untuk hari depan pakai dari today
+        var fromDay = d.day;
+        if(viewingCurrentMonth && d.day > todayD) fromDay = todayD;
+        for(var j = 0; j < workDayNums.length; j++){
+          if(workDayNums[j] >= fromDay) remainWork++;
+        }
+        if(remainWork < 1) remainWork = 1;
+        var sisa = data.target - actualBefore;
+        if(sisa < 0) sisa = 0;
+        tgt = Math.round(sisa / remainWork);
+      }
+      dayTargets.push({
+        base: base,
+        carryIn: Math.max(0, tgt - base),
+        target: tgt,
+        off: false,
+        mode: mode
+      });
+    });
+
+    // Skala grafik dari AKTUAL saja — biar tinggi batang proporsional & terbaca
+    // (target hutang bisa jauh lebih besar; garis target di-clamp ke puncak grafik)
+    var chartMax = Math.max(maxTotal, 1);
+
+    var chartCells = days.map(function(d, di){
+      var tInfo = dayTargets[di] || { base:0, carryIn:0, target:0, off:false };
+      var h = d.total > 0 ? Math.max(4, Math.round((d.total / chartMax) * CHART_H)) : 0;
+      var isMax = maxTotal > 0 && d.total === maxTotal && d.total > 0;
+      // Warna inline (senada) biar tidak ditimpa CSS lama
+      // tertinggi = navy, tercapai = slate, di bawah = abu muda
+      var barBg = "#CBD5E1";
+      if(isMax) barBg = "#0F172A";
+      else if(tInfo.off || tInfo.target <= 0) barBg = "#94A3B8";
+      else if(d.total >= tInfo.target) barBg = "#475569";
+      else barBg = "#CBD5E1";
+      var tip = "Tgl "+d.day+": aktual "+fmt(d.total);
+      if(tInfo.off) tip += " · libur Minggu (tanpa target)";
+      else {
+        tip += " · target "+fmt(tInfo.target);
+        if(tInfo.mode === "sisa") tip += " (sisa target ÷ sisa hari kerja)";
+        else tip += " (pace ideal bulan)";
+        if(d.total >= tInfo.target && tInfo.target > 0) tip += " · tercapai";
+        else if(tInfo.target > 0) tip += " · di bawah target";
+      }
+      if(isMax) tip += " · tertinggi";
+      tip = String(tip).replace(/"/g, "&quot;");
+      return '<td class="chart-cell" title="'+tip+'">'+
+        '<div class="harian-chart-val" style="color:'+(isMax?"#0F172A":"#64748B")+' !important;font-weight:'+(isMax?"800":"600")+'">'+(d.total ? fmt(d.total) : "")+'</div>'+
+        '<div class="harian-chart-col-inner" style="height:'+CHART_H+'px;">'+
+          (h ? '<div class="harian-chart-bar" style="height:'+h+'px;background:'+barBg+' !important;background-image:none !important;"></div>' : '')+
+        '</div>'+
       '</td>';
     }).join("");
     var sumGe = 0, sumGb = 0, sumGg = 0;
     days.forEach(function(d){ sumGe += d.ge; sumGb += d.gb; sumGg += d.gg; });
+    var targetRowCells = dayTargets.map(function(t){
+      if(t.off){
+        return '<td class="num oh-day-tgt is-off" title="Libur Minggu — tanpa target">—</td>';
+      }
+      var tip = t.mode === "sisa"
+        ? ("Target kejar: "+fmt(t.target)+" (sisa bulan ÷ sisa hari kerja · pace ideal "+fmt(t.base)+")")
+        : ("Target pace: "+fmt(t.target));
+      tip = String(tip).replace(/"/g, "&quot;");
+      return '<td class="num oh-day-tgt" title="'+tip+'">'+fmt(t.target)+'</td>';
+    }).join("");
 
     var syncedHtml =
-      '<div class="rejected-top3-title" style="margin-top:16px;">Grafik &amp; Rincian Harian</div>'+
+      '<div class="oh-harian-head">'+
+        '<div class="rejected-top3-title" style="margin:0;">Grafik &amp; Rincian Harian</div>'+
+        '<div class="oh-chart-legend">'+
+          '<span><i class="lg-low"></i> Di bawah target</span>'+
+          '<span><i class="lg-ok"></i> Tercapai</span>'+
+          '<span><i class="lg-max"></i> Tertinggi</span>'+
+        '</div>'+
+      '</div>'+
       '<div class="harian-sync-wrap"><div class="harian-table-wrap">'+
         '<table class="harian-table harian-table-synced"><thead><tr>'+
           '<th class="label-col">Tanggal</th>'+headerCells+'<th class="total-col">Total</th>'+
         '</tr></thead><tbody>'+
           '<tr class="chart-row"><td class="label-col">Grafik</td>'+chartCells+'<td class="total-col"></td></tr>'+
+          '<tr class="target-row"><td class="label-col">Target</td>'+targetRowCells+'<td class="total-col">'+fmt(data.target)+'</td></tr>'+
           '<tr><td class="label-col">GE</td>'+rowCells('ge')+'<td class="total-col">'+fmt(sumGe)+'</td></tr>'+
           '<tr><td class="label-col">GB</td>'+rowCells('gb')+'<td class="total-col">'+fmt(sumGb)+'</td></tr>'+
           '<tr><td class="label-col">GG</td>'+rowCells('gg')+'<td class="total-col">'+fmt(sumGg)+'</td></tr>'+
@@ -32775,19 +32888,23 @@ $on("cabangPinSubmit", "click", function(){
         '<div class="cmp-result" style="margin-top:10px;"></div>'+
       '</div>';
     // ---- Pencapaian per minggu (Sen–Min; M1 = tgl 1 s/d Minggu pertama) ----
-    function buildWeeksHarian_(daysArr, year, month, targetBulan){
+    function buildWeeksHarian_(daysArr, year, month, targetBulan, skipSunday, dayTargetsArr){
       var nDays = daysArr.length;
       if(!nDays || !year || !month) return [];
       var byDay = {};
       daysArr.forEach(function(d){ byDay[d.day] = d; });
+      var tgtByDay = {};
+      (dayTargetsArr || []).forEach(function(t, i){
+        var dayNum = (daysArr[i] && daysArr[i].day) || (i + 1);
+        tgtByDay[dayNum] = t;
+      });
       var weeks = [];
       var cur = null;
       for(var d = 1; d <= nDays; d++){
-        var dow = new Date(year, month - 1, d).getDay(); // 0=Min … 6=Sab
-        // mulai minggu baru: hari 1, atau Senin (1)
+        var dow = new Date(year, month - 1, d).getDay();
         if(d === 1 || dow === 1){
           if(cur) weeks.push(cur);
-          cur = { week: weeks.length + 1, start: d, end: d, ge:0, gb:0, gg:0, total:0, days:0 };
+          cur = { week: weeks.length + 1, start: d, end: d, ge:0, gb:0, gg:0, total:0, days:0, workDays:0, target:0 };
         }
         var cell = byDay[d] || { ge:0, gb:0, gg:0, total:0 };
         cur.end = d;
@@ -32796,48 +32913,60 @@ $on("cabangPinSubmit", "click", function(){
         cur.gg += cell.gg || 0;
         cur.total += cell.total || 0;
         cur.days += 1;
-        // tutup di Minggu (0)
+        var isSun = (dow === 0);
+        if(!(skipSunday && isSun)) cur.workDays += 1;
+        // Target pekan = jumlah target harian (model sisa÷sisa) di rentang pekan
+        var ti = tgtByDay[d];
+        if(ti && !ti.off) cur.target += ti.target || 0;
         if(dow === 0){
           weeks.push(cur);
           cur = null;
         }
       }
       if(cur) weeks.push(cur);
-      // target proporsional hari kalender
       weeks.forEach(function(w){
-        w.target = targetBulan > 0 ? Math.round(targetBulan * (w.days / nDays)) : 0;
+        w.baseTarget = w.target;
+        w.carryIn = 0;
         w.pct = w.target > 0 ? Math.round((w.total / w.target) * 100) : 0;
       });
       return weeks;
     }
     var ymW = (typeof harianYm_ === "function") ? harianYm_() : { y: data.year||0, m: data.month||0 };
-    var weeksData = buildWeeksHarian_(days, ymW.y, ymW.m, data.target || 0);
+    var skipSunWeeks = false;
+    try{
+      var cabW = (wrapId === "kanitMenuHarianWrap") ? ((session && session.cabang)||"") : (((document.getElementById("menuHarianCabang")||{}).value)||"");
+      skipSunWeeks = !!(cabW && cabW !== "TOTAL_AREA" && CABANG_TUTUP_MINGGU_LIST.indexOf(cabW) !== -1);
+    }catch(eW){}
+    var weeksData = buildWeeksHarian_(days, ymW.y, ymW.m, data.target || 0, skipSunWeeks, dayTargets);
     var pad2 = function(n){ return String(n).padStart(2, "0"); };
     var weekHtml = "";
     if(weeksData.length){
+      var nowW = new Date();
+      var curD = nowW.getDate(), curM = nowW.getMonth()+1, curY = nowW.getFullYear();
+      var isCurMonthW = (ymW.y === curY && ymW.m === curM);
       weekHtml =
         '<div class="oh-week-section">'+
           '<div class="oh-week-head">'+
-            '<div class="oh-week-title">Pencapaian per Minggu</div>'+
-            '<div class="oh-week-sub">Minggu 1 = tgl 1 s/d Minggu pertama · selanjutnya Senin–Minggu</div>'+
+            '<div class="oh-week-title">Pencapaian per Pekan</div>'+
+            '<div class="oh-week-sub">Target = jumlah target harian (sisa ÷ sisa hari kerja)</div>'+
           '</div>'+
           '<div class="oh-week-table-wrap">'+
-            '<table class="oh-week-table">'+
+            '<table class="oh-week-table oh-week-table-compact">'+
               '<thead><tr>'+
-                '<th>Minggu</th><th>Periode</th><th>GE</th><th>GB</th><th>GG</th><th>Total</th><th>Target</th><th>Pencapaian</th>'+
+                '<th>Pekan</th><th>Periode</th><th>Total</th><th>Target</th><th>Pencapaian</th>'+
               '</tr></thead><tbody>'+
               weeksData.map(function(w){
                 var pctCls = w.pct >= 100 ? "oh-pct-ok" : "oh-pct-low";
-                return '<tr>'+
-                  '<td class="oh-w-num">M'+w.week+'</td>'+
+                var isCurrent = isCurMonthW && curD >= w.start && curD <= w.end;
+                var tip = "GE "+fmt(w.ge)+" · GB "+fmt(w.gb)+" · GG "+fmt(w.gg);
+                tip = String(tip).replace(/"/g, "&quot;");
+                return '<tr class="'+(isCurrent ? "oh-w-current" : "")+'" title="'+tip+'">'+
+                  '<td class="oh-w-num">P'+w.week+(isCurrent ? ' <span class="oh-w-now">berjalan</span>' : '')+'</td>'+
                   '<td class="oh-w-range">'+pad2(w.start)+'–'+pad2(w.end)+'</td>'+
-                  '<td class="num">'+fmt(w.ge)+'</td>'+
-                  '<td class="num">'+fmt(w.gb)+'</td>'+
-                  '<td class="num">'+fmt(w.gg)+'</td>'+
                   '<td class="num oh-w-total">'+fmt(w.total)+'</td>'+
                   '<td class="num">'+fmt(w.target)+'</td>'+
                   '<td class="oh-w-pct '+pctCls+'">'+
-                    '<div class="oh-pct-bar"><span style="width:'+Math.min(100,w.pct)+'%"></span></div>'+
+                    '<div class="oh-pct-bar"><span style="width:'+Math.min(100,Math.max(0,w.pct))+'%"></span></div>'+
                     '<b>'+w.pct+'%</b>'+
                   '</td>'+
                 '</tr>';
@@ -44998,10 +45127,10 @@ html[data-theme="light"] .ob-summary-v2 .ob-summary-card.ach.is-low .v{ color:#D
   border-radius:99px !important;
   background:#94A3B8 !important;
 }
-.oh-pct-ok b{ color:#16A34A !important; -webkit-text-fill-color:#16A34A !important; }
-.oh-pct-ok .oh-pct-bar > span{ background:#16A34A !important; }
-.oh-pct-low b{ color:#DC2626 !important; -webkit-text-fill-color:#DC2626 !important; }
-.oh-pct-low .oh-pct-bar > span{ background:#DC2626 !important; }
+.oh-pct-ok b{ color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; }
+.oh-pct-ok .oh-pct-bar > span{ background:#0F172A !important; }
+.oh-pct-low b{ color:#64748B !important; -webkit-text-fill-color:#64748B !important; }
+.oh-pct-low .oh-pct-bar > span{ background:#94A3B8 !important; }
 @media (max-width: 640px){
   .ob-summary-v2{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
 }
@@ -45020,6 +45149,255 @@ html[data-theme="light"] .oh-pct-mid b{
 .oh-pct-mid .oh-pct-bar > span{
   background:#DC2626 !important;
 }
+</style>
+
+
+<style id="oh-carry-note">
+.oh-tgt-note{
+  display:block !important;
+  font-size:10px !important;
+  font-weight:500 !important;
+  color:#64748B !important;
+  -webkit-text-fill-color:#64748B !important;
+  margin-top:2px !important;
+  line-height:1.3 !important;
+}
+.oh-w-tgt{ vertical-align:middle !important; }
+</style>
+
+
+<style id="oh-tgt-tip">
+.oh-w-tgt{
+  cursor: help !important;
+  border-bottom: 1px dotted #94A3B8 !important;
+}
+</style>
+
+
+<style id="oh-daily-target-chart">
+.harian-table td.chart-cell{
+  vertical-align: bottom !important;
+  padding: 6px 2px 4px !important;
+  background: #FFFFFF !important;
+  min-width: 36px !important;
+}
+.harian-table td.chart-cell .harian-chart-val{
+  display: block !important;
+  text-align: center !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  line-height: 1.2 !important;
+  margin-bottom: 4px !important;
+  white-space: nowrap !important;
+  min-height: 12px !important;
+}
+.harian-table td.chart-cell .harian-chart-val.is-max{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  font-weight: 800 !important;
+}
+.harian-chart-col-inner{
+  position: relative !important;
+  width: 100% !important;
+  max-width: 28px !important;
+  height: 100px !important;
+  min-height: 100px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+/* Palette senada: abu muda → slate → navy */
+.harian-chart-bar{
+  width: 12px !important;
+  max-width: 14px !important;
+  min-height: 4px !important;
+  border-radius: 3px 3px 1px 1px !important;
+  background: #CBD5E1 !important; /* default / low */
+}
+.harian-chart-bar.is-low{
+  background: #CBD5E1 !important; /* di bawah target */
+}
+.harian-chart-bar.is-ok{
+  background: #64748B !important; /* tercapai */
+}
+.harian-chart-bar.is-neutral{
+  background: #94A3B8 !important; /* libur / tanpa target */
+}
+.harian-chart-bar.is-max{
+  background: #0F172A !important; /* tertinggi */
+}
+/* sembunyikan sisa garis target lama */
+.harian-chart-target-line,
+.harian-chart-stack{ display: none !important; }
+html[data-theme="light"] .harian-table tr.chart-row td{
+  background: #FFFFFF !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .harian-table tr.target-row td{
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+  font-size: 11px !important;
+  background: #F8FAFC !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+}
+html[data-theme="light"] .harian-table tr.target-row td.label-col{
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-weight: 700 !important;
+  background: #F8FAFC !important;
+}
+.oh-day-tgt{ cursor: help !important; }
+.oh-day-tgt.is-off{
+  color: #94A3B8 !important;
+  -webkit-text-fill-color: #94A3B8 !important;
+}
+</style>
+
+
+<style id="oh-chart-scale-fix">
+.harian-chart-col-inner{
+  height: 100px !important;
+  min-height: 100px !important;
+}
+.harian-table tr.chart-row td.chart-cell{
+  height: auto !important;
+  vertical-align: bottom !important;
+}
+.harian-chart-bar{
+  min-height: 4px !important;
+}
+/* target line removed */
+.oh-day-tgt.is-off{
+  color: #94A3B8 !important;
+  -webkit-text-fill-color: #94A3B8 !important;
+}
+</style>
+
+
+<style id="oh-bar-palette-final">
+/* Override total warna batang Omset Harian — senada, tanpa merah */
+html[data-theme="light"] .harian-table td.chart-cell .harian-chart-bar,
+html[data-theme="light"] .harian-table .harian-chart-bar,
+.harian-table .harian-chart-bar,
+.admin-content .harian-chart-bar,
+.harian-chart-bar{
+  background: #CBD5E1 !important;
+  background-image: none !important;
+  background-color: #CBD5E1 !important;
+}
+html[data-theme="light"] .harian-table .harian-chart-bar.is-low,
+.harian-chart-bar.is-low{
+  background: #CBD5E1 !important;
+  background-image: none !important;
+  background-color: #CBD5E1 !important;
+}
+html[data-theme="light"] .harian-table .harian-chart-bar.is-ok,
+.harian-chart-bar.is-ok{
+  background: #64748B !important;
+  background-image: none !important;
+  background-color: #64748B !important;
+}
+html[data-theme="light"] .harian-table .harian-chart-bar.is-neutral,
+.harian-chart-bar.is-neutral{
+  background: #94A3B8 !important;
+  background-image: none !important;
+  background-color: #94A3B8 !important;
+}
+html[data-theme="light"] .harian-table .harian-chart-bar.is-max,
+html[data-theme="light"] .harian-table .harian-chart-bar.is-max.is-ok,
+html[data-theme="light"] .harian-table .harian-chart-bar.is-max.is-low,
+.admin-content .harian-chart-bar.is-max,
+.harian-chart-bar.is-max{
+  background: #0F172A !important;
+  background-image: none !important;
+  background-color: #0F172A !important;
+}
+html[data-theme="light"] .harian-table td.chart-cell .harian-chart-val.is-max,
+.harian-chart-val.is-max{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+</style>
+
+
+<style id="oh-layout-v3">
+.ob-summary-focus{
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  margin-bottom: 18px !important;
+}
+@media (max-width: 900px){
+  .ob-summary-focus{ grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+html[data-theme="light"] .ob-summary-focus .ob-summary-card{
+  padding: 14px 16px !important;
+  min-height: 78px !important;
+}
+html[data-theme="light"] .ob-summary-focus .ob-summary-card .s{
+  font-size: 11px !important;
+  color: #64748B !important;
+  margin-top: 4px !important;
+  font-weight: 500 !important;
+}
+html[data-theme="light"] .ob-summary-focus .ob-summary-card .v{
+  font-size: 20px !important;
+  letter-spacing: -0.02em !important;
+}
+.oh-week-section{ margin-bottom: 20px !important; }
+.oh-week-table-compact th:nth-child(3),
+.oh-week-table-compact th:nth-child(4),
+.oh-week-table-compact td.num{ font-variant-numeric: tabular-nums !important; }
+tr.oh-w-current td{
+  background: #F1F5F9 !important;
+}
+tr.oh-w-current td.oh-w-num{
+  font-weight: 800 !important;
+}
+.oh-w-now{
+  display: inline-block !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #64748B !important;
+  background: #E2E8F0 !important;
+  border-radius: 99px !important;
+  padding: 1px 7px !important;
+  margin-left: 6px !important;
+  vertical-align: middle !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+.oh-harian-head{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  margin: 16px 0 10px !important;
+}
+.oh-chart-legend{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  font-size: 11px !important;
+  color: #64748B !important;
+  font-weight: 600 !important;
+}
+.oh-chart-legend i{
+  display: inline-block !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 2px !important;
+  margin-right: 5px !important;
+  vertical-align: -1px !important;
+}
+.oh-chart-legend .lg-low{ background: #CBD5E1 !important; }
+.oh-chart-legend .lg-ok{ background: #475569 !important; }
+.oh-chart-legend .lg-max{ background: #0F172A !important; }
 </style>
 
 </body>
