@@ -4286,8 +4286,8 @@ html[data-theme="light"] #kanitSidebar {
 /* ===== Auth / Landing modern ===== */
   .cabang-cfg-table{ display:flex; flex-direction:column; gap:8px; margin-top:8px; }
   .cabang-cfg-head, .cabang-cfg-row{
-    display:grid; grid-template-columns:72px 64px 88px 100px 1fr;
-    gap:10px; align-items:center;
+    display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center;
+    max-width:720px;
   }
   .cabang-cfg-head{
     font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft);
@@ -8191,14 +8191,16 @@ html[data-theme="light"] #kanitSidebar {
     display:none;
   }
   .cabang-cfg-row{
-    display:grid !important;
-    grid-template-columns: 90px 70px 90px 100px 1fr auto !important;
-    gap:10px !important;
+    display:flex !important;
+    flex-wrap:wrap !important;
+    gap:10px 14px !important;
     align-items:center !important;
     background:#FFFFFF !important;
-    border:1px solid rgba(148,163,184,0.25) !important;
+    border:1px solid #E2E8F0 !important;
     border-radius:12px !important;
     padding:12px 14px !important;
+    width:100% !important;
+    max-width:720px !important;
   }
   .cabang-cfg-kode{ color:#0F172A !important; font-weight:800 !important; font-size:14px !important; }
   .cabang-cfg-row select,
@@ -32263,25 +32265,31 @@ $on("cabangPinSubmit", "click", function(){
       var stH = 'style="color:#64748B !important;background:#F8FAFC !important;font-weight:700"';
       var body = rows.map(function(r){
         var gapN = parseNum(r.gap);
-        var gapColor = gapN < 0 ? "#DC2626" : (gapN > 0 ? "#16A34A" : "#0F172A");
+        var gapCls = gapN < 0 ? "kh-val-neg" : (gapN > 0 ? "kh-val-pos" : "");
+        var nT = parseNum(r.target);
+        var nP = parseNum(r.proyeksi);
+        var proyCls = (nP < nT) ? "kh-val-neg" : ((nP > nT) ? "kh-val-pos" : "");
         return '<tr>'+
           '<td class="kh-cab" '+st+'>'+escHtml(r.cabang)+'</td>'+
           '<td '+st+'>'+escHtml(r.target)+'</td>'+
           '<td '+st+'>'+escHtml(r.aktual)+'</td>'+
           '<td '+st+'>'+escHtml(r.persen)+'</td>'+
-          '<td '+st+'>'+escHtml(r.proyeksi)+'</td>'+
-          '<td style="color:'+gapColor+' !important;background:#FFFFFF !important;font-weight:700">'+escHtml(r.gap)+'</td>'+
+          '<td class="'+proyCls+'" '+st+'>'+escHtml(r.proyeksi)+'</td>'+
+          '<td class="'+gapCls+'" '+st+'>'+escHtml(r.gap)+'</td>'+
         '</tr>';
       }).join("");
       var gapTotN = parseNum(tot.gap);
       var gapTotColor = gapTotN < 0 ? "#DC2626" : (gapTotN > 0 ? "#16A34A" : "#0F172A");
+      var nTotT = parseNum(tot.target);
+      var nTotP = parseNum(tot.proyeksi);
+      var proyTotColor = (nTotP < nTotT) ? "#DC2626" : ((nTotP > nTotT) ? "#16A34A" : "#0F172A");
       body += '<tr class="kh-total-row">'+
         '<td class="kh-cab" style="color:#0F172A !important;background:#F1F5F9 !important;font-weight:800">TOTAL</td>'+
         '<td style="color:#0F172A !important;background:#F1F5F9 !important;font-weight:700">'+escHtml(tot.target||"-")+'</td>'+
         '<td style="color:#0F172A !important;background:#F1F5F9 !important;font-weight:700">'+escHtml(tot.aktual||"-")+'</td>'+
         '<td style="color:#0F172A !important;background:#F1F5F9 !important;font-weight:700">'+escHtml(tot.capaianPersen||"-")+'</td>'+
-        '<td style="color:#0F172A !important;background:#F1F5F9 !important;font-weight:700">'+escHtml(tot.proyeksi||"-")+'</td>'+
-        '<td style="color:'+gapTotColor+' !important;background:#F1F5F9 !important;font-weight:800">'+escHtml(tot.gap||"-")+'</td>'+
+        '<td class="'+((nTotP < nTotT) ? "kh-val-neg" : ((nTotP > nTotT) ? "kh-val-pos" : ""))+'" style="background:#F1F5F9 !important;font-weight:700">'+escHtml(tot.proyeksi||"-")+'</td>'+
+        '<td class="'+((gapTotN < 0) ? "kh-val-neg" : ((gapTotN > 0) ? "kh-val-pos" : ""))+'" style="background:#F1F5F9 !important;font-weight:800">'+escHtml(tot.gap||"-")+'</td>'+
       '</tr>';
       return '<div class="kh-detail-card" style="background:#FFFFFF !important;border:1px solid #E2E8F0;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(15,23,42,0.06)">'+
         '<div class="kh-detail-card-h" style="color:#0F172A !important;background:#F8FAFC !important;border-bottom:1px solid #E2E8F0">'+khCatIconSvg_(cat.key)+'<span style="color:#0F172A !important">'+escHtml(cat.label||"")+'</span></div>'+
@@ -32677,15 +32685,16 @@ $on("cabangPinSubmit", "click", function(){
     var achPct = data.target > 0 ? Math.round((data.totalBulan / data.target) * 100) : 0;
     var sumGe0 = 0, sumGb0 = 0, sumGg0 = 0;
     days.forEach(function(d){ sumGe0 += d.ge||0; sumGb0 += d.gb||0; sumGg0 += d.gg||0; });
+    var achCls = achPct >= 100 ? "is-ok" : "is-low";
     var summaryHtml =
-      '<div class="ob-summary">'+
+      '<div class="ob-summary ob-summary-v2">'+
         '<div class="ob-summary-card"><div class="k">Total GE</div><div class="v">'+fmt(sumGe0)+'</div></div>'+
         '<div class="ob-summary-card"><div class="k">Total GB</div><div class="v">'+fmt(sumGb0)+'</div></div>'+
         '<div class="ob-summary-card"><div class="k">Total GG</div><div class="v">'+fmt(sumGg0)+'</div></div>'+
-        '<div class="ob-summary-card"><div class="k">Total Bulan</div><div class="v">'+fmt(data.totalBulan)+'</div></div>'+
+        '<div class="ob-summary-card highlight"><div class="k">Total Bulan</div><div class="v">'+fmt(data.totalBulan)+'</div></div>'+
         '<div class="ob-summary-card"><div class="k">Target</div><div class="v">'+fmt(data.target)+'</div></div>'+
-        '<div class="ob-summary-card ach"><div class="k">Pencapaian</div><div class="v">'+achPct+'%</div></div>'+
-        '<div class="ob-summary-card"><div class="k">Tertinggi</div><div class="v">'+(maxDayObj ? ('Tgl '+maxDayObj.day+' ('+fmt(maxDayObj.total)+')') : '-')+'</div></div>'+
+        '<div class="ob-summary-card ach '+achCls+'"><div class="k">Pencapaian</div><div class="v">'+achPct+'%</div></div>'+
+        '<div class="ob-summary-card"><div class="k">Tertinggi</div><div class="v">'+(maxDayObj ? ('Tgl '+maxDayObj.day+' · '+fmt(maxDayObj.total)) : '—')+'</div></div>'+
       '</div>';
 
     // Chart + data dalam 1 tabel yang sama → kolom tanggal pasti sejajar.
@@ -32765,7 +32774,79 @@ $on("cabangPinSubmit", "click", function(){
         '</div>'+
         '<div class="cmp-result" style="margin-top:10px;"></div>'+
       '</div>';
-    wrap.innerHTML = summaryHtml + syncedHtml + compareHtml;
+    // ---- Pencapaian per minggu (Sen–Min; M1 = tgl 1 s/d Minggu pertama) ----
+    function buildWeeksHarian_(daysArr, year, month, targetBulan){
+      var nDays = daysArr.length;
+      if(!nDays || !year || !month) return [];
+      var byDay = {};
+      daysArr.forEach(function(d){ byDay[d.day] = d; });
+      var weeks = [];
+      var cur = null;
+      for(var d = 1; d <= nDays; d++){
+        var dow = new Date(year, month - 1, d).getDay(); // 0=Min … 6=Sab
+        // mulai minggu baru: hari 1, atau Senin (1)
+        if(d === 1 || dow === 1){
+          if(cur) weeks.push(cur);
+          cur = { week: weeks.length + 1, start: d, end: d, ge:0, gb:0, gg:0, total:0, days:0 };
+        }
+        var cell = byDay[d] || { ge:0, gb:0, gg:0, total:0 };
+        cur.end = d;
+        cur.ge += cell.ge || 0;
+        cur.gb += cell.gb || 0;
+        cur.gg += cell.gg || 0;
+        cur.total += cell.total || 0;
+        cur.days += 1;
+        // tutup di Minggu (0)
+        if(dow === 0){
+          weeks.push(cur);
+          cur = null;
+        }
+      }
+      if(cur) weeks.push(cur);
+      // target proporsional hari kalender
+      weeks.forEach(function(w){
+        w.target = targetBulan > 0 ? Math.round(targetBulan * (w.days / nDays)) : 0;
+        w.pct = w.target > 0 ? Math.round((w.total / w.target) * 100) : 0;
+      });
+      return weeks;
+    }
+    var ymW = (typeof harianYm_ === "function") ? harianYm_() : { y: data.year||0, m: data.month||0 };
+    var weeksData = buildWeeksHarian_(days, ymW.y, ymW.m, data.target || 0);
+    var pad2 = function(n){ return String(n).padStart(2, "0"); };
+    var weekHtml = "";
+    if(weeksData.length){
+      weekHtml =
+        '<div class="oh-week-section">'+
+          '<div class="oh-week-head">'+
+            '<div class="oh-week-title">Pencapaian per Minggu</div>'+
+            '<div class="oh-week-sub">Minggu 1 = tgl 1 s/d Minggu pertama · selanjutnya Senin–Minggu</div>'+
+          '</div>'+
+          '<div class="oh-week-table-wrap">'+
+            '<table class="oh-week-table">'+
+              '<thead><tr>'+
+                '<th>Minggu</th><th>Periode</th><th>GE</th><th>GB</th><th>GG</th><th>Total</th><th>Target</th><th>Pencapaian</th>'+
+              '</tr></thead><tbody>'+
+              weeksData.map(function(w){
+                var pctCls = w.pct >= 100 ? "oh-pct-ok" : "oh-pct-low";
+                return '<tr>'+
+                  '<td class="oh-w-num">M'+w.week+'</td>'+
+                  '<td class="oh-w-range">'+pad2(w.start)+'–'+pad2(w.end)+'</td>'+
+                  '<td class="num">'+fmt(w.ge)+'</td>'+
+                  '<td class="num">'+fmt(w.gb)+'</td>'+
+                  '<td class="num">'+fmt(w.gg)+'</td>'+
+                  '<td class="num oh-w-total">'+fmt(w.total)+'</td>'+
+                  '<td class="num">'+fmt(w.target)+'</td>'+
+                  '<td class="oh-w-pct '+pctCls+'">'+
+                    '<div class="oh-pct-bar"><span style="width:'+Math.min(100,w.pct)+'%"></span></div>'+
+                    '<b>'+w.pct+'%</b>'+
+                  '</td>'+
+                '</tr>';
+              }).join("")+
+            '</tbody></table>'+
+          '</div>'+
+        '</div>';
+    }
+    wrap.innerHTML = summaryHtml + weekHtml + syncedHtml + compareHtml;
     var srcSel = document.getElementById("menuHarianBulan") || document.getElementById("kanitMenuHarianBulan");
     if(srcSel){
       var opts = srcSel.innerHTML;
@@ -35738,9 +35819,9 @@ function applyRejectedAlasanFilter_(which){
       if(hub){ hub.style.display = ""; hub.style.visibility = "visible"; }
       panels.forEach(function(pn){ if(pn){ pn.style.display = "none"; pn.classList.remove("hub-panel-open"); } });
       cards.forEach(function(c){ if(c) c.classList.remove("active"); });
-      // panel TTD khusus
+      // panel TTD khusus — WAJIB hapus hub-panel-open (CSS pakai !important)
       var ttd = document.getElementById("cabangTtdPanel");
-      if(ttd) ttd.style.display = "none";
+      if(ttd){ ttd.style.display = "none"; ttd.classList.remove("hub-panel-open"); }
       scrollContentTop();
     }
     function openPanel(i){
@@ -35748,7 +35829,7 @@ function applyRejectedAlasanFilter_(which){
       panels.forEach(function(pn){ if(pn){ pn.style.display = "none"; pn.classList.remove("hub-panel-open"); } });
       cards.forEach(function(c){ if(c) c.classList.remove("active"); });
       var ttd = document.getElementById("cabangTtdPanel");
-      if(ttd) ttd.style.display = "none";
+      if(ttd){ ttd.style.display = "none"; ttd.classList.remove("hub-panel-open"); }
       if(cards[i]) cards[i].classList.add("active");
       if(panels[i]){
         panels[i].style.display = "block";
@@ -35804,10 +35885,20 @@ function applyRejectedAlasanFilter_(which){
   ]);
 
   document.querySelectorAll(".hub-back-btn").forEach(function(btn){
-    btn.addEventListener("click", function(){
+    btn.addEventListener("click", function(ev){
+      ev.preventDefault();
       var which = btn.getAttribute("data-hub");
       if(which === "updateData" && updateDataHubNav) updateDataHubNav.showHub();
-      if(which === "kelolaCabang" && kelolaCabangHubNav) kelolaCabangHubNav.showHub();
+      if(which === "kelolaCabang"){
+        // Tutup semua panel termasuk TTD, buka hub
+        document.querySelectorAll("#tab-kelolacabang .hub-panel-full").forEach(function(pn){
+          pn.style.display = "none";
+          pn.classList.remove("hub-panel-open");
+        });
+        var hub = document.getElementById("kelolaCabangHub");
+        if(hub){ hub.style.display = ""; hub.style.visibility = "visible"; }
+        if(kelolaCabangHubNav) kelolaCabangHubNav.showHub();
+      }
     });
   });
 
@@ -36445,17 +36536,7 @@ function applyRejectedAlasanFilter_(which){
       document.getElementById("cabangConfigSaveBtn").style.display = "none";
       return;
     }
-    if(bendaharaCabang) _kaBendaharaCabang = bendaharaCabang;
-    var bendOpts = config.map(function(c){
-      return '<option value="'+escHtml(c.kode)+'"'+(_kaBendaharaCabang===c.kode?' selected':'')+'>'+escHtml(c.kode)+'</option>';
-    }).join("");
     wrap.innerHTML =
-      '<div class="ka-bendahara-row" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px;padding:12px 14px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;background:rgba(255,255,255,0.03);">'+
-        '<label style="font-size:12px;font-weight:700;color:#64748B;">Bendahara Kas Area</label>'+
-        '<select id="kaBendaharaSelect" style="min-width:120px;">'+bendOpts+'</select>'+
-        '<button type="button" class="btn-xs" id="kaBendaharaSaveBtn">Simpan Bendahara</button>'+
-        '<span class="hint" style="margin:0;font-size:11px;">Kanit cabang ini yang boleh centang &amp; input debit. Default GRT013.</span>'+
-      '</div>'+
       '<div class="cabang-cfg-table">'+
       '<div class="cabang-cfg-head"><span>Cabang</span><span>Kelas</span><span>Status</span><span>Libur Minggu</span><span></span></div>'+
       config.map(function(c){
@@ -36473,7 +36554,7 @@ function applyRejectedAlasanFilter_(which){
           '<span class="cabang-cfg-badge '+(c.kcu?"is-kcu":"is-kcp")+'">'+statusLbl+'</span>'+
         '</label>'+
         '<label class="cabang-cfg-check"><input type="checkbox" data-kode="'+c.kode+'" class="cabang-libur-toggle"'+(c.liburMinggu ? ' checked' : '')+'> Minggu</label>'+
-        '<button type="button" class="btn-xs secondary cabang-reset-pin-btn" data-kode="'+c.kode+'">Reset PIN</button> '+
+        '<button type="button" class="btn-xs secondary cabang-reset-pin-btn" data-kode="'+c.kode+'">Reset</button> '+
         '<button type="button" class="btn-xs cabang-ttd-btn" data-kode="'+c.kode+'">Karyawan &amp; TTD</button>'+
       '</div>';
     }).join("")+'</div>';
@@ -36500,31 +36581,7 @@ function applyRejectedAlasanFilter_(which){
     });
     document.getElementById("cabangConfigSaveBtn").style.display = "block";
 
-    var bendSave = document.getElementById("kaBendaharaSaveBtn");
-    if(bendSave){
-      bendSave.addEventListener("click", function(){
-        var sel = document.getElementById("kaBendaharaSelect");
-        var kode = sel ? sel.value : "";
-        var msgEl = document.getElementById("cabangConfigMsg");
-        if(!adminSessionGuard(msgEl)) return;
-        bendSave.disabled = true;
-        google.script.run
-          .withSuccessHandler(function(r){
-            bendSave.disabled = false;
-            if(!r || r.status !== "OK"){
-              showMsg(msgEl, (r && r.reason) || "Gagal simpan bendahara.", "err");
-              return;
-            }
-            _kaBendaharaCabang = r.bendaharaCabang || kode;
-            showMsg(msgEl, "Bendahara Kas Area: "+_kaBendaharaCabang, "ok");
-          })
-          .withFailureHandler(function(err){
-            bendSave.disabled = false;
-            showMsg(msgEl, "Koneksi: "+(err.message||err), "err");
-          })
-          .setKasAreaBendahara(session.adminPin, kode);
-      });
-    }
+    
 
     wrap.querySelectorAll(".cabang-reset-pin-btn").forEach(function(btn){
       btn.addEventListener("click", function(){
@@ -44624,6 +44681,344 @@ html.rej-is-loading #kanitRejectedWrap{
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
+}
+</style>
+
+
+<style id="kelola-cabang-layout-fix">
+/* Kelola Cabang: compact, tidak melebar kosong */
+#tab-kelolacabang #cabangConfigWrap,
+html[data-theme="light"] #tab-kelolacabang #cabangConfigWrap{
+  max-width: 720px !important;
+}
+#tab-kelolacabang .cabang-cfg-table,
+html[data-theme="light"] #tab-kelolacabang .cabang-cfg-table{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  max-width: 720px !important;
+  width: 100% !important;
+}
+#tab-kelolacabang .cabang-cfg-row,
+html[data-theme="light"] #tab-kelolacabang .cabang-cfg-row{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 10px 12px !important;
+  padding: 10px 12px !important;
+  max-width: 720px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+}
+#tab-kelolacabang .cabang-cfg-kode,
+html[data-theme="light"] #tab-kelolacabang .cabang-cfg-kode{
+  min-width: 64px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+}
+#tab-kelolacabang .cabang-kelas-select,
+html[data-theme="light"] #tab-kelolacabang .cabang-kelas-select{
+  width: 52px !important;
+  min-width: 52px !important;
+  max-width: 52px !important;
+  padding: 6px 4px !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+}
+#tab-kelolacabang .cabang-cfg-status,
+html[data-theme="light"] #tab-kelolacabang .cabang-cfg-status{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+#tab-kelolacabang .cabang-cfg-check,
+html[data-theme="light"] #tab-kelolacabang .cabang-cfg-check{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  font-size: 12px !important;
+  color: #475569 !important;
+}
+/* Tombol aksi: ukuran natural, TIDAK stretch */
+#tab-kelolacabang .cabang-reset-pin-btn,
+#tab-kelolacabang .cabang-ttd-btn,
+html[data-theme="light"] #tab-kelolacabang .cabang-reset-pin-btn,
+html[data-theme="light"] #tab-kelolacabang .cabang-ttd-btn{
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  flex: 0 0 auto !important;
+  height: 32px !important;
+  padding: 0 12px !important;
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  margin-left: 0 !important;
+}
+#tab-kelolacabang .cabang-reset-pin-btn,
+html[data-theme="light"] #tab-kelolacabang .cabang-reset-pin-btn{
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+}
+#tab-kelolacabang .cabang-ttd-btn,
+html[data-theme="light"] #tab-kelolacabang .cabang-ttd-btn{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  border: 1px solid #0F172A !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+/* Bendahara row compact */
+#tab-kelolacabang .ka-bendahara-row,
+html[data-theme="light"] #tab-kelolacabang .ka-bendahara-row{
+  max-width: 720px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  align-items: center !important;
+  padding: 12px 14px !important;
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+}
+#tab-kelolacabang .cabang-cfg-head{
+  display: none !important;
+}
+@media (max-width: 560px){
+  #tab-kelolacabang .cabang-cfg-row{
+    max-width: 100% !important;
+  }
+  #tab-kelolacabang .cabang-reset-pin-btn,
+  #tab-kelolacabang .cabang-ttd-btn{
+    flex: 1 1 auto !important;
+    text-align: center !important;
+  }
+}
+</style>
+
+
+<style id="kelola-cabang-v2-fix">
+/* KCP badge: tidak gelap */
+html[data-theme="light"] .cabang-cfg-badge.is-kcp,
+.cabang-cfg-badge.is-kcp{
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+  border: 1px solid #E2E8F0 !important;
+}
+html[data-theme="light"] .cabang-cfg-badge.is-kcu,
+.cabang-cfg-badge.is-kcu{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: 1px solid #0F172A !important;
+}
+/* Reset PIN tombol pendek */
+#tab-kelolacabang .cabang-reset-pin-btn,
+html[data-theme="light"] #tab-kelolacabang .cabang-reset-pin-btn,
+.cabang-reset-pin-btn{
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 90px !important;
+  flex: 0 0 auto !important;
+  padding: 0 12px !important;
+  height: 32px !important;
+  white-space: nowrap !important;
+}
+/* Sembunyikan sisa UI bendahara kalau ada */
+.ka-bendahara-row,
+#kaBendaharaSelect,
+#kaBendaharaSaveBtn{ display: none !important; }
+</style>
+
+
+<style id="kh-val-color-fix">
+/* Proyeksi & Gap: merah / hijau — kalahkan -webkit-text-fill-color global */
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table td.kh-val-neg,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table td.kh-val-neg,
+html[data-theme="light"] .kh-detail-table td.kh-val-neg,
+#tab-kinerjaharian .kh-detail-table td.kh-val-neg,
+#tab-kanitkinerjaharian .kh-detail-table td.kh-val-neg,
+.kh-detail-table td.kh-val-neg,
+td.kh-val-neg{
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] #tab-kinerjaharian .kh-detail-table td.kh-val-pos,
+html[data-theme="light"] #tab-kanitkinerjaharian .kh-detail-table td.kh-val-pos,
+html[data-theme="light"] .kh-detail-table td.kh-val-pos,
+#tab-kinerjaharian .kh-detail-table td.kh-val-pos,
+#tab-kanitkinerjaharian .kh-detail-table td.kh-val-pos,
+.kh-detail-table td.kh-val-pos,
+td.kh-val-pos{
+  color: #16A34A !important;
+  -webkit-text-fill-color: #16A34A !important;
+  font-weight: 700 !important;
+}
+</style>
+
+
+<style id="oh-week-layout">
+/* Omset Harian — summary + pencapaian minggu */
+.ob-summary-v2{
+  display:grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+  gap: 10px !important;
+  margin-bottom: 16px !important;
+}
+html[data-theme="light"] .ob-summary-v2 .ob-summary-card{
+  background:#FFFFFF !important;
+  border:1px solid #E2E8F0 !important;
+  border-radius:12px !important;
+  padding:12px 14px !important;
+}
+html[data-theme="light"] .ob-summary-v2 .ob-summary-card .k{
+  font-size:11px !important;
+  color:#64748B !important;
+  font-weight:600 !important;
+  margin-bottom:4px !important;
+}
+html[data-theme="light"] .ob-summary-v2 .ob-summary-card .v{
+  font-size:16px !important;
+  font-weight:800 !important;
+  color:#0F172A !important;
+  -webkit-text-fill-color:#0F172A !important;
+}
+html[data-theme="light"] .ob-summary-v2 .ob-summary-card.highlight{
+  border-color:#CBD5E1 !important;
+  background:#F8FAFC !important;
+}
+html[data-theme="light"] .ob-summary-v2 .ob-summary-card.ach.is-ok .v{ color:#16A34A !important; -webkit-text-fill-color:#16A34A !important; }
+html[data-theme="light"] .ob-summary-v2 .ob-summary-card.ach.is-low .v{ color:#DC2626 !important; -webkit-text-fill-color:#DC2626 !important; }
+
+.oh-week-section{
+  margin: 0 0 18px 0 !important;
+  background:#FFFFFF !important;
+  border:1px solid #E2E8F0 !important;
+  border-radius:14px !important;
+  overflow:hidden !important;
+}
+.oh-week-head{
+  padding:12px 16px !important;
+  border-bottom:1px solid #E2E8F0 !important;
+  background:#F8FAFC !important;
+}
+.oh-week-title{
+  font-size:13px !important;
+  font-weight:800 !important;
+  color:#0F172A !important;
+  -webkit-text-fill-color:#0F172A !important;
+  letter-spacing:0.01em !important;
+}
+.oh-week-sub{
+  font-size:11px !important;
+  color:#64748B !important;
+  margin-top:2px !important;
+}
+.oh-week-table-wrap{ overflow-x:auto !important; }
+.oh-week-table{
+  width:100% !important;
+  border-collapse:collapse !important;
+  font-size:12.5px !important;
+}
+.oh-week-table thead th{
+  text-align:right !important;
+  padding:10px 12px !important;
+  font-size:10.5px !important;
+  font-weight:700 !important;
+  text-transform:uppercase !important;
+  letter-spacing:0.04em !important;
+  color:#64748B !important;
+  background:#FFFFFF !important;
+  border-bottom:1px solid #E2E8F0 !important;
+  white-space:nowrap !important;
+}
+.oh-week-table thead th:first-child,
+.oh-week-table thead th:nth-child(2){ text-align:left !important; }
+.oh-week-table tbody td{
+  padding:11px 12px !important;
+  border-bottom:1px solid #F1F5F9 !important;
+  color:#0F172A !important;
+  -webkit-text-fill-color:#0F172A !important;
+  text-align:right !important;
+  font-variant-numeric:tabular-nums !important;
+  background:#FFFFFF !important;
+}
+.oh-week-table tbody td:first-child,
+.oh-week-table tbody td:nth-child(2){ text-align:left !important; }
+.oh-week-table tbody tr:last-child td{ border-bottom:none !important; }
+.oh-week-table tbody tr:hover td{ background:#F8FAFC !important; }
+.oh-w-num{
+  font-weight:800 !important;
+  color:#0F172A !important;
+  white-space:nowrap !important;
+}
+.oh-w-range{
+  font-family: ui-monospace, "JetBrains Mono", monospace !important;
+  font-size:12px !important;
+  color:#475569 !important;
+  white-space:nowrap !important;
+}
+.oh-w-total{ font-weight:800 !important; }
+.oh-w-pct{
+  min-width:110px !important;
+  white-space:nowrap !important;
+}
+.oh-w-pct b{
+  display:inline-block !important;
+  min-width:36px !important;
+  text-align:right !important;
+  margin-left:8px !important;
+  font-weight:800 !important;
+}
+.oh-pct-bar{
+  display:inline-block !important;
+  vertical-align:middle !important;
+  width:56px !important;
+  height:6px !important;
+  border-radius:99px !important;
+  background:#E2E8F0 !important;
+  overflow:hidden !important;
+}
+.oh-pct-bar > span{
+  display:block !important;
+  height:100% !important;
+  border-radius:99px !important;
+  background:#94A3B8 !important;
+}
+.oh-pct-ok b{ color:#16A34A !important; -webkit-text-fill-color:#16A34A !important; }
+.oh-pct-ok .oh-pct-bar > span{ background:#16A34A !important; }
+.oh-pct-low b{ color:#DC2626 !important; -webkit-text-fill-color:#DC2626 !important; }
+.oh-pct-low .oh-pct-bar > span{ background:#DC2626 !important; }
+@media (max-width: 640px){
+  .ob-summary-v2{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+}
+</style>
+
+
+<style id="oh-no-orange">
+/* Hilangkan sisa oranye di Omset Harian / pencapaian minggu */
+html[data-theme="light"] #tab-menuharian .ob-summary-card.ach.is-mid .v,
+html[data-theme="light"] .ob-summary-v2 .ob-summary-card.ach.is-mid .v,
+.oh-pct-mid b,
+html[data-theme="light"] .oh-pct-mid b{
+  color:#DC2626 !important;
+  -webkit-text-fill-color:#DC2626 !important;
+}
+.oh-pct-mid .oh-pct-bar > span{
+  background:#DC2626 !important;
 }
 </style>
 
