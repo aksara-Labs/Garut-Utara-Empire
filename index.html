@@ -29286,7 +29286,8 @@ html[data-theme="light"] table.libur-table td{
         </div>
         <nav class="admin-sidebar-nav">
           <div class="admin-sidebar-section">Utama</div>
-          <button class="tab-btn admin-nav-btn active" data-tab="kanitinput"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4L16.5 3.5z"/></svg></span><span class="admin-nav-label">Input Omset</span></button>
+          <button class="tab-btn admin-nav-btn active" data-tab="kanitdashboard"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span><span class="admin-nav-label">Dashboard</span></button>
+          <button class="tab-btn admin-nav-btn" data-tab="kanitinput"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4L16.5 3.5z"/></svg></span><span class="admin-nav-label">Input Omset</span></button>
           <div class="admin-sidebar-section">Omset & Kinerja</div>
           <button class="tab-btn admin-nav-btn" data-tab="kanitkinerjaharian"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M12 19V5M20 19v-7"/></svg></span><span class="admin-nav-label">Dashboard Harian</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kanitmenuharian"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M12 19V5M20 19v-7"/></svg></span><span class="admin-nav-label">Omset Harian</span></button>
@@ -29318,8 +29319,16 @@ html[data-theme="light"] table.libur-table td{
         <div class="admin-content" id="mainContent">
     <div style="display:none;"><div class="greeting" id="kanitGreeting"></div><h1 id="formTitle">MYdashboard</h1></div>
 
+    <!-- Tab: Dashboard Kanit (home) -->
+    <div class="panel subpanel active" id="tab-kanitdashboard">
+      <div id="kanitDashWrap">
+        <div class="empty-log">Memuat dashboard...</div>
+      </div>
+      <div class="msg" id="kanitDashMsg"></div>
+    </div>
+
     <!-- Tab: Input Omset & Rejected — mockup v2 -->
-    <div class="panel subpanel active" id="tab-kanitinput">
+    <div class="panel subpanel" id="tab-kanitinput">
       <form id="omsetForm" class="omset-form-lite omset-form-v2">
         <div class="field">
           <label>Tanggal</label>
@@ -31544,7 +31553,268 @@ $on("cabangPinSubmit", "click", function(){
   });
 
   // ---------------- Omset form ----------------
-  function openOmsetForm(){
+
+  // ========== Dashboard Kanit ==========
+  function kdMonthLabel_(offset){
+    var bulanId = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+    var d = new Date();
+    if(offset) d.setMonth(d.getMonth() + offset);
+    return bulanId[d.getMonth()] + " " + d.getFullYear();
+  }
+  function kdPad2_(n){ return String(n).padStart(2, "0"); }
+  function kdFmt_(n){
+    n = Math.round(Number(n) || 0);
+    return (typeof fmt === "function") ? fmt(n) : String(n);
+  }
+  function kdIsSunday_(y, m, day){ return new Date(y, m - 1, day).getDay() === 0; }
+  function loadKanitDashboard(){
+    var wrap = document.getElementById("kanitDashWrap");
+    var msg = document.getElementById("kanitDashMsg");
+    if(!wrap) return;
+    if(!session.cabang){
+      wrap.innerHTML = '<div class="empty-log">Sesi cabang tidak ditemukan.</div>';
+      return;
+    }
+    wrap.innerHTML = '<div class="empty-log">Memuat dashboard...</div>';
+    if(msg) try{ clearMsg(msg); }catch(e){}
+    var cabang = session.cabang;
+    var pin = session.cabangPin || session.sessionToken || session.adminPin;
+    var curLabel = kdMonthLabel_(0);
+    var prevLabel = kdMonthLabel_(-1);
+    var now = new Date();
+    var y = now.getFullYear(), m = now.getMonth() + 1, today = now.getDate();
+    var tutupMinggu = (typeof CABANG_TUTUP_MINGGU_LIST !== "undefined" && CABANG_TUTUP_MINGGU_LIST.indexOf(cabang) !== -1);
+
+    function renderDash(cur, prev, rejCount){
+      cur = cur || {};
+      var days = cur.days || [];
+      var targetBulan = Number(cur.target) || 0;
+      var totalBulan = Number(cur.totalBulan) || 0;
+      var sumGe = 0, sumGb = 0, sumGg = 0;
+      days.forEach(function(d){ sumGe += d.ge||0; sumGb += d.gb||0; sumGg += d.gg||0; });
+      if(!totalBulan) totalBulan = sumGe + sumGb + sumGg;
+      var pct = targetBulan > 0 ? Math.round((totalBulan / targetBulan) * 100) : 0;
+      var pctCls = pct >= 100 ? "is-ok" : "is-low";
+
+      // Kemarin
+      var yest = new Date(y, m - 1, today - 1);
+      var yestDay = yest.getDate();
+      var yestSameMonth = (yest.getMonth()+1 === m && yest.getFullYear() === y);
+      var yestRow = null;
+      if(yestSameMonth){
+        for(var i=0;i<days.length;i++){ if(days[i].day === yestDay){ yestRow = days[i]; break; } }
+      }
+      var yestTotal = yestRow ? (yestRow.total||0) : 0;
+      var yestGe = yestRow ? (yestRow.ge||0) : 0;
+      var yestGb = yestRow ? (yestRow.gb||0) : 0;
+      var yestGg = yestRow ? (yestRow.gg||0) : 0;
+
+      // Target harian model sisa÷sisa (sama Omset Harian)
+      function isWork(dayNum){ return !(tutupMinggu && kdIsSunday_(y, m, dayNum)); }
+      var workDays = [];
+      var nDays = days.length || new Date(y, m, 0).getDate();
+      for(var d=1; d<=nDays; d++){ if(isWork(d)) workDays.push(d); }
+      var byTot = {};
+      days.forEach(function(d){ byTot[d.day] = d.total||0; });
+      function targetForDay(dayNum){
+        if(!isWork(dayNum) || targetBulan <= 0 || !workDays.length) return 0;
+        var actualBefore = 0, remain = 0, cutoff = dayNum, fromDay = dayNum;
+        if(dayNum > today){ cutoff = today; fromDay = today; }
+        workDays.forEach(function(wd){
+          if(wd < cutoff) actualBefore += byTot[wd]||0;
+          if(wd >= fromDay) remain++;
+        });
+        if(remain < 1) remain = 1;
+        var sisa = targetBulan - actualBefore;
+        if(sisa < 0) sisa = 0;
+        return Math.round(sisa / remain);
+      }
+      var yestTarget = yestSameMonth ? targetForDay(yestDay) : 0;
+      var yestBelow = yestSameMonth && yestTarget > 0 && yestTotal < yestTarget;
+      var todayTarget = targetForDay(today);
+      var todayOff = tutupMinggu && kdIsSunday_(y, m, today);
+
+      // Pekan berjalan
+      var pekanStart = today, pekanEnd = today, pekanIdx = 1;
+      // cari senin pekan ini atau tgl 1
+      var dow = new Date(y, m-1, today).getDay();
+      var back = (dow === 0) ? 6 : (dow - 1);
+      pekanStart = Math.max(1, today - back);
+      // end minggu
+      var toSun = (dow === 0) ? 0 : (7 - dow);
+      pekanEnd = Math.min(nDays, today + toSun);
+      // index pekan
+      var wcount = 0, curW = null;
+      for(var dd=1; dd<=nDays; dd++){
+        var dw = new Date(y, m-1, dd).getDay();
+        if(dd===1 || dw===1){ wcount++; curW = wcount; }
+        if(dd === today){ pekanIdx = curW; break; }
+      }
+      var pekanAktual = 0, pekanTarget = 0;
+      for(var pd=pekanStart; pd<=pekanEnd; pd++){
+        pekanAktual += byTot[pd]||0;
+        pekanTarget += targetForDay(pd);
+      }
+      var pekanPct = pekanTarget > 0 ? Math.round((pekanAktual / pekanTarget) * 100) : 0;
+
+      // Vs periode sama: 1..yesterday vs prev month 1..yesterday
+      var untilDay = today - 1;
+      var vsCur = 0, vsPrev = 0;
+      if(untilDay >= 1){
+        for(var vd=1; vd<=untilDay; vd++) vsCur += byTot[vd]||0;
+        if(prev && prev.days){
+          prev.days.forEach(function(d){ if(d.day <= untilDay) vsPrev += d.total||0; });
+        }
+      }
+      var vsSelisih = vsCur - vsPrev;
+      var vsPersen = vsPrev > 0 ? Math.round((vsSelisih / vsPrev) * 1000) / 10 : null;
+      var vsUp = vsSelisih >= 0;
+
+      var rejN = (rejCount != null && isFinite(rejCount)) ? rejCount : null;
+
+      wrap.innerHTML =
+        '<div class="kd-grid">'+
+          '<div class="kd-card kd-card-hero">'+
+            '<div class="kd-k">Pencapaian Gadai</div>'+
+            '<div class="kd-v kd-v-xl '+pctCls+'">'+pct+'%</div>'+
+            '<div class="kd-sub">'+kdFmt_(totalBulan)+' / '+kdFmt_(targetBulan)+' · '+curLabel+'</div>'+
+            '<div class="kd-chips">'+
+              '<span>GE <b>'+kdFmt_(sumGe)+'</b></span>'+
+              '<span>GB <b>'+kdFmt_(sumGb)+'</b></span>'+
+              '<span>GG <b>'+kdFmt_(sumGg)+'</b></span>'+
+            '</div>'+
+          '</div>'+
+          '<div class="kd-card'+(yestBelow?' kd-danger':'')+'">'+
+            '<div class="kd-k">Omset kemarin'+(yestSameMonth ? ' · tgl '+kdPad2_(yestDay) : '')+'</div>'+
+            '<div class="kd-v'+(yestBelow?' is-danger':'')+'">'+kdFmt_(yestTotal)+'</div>'+
+            '<div class="kd-sub">GE '+kdFmt_(yestGe)+' · GB '+kdFmt_(yestGb)+' · GG '+kdFmt_(yestGg)+'</div>'+
+            (yestSameMonth && yestTarget > 0
+              ? '<div class="kd-sub'+(yestBelow?' is-danger':'')+'">Target '+kdFmt_(yestTarget)+(yestBelow?' · di bawah target':' · tercapai')+'</div>'
+              : '')+
+          '</div>'+
+          '<div class="kd-card">'+
+            '<div class="kd-k">Vs bulan lalu</div>'+
+            '<div class="kd-v '+(untilDay>=1?(vsUp?'is-ok':'is-low'):'')+'">'+(untilDay>=1 ? ((vsUp?'+':'')+kdFmt_(vsSelisih)) : '—')+'</div>'+
+            '<div class="kd-sub">'+(untilDay>=1
+              ? ('1–'+untilDay+' · '+kdFmt_(vsCur)+' vs '+kdFmt_(vsPrev)+(vsPersen!=null ? ' ('+(vsPersen>0?'+':'')+vsPersen+'%)' : ''))
+              : 'Belum ada hari untuk dibandingkan')+'</div>'+
+          '</div>'+
+          '<div class="kd-card">'+
+            '<div class="kd-k">Target hari ini</div>'+
+            '<div class="kd-v">'+ (todayOff ? '—' : kdFmt_(todayTarget)) +'</div>'+
+            '<div class="kd-sub">'+(todayOff ? 'Libur Minggu' : ('sisa target ÷ sisa hari kerja · tgl '+kdPad2_(today)))+'</div>'+
+          '</div>'+
+          '<div class="kd-card">'+
+            '<div class="kd-k">Pekan berjalan · P'+pekanIdx+'</div>'+
+            '<div class="kd-v">'+kdFmt_(pekanAktual)+'</div>'+
+            '<div class="kd-sub">'+kdPad2_(pekanStart)+'–'+kdPad2_(pekanEnd)+' · target '+kdFmt_(pekanTarget)+' · '+pekanPct+'%</div>'+
+            '<div class="kd-bar"><span style="width:'+Math.min(100,pekanPct)+'%"></span></div>'+
+          '</div>'+
+          '<div class="kd-card">'+
+            '<div class="kd-k">Rejected bulan ini</div>'+
+            '<div class="kd-v">'+(rejN==null ? '—' : kdFmt_(rejN))+'</div>'+
+            '<div class="kd-sub">Jumlah transaksi reject · '+curLabel+'</div>'+
+          '</div>'+
+        '</div>'+
+        '<div class="kd-actions">'+
+          '<button type="button" class="kd-btn-primary" id="kanitDashGoInput">Input Omset</button>'+
+          '<button type="button" class="kd-btn-ghost" id="kanitDashRefresh">Refresh</button>'+
+        '</div>';
+
+      var go = document.getElementById("kanitDashGoInput");
+      if(go) go.onclick = function(){
+        try{
+          var scope = document.getElementById("screen-omset-form") || document;
+          var btn = scope.querySelector('.tab-btn[data-tab="kanitinput"]');
+          if(btn) btn.click();
+        }catch(e){}
+      };
+      var rf = document.getElementById("kanitDashRefresh");
+      if(rf) rf.onclick = function(){ loadKanitDashboard(); };
+    }
+
+    var curData = null, prevData = null, rejCount = null;
+    var renderedOnce = false;
+    var loadGen = (loadKanitDashboard._gen = (loadKanitDashboard._gen || 0) + 1);
+
+    function paint(){
+      if(loadGen !== loadKanitDashboard._gen) return;
+      renderedOnce = true;
+      try{ renderDash(curData, prevData, rejCount); }
+      catch(ePaint){
+        wrap.innerHTML = '<div class="empty-log">Gagal menampilkan dashboard. Coba Refresh.</div>';
+      }
+    }
+
+    function callGrid_(label, onOk){
+      try{
+        if(!(typeof google !== "undefined" && google.script && google.script.run)){
+          onOk(null, "google.script tidak tersedia");
+          return;
+        }
+        google.script.run
+          .withSuccessHandler(function(r){
+            if(loadGen !== loadKanitDashboard._gen) return;
+            if(r && r.status === "OK" && r.data) onOk(r.data, null);
+            else onOk(null, (r && r.reason) || "Data kosong");
+          })
+          .withFailureHandler(function(err){
+            if(loadGen !== loadKanitDashboard._gen) return;
+            onOk(null, String(err || "gagal"));
+          })
+          .getHarianGridKanit(cabang, pin, label);
+      }catch(eCall){
+        onOk(null, String(eCall));
+      }
+    }
+
+    // Bulan ini dulu → tampil segera; vs & rejected menyusul
+    callGrid_(curLabel, function(data, err){
+      curData = data;
+      if(!data){
+        wrap.innerHTML = '<div class="empty-log">Gagal memuat data bulan ini'+(err ? ' ('+err+')' : '')+'. Coba Refresh.</div>';
+        return;
+      }
+      paint();
+    });
+
+    setTimeout(function(){
+      if(loadGen !== loadKanitDashboard._gen) return;
+      if(!renderedOnce){
+        if(curData) paint();
+        else wrap.innerHTML = '<div class="empty-log">Memuat terlalu lama. Ketuk Refresh.</div>';
+      }
+    }, 1200);
+
+    callGrid_(prevLabel, function(data){
+      prevData = data;
+      if(renderedOnce) paint();
+    });
+
+    try{
+      var startStr = y + "-" + kdPad2_(m) + "-01";
+      var endStr = y + "-" + kdPad2_(m) + "-" + kdPad2_(today);
+      if(typeof google !== "undefined" && google.script && google.script.run){
+        google.script.run
+          .withSuccessHandler(function(r){
+            if(loadGen !== loadKanitDashboard._gen) return;
+            var n = 0;
+            if(r && r.status === "OK"){
+              var d = r.data || r;
+              if(typeof d.totalRows === "number") n = d.totalRows;
+              else if(d.allDetail && d.allDetail.length) n = d.allDetail.length;
+            }
+            rejCount = n;
+            if(renderedOnce) paint();
+          })
+          .withFailureHandler(function(){})
+          .getRejectedAnalysisKanit(cabang, pin, startStr, endStr);
+      }
+    }catch(eR){}
+  }
+
+
+    function openOmsetForm(){
     document.getElementById("formTitle").textContent = "Report Omset Harian — " + session.cabang;
     loadKanitProfileFromServer();
     var nama = NAMA_CABANG[session.cabang] || session.cabang;
@@ -31553,6 +31823,19 @@ $on("cabangPinSubmit", "click", function(){
     if(sub) sub.textContent = session.cabang || "";
     toggleKanitJadwalLiburTab();
     showScreen("screen-omset-form");
+    // Landing Kanit = Dashboard
+    try{
+      var scope = document.getElementById("screen-omset-form") || document;
+      scope.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
+      scope.querySelectorAll(".subpanel").forEach(function(p){ p.classList.remove("active"); });
+      var dashBtn = scope.querySelector('.tab-btn[data-tab="kanitdashboard"]');
+      var dashPanel = document.getElementById("tab-kanitdashboard");
+      if(dashBtn) dashBtn.classList.add("active");
+      if(dashPanel){ dashPanel.classList.add("active"); dashPanel.style.display = "block"; }
+      var kt = document.getElementById("kanitTopbarTitle");
+      if(kt) kt.textContent = "Dashboard";
+    }catch(eLand){}
+    try{ loadKanitDashboard(); }catch(eL){}
     renderLog();
   }
 
@@ -34061,6 +34344,9 @@ $on("cabangPinSubmit", "click", function(){
       var tabId = "tab-" + btn.dataset.tab;
       var panel = scope.querySelector("#" + tabId) || document.getElementById(tabId);
       if(panel){
+        if(btn.dataset.tab === "kanitdashboard"){
+          try{ loadKanitDashboard(); }catch(eKD){}
+        }
         // Pindahkan panel dokumen ke layar aktif (KC/Kanit) supaya tidak kosong
         if(btn.dataset.tab === "dokumen"){
           var host = scope.querySelector(".admin-content") || scope.querySelector(".admin-main") || scope;
@@ -45398,6 +45684,117 @@ tr.oh-w-current td.oh-w-num{
 .oh-chart-legend .lg-low{ background: #CBD5E1 !important; }
 .oh-chart-legend .lg-ok{ background: #475569 !important; }
 .oh-chart-legend .lg-max{ background: #0F172A !important; }
+</style>
+
+
+<style id="kanit-dashboard-css">
+#tab-kanitdashboard{ padding-bottom: 24px !important; }
+.kd-grid{
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+@media (max-width: 640px){
+  .kd-grid{ grid-template-columns: 1fr !important; }
+}
+.kd-card{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+}
+.kd-card-hero{
+  grid-column: 1 / -1 !important;
+  background: #F8FAFC !important;
+}
+.kd-k{
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #64748B !important;
+  margin-bottom: 6px !important;
+}
+.kd-v{
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.15 !important;
+}
+.kd-v-xl{ font-size: 40px !important; }
+.kd-v.is-ok, .kd-v-xl.is-ok{ color: #0F172A !important; -webkit-text-fill-color: #0F172A !important; }
+.kd-v.is-low{ color: #64748B !important; -webkit-text-fill-color: #64748B !important; }
+.kd-v.is-danger, .kd-sub.is-danger{
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+}
+.kd-danger{
+  border-color: #FECACA !important;
+  background: #FEF2F2 !important;
+}
+.kd-sub{
+  font-size: 12px !important;
+  color: #64748B !important;
+  margin-top: 6px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+.kd-chips{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin-top: 12px !important;
+}
+.kd-chips span{
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 99px !important;
+  padding: 5px 10px !important;
+  font-size: 12px !important;
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+.kd-chips b{ color: #0F172A !important; font-weight: 800 !important; }
+.kd-bar{
+  margin-top: 10px !important;
+  height: 6px !important;
+  border-radius: 99px !important;
+  background: #E2E8F0 !important;
+  overflow: hidden !important;
+}
+.kd-bar > span{
+  display: block !important;
+  height: 100% !important;
+  background: #0F172A !important;
+  border-radius: 99px !important;
+}
+.kd-actions{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-top: 16px !important;
+}
+.kd-btn-primary{
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 12px 18px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+}
+.kd-btn-ghost{
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 999px !important;
+  padding: 12px 18px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+}
 </style>
 
 </body>
