@@ -31987,28 +31987,31 @@ $on("cabangPinSubmit", "click", function(){
 
     var targetHarianValue, targetHarianClass;
     if(r.target_harian_status === "TERCAPAI"){
-      targetHarianValue = "Target sudah tercapai";
+      targetHarianValue = "Sudah tercapai";
       targetHarianClass = "neg";
     } else if(r.target_harian_status === "HABIS_HARI"){
-      targetHarianValue = "Belum tercapai bulan ini";
+      targetHarianValue = "Belum tercapai";
       targetHarianClass = "pos";
     } else {
-      targetHarianValue = fmt(r.target_harian_angka) + " / hari (" + r.sisa_hari_kerja + " hari kerja)";
+      targetHarianValue = fmt(r.target_harian_angka) + "/hr · " + r.sisa_hari_kerja + " hk";
       targetHarianClass = "";
     }
 
+    var kemarinLab = r.bulan_kemarin_label ? String(r.bulan_kemarin_label).replace(/\s*20\d{2}\s*/," ").trim() : "";
+    var kemarinVal = (r.bulan_kemarin_total === null || r.bulan_kemarin_total === undefined) ? "—" : fmt(r.bulan_kemarin_total);
+
     recapEl.style.display = "block";
     recapEl.innerHTML =
-      '<div class="recap-row"><span class="k">Pencapaian GE</span><span class="v">'+fmt(r.ge_total)+'</span></div>'+
-      '<div class="recap-row"><span class="k">Pencapaian GB</span><span class="v">'+fmt(r.gb_total)+'</span></div>'+
-      '<div class="recap-row"><span class="k">Pencapaian GG</span><span class="v">'+fmt(r.gg_total)+'</span></div>'+
-      '<div class="recap-row total"><span class="k">Pencapaian All Gadai (GE+GB+GG)</span><span class="v">'+fmt(r.bulan_ini_total)+'</span></div>'+
+      '<div class="recap-row"><span class="k">GE</span><span class="v">'+fmt(r.ge_total)+'</span></div>'+
+      '<div class="recap-row"><span class="k">GB</span><span class="v">'+fmt(r.gb_total)+'</span></div>'+
+      '<div class="recap-row"><span class="k">GG</span><span class="v">'+fmt(r.gg_total)+'</span></div>'+
+      '<div class="recap-row total"><span class="k">All Gadai</span><span class="v">'+fmt(r.bulan_ini_total)+'</span></div>'+
       '<div class="recap-row"><span class="k">Rejected hari ini</span><span class="v">'+fmt(r.rejected)+'</span></div>'+
-      '<div class="recap-row"><span class="k">Target All Gadai ('+cabang+', '+r.monthLabel+')</span><span class="v">'+fmt(r.target_bulan_ini)+'</span></div>'+
-      '<div class="recap-row diff"><span class="k">Selisih Target Bulan Ini</span><span class="v '+selisihClass+'">'+fmt(Math.abs(selisih))+' ('+selisihLabel+')</span></div>'+
-      '<div class="recap-row"><span class="k">Pencapaian bulan kemarin'+(r.bulan_kemarin_label ? " (" + r.bulan_kemarin_label + ")" : "")+'</span><span class="v">'+(r.bulan_kemarin_total === null || r.bulan_kemarin_total === undefined ? "belum ada data" : fmt(r.bulan_kemarin_total))+'</span></div>'+
-      '<div class="recap-row total"><span class="k">Proyeksi All Gadai (estimasi akhir bulan)</span><span class="v">'+fmt(r.proyeksi_all_gadai)+'</span></div>'+
-      '<div class="recap-row diff"><span class="k">Target Harian (supaya kejar target bulanan)</span><span class="v '+targetHarianClass+'">'+targetHarianValue+'</span></div>';
+      '<div class="recap-row"><span class="k">Target · '+cabang+' · '+(r.monthLabel||'')+'</span><span class="v">'+fmt(r.target_bulan_ini)+'</span></div>'+
+      '<div class="recap-row diff"><span class="k">Selisih target</span><span class="v '+selisihClass+'">'+fmt(Math.abs(selisih))+' ('+selisihLabel+')</span></div>'+
+      '<div class="recap-row"><span class="k">Bulan kemarin'+(kemarinLab ? ' · '+kemarinLab : '')+'</span><span class="v">'+kemarinVal+'</span></div>'+
+      '<div class="recap-row total"><span class="k">Proyeksi akhir bulan</span><span class="v">'+fmt(r.proyeksi_all_gadai)+'</span></div>'+
+      '<div class="recap-row diff"><span class="k">Target / hari</span><span class="v '+targetHarianClass+'">'+targetHarianValue+'</span></div>';
   }
 
   var modalOverlay = document.getElementById("modalOverlay");
@@ -46454,6 +46457,91 @@ html[data-theme="light"] #tab-kanitinput .omset-log-v2 .empty-log,
   font-weight:700 !important;
   text-decoration:none !important;
   margin-right:8px !important;
+}
+</style>
+
+
+<style id="result-recap-compact">
+/* Modal rekap padat — semua baris muat di HP */
+#resultOverlay .result-modal-card,
+.result-modal-card{
+  max-height: min(92vh, 720px) !important;
+  padding: 14px 14px 12px !important;
+  width: min(92vw, 380px) !important;
+}
+#resultOverlay .stamp,
+#resultOverlay .result .stamp{
+  font-size: 11px !important;
+  margin: 0 0 2px !important;
+  line-height: 1.2 !important;
+}
+#resultOverlay .thanks{
+  font-size: 15px !important;
+  margin: 0 0 2px !important;
+  line-height: 1.25 !important;
+}
+#resultOverlay .detail{
+  font-size: 11.5px !important;
+  margin-bottom: 8px !important;
+  line-height: 1.3 !important;
+}
+#resultOverlay .recap,
+html[data-theme="light"] #resultOverlay .recap{
+  border-top: 1px solid #F1F5F9 !important;
+  padding-top: 6px !important;
+  margin-top: 2px !important;
+}
+#resultOverlay .recap-row,
+html[data-theme="light"] #resultOverlay .recap-row{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 3.5px 0 !important;
+  border-bottom: 1px solid #F8FAFC !important;
+  min-height: 0 !important;
+}
+#resultOverlay .recap-row .k,
+html[data-theme="light"] #resultOverlay .recap-row .k{
+  font-size: 11.5px !important;
+  line-height: 1.25 !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+#resultOverlay .recap-row .v,
+html[data-theme="light"] #resultOverlay .recap-row .v{
+  font-size: 12.5px !important;
+  line-height: 1.25 !important;
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+  text-align: right !important;
+}
+#resultOverlay .ss-reminder{
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+  margin-top: 8px !important;
+  line-height: 1.3 !important;
+}
+#resultOverlay .modal-actions,
+#resultOverlay #resultActions{
+  margin-top: 10px !important;
+  gap: 8px !important;
+}
+#resultOverlay .modal-btn{
+  padding: 10px 14px !important;
+  font-size: 13px !important;
+}
+@media (max-width: 400px){
+  #resultOverlay .result-modal-card,
+  .result-modal-card{
+    width: min(96vw, 360px) !important;
+    padding: 12px 12px 10px !important;
+  }
+  #resultOverlay .recap-row .k{ font-size: 11px !important; }
+  #resultOverlay .recap-row .v{ font-size: 12px !important; }
 }
 </style>
 
