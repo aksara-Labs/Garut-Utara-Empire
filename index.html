@@ -30013,7 +30013,7 @@ html[data-theme="light"] table.libur-table td{
             <div class="field"><label>Cabang</label><select id="docSpCabang"></select></div>
             <div class="field"><label>NIK</label><input type="text" id="docSpNik"></div>
             <div class="field"><label>No. HP</label><input type="text" id="docSpHp"></div>
-            <div class="field"><label>Tgl Kwitansi</label><input type="text" id="docSpTgl" placeholder="22/08/2026"></div>
+            <div class="field"><label>Tgl Kwitansi</label><input type="date" id="docSpTgl" required></div>
             <div class="field"><label>Jenis Pengeluaran</label><input type="text" id="docSpJenis"></div>
             <div class="field"><label>Nominal</label><input type="text" id="docSpNominal" placeholder="25000"></div>
           </div>
@@ -30648,7 +30648,7 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
         var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, timeoutMs);
 
         // GET untuk request biasa (andal dari GitHub Pages)
-        // POST: payload besar ATAU semua docProses* (hindari query string rusak di redirect Google)
+        // POST hanya kalau payload besar (upload)
         _hybridEnqueue(function(done){
           var usePost = payload.length > 1500 || isDoc;
           var req;
@@ -41393,35 +41393,41 @@ function renderKanitAuditWizard(){
   if(spBtn) spBtn.addEventListener("click", function(){
     var msg = document.getElementById("docSpMsg");
     clearMsg(msg);
-    var elCab = document.getElementById("docSpCabang");
-    var elNik = document.getElementById("docSpNik");
-    var elHp = document.getElementById("docSpHp");
-    var elTgl = document.getElementById("docSpTgl");
-    var elJenis = document.getElementById("docSpJenis");
-    var elNom = document.getElementById("docSpNominal");
+    // Baca dari form SP yang terlihat (hindari elemen tersembunyi / ID bentrok)
+    var root = document.getElementById("docFormSP") || document;
+    function spVal(id){
+      var el = root.querySelector("#" + id) || document.getElementById(id);
+      return el ? String(el.value || "").trim() : "";
+    }
     var payload = {
-      kodeCabang: elCab ? String(elCab.value || "").trim() : "",
-      nik: elNik ? String(elNik.value || "").trim() : "",
-      noHp: elHp ? String(elHp.value || "").trim() : "",
-      tanggal: elTgl ? String(elTgl.value || "").trim() : "",
-      jenisPengeluaran: elJenis ? String(elJenis.value || "").trim() : "",
-      nominal: elNom ? String(elNom.value || "").trim() : ""
+      kodeCabang: spVal("docSpCabang"),
+      nik: spVal("docSpNik"),
+      noHp: spVal("docSpHp"),
+      tanggal: spVal("docSpTgl"),
+      jenisPengeluaran: spVal("docSpJenis"),
+      nominal: spVal("docSpNominal")
     };
+    // Fallback cabang dari sesi kanit
+    if(!payload.kodeCabang){
+      try{ if(session && session.cabang) payload.kodeCabang = String(session.cabang); }catch(e){}
+    }
     if(!payload.kodeCabang){
       showMsg(msg, "Cabang belum terisi. Tutup form lalu buka lagi dari menu Pembuatan Dokumen.", "err");
       return;
     }
-    if(!payload.nik || !payload.noHp){
-      showMsg(msg, "NIK dan No. HP wajib diisi.", "err");
-      return;
-    }
-    if(!payload.tanggal || !payload.jenisPengeluaran || !payload.nominal){
-      showMsg(msg, "Tanggal kwitansi, jenis pengeluaran, dan nominal wajib diisi.", "err");
-      return;
-    }
+    if(!payload.nik){ showMsg(msg, "NIK wajib diisi.", "err"); return; }
+    if(!payload.noHp){ showMsg(msg, "No. HP wajib diisi.", "err"); return; }
+    if(!payload.tanggal){ showMsg(msg, "Tanggal kwitansi wajib diisi (pakai pemilih tanggal).", "err"); return; }
+    if(!payload.jenisPengeluaran){ showMsg(msg, "Jenis pengeluaran wajib diisi.", "err"); return; }
+    if(!payload.nominal){ showMsg(msg, "Nominal wajib diisi.", "err"); return; }
     if(!String(payload.nominal).replace(/[^0-9]/g, "")){
       showMsg(msg, "Nominal harus berisi angka.", "err");
       return;
+    }
+    // Format tampilan tanggal untuk dokumen: yyyy-MM-dd -> dd/MM/yyyy
+    if(/^\d{4}-\d{2}-\d{2}$/.test(payload.tanggal)){
+      var parts = payload.tanggal.split("-");
+      payload.tanggal = parts[2] + "/" + parts[1] + "/" + parts[0];
     }
     var hint = document.getElementById("docSpWaitHint");
     if(hint) hint.style.display = "";
@@ -41445,6 +41451,28 @@ function renderKanitAuditWizard(){
       })
       .docProsesSP(payload);
   });
+
+  // Default Tgl Kwitansi = hari ini (saat form SP dibuka)
+  (function prefillSpDate(){
+    function setToday(){
+      var el = document.getElementById("docSpTgl");
+      if(!el) return;
+      if(el.value) return;
+      try{
+        var d = new Date();
+        var yyyy = d.getFullYear();
+        var mm = String(d.getMonth()+1).padStart(2,"0");
+        var dd = String(d.getDate()).padStart(2,"0");
+        if(el.type === "date") el.value = yyyy + "-" + mm + "-" + dd;
+        else el.value = dd + "/" + mm + "/" + yyyy;
+      }catch(e){}
+    }
+    setToday();
+    document.addEventListener("click", function(ev){
+      var card = ev.target && ev.target.closest && ev.target.closest('.doc-hub-card[data-doc="sp"]');
+      if(card) setTimeout(setToday, 50);
+    });
+  })();
 
   // ---- Jadwal: auto-load on cabang change, next month btn, GRT013 mode ----
   var adminLiburModeCutiSakit = false;
