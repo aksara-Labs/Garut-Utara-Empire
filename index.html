@@ -29691,6 +29691,13 @@ html[data-theme="light"] table.libur-table td{
 
       <div class="admin-section-title" style="margin-top:22px;">Karyawan Bertugas Hari Ini</div>
       <div id="adminBertugasWrap"><div class="empty-log">Memuat...</div></div>
+
+      <div class="admin-section-title" style="margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+        <span>Siapa Online</span>
+        <button type="button" id="onlineUsersRefreshBtn" class="btn-xs secondary" style="width:auto;padding:6px 12px;">Refresh</button>
+      </div>
+      <div class="hint" style="margin-bottom:8px;">Online = aktif dalam 3 menit terakhir. Last seen = terakhir heartbeat/login.</div>
+      <div id="onlineUsersWrap"><div class="empty-log">Memuat...</div></div>
     </div>
 
     <!-- Dashboard Harian -->
@@ -29928,7 +29935,7 @@ html[data-theme="light"] table.libur-table td{
       <div id="docHasilKanit" class="doc-form-page hub-panel-full" style="display:none;">
         <button type="button" class="hub-back-btn doc-back-btn">&larr; Kembali</button>
         <div class="admin-section-title" style="margin-top:8px;">Hasil Dokumen Cabang</div>
-        <div class="hint" style="margin-bottom:10px;">Hanya dokumen cabang Anda. Cari nomor BA, no faktur, atau SN.</div>
+        <div class="hint" style="margin-bottom:10px;">Hanya dokumen cabang Anda. Cari no faktur, nomor BA, atau SN — termasuk file lama (nama file di Drive).</div>
         <div class="filter-row-compact" style="gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:flex-end;">
           <div class="field" style="flex:1 1 180px;min-width:160px;">
             <label>Cari</label>
@@ -31350,6 +31357,7 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
       session.jabatan = r.jabatan;
       session.role = r.role;
       session.loginAt = Date.now();
+      try{ startPresenceHeartbeat_(); }catch(eHb){}
       // Session token server (audit #1) — dipakai untuk API write, bukan PIN mentah
       var tok = (r && (r.sessionToken || r.sessionPin)) || pin;
       session.sessionToken = tok;
@@ -31464,6 +31472,7 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     try{ localStorage.removeItem("gueSession"); }catch(e){}
   }
   function performAutoLogout_(reason){
+    try{ stopPresenceHeartbeat_(); }catch(e){}
     try{
       session.cabang = null;
       session.cabangPin = null;
@@ -31492,6 +31501,35 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     if(sessionExpired_()) performAutoLogout_("timeout 1 jam");
   }
   setInterval(checkSessionTimeout_, 30 * 1000);
+
+  // Presence heartbeat — update last seen di server
+  var _presenceTimer = null;
+  function presenceToken_(){
+    try{
+      return session.sessionToken || session.adminPin || session.cabangPin || "";
+    }catch(e){ return ""; }
+  }
+  function sendPresenceHeartbeat_(){
+    var tok = presenceToken_();
+    if(!tok || !String(tok).match(/^S/)) return; // butuh session token
+    try{
+      if(!(typeof google !== "undefined" && google.script && google.script.run)) return;
+      google.script.run
+        .withSuccessHandler(function(){})
+        .withFailureHandler(function(){})
+        .presenceHeartbeat(tok);
+    }catch(e){}
+  }
+  function startPresenceHeartbeat_(){
+    try{ if(_presenceTimer) clearInterval(_presenceTimer); }catch(e){}
+    sendPresenceHeartbeat_();
+    _presenceTimer = setInterval(sendPresenceHeartbeat_, 60 * 1000);
+  }
+  function stopPresenceHeartbeat_(){
+    try{ if(_presenceTimer) clearInterval(_presenceTimer); }catch(e){}
+    _presenceTimer = null;
+  }
+
   document.addEventListener("visibilitychange", function(){
     if(document.visibilityState === "visible") checkSessionTimeout_();
   });
@@ -31524,6 +31562,7 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
       session.adminPin = s.adminPin || null;
       session.sessionToken = s.sessionToken || s.adminPin || s.cabangPin || null;
       session.loginAt = t0;
+      try{ startPresenceHeartbeat_(); }catch(eHb2){}
       if(s.role === "kc" && session.adminPin){
         setTimeout(function(){
           try{
@@ -32450,6 +32489,7 @@ $on("cabangPinSubmit", "click", function(){
     document.getElementById("adminGreeting").innerHTML = escHtml(getGreeting()) + ", <b>" + escHtml(getAdminDisplayName()) + "</b>";
     showScreen("screen-admin-dashboard");
     try{ setTimeout(function(){ loadAdminHomeBundle(false); }, 30); }catch(e){}
+    try{ setTimeout(function(){ loadOnlineUsers(); }, 80); }catch(e){}
     try{ startAdminNotifPoll(); }catch(e){}
     try{
       var re = document.getElementById("rejectedAnalysisEnd");
@@ -41088,6 +41128,67 @@ function renderKanitAuditWizard(){
     openCabangTtdPanel(btn.getAttribute("data-kode"));
   });
 
+
+  function loadOnlineUsers(){
+    var wrap = document.getElementById("onlineUsersWrap");
+    if(!wrap) return;
+    var pin = null;
+    try{ pin = session.adminPin || session.sessionToken; }catch(e){}
+    if(!pin){
+      wrap.innerHTML = '<div class="empty-log">Sesi admin tidak ditemukan.</div>';
+      return;
+    }
+    wrap.innerHTML = '<div class="empty-log">Memuat...</div>';
+    try{
+      google.script.run
+        .withSuccessHandler(function(r){
+          if(!r || r.status !== "OK"){
+            wrap.innerHTML = '<div class="empty-log">'+(r && r.reason ? r.reason : "Gagal memuat")+'</div>';
+            return;
+          }
+          var users = r.users || [];
+          if(!users.length){
+            wrap.innerHTML = '<div class="empty-log">Belum ada data kehadiran. User perlu login dulu.</div>';
+            return;
+          }
+          var onlineN = r.onlineCount || 0;
+          var rows = users.map(function(u){
+            var badge = u.online
+              ? '<span class="on-badge on-live">Online</span>'
+              : '<span class="on-badge on-off">Offline</span>';
+            var ago = "";
+            if(u.online) ago = "aktif sekarang";
+            else if(u.agoMin == null) ago = "—";
+            else if(u.agoMin < 60) ago = u.agoMin + " mnt lalu";
+            else if(u.agoMin < 1440) ago = Math.floor(u.agoMin/60) + " jam lalu";
+            else ago = Math.floor(u.agoMin/1440) + " hari lalu";
+            var roleLab = (u.role === "kc") ? "KC" : (u.cabang || u.role || "—");
+            return '<tr class="'+(u.online?"on-row-live":"")+'">'+
+              '<td>'+badge+'</td>'+
+              '<td><b>'+escHtml(u.nama||"—")+'</b><div class="on-sub">'+escHtml(u.jabatan||"")+'</div></td>'+
+              '<td>'+escHtml(roleLab)+'</td>'+
+              '<td>'+escHtml(u.lastSeen||"—")+'<div class="on-sub">'+escHtml(ago)+'</div></td>'+
+              '</tr>';
+          }).join("");
+          wrap.innerHTML =
+            '<div class="on-summary"><b>'+onlineN+'</b> online · '+users.length+' tercatat</div>'+
+            '<div class="table-wrap"><table class="karyawan-table on-table"><thead><tr>'+
+            '<th>Status</th><th>Nama</th><th>Cabang / Role</th><th>Terakhir online</th>'+
+            '</tr></thead><tbody>'+rows+'</tbody></table></div>';
+        })
+        .withFailureHandler(function(err){
+          wrap.innerHTML = '<div class="empty-log">'+String(err.message||err)+'</div>';
+        })
+        .getOnlineUsers(pin);
+    }catch(e){
+      wrap.innerHTML = '<div class="empty-log">Gagal memuat.</div>';
+    }
+  }
+  (function(){
+    var b = document.getElementById("onlineUsersRefreshBtn");
+    if(b) b.addEventListener("click", function(){ loadOnlineUsers(); });
+  })();
+
   // ---- Pembuatan Dokumen ----
   var docMetaCache = null;
   function docFileToB64(file, cb){
@@ -46810,6 +46911,37 @@ html[data-theme="light"] #resultOverlay .recap-row .v{
     gap: 6px !important;
   }
   .kd-chip{ padding: 5px 8px !important; font-size: 11px !important; }
+}
+</style>
+
+
+<style id="online-users-css">
+#onlineUsersWrap .on-summary{
+  font-size: 13px; color: #64748B; margin-bottom: 10px; font-weight: 600;
+}
+#onlineUsersWrap .on-summary b{ color: #16A34A; font-size: 16px; }
+#onlineUsersWrap .on-badge{
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 800; border-radius: 99px;
+  padding: 3px 8px; letter-spacing: 0.02em;
+}
+#onlineUsersWrap .on-badge.on-live{
+  background: #DCFCE7; color: #166534;
+}
+#onlineUsersWrap .on-badge.on-live::before{
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: #16A34A; display: inline-block;
+}
+#onlineUsersWrap .on-badge.on-off{
+  background: #F1F5F9; color: #64748B;
+}
+#onlineUsersWrap .on-sub{
+  font-size: 11px; color: #94A3B8; font-weight: 500; margin-top: 2px;
+}
+#onlineUsersWrap .on-row-live td{ background: #F0FDF4 !important; }
+#onlineUsersWrap .on-table{ font-size: 13px; }
+html[data-theme="light"] #onlineUsersWrap .on-table th{
+  background: #F8FAFC !important; color: #0F172A !important;
 }
 </style>
 
