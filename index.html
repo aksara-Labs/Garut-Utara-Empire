@@ -30613,12 +30613,33 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
       var errFn = function(){};
       var proxy;
 
+      function hybridSessionToken_(){
+        try{
+          if(typeof session === "undefined" || !session) return "";
+          // Prioritas token sesi (S…), bukan PIN mentah
+          var cands = [session.sessionToken, session.sessionPin, session.adminPin, session.cabangPin];
+          for(var i=0;i<cands.length;i++){
+            var t = cands[i];
+            if(t && String(t).length >= 24 && String(t).charAt(0) === "S") return String(t);
+          }
+          // fallback: apapun yang tersimpan (server tetap validasi)
+          for(var j=0;j<cands.length;j++){
+            if(cands[j]) return String(cands[j]);
+          }
+        }catch(e){}
+        return "";
+      }
       function callAction(action, args){
         if (!WEB_APP_URL) {
           errFn({ message: "WEB_APP_URL belum diisi. Isi URL Web App Apps Script di Index.html." });
           return;
         }
-        args = args || [];
+        args = Array.prototype.slice.call(args || []);
+        // Sisipkan token sesi untuk aksi write (docProses*, save*, submit*, …)
+        var tok = hybridSessionToken_();
+        if(tok && args.length && args[0] && typeof args[0] === "object" && !Array.isArray(args[0])){
+          if(!args[0].sessionToken) args[0] = Object.assign({}, args[0], { sessionToken: tok, token: tok });
+        }
         var payload = JSON.stringify(args);
         var ctrl = (typeof AbortController === "function") ? new AbortController() : null;
         var isDoc = String(action || "").indexOf("docProses") === 0 || String(action || "") === "docUploadTtdKaryawan";
@@ -30637,14 +30658,15 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
               mode: "cors",
               redirect: "follow",
               headers: { "Content-Type": "text/plain;charset=utf-8" },
-              body: JSON.stringify({ action: action, args: args }),
+              body: JSON.stringify({ action: action, args: args, token: tok, sessionToken: tok }),
               signal: ctrl ? ctrl.signal : undefined
             });
           } else {
             var url = WEB_APP_URL +
               (WEB_APP_URL.indexOf("?") >= 0 ? "&" : "?") +
               "action=" + encodeURIComponent(action) +
-              "&args=" + encodeURIComponent(payload);
+              "&args=" + encodeURIComponent(payload) +
+              (tok ? ("&token=" + encodeURIComponent(tok)) : "");
             req = fetch(url, {
               method: "GET",
               mode: "cors",
