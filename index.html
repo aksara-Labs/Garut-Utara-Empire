@@ -30648,9 +30648,9 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
         var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, timeoutMs);
 
         // GET untuk request biasa (andal dari GitHub Pages)
-        // POST hanya kalau payload besar (upload)
+        // POST: payload besar ATAU semua docProses* (hindari query string rusak di redirect Google)
         _hybridEnqueue(function(done){
-          var usePost = payload.length > 1500;
+          var usePost = payload.length > 1500 || isDoc;
           var req;
           if (usePost) {
             req = fetch(WEB_APP_URL, {
@@ -41393,6 +41393,36 @@ function renderKanitAuditWizard(){
   if(spBtn) spBtn.addEventListener("click", function(){
     var msg = document.getElementById("docSpMsg");
     clearMsg(msg);
+    var elCab = document.getElementById("docSpCabang");
+    var elNik = document.getElementById("docSpNik");
+    var elHp = document.getElementById("docSpHp");
+    var elTgl = document.getElementById("docSpTgl");
+    var elJenis = document.getElementById("docSpJenis");
+    var elNom = document.getElementById("docSpNominal");
+    var payload = {
+      kodeCabang: elCab ? String(elCab.value || "").trim() : "",
+      nik: elNik ? String(elNik.value || "").trim() : "",
+      noHp: elHp ? String(elHp.value || "").trim() : "",
+      tanggal: elTgl ? String(elTgl.value || "").trim() : "",
+      jenisPengeluaran: elJenis ? String(elJenis.value || "").trim() : "",
+      nominal: elNom ? String(elNom.value || "").trim() : ""
+    };
+    if(!payload.kodeCabang){
+      showMsg(msg, "Cabang belum terisi. Tutup form lalu buka lagi dari menu Pembuatan Dokumen.", "err");
+      return;
+    }
+    if(!payload.nik || !payload.noHp){
+      showMsg(msg, "NIK dan No. HP wajib diisi.", "err");
+      return;
+    }
+    if(!payload.tanggal || !payload.jenisPengeluaran || !payload.nominal){
+      showMsg(msg, "Tanggal kwitansi, jenis pengeluaran, dan nominal wajib diisi.", "err");
+      return;
+    }
+    if(!String(payload.nominal).replace(/[^0-9]/g, "")){
+      showMsg(msg, "Nominal harus berisi angka.", "err");
+      return;
+    }
     var hint = document.getElementById("docSpWaitHint");
     if(hint) hint.style.display = "";
     spBtn.disabled = true;
@@ -41413,14 +41443,7 @@ function renderKanitAuditWizard(){
         spBtn.disabled = false;
         showMsg(msg, String(err.message||err), "err");
       })
-      .docProsesSP({
-        kodeCabang: document.getElementById("docSpCabang").value,
-        nik: document.getElementById("docSpNik").value,
-        noHp: document.getElementById("docSpHp").value,
-        tanggal: document.getElementById("docSpTgl").value,
-        jenisPengeluaran: document.getElementById("docSpJenis").value,
-        nominal: document.getElementById("docSpNominal").value
-      });
+      .docProsesSP(payload);
   });
 
   // ---- Jadwal: auto-load on cabang change, next month btn, GRT013 mode ----
