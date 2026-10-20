@@ -41185,9 +41185,32 @@ function renderKanitAuditWizard(){
       return;
     }
     var url = r.docUrl || r.fileUrl || "";
-    var html = url ? '<a href="'+url+'" target="_blank" rel="noopener" class="btn-xs">Buka Dokumen</a> ' : "";
+    // Inline style biar teks selalu terbaca (hindari konflik CSS btn-xs gelap)
+    // !important di inline + span dalam — kalahkan CSS global a/btn
+    var btnOpen =
+      "display:inline-flex !important;align-items:center !important;justify-content:center !important;" +
+      "height:36px !important;padding:0 16px !important;border-radius:10px !important;" +
+      "font-size:13px !important;font-weight:700 !important;line-height:36px !important;" +
+      "background:#0F172A !important;background-image:none !important;" +
+      "color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;" +
+      "border:none !important;text-decoration:none !important;cursor:pointer !important;" +
+      "opacity:1 !important;visibility:visible !important;";
+    var btnPdf =
+      "display:inline-flex !important;align-items:center !important;justify-content:center !important;" +
+      "height:36px !important;padding:0 16px !important;border-radius:10px !important;" +
+      "font-size:13px !important;font-weight:700 !important;line-height:36px !important;" +
+      "background:#FFFFFF !important;background-image:none !important;" +
+      "color:#0F172A !important;-webkit-text-fill-color:#0F172A !important;" +
+      "border:1px solid #E2E8F0 !important;text-decoration:none !important;cursor:pointer !important;" +
+      "margin-left:8px !important;opacity:1 !important;visibility:visible !important;";
+    var spanOpen = "color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;font-weight:700 !important;";
+    var spanPdf = "color:#0F172A !important;-webkit-text-fill-color:#0F172A !important;font-weight:700 !important;";
+    var html = "";
+    if(url){
+      html += '<a href="'+url+'" target="_blank" rel="noopener" class="doc-result-btn doc-result-open" style="'+btnOpen+'"><span style="'+spanOpen+'">Buka Dokumen</span></a>';
+    }
     if(r.pdfBase64 && r.pdfFileName){
-      html += '<a class="btn-xs secondary" download="'+r.pdfFileName+'" href="data:application/pdf;base64,'+r.pdfBase64+'">Download PDF</a>';
+      html += '<a download="'+r.pdfFileName+'" href="data:application/pdf;base64,'+r.pdfBase64+'" class="doc-result-btn doc-result-pdf" style="'+btnPdf+'"><span style="'+spanPdf+'">Download PDF</span></a>';
     }
     el.innerHTML = html || '<div class="empty-log">Selesai</div>';
   }
@@ -46260,5 +46283,40 @@ html[data-theme="light"] #tab-kanitinput .omset-log-v2 .empty-log,
 
 <!-- WRITE_TEST_XYZ -->
 </style>
+
+<style id="doc-result-btn-fix">
+#tab-dokumen a.doc-result-open,
+#tab-dokumen a.doc-result-open span,
+.doc-result-open,
+.doc-result-open span{
+  color:#FFFFFF !important;
+  -webkit-text-fill-color:#FFFFFF !important;
+  background:#0F172A !important;
+  background-image:none !important;
+  opacity:1 !important;
+}
+#tab-dokumen a.doc-result-pdf,
+#tab-dokumen a.doc-result-pdf span,
+.doc-result-pdf,
+.doc-result-pdf span{
+  color:#0F172A !important;
+  -webkit-text-fill-color:#0F172A !important;
+  background:#FFFFFF !important;
+  opacity:1 !important;
+}
+#tab-dokumen a.doc-result-btn{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  height:36px !important;
+  padding:0 16px !important;
+  border-radius:10px !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+  text-decoration:none !important;
+  margin-right:8px !important;
+}
+</style>
+
 </body>
 </html>
