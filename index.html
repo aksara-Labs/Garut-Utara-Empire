@@ -29081,8 +29081,8 @@ html[data-theme="light"] table.libur-table td{
   <div class="pap-title" id="kanitLiburActionTitle">Pilih</div>
   <button type="button" data-act="libur" id="kanitLiburActLibur">Libur</button>
   <button type="button" data-act="cuti" id="kanitLiburActCuti">Cuti</button>
-  <button type="button" data-act="hapus-libur" id="kanitLiburActHapus" class="danger" style="display:none;">Hapus Libur</button>
-  <button type="button" data-act="batal">Batal</button>
+  <button type="button" data-act="hapus" id="kanitLiburActHapus" class="danger" style="display:none;">Hapus</button>
+  <button type="button" data-act="batal" id="kanitLiburActBatal">Tutup</button>
 </div>
 
 
@@ -31778,13 +31778,27 @@ $on("cabangPinSubmit", "click", function(){
       paint();
     });
 
+    // GAS sering >2–5 detik (cold start). Jangan ganti spinner jadi error terlalu cepat.
+    setTimeout(function(){
+      if(loadGen !== loadKanitDashboard._gen) return;
+      if(!renderedOnce && curData) paint();
+      // kalau belum ada data, tetap tampilkan "Memuat..." — jangan panic message
+    }, 2500);
     setTimeout(function(){
       if(loadGen !== loadKanitDashboard._gen) return;
       if(!renderedOnce){
         if(curData) paint();
-        else wrap.innerHTML = '<div class="empty-log">Memuat terlalu lama. Ketuk Refresh.</div>';
+        else {
+          wrap.innerHTML =
+            '<div class="empty-log">Masih memuat… koneksi ke server lambat.</div>'+
+            '<div class="kd-actions" style="margin-top:12px;">'+
+              '<button type="button" class="kd-btn-primary" id="kanitDashRetrySlow">Coba lagi</button>'+
+            '</div>';
+          var b = document.getElementById("kanitDashRetrySlow");
+          if(b) b.onclick = function(){ loadKanitDashboard(); };
+        }
       }
-    }, 1200);
+    }, 10000);
 
     callGrid_(prevLabel, function(data){
       prevData = data;
@@ -33594,7 +33608,7 @@ $on("cabangPinSubmit", "click", function(){
     if(editable){
       wrap.querySelectorAll(".libur-cell, .jl-cell").forEach(function(cell){
         cell.addEventListener("click", function(ev){
-          if(cell.classList.contains("st-cuti") || cell.classList.contains("st-cuti-pending")) return;
+          // Cuti & Libur sama-sama bisa diklik (hapus / ubah via popup)
           openKanitLiburActionPopup(cell, ev);
         });
       });
@@ -33617,21 +33631,32 @@ $on("cabangPinSubmit", "click", function(){
   }
   function openKanitLiburActionPopup(cell, ev){
     var kar = cell.dataset.kar, day = Number(cell.dataset.day);
-    var isLibur = !!(kanitLiburState[kar] && kanitLiburState[kar][day]);
-    _liburPopupTarget = { kar: kar, day: day, cell: cell };
+    var isLibur = !!(kanitLiburState[kar] && kanitLiburState[kar][day]) || cell.classList.contains("st-libur");
+    var isCuti = cell.classList.contains("st-cuti") || cell.classList.contains("st-cuti-pending");
+    var isFilled = isLibur || isCuti;
+    _liburPopupTarget = { kar: kar, day: day, cell: cell, isLibur: isLibur, isCuti: isCuti };
     var popup = document.getElementById("kanitLiburActionPopup");
-    document.getElementById("kanitLiburActionTitle").textContent = "Tanggal " + String(day).padStart(2,"0");
-    document.getElementById("kanitLiburActLibur").style.display = isLibur ? "none" : "";
-    document.getElementById("kanitLiburActHapus").style.display = isLibur ? "" : "none";
-    // Cuti langsung (tanpa approval) — Kanit & KC
-    var canCuti = true;
-    document.getElementById("kanitLiburActCuti").style.display = "";
-    // posisi dekat cell
+    var kind = isCuti ? "Cuti" : (isLibur ? "Libur" : "kosong");
+    document.getElementById("kanitLiburActionTitle").textContent =
+      "Tgl " + String(day).padStart(2,"0") + (isFilled ? (" · " + kind) : "");
+    // Kosong → hanya Libur + Cuti. Terisi → hanya Hapus.
+    var actLibur = document.getElementById("kanitLiburActLibur");
+    var actCuti = document.getElementById("kanitLiburActCuti");
+    var actHapus = document.getElementById("kanitLiburActHapus");
+    function showBtn_(el, on){
+      if(!el) return;
+      if(on){ el.style.removeProperty("display"); el.style.display = ""; }
+      else { el.style.setProperty("display","none","important"); }
+    }
+    showBtn_(actLibur, !isFilled);
+    showBtn_(actCuti, !isFilled);
+    showBtn_(actHapus, isFilled);
+    if(actHapus) actHapus.textContent = isCuti ? "Hapus Cuti" : (isLibur ? "Hapus Libur" : "Hapus");
     var rect = cell.getBoundingClientRect();
     popup.style.left = Math.min(window.innerWidth - 170, Math.max(8, rect.left)) + "px";
     popup.style.top = Math.min(window.innerHeight - 180, rect.bottom + 6) + "px";
     popup.classList.add("show");
-    ev.stopPropagation();
+    if(ev && ev.stopPropagation) ev.stopPropagation();
   }
   function monthLabelToYm_(label){
     // "September 2026" -> {y:2026, m:9}
@@ -33746,6 +33771,80 @@ $on("cabangPinSubmit", "click", function(){
         .submitCuti(session.cabang, session.cabangPin, kar, tgl, tgl, "Cuti", "");
     }
   }
+  function hapusCutiFromGrid_(kar, day, cell){
+    var msgEl = document.getElementById("kanitJadwalLiburMsg") || document.getElementById("jadwalLiburMsg");
+    var bulanEl = document.getElementById("kanitJadwalLiburBulan") || document.getElementById("jadwalLiburBulan");
+    var monthLabel = (bulanEl && bulanEl.value) || "";
+    var ym = monthLabelToYm_(monthLabel);
+    if(!ym){ showMsg(msgEl, "Bulan tidak dikenali.", "err"); return; }
+    var tgl = ym.y + "-" + String(ym.m).padStart(2,"0") + "-" + String(day).padStart(2,"0");
+    showMsg(msgEl, "Menghapus cuti...", "ok");
+    function onOk(r){
+      if(!r || r.status !== "OK"){ showMsg(msgEl, (r && r.reason) || "Gagal menghapus cuti.", "err"); return; }
+      showMsg(msgEl, "Cuti dihapus.", "ok");
+      if(cell){ cell.classList.remove("st-cuti","st-cuti-pending"); cell.textContent = ""; cell.title = ""; }
+      try{ if(typeof loadKanitCutiList === "function") loadKanitCutiList(); }catch(e){}
+      try{
+        var btn = document.getElementById("jadwalLiburLoadBtn") || document.getElementById("kanitJadwalLiburLoadBtn");
+        if(btn) btn.click();
+      }catch(e2){}
+    }
+    function onFail(err){ showMsg(msgEl, "Kesalahan: "+(err.message||err), "err"); }
+    function cancelById(id){
+      if(session && session.adminPin){
+        google.script.run.withSuccessHandler(onOk).withFailureHandler(onFail)
+          .cancelCutiAdmin(session.adminPin, id, "Dihapus dari grid jadwal");
+      } else {
+        google.script.run.withSuccessHandler(onOk).withFailureHandler(onFail)
+          .requestBatalCutiKanit(session.cabang, session.cabangPin, id);
+      }
+    }
+    // Cari cuti aktif yang mencakup tanggal ini
+    function matchRow(row){
+      if(!row) return false;
+      if(String(row.karyawanId||row.idKaryawan||"") !== String(kar) && String(row.karyawan||"") !== String(kar)){
+        // beberapa response pakai field berbeda
+        if(String(row.karyawanId||"") !== String(kar) && String(row.karId||"") !== String(kar)) return false;
+      }
+      var st = String(row.status||"").trim();
+      if(st && st !== "Disetujui" && st !== "Menunggu Batal") return false;
+      var mulai = String(row.tanggalMulai||row.mulai||row.start||"").slice(0,10);
+      var selesai = String(row.tanggalSelesai||row.selesai||row.end||mulai).slice(0,10);
+      return mulai && selesai && tgl >= mulai && tgl <= selesai;
+    }
+    function pickId(rows){
+      rows = rows || [];
+      for(var i=0;i<rows.length;i++){
+        var row = rows[i];
+        var kid = String(row.karyawanId||row.idKaryawan||row.karId||"");
+        if(kid && kid !== String(kar)) continue;
+        if(!kid && String(row.karyawan||"") && String(row.karyawan) !== String(kar)) continue;
+        var st = String(row.status||"").trim();
+        if(st && st !== "Disetujui" && st !== "Menunggu Batal") continue;
+        var mulai = String(row.tanggalMulai||row.mulai||"").slice(0,10);
+        var selesai = String(row.tanggalSelesai||row.selesai||mulai).slice(0,10);
+        if(mulai && selesai && tgl >= mulai && tgl <= selesai) return row.id || row.cutiId;
+      }
+      return null;
+    }
+    if(session && session.adminPin){
+      var cabang = (typeof adminLiburCabang !== "undefined" && adminLiburCabang) || (document.getElementById("jadwalLiburCabang")||{}).value || "";
+      google.script.run.withSuccessHandler(function(r){
+        var rows = (r && r.cuti) || (r && r.data && r.data.cuti) || [];
+        var id = pickId(rows);
+        if(!id){ showMsg(msgEl, "Data cuti tanggal ini tidak ditemukan.", "err"); return; }
+        cancelById(id);
+      }).withFailureHandler(onFail).getCutiAdmin(session.adminPin, cabang, "Disetujui");
+    } else {
+      google.script.run.withSuccessHandler(function(r){
+        var rows = (r && r.cuti) || [];
+        var id = pickId(rows);
+        if(!id){ showMsg(msgEl, "Data cuti tanggal ini tidak ditemukan.", "err"); return; }
+        cancelById(id);
+      }).withFailureHandler(onFail).getCutiKanit(session.cabang, session.cabangPin);
+    }
+  }
+
   $on("kanitLiburActionPopup", "click", function(e){
     var btn = e.target.closest("button[data-act]");
     if(!btn) return;
@@ -33754,8 +33853,11 @@ $on("cabangPinSubmit", "click", function(){
     closeKanitLiburActionPopup();
     if(!tgt || act === "batal") return;
     if(act === "libur") applyLiburCell_(tgt.kar, tgt.day, true);
-    else if(act === "hapus-libur") applyLiburCell_(tgt.kar, tgt.day, false);
     else if(act === "cuti") submitCutiFromGrid_(tgt.kar, tgt.day);
+    else if(act === "hapus" || act === "hapus-libur"){
+      if(tgt.isCuti) hapusCutiFromGrid_(tgt.kar, tgt.day, tgt.cell);
+      else applyLiburCell_(tgt.kar, tgt.day, false);
+    }
   });
   document.addEventListener("click", function(e){
     var p = document.getElementById("kanitLiburActionPopup");
@@ -41314,26 +41416,44 @@ function renderKanitAuditWizard(){
     });
   }
 
-  // Popup: for mode cuti/sakit only show Cuti + Sakit
+  // Popup rules: kosong → Libur+Cuti; terisi → Hapus+Tutup. Cabang tutup Minggu: kosong hanya Cuti.
   var _openLiburPopupOrig = openKanitLiburActionPopup;
   openKanitLiburActionPopup = function(cell, ev){
     _openLiburPopupOrig(cell, ev);
+    var tgt = _liburPopupTarget || {};
+    var isFilled = !!(tgt.isLibur || tgt.isCuti);
     var isAdmin = !!(session.adminPin && !session.cabangPin);
-    var modeCS = adminLiburModeCutiSakit && isAdmin;
+    var modeCS = !!(adminLiburModeCutiSakit && isAdmin);
+    // fallback modeCS dari class data grid kanit
+    try{
+      if(!modeCS && cell && cell.closest){
+        var root = cell.closest("#kanitJadwalLiburWrap") || cell.closest("#jadwalLiburWrap");
+        // no-op
+      }
+    }catch(e){}
     var actLibur = document.getElementById("kanitLiburActLibur");
     var actHapus = document.getElementById("kanitLiburActHapus");
     var actCuti = document.getElementById("kanitLiburActCuti");
     var actSakit = document.getElementById("kanitLiburActSakit");
-    // Sakit: HANYA KC, semua cabang
-    if(actSakit) actSakit.style.display = "none"; // Sakit dihapus
+    if(actSakit) actSakit.style.display = "none";
+    function showBtn2_(el, on){
+      if(!el) return;
+      if(on){ el.style.removeProperty("display"); el.style.display = ""; }
+      else { el.style.setProperty("display","none","important"); }
+    }
+    if(isFilled){
+      showBtn2_(actLibur, false);
+      showBtn2_(actCuti, false);
+      showBtn2_(actHapus, true);
+      return;
+    }
+    showBtn2_(actHapus, false);
     if(modeCS){
-      // cabang tutup Minggu: hanya Cuti oleh KC
-      if(actLibur) actLibur.style.display = "none";
-      if(actHapus) actHapus.style.display = "none";
-      if(actCuti) actCuti.style.display = isAdmin ? "" : "none";
-    } else if(isAdmin){
-      // KC di cabang normal: Libur saja (cuti diajukan Kanit)
-      if(actCuti) actCuti.style.display = "none";
+      showBtn2_(actLibur, false);
+      showBtn2_(actCuti, true);
+    } else {
+      showBtn2_(actLibur, true);
+      showBtn2_(actCuti, true);
     }
   };
 
@@ -43412,11 +43532,13 @@ html[data-theme="light"] .libur-action-popup button:hover{
   -webkit-text-fill-color:#0F766E !important;
 }
 .libur-action-popup button.danger,
+.libur-action-popup button[data-act="hapus"],
 .libur-action-popup button[data-act="hapus-libur"]{
   color:#DC2626 !important;
   -webkit-text-fill-color:#DC2626 !important;
 }
 .libur-action-popup button.danger:hover,
+.libur-action-popup button[data-act="hapus"]:hover,
 .libur-action-popup button[data-act="hapus-libur"]:hover{
   background:#FEF2F2 !important;
 }
@@ -45794,6 +45916,17 @@ tr.oh-w-current td.oh-w-num{
   font-weight: 600 !important;
   font-size: 13px !important;
   cursor: pointer !important;
+}
+</style>
+
+
+<style id="jl-cuti-clickable">
+.libur-cell.st-cuti,
+.jl-cell.st-cuti,
+.libur-cell.st-cuti-pending,
+.jl-cell.st-cuti-pending{
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 </style>
 
