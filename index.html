@@ -29317,8 +29317,8 @@ html[data-theme="light"] table.libur-table td{
     <div class="panel subpanel" id="tab-kanitinput">
       <form id="omsetForm" class="omset-form-lite omset-form-v2">
         <div class="field">
-          <label>Tanggal</label>
-          <input type="date" id="tanggal" min="2026-05-01" max="2027-01-31" required>
+          <label>Tanggal <span class="omset-hint">dd/mm/yyyy</span></label>
+          <input type="date" id="tanggal" lang="id" min="2026-05-01" max="2027-01-31" required>
         </div>
 
         <div class="omset-section-lab">Omset Harian (per kanal)</div>
@@ -29911,7 +29911,43 @@ html[data-theme="light"] table.libur-table td{
             </span>
             <span class="doc-hub-arrow" aria-hidden="true">→</span>
           </button>
+          <button type="button" class="doc-hub-card" data-doc="hasil" id="docHubHasilBtn">
+            <span class="doc-hub-badge" style="color:#fff!important;-webkit-text-fill-color:#fff!important;background:#334155!important;display:inline-flex!important;align-items:center;justify-content:center;width:42px;height:42px;border-radius:11px;font-weight:800;font-size:12px;">📄</span>
+            <span class="doc-hub-body">
+              <span class="doc-hub-title">Lihat Hasil Dokumen</span>
+              <span class="doc-hub-desc">Riwayat BA SN / GA / SP cabang ini · cari no faktur</span>
+            </span>
+            <span class="doc-hub-arrow" aria-hidden="true">→</span>
+          </button>
+
         </div>
+      </div>
+
+
+      <!-- Kanit: Lihat Hasil Dokumen -->
+      <div id="docHasilKanit" class="doc-form-page hub-panel-full" style="display:none;">
+        <button type="button" class="hub-back-btn doc-back-btn">&larr; Kembali</button>
+        <div class="admin-section-title" style="margin-top:8px;">Hasil Dokumen Cabang</div>
+        <div class="hint" style="margin-bottom:10px;">Hanya dokumen cabang Anda. Cari nomor BA, no faktur, atau SN.</div>
+        <div class="filter-row-compact" style="gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:flex-end;">
+          <div class="field" style="flex:1 1 180px;min-width:160px;">
+            <label>Cari</label>
+            <input type="search" id="docHasilSearch" placeholder="No faktur / nomor BA / SN…" autocomplete="off">
+          </div>
+          <div class="field" style="flex:0 0 120px;">
+            <label>Jenis</label>
+            <select id="docHasilJenis">
+              <option value="">Semua</option>
+              <option value="SN">BA SN</option>
+              <option value="GA">BA GA</option>
+              <option value="SP">Surat Pernyataan</option>
+            </select>
+          </div>
+          <button type="button" id="docHasilLoadBtn" class="btn-xs">Tampilkan</button>
+        </div>
+        <div id="docHasilKpi" class="audit-kpi-grid" style="margin-bottom:12px;"></div>
+        <div id="docHasilWrap"><div class="empty-log">Ketuk Tampilkan untuk memuat.</div></div>
+        <div class="msg" id="docHasilMsg"></div>
       </div>
 
       <!-- Form SN (halaman baru) -->
@@ -31782,6 +31818,11 @@ $on("cabangPinSubmit", "click", function(){
             '</div>'+
           '</div>'+
           '<div class="kd-grid">'+
+            '<div class="kd-card kd-card-priority">'+
+              '<div class="kd-k">Target hari ini</div>'+
+              '<div class="kd-v">'+ (todayOff ? '—' : kdFmt_(todayTarget)) +'</div>'+
+              '<div class="kd-sub">'+(todayOff ? 'Libur Minggu' : ('Sisa target ÷ sisa hari kerja · tgl '+kdPad2_(today)))+'</div>'+
+            '</div>'+
             '<div class="kd-card'+(yestBelow?' kd-danger':'')+'">'+
               '<div class="kd-k-row"><span class="kd-k">Omset kemarin'+(yestSameMonth ? ' · tgl '+kdPad2_(yestDay) : '')+'</span>'+yestBadge+'</div>'+
               '<div class="kd-v'+(yestBelow?' is-danger':'')+'">'+kdFmt_(yestTotal)+'</div>'+
@@ -31796,11 +31837,6 @@ $on("cabangPinSubmit", "click", function(){
               '<div class="kd-sub">'+(untilDay>=1
                 ? ('1–'+untilDay+' · '+kdFmt_(vsCur)+' vs '+kdFmt_(vsPrev)+(vsPersen!=null ? ' ('+(vsPersen>0?'+':'')+vsPersen+'%)' : ''))
                 : 'Belum ada hari untuk dibandingkan')+'</div>'+
-            '</div>'+
-            '<div class="kd-card">'+
-              '<div class="kd-k">Target hari ini</div>'+
-              '<div class="kd-v">'+ (todayOff ? '—' : kdFmt_(todayTarget)) +'</div>'+
-              '<div class="kd-sub">'+(todayOff ? 'Libur Minggu' : ('Sisa target ÷ sisa hari kerja · tgl '+kdPad2_(today)))+'</div>'+
             '</div>'+
             '<div class="kd-card">'+
               '<div class="kd-k-row"><span class="kd-k">Pekan berjalan · P'+pekanIdx+'</span><span class="kd-pct-pill">'+pekanPct+'%</span></div>'+
@@ -41224,7 +41260,7 @@ function renderKanitAuditWizard(){
   function docShowHub(){
     var hub = document.getElementById("docHub");
     if(hub) hub.style.display = "";
-    ["docFormSN","docFormGA","docFormSP"].forEach(function(id){
+    ["docFormSN","docFormGA","docFormSP","docHasilKanit"].forEach(function(id){
       var el = document.getElementById(id);
       if(el) el.style.display = "none";
     });
@@ -41232,21 +41268,90 @@ function renderKanitAuditWizard(){
   function docOpenForm(kind){
     var hub = document.getElementById("docHub");
     if(hub) hub.style.display = "none";
-    ["docFormSN","docFormGA","docFormSP"].forEach(function(id){
+    ["docFormSN","docFormGA","docFormSP","docHasilKanit"].forEach(function(id){
       var el = document.getElementById(id);
       if(el) el.style.display = "none";
     });
-    var map = { sn:"docFormSN", ga:"docFormGA", sp:"docFormSP" };
+    var map = { sn:"docFormSN", ga:"docFormGA", sp:"docFormSP", hasil:"docHasilKanit" };
     var el = document.getElementById(map[kind]);
     if(el){
       el.style.display = "block";
       el.style.visibility = "visible";
+    }
+    if(kind === "hasil"){
+      try{ loadDocHasilKanit(); }catch(eH){}
+      return;
     }
     try{
       if(docMetaCache) docFillCabangSelects(docMetaCache);
       else loadDokumenTab();
     }catch(e){}
   }
+  function loadDocHasilKanit(){
+    var wrap = document.getElementById("docHasilWrap");
+    var msg = document.getElementById("docHasilMsg");
+    var kpi = document.getElementById("docHasilKpi");
+    var q = ((document.getElementById("docHasilSearch")||{}).value || "").trim();
+    var jenis = ((document.getElementById("docHasilJenis")||{}).value || "").trim();
+    var cabang = "";
+    var pin = "";
+    try{
+      cabang = session.cabang || "";
+      pin = session.cabangPin || session.sessionToken || "";
+    }catch(e){}
+    if(!cabang || !pin){
+      if(wrap) wrap.innerHTML = '<div class="empty-log">Sesi cabang tidak ditemukan. Login ulang.</div>';
+      return;
+    }
+    if(wrap) wrap.innerHTML = '<div class="empty-log">Memuat hasil dokumen...</div>';
+    try{ if(msg) clearMsg(msg); }catch(e){}
+    google.script.run
+      .withSuccessHandler(function(r){
+        if(!r || r.status !== "OK"){
+          if(wrap) wrap.innerHTML = '<div class="empty-log">'+escHtml((r&&r.reason)||"Gagal memuat")+'</div>';
+          return;
+        }
+        var list = (r.riwayat || []).filter(function(row){
+          if(jenis && row.jenis !== jenis) return false;
+          return true;
+        });
+        if(kpi){
+          kpi.innerHTML =
+            '<div class="audit-kpi"><div class="k">BA SN</div><div class="v">'+(r.totalSN||0)+'</div></div>'+
+            '<div class="audit-kpi"><div class="k">BA GA</div><div class="v">'+(r.totalGA||0)+'</div></div>'+
+            '<div class="audit-kpi"><div class="k">SP</div><div class="v">'+(r.totalSP||0)+'</div></div>'+
+            '<div class="audit-kpi"><div class="k">Ditampilkan</div><div class="v">'+list.length+'</div></div>';
+        }
+        if(!list.length){
+          if(wrap) wrap.innerHTML = '<div class="empty-log">'+(q ? "Tidak ada hasil untuk \""+escHtml(q)+"\"." : "Belum ada dokumen untuk cabang ini.")+'</div>';
+          return;
+        }
+        if(wrap){
+          wrap.innerHTML = '<div class="table-wrap"><table class="karyawan-table"><thead><tr>'+
+            '<th>Waktu</th><th>Jenis</th><th>Nomor / Faktur / Ket</th><th>Dokumen</th>'+
+            '</tr></thead><tbody>'+
+            list.map(function(row){
+              var link = row.link ? '<a href="'+row.link+'" target="_blank" rel="noopener" class="btn-xs secondary">Buka</a>' : '—';
+              var jLabel = row.jenis === "SN" ? "BA SN" : (row.jenis === "GA" ? "BA GA" : (row.jenis === "SP" ? "SP" : row.jenis));
+              return '<tr><td>'+escHtml(row.waktu)+'</td><td><b>'+escHtml(jLabel)+'</b></td><td>'+escHtml(row.nomor||"—")+'</td><td>'+link+'</td></tr>';
+            }).join("")+'</tbody></table></div>';
+        }
+      })
+      .withFailureHandler(function(err){
+        if(wrap) wrap.innerHTML = '<div class="empty-log">'+escHtml(String(err.message||err))+'</div>';
+      })
+      .docAmbilRiwayatKanit(cabang, pin, q);
+  }
+  (function(){
+    var btn = document.getElementById("docHasilLoadBtn");
+    if(btn) btn.addEventListener("click", function(){ loadDocHasilKanit(); });
+    var search = document.getElementById("docHasilSearch");
+    if(search){
+      search.addEventListener("keydown", function(ev){
+        if(ev.key === "Enter"){ ev.preventDefault(); loadDocHasilKanit(); }
+      });
+    }
+  })();
   // Event delegation — aman walau panel dipindah antar layar KC/Kanit
   document.addEventListener("click", function(ev){
     var card = ev.target.closest(".doc-hub-card");
@@ -46614,6 +46719,97 @@ html[data-theme="light"] #resultOverlay .recap-row .v{
   }
   #resultOverlay .recap-row .k{ font-size: 11px !important; }
   #resultOverlay .recap-row .v{ font-size: 12px !important; }
+}
+</style>
+
+
+<style id="kanit-mobile-fase-a">
+/* ===== Kanit mobile Fase A ===== */
+@media (max-width: 720px){
+  /* Form input omset: full width, tidak mengambang */
+  #screen-omset-form #tab-kanitinput,
+  #tab-kanitinput,
+  #tab-kanitinput.panel,
+  #tab-kanitinput.subpanel,
+  html[data-theme="light"] #tab-kanitinput,
+  html[data-theme="light"] #screen-omset-form #tab-kanitinput{
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  html[data-theme="light"] #omsetForm,
+  html[data-theme="light"] #omsetForm.omset-form-lite,
+  html[data-theme="light"] #omsetForm.omset-form-v2,
+  #omsetForm.omset-form-v2,
+  #omsetForm.omset-form-lite.omset-form-v2{
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 14px 14px 16px !important;
+    box-sizing: border-box !important;
+    border-radius: 14px !important;
+  }
+  #tab-kanitinput .triple,
+  #omsetForm .omset-prefix-row,
+  .omset-prefix-row{
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  /* Topbar: ruang sentuh + judul tidak kepotong */
+  #screen-omset-form .admin-topbar{
+    padding: 8px 10px !important;
+    gap: 8px !important;
+    min-height: 52px !important;
+  }
+  #screen-omset-form .admin-topbar-title{
+    font-size: 15px !important;
+    font-weight: 800 !important;
+  }
+  #screen-omset-form .admin-hamburger{
+    width: 42px !important;
+    height: 42px !important;
+    flex-shrink: 0 !important;
+  }
+  /* Profil selalu terlihat di mobile */
+  #screen-omset-form .topbar-user-group .meta,
+  #screen-omset-form .kanit-profile-btn .meta{
+    display: none !important;
+  }
+  #screen-omset-form .kanit-profile-btn,
+  #kanitProfileBtn{
+    min-width: 42px !important;
+    min-height: 42px !important;
+    padding: 4px !important;
+  }
+  /* Content padding + safe area */
+  #screen-omset-form .admin-content{
+    padding: 10px 12px calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  #tab-kanitdashboard{
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  /* Dashboard: hero & kartu lebih rapat */
+  .kd-wrap{ gap: 10px !important; }
+  .kd-card{ padding: 12px !important; border-radius: 12px !important; }
+  .kd-card-hero{ padding: 14px 12px 12px !important; }
+  .kd-v{ font-size: 24px !important; }
+  .kd-v-xl{ font-size: 34px !important; }
+  .kd-greet{ font-size: 15px !important; }
+  .kd-head-actions{ width: 100% !important; }
+  .kd-btn-sm{ flex: 1 1 auto !important; text-align: center !important; }
+  /* Sidebar: area sentuh lebih besar */
+  #kanitSidebar .admin-nav-btn{
+    min-height: 44px !important;
+    padding: 10px 12px !important;
+  }
+}
+@media (max-width: 400px){
+  #tab-kanitinput .triple,
+  #omsetForm .omset-prefix-row{
+    gap: 6px !important;
+  }
+  .kd-chip{ padding: 5px 8px !important; font-size: 11px !important; }
 }
 </style>
 
