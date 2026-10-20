@@ -30711,7 +30711,8 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     nik: null,
     nama: null,
     jabatan: null,
-    role: null
+    role: null,
+    loginAt: null
   };
 
   // Cache browser: data terakhir langsung tampil, refresh di background
@@ -31290,6 +31291,8 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
 
     function persistSession_(){
       try{
+        var now = Date.now();
+        if(!session.loginAt) session.loginAt = now;
         var payload = {
           nik: session.nik,
           nama: session.nama,
@@ -31299,9 +31302,12 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
           cabangPin: session.cabangPin,
           adminPin: session.adminPin,
           sessionToken: session.sessionToken,
-          t: Date.now()
+          t: session.loginAt || now,
+          loginAt: session.loginAt || now
         };
-        localStorage.setItem("gueSession", JSON.stringify(payload));
+        // Hanya sessionStorage → tutup tab/browser = sesi hilang
+        sessionStorage.setItem("gueSession", JSON.stringify(payload));
+        try{ localStorage.removeItem("gueSession"); }catch(e2){}
       }catch(e){}
     }
     function enterApp(r, pin){
@@ -31309,6 +31315,7 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
       session.nama = r.nama;
       session.jabatan = r.jabatan;
       session.role = r.role;
+      session.loginAt = Date.now();
       // Session token server (audit #1) — dipakai untuk API write, bukan PIN mentah
       var tok = (r && (r.sessionToken || r.sessionPin)) || pin;
       session.sessionToken = tok;
@@ -31416,15 +31423,62 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
 
 
   // Restore session setelah refresh (jangan auto-logout)
+  // Sesi: max 1 jam; tutup tab = logout (sessionStorage)
+  var SESSION_MAX_MS = 60 * 60 * 1000;
+  function clearGueSessionStores_(){
+    try{ sessionStorage.removeItem("gueSession"); }catch(e){}
+    try{ localStorage.removeItem("gueSession"); }catch(e){}
+  }
+  function performAutoLogout_(reason){
+    try{
+      session.cabang = null;
+      session.cabangPin = null;
+      session.adminPin = null;
+      session.sessionToken = null;
+      session.role = null;
+      session.nik = null;
+      session.nama = null;
+      session.jabatan = null;
+      session.loginAt = null;
+    }catch(e){}
+    clearGueSessionStores_();
+    try{ stopAdminNotifPoll(); }catch(e){}
+    try{ adminHomeBundleAt = 0; adminSummaryLoaded = false; }catch(e){}
+    try{ closeAllProfileModals(); }catch(e){}
+    try{ showScreen("screen-landing"); }catch(e){}
+    if(reason){ try{ console.info("[sesi]", reason); }catch(e2){} }
+  }
+  function sessionExpired_(){
+    var t0 = session.loginAt || 0;
+    if(!t0) return false;
+    return (Date.now() - t0) >= SESSION_MAX_MS;
+  }
+  function checkSessionTimeout_(){
+    if(!session.role && !session.sessionToken) return;
+    if(sessionExpired_()) performAutoLogout_("timeout 1 jam");
+  }
+  setInterval(checkSessionTimeout_, 30 * 1000);
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState === "visible") checkSessionTimeout_();
+  });
+  // Tutup tab/browser: sessionStorage otomatis hilang.
+  // Hanya bersihkan sisa localStorage (jangan hapus sessionStorage di sini —
+  // beforeunload juga terpanggil saat refresh, yang harus tetap login).
+  window.addEventListener("pagehide", function(){
+    try{ localStorage.removeItem("gueSession"); }catch(e){}
+  });
+
   (function restoreSessionOnBoot(){
     try{
-      var raw = localStorage.getItem("gueSession");
+      // Hapus sesi lama di localStorage (migrasi)
+      try{ localStorage.removeItem("gueSession"); }catch(eM){}
+      var raw = sessionStorage.getItem("gueSession");
       if(!raw) return;
       var s = JSON.parse(raw);
       if(!s || !s.role) return;
-      // Max 7 hari
-      if(s.t && (Date.now() - s.t > 7*24*60*60*1000)){
-        localStorage.removeItem("gueSession");
+      var t0 = s.loginAt || s.t || 0;
+      if(!t0 || (Date.now() - t0) >= SESSION_MAX_MS){
+        clearGueSessionStores_();
         return;
       }
       session.nik = s.nik || null;
@@ -31435,6 +31489,7 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
       session.cabangPin = s.cabangPin || null;
       session.adminPin = s.adminPin || null;
       session.sessionToken = s.sessionToken || s.adminPin || s.cabangPin || null;
+      session.loginAt = t0;
       if(s.role === "kc" && session.adminPin){
         setTimeout(function(){
           try{
@@ -31912,14 +31967,7 @@ $on("cabangPinSubmit", "click", function(){
   }
 
   $on("logoutFromForm", "click", function(){
-    session.cabang = null;
-    session.cabangPin = null;
-    session.sessionToken = null;
-    session.role = null;
-    session.nik = null;
-    try{ localStorage.removeItem("gueSession"); }catch(e){}
-    try{ closeAllProfileModals(); }catch(e){}
-    showScreen("screen-landing");
+    performAutoLogout_("manual kanit");
   });
 
   function logKeyForCabang(){ return LOG_KEY_PREFIX + session.cabang; }
@@ -32312,15 +32360,7 @@ $on("cabangPinSubmit", "click", function(){
   });
 
   $on("logoutFromAdmin", "click", function(){
-    session.adminPin = null;
-    session.sessionToken = null;
-    session.role = null;
-    session.nik = null;
-    try{ localStorage.removeItem("gueSession"); }catch(e){}
-    try{ stopAdminNotifPoll(); }catch(e){}
-    try{ adminHomeBundleAt = 0; adminSummaryLoaded = false; }catch(e){}
-    try{ closeAllProfileModals(); }catch(e){}
-    showScreen("screen-landing");
+    performAutoLogout_("manual kc");
   });
 
   // ---------------- Admin dashboard ----------------
