@@ -30494,9 +30494,7 @@ html[data-theme="light"] table.libur-table td{
       <div class="thanks" id="thanks"></div>
       <div class="detail" id="detail"></div>
       <div class="recap" id="recap" style="display:none;"></div>
-      <div class="ss-reminder" id="ssReminder" style="display:none;">
-        Unduh gambar bila perlu dikirim ke grup.
-      </div>
+      <div class="ss-reminder" id="ssReminder" style="display:none;" role="status"></div>
     </div>
     <div class="modal-actions" id="resultActions">
       <button type="button" class="modal-btn cancel" id="resultCloseBtn">Tutup</button>
@@ -32197,7 +32195,25 @@ $on("cabangPinSubmit", "click", function(){
           thanksEl.textContent = "Terima kasih! Data omset tersimpan.";
           detailEl.textContent = r.cabang+" · "+r.monthLabel+", tgl "+String(r.day).padStart(2,"0")+" (GE "+ge+" / GB "+gb+" / GG "+gg+" / Rejected "+rejected+").";
           renderRecap(r, r.cabang);
-          ssReminderEl.style.display = "block";
+          // Status target harian (input hari ini vs target / hari)
+          try{
+            var dayTot = (Number(ge)||0) + (Number(gb)||0) + (Number(gg)||0);
+            var dayOk = false;
+            if(r.target_harian_status === "TERCAPAI"){
+              dayOk = true;
+            } else if(r.target_harian_status === "OK" && r.target_harian_angka != null){
+              dayOk = dayTot >= Number(r.target_harian_angka);
+            } else {
+              dayOk = false;
+            }
+            ssReminderEl.className = "ss-reminder " + (dayOk ? "ss-ok" : "ss-bad");
+            ssReminderEl.textContent = dayOk
+              ? "Good Job Mencapai Target Harian"
+              : "Tidak Mencapai Target Harian";
+            ssReminderEl.style.display = "block";
+          }catch(eSs){
+            ssReminderEl.style.display = "none";
+          }
           logEntries.unshift({ tanggal: tanggal, cabang: cabang, ge: ge, gb: gb, gg: gg, rejected: rejected });
           logEntries = logEntries.slice(0,20);
           saveLog(logEntries);
@@ -46560,10 +46576,26 @@ html[data-theme="light"] #resultOverlay .recap-row .v{
   text-align: right !important;
 }
 #resultOverlay .ss-reminder{
-  font-size: 11px !important;
-  padding: 8px 10px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  padding: 10px 12px !important;
   margin-top: 8px !important;
-  line-height: 1.3 !important;
+  line-height: 1.35 !important;
+  text-align: center !important;
+  border-radius: 10px !important;
+  border: 1px solid transparent !important;
+}
+#resultOverlay .ss-reminder.ss-ok{
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  background: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+}
+#resultOverlay .ss-reminder.ss-bad{
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+  background: #FEF2F2 !important;
+  border-color: #FECACA !important;
 }
 #resultOverlay .modal-actions,
 #resultOverlay #resultActions{
