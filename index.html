@@ -38469,11 +38469,11 @@ function applyRejectedAlasanFilter_(which){
     var list = document.getElementById("adminNotifList");
     if(!list) return;
     if(!items || !items.length){
-      list.innerHTML = '<div class="empty-log" style="padding:14px;">Tidak ada notifikasi baru.</div>';
+      list.innerHTML = '<div class="empty-log" style="padding:14px;">Tidak ada notifikasi dokumen baru.</div>';
       return;
     }
-    list.innerHTML = items.map(function(it){
-      return '<div class="notif-item '+(it.type||'')+'" data-type="'+(it.type||'')+'">'+
+    list.innerHTML = items.map(function(it, idx){
+      return '<div class="notif-item '+(it.type||'')+'" data-type="'+(it.type||'')+'" data-idx="'+idx+'" data-link="'+escHtml(it.link||'')+'" data-title="'+escHtml(it.title||'')+'">'+
         '<div class="ni-title">'+escHtml(it.title||"Notifikasi")+'</div>'+
         '<div class="ni-body">'+escHtml(it.body||"")+'</div>'+
         '<div class="ni-time">'+formatNotifTime(it.time)+'</div>'+
@@ -38482,17 +38482,21 @@ function applyRejectedAlasanFilter_(which){
     list.querySelectorAll(".notif-item").forEach(function(el){
       el.addEventListener("click", function(){
         var type = el.getAttribute("data-type");
-        document.getElementById("adminNotifPanel").classList.remove("open");
-        if(type === "cuti"){
-          var btn = document.querySelector('.admin-nav-btn[data-tab="jadwallibur"]');
-          if(btn) btn.click();
-          setTimeout(function(){ try{ document.getElementById("approvalCutiLoadBtn").click(); }catch(e){} }, 200);
-        } else if(type === "omset"){
-          var btn2 = document.querySelector('.admin-nav-btn[data-tab="pemantauan"]');
-          if(btn2) btn2.click();
-        } else if(type === "dokumen"){
-          var btn3 = document.querySelector('.admin-nav-btn[data-tab="dokumen"]');
+        var link = el.getAttribute("data-link") || "";
+        var title = el.getAttribute("data-title") || "Dokumen";
+        var panel = document.getElementById("adminNotifPanel");
+        if(panel) panel.classList.remove("open");
+        if(type === "dokumen" && link){
+          // buka tab Dokumen + preview PDF langsung
+          var btn3 = document.querySelector('#adminSidebar .admin-nav-btn[data-tab="dokumen"]')
+            || document.querySelector('.admin-nav-btn[data-tab="dokumen"]');
           if(btn3) btn3.click();
+          setTimeout(function(){
+            try{ if(typeof openDocPdfModal_ === "function") openDocPdfModal_(link, title); }catch(e){}
+          }, 200);
+        } else if(type === "dokumen"){
+          var btn4 = document.querySelector('.admin-nav-btn[data-tab="dokumen"]');
+          if(btn4) btn4.click();
           setTimeout(function(){ try{ loadDocRiwayat(); }catch(e){} }, 250);
         }
       });
@@ -47305,6 +47309,41 @@ html[data-theme="light"] #docRiwayatWrap .doc-hasil-month-title{
 .doc-ico-btn.doc-btn-hapus:hover{
   background: #FEE2E2 !important;
   border-color: #FCA5A5 !important;
+}
+</style>
+
+
+<style id="notif-panel-mobile-fix">
+/* Panel notifikasi: jangan ke-potong di HP */
+.admin-topbar-bell-wrap{
+  position: relative !important;
+}
+.notif-panel,
+#adminNotifPanel.notif-panel{
+  position: absolute !important;
+  right: 0 !important;
+  left: auto !important;
+  top: calc(100% + 8px) !important;
+  width: min(360px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  z-index: 8000 !important;
+  box-sizing: border-box !important;
+}
+@media (max-width: 560px){
+  .notif-panel,
+  #adminNotifPanel.notif-panel{
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    top: 56px !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: min(70vh, 480px) !important;
+    border-radius: 14px !important;
+  }
+  .notif-panel-body{
+    max-height: min(55vh, 380px) !important;
+  }
 }
 </style>
 
