@@ -36029,7 +36029,7 @@ function applyRejectedAlasanFilter_(which){
   function rejectedDetailTransaksiTableHtml_(rows){
     if(!rows.length) return '<div class="empty-log">Tidak ada data reject di rentang ini.</div>';
     return '<div class="rejected-detail-table-wrap"><table class="rejected-detail-table"><thead><tr>'+
-      '<th>ID</th><th>Tanggal</th><th>Cabang</th><th>Nama Nasabah</th><th>No. HP</th><th>Barang</th><th>Alasan Reject</th><th>Pinjaman Max</th><th>Status Gadai</th><th>WA</th>'+
+      '<th>ID</th><th>Tanggal</th><th>Cabang</th><th>Nama Nasabah</th><th>No. HP</th><th>Barang</th><th>Alasan Reject</th><th>Pinjaman Max</th><th>Status Gadai</th>'+
       '</tr></thead><tbody>'+
       rows.map(function(r){
         var namaFull = String(r.namaNasabah || "").trim();
@@ -36039,12 +36039,11 @@ function applyRejectedAlasanFilter_(which){
           '<td>'+(r.tanggal||"-")+(r.jam ? '<span class="sub">'+r.jam+'</span>' : '')+'</td>'+
           '<td>'+r.cabang+'</td>'+
           '<td title="'+String(namaFull).replace(/"/g,'&quot;')+'">'+namaDepan+'</td>'+
-          '<td>'+r.noHp+'</td>'+
+          '<td class="rej-hp-cell"><span class="rej-hp-num">'+escHtml(String(r.noHp||"-"))+'</span> '+rejectedWaBtnHtml_(r)+'</td>'+
           '<td>'+r.barang+(r.jenis && r.jenis !== "-" ? '<span class="sub">'+r.jenis+'</span>' : '')+'</td>'+
           '<td><span class="reject-alasan-badge">'+r.alasan+'</span></td>'+
           '<td>Rp '+fmt(r.pinjamanMax)+'</td>'+
           '<td><span class="reject-status-badge'+(r.sudahGadai ? ' sudah' : '')+'">'+(r.sudahGadai ? 'Sudah Tergadai' : 'Belum Tergadai')+'</span></td>'+
-          '<td class="rej-wa-cell">'+rejectedWaBtnHtml_(r)+'</td>'+
         '</tr>';
       }).join("")+
       '</tbody></table></div>';
@@ -47531,6 +47530,27 @@ html[data-theme="light"] #docRiwayatWrap .doc-hasil-month-title{
 #kanitRejectedWrap .rejected-top3-title{
   margin-bottom: 8px !important;
   font-size: 13px !important;
+}
+</style>
+
+
+<style id="rej-wa-beside-hp-css">
+#rejectedDetailWrap .rej-hp-cell,
+#kanitRejectedWrap .rej-hp-cell{
+  white-space: nowrap !important;
+}
+#rejectedDetailWrap .rej-hp-cell .rej-hp-num,
+#kanitRejectedWrap .rej-hp-cell .rej-hp-num{
+  vertical-align: middle;
+  margin-right: 4px;
+}
+#rejectedDetailWrap .rej-hp-cell .rej-wa-btn,
+#kanitRejectedWrap .rej-hp-cell .rej-wa-btn{
+  display: inline-flex !important;
+  vertical-align: middle;
+  width: 26px !important;
+  height: 26px !important;
+  margin: 0 !important;
 }
 </style>
 
