@@ -35971,42 +35971,64 @@ function applyRejectedAlasanFilter_(which){
     var alamat = String(r.alamatCabang || "").trim() || "cabang kami";
     var barang = String(r.barang || "").trim();
     if(!barang || barang === "-") barang = "barang gadai";
-    // Emoji via \u escape (aman encoding file)
-    var ePray = "\uD83D\uDE4F";
-    var ePin = "\uD83D\uDCCD";
-    var ePhone = "\uD83D\uDCF1";
-    var eGold = "\uD83E\uDD47";
-    var eCar = "\uD83D\uDE97";
-    var eSpark = "\u2728";
-    var bullet = "\u2022";
-    var arrow = "\u2192";
-    return (
-      salam + ", Bapak/Ibu " + nama + " " + ePray + "\n\n" +
-      "Perkenalkan, kami dari *Pusat Gadai Indonesia*\n" +
-      ePin + " " + alamat + "\n\n" +
-      "Kami ingin mengonfirmasi terkait pengajuan gadai *" + barang + "* Anda.\n\n" +
-      "Apakah Bapak/Ibu ingin pengajuan ini *diproses*?\n" +
-      bullet + " Jika *ingin diproses* " + arrow + " silakan datang kembali ke cabang kami.\n" +
-      bullet + " Jika ingin *simulasi ulang* " + arrow + " silakan konfirmasi melalui pesan ini.\n" +
-      bullet + " Jika ingin *nominal pinjaman / barang lainnya* " + arrow + " silakan sampaikan kebutuhan Bapak/Ibu.\n\n" +
-      "*Pusat Gadai Indonesia* menerima gadai:\n\n" +
-      ePhone + " *Elektronik*\n" +
-      bullet + " HP\n" + bullet + " Laptop\n" + bullet + " Kamera\n" + bullet + " TV\n" + bullet + " Game\n" + bullet + " dan lainnya\n\n" +
-      eGold + " *Emas*\n" +
-      bullet + " Perhiasan (muda atau tua)\n" + bullet + " Logam mulia\n\n" +
-      eCar + " *BPKB*\n" +
-      bullet + " Kendaraan maksimal 10 tahun terakhir\n\n" +
-      eSpark + " *PROMO Gadai Spektakuler* " + eSpark + "\n" +
-      "Gadai dengan pinjaman minimal *Rp1.000.000* dan dapatkan kesempatan *Spin Wheel* berhadiah:\n" +
-      bullet + " 1 unit Mobil Xpander\n" +
-      bullet + " 2 paket Umroh untuk sepasang\n" +
-      bullet + " Puluhan unit Kulkas 2 pintu\n" +
-      bullet + " Puluhan unit iPhone 17\n" +
-      bullet + " Ribuan Logam Mulia\n" +
-      bullet + " Ribuan Voucher Indomaret\n\n" +
-      "Kami tunggu kabar atau kedatangan Bapak/Ibu di cabang kami.\n" +
-      "Terima kasih " + ePray
-    );
+    function cp(){
+      try{
+        return String.fromCodePoint.apply(String, arguments);
+      }catch(e){
+        return "";
+      }
+    }
+    var ePray = cp(0x1F64F);
+    var ePin = cp(0x1F4CD);
+    var ePhone = cp(0x1F4F1);
+    var eGold = cp(0x1F947);
+    var eCar = cp(0x1F697);
+    var eSpark = cp(0x2728);
+    var bullet = "-";
+    var arrow = "->";
+    var lines = [
+      salam + ", Bapak/Ibu " + nama + (ePray ? (" " + ePray) : ""),
+      "",
+      "Perkenalkan, kami dari *Pusat Gadai Indonesia*",
+      (ePin ? (ePin + " ") : "") + alamat,
+      "",
+      "Kami ingin mengonfirmasi terkait pengajuan gadai *" + barang + "* Anda.",
+      "",
+      "Apakah Bapak/Ibu ingin pengajuan ini *diproses*?",
+      bullet + " Jika *ingin diproses* " + arrow + " silakan datang kembali ke cabang kami.",
+      bullet + " Jika ingin *simulasi ulang* " + arrow + " silakan konfirmasi melalui pesan ini.",
+      bullet + " Jika ingin *nominal pinjaman / barang lainnya* " + arrow + " silakan sampaikan kebutuhan Bapak/Ibu.",
+      "",
+      "*Pusat Gadai Indonesia* menerima gadai:",
+      "",
+      (ePhone ? (ePhone + " ") : "") + "*Elektronik*",
+      bullet + " HP",
+      bullet + " Laptop",
+      bullet + " Kamera",
+      bullet + " TV",
+      bullet + " Game",
+      bullet + " dan lainnya",
+      "",
+      (eGold ? (eGold + " ") : "") + "*Emas*",
+      bullet + " Perhiasan (muda atau tua)",
+      bullet + " Logam mulia",
+      "",
+      (eCar ? (eCar + " ") : "") + "*BPKB*",
+      bullet + " Kendaraan maksimal 10 tahun terakhir",
+      "",
+      (eSpark ? (eSpark + " ") : "") + "*PROMO Gadai Spektakuler*" + (eSpark ? (" " + eSpark) : ""),
+      "Gadai dengan pinjaman minimal *Rp1.000.000* dan dapatkan kesempatan *Spin Wheel* berhadiah:",
+      bullet + " 1 unit Mobil Xpander",
+      bullet + " 2 paket Umroh untuk sepasang",
+      bullet + " Puluhan unit Kulkas 2 pintu",
+      bullet + " Puluhan unit iPhone 17",
+      bullet + " Ribuan Logam Mulia",
+      bullet + " Ribuan Voucher Indomaret",
+      "",
+      "Kami tunggu kabar atau kedatangan Bapak/Ibu di cabang kami.",
+      "Terima kasih" + (ePray ? (" " + ePray) : "")
+    ];
+    return lines.join("\n");
   }
   function rejectedWaBtnHtml_(r){
     var valid = rejectedHpValid_(r.noHp);
