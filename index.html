@@ -38465,6 +38465,26 @@ function applyRejectedAlasanFilter_(which){
       return pad(d.getDate())+"/"+pad(d.getMonth()+1)+" "+pad(d.getHours())+":"+pad(d.getMinutes());
     }catch(e){ return String(t).slice(0,16); }
   }
+  function updateAdminNotifBadge_(){
+    var badge = document.getElementById("adminNotifBadge");
+    var n = (adminNotifCache && adminNotifCache.length) || 0;
+    if(badge){
+      if(n > 0){ badge.style.display = "flex"; badge.textContent = n > 99 ? "99+" : String(n); }
+      else { badge.style.display = "none"; badge.textContent = "0"; }
+    }
+  }
+  function dismissAdminNotif_(notifId){
+    if(!notifId) return;
+    adminNotifCache = (adminNotifCache || []).filter(function(it){ return String(it.id||"") !== String(notifId); });
+    updateAdminNotifBadge_();
+    renderAdminNotifList(adminNotifCache);
+    try{
+      var pin = session.adminPin || session.sessionToken;
+      if(pin && google.script && google.script.run){
+        google.script.run.withFailureHandler(function(){}).markAdminNotifRead(pin, notifId);
+      }
+    }catch(e){}
+  }
   function renderAdminNotifList(items){
     var list = document.getElementById("adminNotifList");
     if(!list) return;
@@ -38473,7 +38493,7 @@ function applyRejectedAlasanFilter_(which){
       return;
     }
     list.innerHTML = items.map(function(it, idx){
-      return '<div class="notif-item '+(it.type||'')+'" data-type="'+(it.type||'')+'" data-idx="'+idx+'" data-link="'+escHtml(it.link||'')+'" data-title="'+escHtml(it.title||'')+'">'+
+      return '<div class="notif-item '+(it.type||'')+'" data-type="'+(it.type||'')+'" data-id="'+escHtml(it.id||'')+'" data-idx="'+idx+'" data-link="'+escHtml(it.link||'')+'" data-title="'+escHtml(it.title||'')+'">'+
         '<div class="ni-title">'+escHtml(it.title||"Notifikasi")+'</div>'+
         '<div class="ni-body">'+escHtml(it.body||"")+'</div>'+
         '<div class="ni-time">'+formatNotifTime(it.time)+'</div>'+
@@ -38484,10 +38504,12 @@ function applyRejectedAlasanFilter_(which){
         var type = el.getAttribute("data-type");
         var link = el.getAttribute("data-link") || "";
         var title = el.getAttribute("data-title") || "Dokumen";
+        var nid = el.getAttribute("data-id") || "";
+        // hilangkan dari list + kurangi badge saat diklik
+        dismissAdminNotif_(nid);
         var panel = document.getElementById("adminNotifPanel");
         if(panel) panel.classList.remove("open");
         if(type === "dokumen" && link){
-          // buka tab Dokumen + preview PDF langsung
           var btn3 = document.querySelector('#adminSidebar .admin-nav-btn[data-tab="dokumen"]')
             || document.querySelector('.admin-nav-btn[data-tab="dokumen"]');
           if(btn3) btn3.click();
@@ -38548,13 +38570,6 @@ function applyRejectedAlasanFilter_(which){
         var badge = document.getElementById("adminNotifBadge");
         if(badge){ badge.style.display = "none"; badge.textContent = "0"; }
         loadAdminNotifications();
-        // Tandai sudah dibaca di server jika ada
-        try{
-          if(session.adminPin && google.script && google.script.run){
-            google.script.run.withFailureHandler(function(){})
-              .markAdminNotificationsRead(session.adminPin);
-          }
-        }catch(err){}
       }
     });
     document.addEventListener("click", function(e){
