@@ -35971,62 +35971,47 @@ function applyRejectedAlasanFilter_(which){
     var alamat = String(r.alamatCabang || "").trim() || "cabang kami";
     var barang = String(r.barang || "").trim();
     if(!barang || barang === "-") barang = "barang gadai";
-    function cp(){
-      try{
-        return String.fromCodePoint.apply(String, arguments);
-      }catch(e){
-        return "";
-      }
-    }
-    var ePray = cp(0x1F64F);
-    var ePin = cp(0x1F4CD);
-    var ePhone = cp(0x1F4F1);
-    var eGold = cp(0x1F947);
-    var eCar = cp(0x1F697);
-    var eSpark = cp(0x2728);
-    var bullet = "-";
-    var arrow = "->";
     var lines = [
-      salam + ", Bapak/Ibu " + nama + (ePray ? (" " + ePray) : ""),
+      salam + ", Bapak/Ibu " + nama,
       "",
       "Perkenalkan, kami dari *Pusat Gadai Indonesia*",
-      (ePin ? (ePin + " ") : "") + alamat,
+      "Alamat: " + alamat,
       "",
       "Kami ingin mengonfirmasi terkait pengajuan gadai *" + barang + "* Anda.",
       "",
       "Apakah Bapak/Ibu ingin pengajuan ini *diproses*?",
-      bullet + " Jika *ingin diproses* " + arrow + " silakan datang kembali ke cabang kami.",
-      bullet + " Jika ingin *simulasi ulang* " + arrow + " silakan konfirmasi melalui pesan ini.",
-      bullet + " Jika ingin *nominal pinjaman / barang lainnya* " + arrow + " silakan sampaikan kebutuhan Bapak/Ibu.",
+      "- Jika *ingin diproses* -> silakan datang kembali ke cabang kami.",
+      "- Jika ingin *simulasi ulang* -> silakan konfirmasi melalui pesan ini.",
+      "- Jika ingin *nominal pinjaman / barang lainnya* -> silakan sampaikan kebutuhan Bapak/Ibu.",
       "",
       "*Pusat Gadai Indonesia* menerima gadai:",
       "",
-      (ePhone ? (ePhone + " ") : "") + "*Elektronik*",
-      bullet + " HP",
-      bullet + " Laptop",
-      bullet + " Kamera",
-      bullet + " TV",
-      bullet + " Game",
-      bullet + " dan lainnya",
+      "*Elektronik*",
+      "- HP",
+      "- Laptop",
+      "- Kamera",
+      "- TV",
+      "- Game",
+      "- dan lainnya",
       "",
-      (eGold ? (eGold + " ") : "") + "*Emas*",
-      bullet + " Perhiasan (muda atau tua)",
-      bullet + " Logam mulia",
+      "*Emas*",
+      "- Perhiasan (muda atau tua)",
+      "- Logam mulia",
       "",
-      (eCar ? (eCar + " ") : "") + "*BPKB*",
-      bullet + " Kendaraan maksimal 10 tahun terakhir",
+      "*BPKB*",
+      "- Kendaraan maksimal 10 tahun terakhir",
       "",
-      (eSpark ? (eSpark + " ") : "") + "*PROMO Gadai Spektakuler*" + (eSpark ? (" " + eSpark) : ""),
+      "*PROMO Gadai Spektakuler*",
       "Gadai dengan pinjaman minimal *Rp1.000.000* dan dapatkan kesempatan *Spin Wheel* berhadiah:",
-      bullet + " 1 unit Mobil Xpander",
-      bullet + " 2 paket Umroh untuk sepasang",
-      bullet + " Puluhan unit Kulkas 2 pintu",
-      bullet + " Puluhan unit iPhone 17",
-      bullet + " Ribuan Logam Mulia",
-      bullet + " Ribuan Voucher Indomaret",
+      "- 1 unit Mobil Xpander",
+      "- 2 paket Umroh untuk sepasang",
+      "- Puluhan unit Kulkas 2 pintu",
+      "- Puluhan unit iPhone 17",
+      "- Ribuan Logam Mulia",
+      "- Ribuan Voucher Indomaret",
       "",
       "Kami tunggu kabar atau kedatangan Bapak/Ibu di cabang kami.",
-      "Terima kasih" + (ePray ? (" " + ePray) : "")
+      "Terima kasih"
     ];
     return lines.join("\n");
   }
@@ -36047,11 +36032,13 @@ function applyRejectedAlasanFilter_(which){
       '<th>ID</th><th>Tanggal</th><th>Cabang</th><th>Nama Nasabah</th><th>No. HP</th><th>Barang</th><th>Alasan Reject</th><th>Pinjaman Max</th><th>Status Gadai</th><th>WA</th>'+
       '</tr></thead><tbody>'+
       rows.map(function(r){
+        var namaFull = String(r.namaNasabah || "").trim();
+        var namaDepan = namaFull && namaFull !== "-" ? namaFull.split(/\s+/)[0] : "-";
         return '<tr>'+
           '<td>'+r.id+'</td>'+
           '<td>'+(r.tanggal||"-")+(r.jam ? '<span class="sub">'+r.jam+'</span>' : '')+'</td>'+
           '<td>'+r.cabang+'</td>'+
-          '<td>'+r.namaNasabah+'</td>'+
+          '<td title="'+String(namaFull).replace(/"/g,'&quot;')+'">'+namaDepan+'</td>'+
           '<td>'+r.noHp+'</td>'+
           '<td>'+r.barang+(r.jenis && r.jenis !== "-" ? '<span class="sub">'+r.jenis+'</span>' : '')+'</td>'+
           '<td><span class="reject-alasan-badge">'+r.alasan+'</span></td>'+
@@ -47485,6 +47472,66 @@ html[data-theme="light"] #docRiwayatWrap .doc-hasil-month-title{
   border: 1px solid #E2E8F0 !important; font-size: 12.5px !important; background: #fff !important; color: #0F172A !important;
 }
 .cabang-cfg-actions{ display: flex; flex-wrap: wrap; gap: 4px; }
+</style>
+
+
+<style id="rej-detail-compact-css">
+/* Detail transaksi rejected — rapat */
+#rejectedDetailWrap .rejected-detail-table-wrap,
+#kanitRejectedWrap .rejected-detail-table-wrap{
+  max-height: none !important;
+}
+#rejectedDetailWrap table.rejected-detail-table,
+#kanitRejectedWrap table.rejected-detail-table,
+#rejectedDetailWrap table,
+#kanitRejectedWrap table{
+  font-size: 11px !important;
+  width: 100% !important;
+}
+#rejectedDetailWrap thead th,
+#kanitRejectedWrap thead th,
+#rejectedDetailWrap .rejected-detail-table th,
+#kanitRejectedWrap .rejected-detail-table th{
+  padding: 5px 6px !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.02em !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+#rejectedDetailWrap tbody td,
+#kanitRejectedWrap tbody td,
+#rejectedDetailWrap .rejected-detail-table td,
+#kanitRejectedWrap .rejected-detail-table td{
+  padding: 4px 6px !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  vertical-align: middle !important;
+}
+#rejectedDetailWrap td .sub,
+#kanitRejectedWrap td .sub,
+#rejectedDetailWrap .rejected-detail-table td .sub{
+  font-size: 9px !important;
+  margin-top: 0 !important;
+  line-height: 1.15 !important;
+}
+#rejectedDetailWrap .reject-alasan-badge,
+#kanitRejectedWrap .reject-alasan-badge,
+#rejectedDetailWrap .reject-status-badge,
+#kanitRejectedWrap .reject-status-badge{
+  font-size: 10px !important;
+  padding: 2px 6px !important;
+  line-height: 1.2 !important;
+}
+#rejectedDetailWrap .rej-wa-btn,
+#kanitRejectedWrap .rej-wa-btn{
+  width: 28px !important;
+  height: 28px !important;
+}
+#rejectedDetailWrap .rejected-top3-title,
+#kanitRejectedWrap .rejected-top3-title{
+  margin-bottom: 8px !important;
+  font-size: 13px !important;
+}
 </style>
 
 </body>
