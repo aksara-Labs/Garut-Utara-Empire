@@ -35971,32 +35971,41 @@ function applyRejectedAlasanFilter_(which){
     var alamat = String(r.alamatCabang || "").trim() || "cabang kami";
     var barang = String(r.barang || "").trim();
     if(!barang || barang === "-") barang = "barang gadai";
+    // Emoji via \u escape (aman encoding file)
+    var ePray = "\uD83D\uDE4F";
+    var ePin = "\uD83D\uDCCD";
+    var ePhone = "\uD83D\uDCF1";
+    var eGold = "\uD83E\uDD47";
+    var eCar = "\uD83D\uDE97";
+    var eSpark = "\u2728";
+    var bullet = "\u2022";
+    var arrow = "\u2192";
     return (
-      salam + ", Bapak/Ibu " + nama + " 🙏\n\n" +
+      salam + ", Bapak/Ibu " + nama + " " + ePray + "\n\n" +
       "Perkenalkan, kami dari *Pusat Gadai Indonesia*\n" +
-      "📍 " + alamat + "\n\n" +
+      ePin + " " + alamat + "\n\n" +
       "Kami ingin mengonfirmasi terkait pengajuan gadai *" + barang + "* Anda.\n\n" +
       "Apakah Bapak/Ibu ingin pengajuan ini *diproses*?\n" +
-      "• Jika *ingin diproses* → silakan datang kembali ke cabang kami.\n" +
-      "• Jika ingin *simulasi ulang* → silakan konfirmasi melalui pesan ini.\n" +
-      "• Jika ingin *nominal pinjaman / barang lainnya* → silakan sampaikan kebutuhan Bapak/Ibu.\n\n" +
+      bullet + " Jika *ingin diproses* " + arrow + " silakan datang kembali ke cabang kami.\n" +
+      bullet + " Jika ingin *simulasi ulang* " + arrow + " silakan konfirmasi melalui pesan ini.\n" +
+      bullet + " Jika ingin *nominal pinjaman / barang lainnya* " + arrow + " silakan sampaikan kebutuhan Bapak/Ibu.\n\n" +
       "*Pusat Gadai Indonesia* menerima gadai:\n\n" +
-      "📱 *Elektronik*\n" +
-      "• HP\n• Laptop\n• Kamera\n• TV\n• Game\n• dan lainnya\n\n" +
-      "🥇 *Emas*\n" +
-      "• Perhiasan (muda atau tua)\n• Logam mulia\n\n" +
-      "🚗 *BPKB*\n" +
-      "• Kendaraan maksimal 10 tahun terakhir\n\n" +
-      "✨ *PROMO Gadai Spektakuler* ✨\n" +
+      ePhone + " *Elektronik*\n" +
+      bullet + " HP\n" + bullet + " Laptop\n" + bullet + " Kamera\n" + bullet + " TV\n" + bullet + " Game\n" + bullet + " dan lainnya\n\n" +
+      eGold + " *Emas*\n" +
+      bullet + " Perhiasan (muda atau tua)\n" + bullet + " Logam mulia\n\n" +
+      eCar + " *BPKB*\n" +
+      bullet + " Kendaraan maksimal 10 tahun terakhir\n\n" +
+      eSpark + " *PROMO Gadai Spektakuler* " + eSpark + "\n" +
       "Gadai dengan pinjaman minimal *Rp1.000.000* dan dapatkan kesempatan *Spin Wheel* berhadiah:\n" +
-      "• 1 unit Mobil Xpander\n" +
-      "• 2 paket Umroh untuk sepasang\n" +
-      "• Puluhan unit Kulkas 2 pintu\n" +
-      "• Puluhan unit iPhone 17\n" +
-      "• Ribuan Logam Mulia\n" +
-      "• Ribuan Voucher Indomaret\n\n" +
+      bullet + " 1 unit Mobil Xpander\n" +
+      bullet + " 2 paket Umroh untuk sepasang\n" +
+      bullet + " Puluhan unit Kulkas 2 pintu\n" +
+      bullet + " Puluhan unit iPhone 17\n" +
+      bullet + " Ribuan Logam Mulia\n" +
+      bullet + " Ribuan Voucher Indomaret\n\n" +
       "Kami tunggu kabar atau kedatangan Bapak/Ibu di cabang kami.\n" +
-      "Terima kasih 🙏"
+      "Terima kasih " + ePray
     );
   }
   function rejectedWaBtnHtml_(r){
