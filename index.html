@@ -30554,9 +30554,9 @@ html[data-theme="light"] table.libur-table td{
     <div id="docPdfBody" style="flex:1;min-height:50vh;background:#F8FAFC;border-radius:10px;overflow:auto;display:flex;align-items:center;justify-content:center;">
       <div class="empty-log">Memuat PDF…</div>
     </div>
-    <div class="modal-actions" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-      <a id="docPdfDownload" class="modal-btn confirm" style="text-decoration:none;display:none;" download>Unduh PDF</a>
-      <button type="button" class="modal-btn cancel" id="docPdfClose2">Tutup</button>
+    <div class="modal-actions doc-pdf-actions" style="margin-top:12px;display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;">
+      <a id="docPdfDownload" class="modal-btn cancel doc-pdf-btn" style="text-decoration:none;display:none;" download>Unduh PDF</a>
+      <button type="button" class="modal-btn cancel doc-pdf-btn" id="docPdfClose2">Tutup</button>
     </div>
   </div>
 </div>
@@ -41379,9 +41379,11 @@ function renderKanitAuditWizard(){
     if(!link) return "—";
     var cab = row.cabang || "";
     var title = (row.jenis || "") + " " + (row.nomor || "");
+    var icoEye = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+    var icoTrash = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>';
     return '<div class="doc-act-btns">'+
-      '<button type="button" class="btn-xs secondary doc-btn-lihat" data-link="'+escHtml(link)+'" data-title="'+escHtml(title)+'">Lihat</button>'+
-      '<button type="button" class="btn-xs doc-btn-hapus" data-link="'+escHtml(link)+'" data-cabang="'+escHtml(cab)+'" style="background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;">Hapus</button>'+
+      '<button type="button" class="doc-ico-btn doc-btn-lihat" title="Lihat" aria-label="Lihat" data-link="'+escHtml(link)+'" data-title="'+escHtml(title)+'">'+icoEye+'</button>'+
+      '<button type="button" class="doc-ico-btn doc-btn-hapus" title="Hapus" aria-label="Hapus" data-link="'+escHtml(link)+'" data-cabang="'+escHtml(cab)+'">'+icoTrash+'</button>'+
       '</div>';
   }
   function wireDocActionBtns_(root, reloadFn){
@@ -47216,8 +47218,94 @@ html[data-theme="light"] #docRiwayatWrap .doc-hasil-month-title{
   border-radius: 16px !important;
   box-shadow: 0 20px 50px rgba(0,0,0,0.25) !important;
 }
-.doc-act-btns{ display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.doc-act-btns .btn-xs{ width: auto !important; padding: 6px 10px !important; font-size: 12px !important; }
+.doc-pdf-actions{
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+.doc-pdf-actions .doc-pdf-btn,
+#docPdfDownload.doc-pdf-btn,
+#docPdfClose2.doc-pdf-btn,
+#docPdfOverlay .modal-btn,
+#docPdfOverlay a.modal-btn{
+  flex: 0 0 auto !important;
+  width: 140px !important;
+  min-width: 140px !important;
+  max-width: 140px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  background: #FFFFFF !important;
+  background-image: none !important;
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+.doc-pdf-actions .doc-pdf-btn:hover,
+#docPdfDownload.doc-pdf-btn:hover,
+#docPdfClose2.doc-pdf-btn:hover{
+  background: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+}
+.doc-act-btns{
+  display: flex !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+.doc-ico-btn{
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  background-image: none !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  flex-shrink: 0 !important;
+}
+.doc-ico-btn svg{ display: block; pointer-events: none; }
+.doc-ico-btn.doc-btn-lihat{
+  color: #0F172A !important;
+  border-color: #E2E8F0 !important;
+  background: #F8FAFC !important;
+}
+.doc-ico-btn.doc-btn-lihat:hover{
+  background: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+}
+.doc-ico-btn.doc-btn-hapus{
+  color: #DC2626 !important;
+  border-color: #FECACA !important;
+  background: #FEF2F2 !important;
+}
+.doc-ico-btn.doc-btn-hapus:hover{
+  background: #FEE2E2 !important;
+  border-color: #FCA5A5 !important;
+}
 </style>
 
 </body>
