@@ -29284,7 +29284,7 @@ html[data-theme="light"] table.libur-table td{
           <button class="tab-btn admin-nav-btn" data-tab="kanitrejected"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg></span><span class="admin-nav-label">Rejected</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kanitjadwallibur"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><span class="admin-nav-label">Jadwal Libur &amp; Cuti</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kanitaudit"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a1 1 0 0 1 1-1h9l6 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></span><span class="admin-nav-label">Dashboard Audit</span></button>
-          <button class="tab-btn admin-nav-btn" data-tab="dokumen"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span><span class="admin-nav-label">Pembuatan Dokumen</span></button>
+          <button class="tab-btn admin-nav-btn" data-tab="dokumen"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span><span class="admin-nav-label">Dokumen</span></button>
         </nav>
 </aside>
       <div class="admin-main">
@@ -29627,6 +29627,7 @@ html[data-theme="light"] table.libur-table td{
           <button class="tab-btn admin-nav-btn" data-tab="jadwallibur"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><span class="admin-nav-label">Jadwal Libur &amp; Cuti</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="audit"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a1 1 0 0 1 1-1h9l6 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></span><span class="admin-nav-label">Dashboard Audit</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="cashopname"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="admin-nav-label">Cash Opname</span></button>
+          <button class="tab-btn admin-nav-btn" data-tab="dokumen"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span><span class="admin-nav-label">Dokumen</span></button>
           <div class="admin-sidebar-section">Pengaturan</div>
           <button class="tab-btn admin-nav-btn" data-tab="updatedata"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L18 10l-4-4L4 16v4z"/><path d="m12 6 4 4"/></svg></span><span class="admin-nav-label">Update Data</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="kelolacabang"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h16M6 20V10l6-6 6 6v10"/><path d="M9 20v-6h6v6"/></svg></span><span class="admin-nav-label">Kelola Cabang</span></button>
@@ -29872,14 +29873,14 @@ html[data-theme="light"] table.libur-table td{
       <div id="rejectedAnalysisMonthChartWrap" style="margin-top:20px;"></div>
     </div>
 
-    <!-- Pembuatan Dokumen -->
+    <!-- Dokumen -->
     <div class="panel subpanel" id="tab-dokumen">
       <!-- Hub pilih jenis -->
       
       <!-- KC: hanya riwayat -->
       <div id="docRiwayatKC" style="display:none;">
-        <div class="admin-section-title">Riwayat Pembuatan Dokumen</div>
-        <div class="hint" style="margin-bottom:12px;">Pantau dokumen semua cabang — terbaru di atas, dikelompokkan per bulan. Cari no faktur / nomor BA. Klik <b>Buka</b> untuk lihat file.</div>
+        <div class="admin-section-title">Riwayat Dokumen</div>
+        <div class="hint" style="margin-bottom:12px;">Pantau dokumen semua cabang — terbaru di atas, dikelompokkan per bulan. Cari no faktur / nomor BA. Klik <b>Lihat</b> untuk preview PDF di app, atau <b>Hapus</b> untuk buang dokumen.</div>
         <div class="filter-row-compact" style="gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:flex-end;">
           <div class="field" style="min-width:130px;">
             <label>Cabang</label>
@@ -30539,6 +30540,23 @@ html[data-theme="light"] table.libur-table td{
     <div class="modal-actions">
       <button type="button" class="modal-btn cancel" id="modalCancel">Batal</button>
       <button type="button" class="modal-btn confirm" id="modalConfirm">Ya, Kirim</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="docPdfOverlay" style="display:none;">
+  <div class="modal-card doc-pdf-modal" style="max-width:min(96vw,920px);width:100%;max-height:92vh;display:flex;flex-direction:column;padding:12px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;">
+      <div class="admin-section-title" id="docPdfTitle" style="margin:0;font-size:15px;">Preview Dokumen</div>
+      <button type="button" class="result-close" id="docPdfClose" style="position:static;">✕</button>
+    </div>
+    <div id="docPdfBody" style="flex:1;min-height:50vh;background:#F8FAFC;border-radius:10px;overflow:auto;display:flex;align-items:center;justify-content:center;">
+      <div class="empty-log">Memuat PDF…</div>
+    </div>
+    <div class="modal-actions" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a id="docPdfDownload" class="modal-btn confirm" style="text-decoration:none;display:none;" download>Unduh PDF</a>
+      <button type="button" class="modal-btn cancel" id="docPdfClose2">Tutup</button>
     </div>
   </div>
 </div>
@@ -41297,6 +41315,97 @@ function renderKanitAuditWizard(){
       try{ loadDocRiwayat(); }catch(e){}
     }
   }
+  
+  function docAuthToken_(){
+    try{
+      return session.sessionToken || session.adminPin || session.cabangPin || "";
+    }catch(e){ return ""; }
+  }
+  function closeDocPdfModal_(){
+    var ov = document.getElementById("docPdfOverlay");
+    if(ov){ ov.style.display = "none"; ov.classList.remove("show"); }
+    var body = document.getElementById("docPdfBody");
+    if(body) body.innerHTML = "";
+  }
+  function openDocPdfModal_(link, title){
+    var ov = document.getElementById("docPdfOverlay");
+    var body = document.getElementById("docPdfBody");
+    var tit = document.getElementById("docPdfTitle");
+    var dl = document.getElementById("docPdfDownload");
+    if(!ov || !body) return;
+    if(tit) tit.textContent = title || "Preview Dokumen";
+    body.innerHTML = '<div class="empty-log">Memuat PDF…</div>';
+    if(dl){ dl.style.display = "none"; dl.removeAttribute("href"); }
+    ov.style.display = "flex";
+    ov.classList.add("show");
+    var tok = docAuthToken_();
+    google.script.run
+      .withSuccessHandler(function(r){
+        if(!r || r.status !== "OK" || !r.pdfBase64){
+          body.innerHTML = '<div class="empty-log">'+escHtml((r&&r.reason)||"Gagal memuat PDF")+'</div>';
+          return;
+        }
+        var src = "data:application/pdf;base64," + r.pdfBase64;
+        body.innerHTML = '<iframe title="PDF" src="'+src+'" style="width:100%;height:min(75vh,720px);border:0;border-radius:8px;background:#fff;"></iframe>';
+        if(dl){
+          dl.href = src;
+          dl.download = r.fileName || "dokumen.pdf";
+          dl.style.display = "inline-flex";
+        }
+        if(tit && r.name) tit.textContent = r.name;
+      })
+      .withFailureHandler(function(err){
+        body.innerHTML = '<div class="empty-log">'+escHtml(String(err.message||err))+'</div>';
+      })
+      .docGetPdf(tok, link);
+  }
+  function hapusDokumen_(link, cabang, onDone){
+    if(!link) return;
+    if(!confirm("Hapus dokumen ini? File dipindah ke sampah Drive dan dihapus dari riwayat.")) return;
+    var tok = docAuthToken_();
+    google.script.run
+      .withSuccessHandler(function(r){
+        if(!r || r.status !== "OK"){
+          alert((r && r.reason) || "Gagal menghapus");
+          return;
+        }
+        if(typeof onDone === "function") onDone();
+      })
+      .withFailureHandler(function(err){ alert(String(err.message||err)); })
+      .docHapusDokumen(tok, link, cabang || "");
+  }
+  function docActionBtns_(row){
+    var link = row.link || "";
+    if(!link) return "—";
+    var cab = row.cabang || "";
+    var title = (row.jenis || "") + " " + (row.nomor || "");
+    return '<div class="doc-act-btns">'+
+      '<button type="button" class="btn-xs secondary doc-btn-lihat" data-link="'+escHtml(link)+'" data-title="'+escHtml(title)+'">Lihat</button>'+
+      '<button type="button" class="btn-xs doc-btn-hapus" data-link="'+escHtml(link)+'" data-cabang="'+escHtml(cab)+'" style="background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;">Hapus</button>'+
+      '</div>';
+  }
+  function wireDocActionBtns_(root, reloadFn){
+    if(!root) return;
+    root.querySelectorAll(".doc-btn-lihat").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        openDocPdfModal_(btn.getAttribute("data-link"), btn.getAttribute("data-title"));
+      });
+    });
+    root.querySelectorAll(".doc-btn-hapus").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        hapusDokumen_(btn.getAttribute("data-link"), btn.getAttribute("data-cabang"), reloadFn);
+      });
+    });
+  }
+  (function(){
+    var c1 = document.getElementById("docPdfClose");
+    var c2 = document.getElementById("docPdfClose2");
+    var ov = document.getElementById("docPdfOverlay");
+    if(c1) c1.addEventListener("click", closeDocPdfModal_);
+    if(c2) c2.addEventListener("click", closeDocPdfModal_);
+    if(ov) ov.addEventListener("click", function(ev){ if(ev.target === ov) closeDocPdfModal_(); });
+  })();
+
   function loadDocRiwayat(){
     var wrap = document.getElementById("docRiwayatWrap");
     var msg = document.getElementById("docRiwayatMsg");
@@ -41369,9 +41478,8 @@ function renderKanitAuditWizard(){
             '<th>Waktu</th><th>Cabang</th><th>Jenis</th><th>Nomor / Faktur / Ket</th><th>Kepala Unit</th><th>Dokumen</th>'+
             '</tr></thead><tbody>'+
             g.rows.map(function(row){
-              var link = row.link ? '<a href="'+row.link+'" target="_blank" rel="noopener" class="btn-xs secondary">Buka</a>' : '—';
               var jLabel = row.jenis === "SN" ? "BA SN" : (row.jenis === "GA" ? "BA GA" : (row.jenis === "SP" ? "SP" : row.jenis));
-              return '<tr><td>'+escHtml(row.waktu)+'</td><td><b>'+escHtml(row.cabang||"—")+'</b></td><td><b>'+escHtml(jLabel)+'</b></td><td>'+escHtml(row.nomor||"—")+'</td><td>'+escHtml(row.kepalaUnit||"—")+'</td><td>'+link+'</td></tr>';
+              return '<tr><td>'+escHtml(row.waktu)+'</td><td><b>'+escHtml(row.cabang||"—")+'</b></td><td><b>'+escHtml(jLabel)+'</b></td><td>'+escHtml(row.nomor||"—")+'</td><td>'+escHtml(row.kepalaUnit||"—")+'</td><td>'+docActionBtns_(row)+'</td></tr>';
             }).join("")+
             '</tbody></table></div></div>';
         });
@@ -41379,6 +41487,7 @@ function renderKanitAuditWizard(){
           htmlOut += '<div class="hint" style="margin-top:10px;"><a href="'+r.linkSpreadsheet+'" target="_blank" rel="noopener">Buka spreadsheet log</a></div>';
         }
         wrap.innerHTML = htmlOut;
+        wireDocActionBtns_(wrap, function(){ loadDocRiwayat(); });
       })
       .withFailureHandler(function(err){
         if(wrap) wrap.innerHTML = '<div class="empty-log">'+String(err.message||err)+'</div>';
@@ -41546,13 +41655,13 @@ function renderKanitAuditWizard(){
               '<th>Waktu</th><th>Jenis</th><th>Nomor / Faktur / Ket</th><th>Dokumen</th>'+
               '</tr></thead><tbody>'+
               g.rows.map(function(row){
-                var link = row.link ? '<a href="'+row.link+'" target="_blank" rel="noopener" class="btn-xs secondary">Buka</a>' : '—';
                 var jLabel = row.jenis === "SN" ? "BA SN" : (row.jenis === "GA" ? "BA GA" : (row.jenis === "SP" ? "SP" : row.jenis));
-                return '<tr><td>'+escHtml(row.waktu)+'</td><td><b>'+escHtml(jLabel)+'</b></td><td>'+escHtml(row.nomor||"—")+'</td><td>'+link+'</td></tr>';
+                return '<tr><td>'+escHtml(row.waktu)+'</td><td><b>'+escHtml(jLabel)+'</b></td><td>'+escHtml(row.nomor||"—")+'</td><td>'+docActionBtns_(row)+'</td></tr>';
               }).join("")+
               '</tbody></table></div></div>';
           });
           wrap.innerHTML = htmlOut;
+          wireDocActionBtns_(wrap, function(){ loadDocHasilKanit(); });
         }
       })
       .withFailureHandler(function(err){
@@ -47091,6 +47200,24 @@ html[data-theme="light"] #docRiwayatWrap .doc-hasil-month-title{
   background: #F1F5F9 !important;
   color: #0F172A !important;
 }
+</style>
+
+
+<style id="doc-pdf-modal-css">
+#docPdfOverlay{
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(15,23,42,0.55);
+  align-items: center; justify-content: center;
+  padding: 12px;
+}
+#docPdfOverlay.show, #docPdfOverlay[style*="flex"]{ display: flex !important; }
+.doc-pdf-modal{
+  background: #fff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25) !important;
+}
+.doc-act-btns{ display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.doc-act-btns .btn-xs{ width: auto !important; padding: 6px 10px !important; font-size: 12px !important; }
 </style>
 
 </body>
