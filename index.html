@@ -29434,6 +29434,13 @@ html[data-theme="light"] table.libur-table td{
         <button type="button" id="kanitRejectedSingleDateBtn" style="display:none !important;width:0;height:0;padding:0;margin:0;border:0;overflow:hidden;" aria-hidden="true"></button>
       </div>
       <div id="kanitRejectedWrap" style="margin-top:20px;"></div>
+
+      <div class="rej-actions-row rej-hide" id="kanitRejectedActionsRow" style="display:none; margin-top:16px;" hidden>
+        <button type="button" id="kanitRejectedAnalisaBtn" class="btn-xs secondary rej-hide" style="display:none;" hidden>Analisa</button>
+      </div>
+      <div id="kanitRejectedAnalysisWrap" style="margin-top:20px;"></div>
+      <div id="kanitRejectedMonthChartWrap" style="margin-top:20px;"></div>
+
       <div class="msg" id="kanitRejectedMsg"></div>
     </div>
 
@@ -36039,7 +36046,7 @@ function applyRejectedAlasanFilter_(which){
           '<td>'+(r.tanggal||"-")+(r.jam ? '<span class="sub">'+r.jam+'</span>' : '')+'</td>'+
           '<td>'+r.cabang+'</td>'+
           '<td title="'+String(namaFull).replace(/"/g,'&quot;')+'">'+namaDepan+'</td>'+
-          '<td class="rej-hp-cell"><span class="rej-hp-num">'+escHtml(String(r.noHp||"-"))+'</span> '+rejectedWaBtnHtml_(r)+'</td>'+
+          '<td class="rej-hp-cell"><span class="rej-hp-inner"><span class="rej-hp-num">'+escHtml(String(r.noHp||"-"))+'</span>'+rejectedWaBtnHtml_(r)+'</span></td>'+
           '<td>'+r.barang+(r.jenis && r.jenis !== "-" ? '<span class="sub">'+r.jenis+'</span>' : '')+'</td>'+
           '<td><span class="reject-alasan-badge">'+r.alasan+'</span></td>'+
           '<td>Rp '+fmt(r.pinjamanMax)+'</td>'+
@@ -36224,6 +36231,7 @@ function applyRejectedAlasanFilter_(which){
   }
 
   // ---------------- Rejected: KC/Admin ----------------
+  var pendingKanitRejectedMain = null;
   var pendingRejectedMain = null;
   var pendingRejectedCompare = null;
 
@@ -37293,18 +37301,56 @@ function applyRejectedAlasanFilter_(which){
           return;
         }
         rejectedLoadingDone_();
+        pendingKanitRejectedMain = r;
         window.__rejectedCache.kanit = { data: r.data, label: session.cabang };
         fillRejectedAlasanSelect_("kanitRejectedAlasan", (r.data && r.data.allDetail) || []);
         // Sama dengan KC: detail transaksi langsung + filter alasan
         applyRejectedAlasanFilter_("kanit");
+        var _kw = document.getElementById("kanitRejectedWrap");
+        var _hasK = _kw && _kw.innerHTML && _kw.innerHTML.indexOf("Belum ada") < 0 && _kw.innerHTML.indexOf("Tidak ada data") < 0 && _kw.innerHTML.trim().length > 40;
+        var kRow = document.getElementById("kanitRejectedActionsRow");
+        var kAn = document.getElementById("kanitRejectedAnalisaBtn");
+        var kSum = document.getElementById("kanitRejectedAnalysisWrap");
+        var kCh = document.getElementById("kanitRejectedMonthChartWrap");
+        if(kSum) kSum.innerHTML = "";
+        if(kCh) kCh.innerHTML = "";
+        if(_hasK){
+          if(kRow){ kRow.style.display = "flex"; kRow.hidden = false; kRow.classList.remove("rej-hide"); }
+          if(kAn){ kAn.style.display = "inline-flex"; kAn.hidden = false; kAn.classList.remove("rej-hide"); }
+        } else {
+          if(kRow){ kRow.style.display = "none"; kRow.hidden = true; kRow.classList.add("rej-hide"); }
+          if(kAn){ kAn.style.display = "none"; kAn.hidden = true; kAn.classList.add("rej-hide"); }
+        }
       })
       .withFailureHandler(function(err){
         self.dataset.busy = "0"; self.disabled = false;
         rejectedLoadingDone_();
+        pendingKanitRejectedMain = null;
         document.getElementById("kanitRejectedWrap").innerHTML = "";
         showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err");
       })
       .getRejectedAnalysisKanit(session.cabang, session.cabangPin, startDate, endDate);
+  });
+
+  $on("kanitRejectedAnalisaBtn", "click", function(){
+    if(!pendingKanitRejectedMain) return;
+    var label = session.cabang || (pendingKanitRejectedMain.cabang || "Cabang");
+    var data = pendingKanitRejectedMain.data || {};
+    var alasanEl = document.getElementById("kanitRejectedAlasan");
+    var alasan = alasanEl ? (alasanEl.value || "") : "";
+    if(alasan && data.allDetail){
+      var rows = filterRejectedRowsByAlasan_(data.allDetail, alasan);
+      var rebuilt = (typeof rebuildRejectedSummaryFromRows_ === "function")
+        ? rebuildRejectedSummaryFromRows_(rows)
+        : {};
+      data = Object.assign({}, data, rebuilt);
+    }
+    renderRejectedSummary(
+      data,
+      label + (alasan ? " · " + alasan : ""),
+      "kanitRejectedAnalysisWrap",
+      "kanitRejectedMonthChartWrap"
+    );
   });
 
   $on("adminChangeSubmit", "click", function(){
@@ -38592,8 +38638,7 @@ function applyRejectedAlasanFilter_(which){
         var link = el.getAttribute("data-link") || "";
         var title = el.getAttribute("data-title") || "Dokumen";
         var nid = el.getAttribute("data-id") || "";
-        // hilangkan dari list + kurangi badge saat diklik
-        dismissAdminNotif_(nid);
+        // Jangan hilangkan notif saat dibuka — user masih bisa lihat di panel
         var panel = document.getElementById("adminNotifPanel");
         if(panel) panel.classList.remove("open");
         if(type === "dokumen" && link){
@@ -47538,19 +47583,60 @@ html[data-theme="light"] #docRiwayatWrap .doc-hasil-month-title{
 #rejectedDetailWrap .rej-hp-cell,
 #kanitRejectedWrap .rej-hp-cell{
   white-space: nowrap !important;
+  min-width: 132px !important;
+}
+#rejectedDetailWrap .rej-hp-cell .rej-hp-inner,
+#kanitRejectedWrap .rej-hp-cell .rej-hp-inner{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  width: 100% !important;
+  min-width: 120px !important;
 }
 #rejectedDetailWrap .rej-hp-cell .rej-hp-num,
 #kanitRejectedWrap .rej-hp-cell .rej-hp-num{
-  vertical-align: middle;
-  margin-right: 4px;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  font-variant-numeric: tabular-nums !important;
+  letter-spacing: 0 !important;
 }
 #rejectedDetailWrap .rej-hp-cell .rej-wa-btn,
 #kanitRejectedWrap .rej-hp-cell .rej-wa-btn{
   display: inline-flex !important;
-  vertical-align: middle;
+  flex: 0 0 26px !important;
   width: 26px !important;
   height: 26px !important;
-  margin: 0 !important;
+  margin: 0 0 0 auto !important;
+  vertical-align: middle;
+}
+</style>
+
+
+<style id="kanit-rej-analisa-css">
+#kanitRejectedAnalisaBtn[hidden],
+#kanitRejectedAnalisaBtn.rej-hide{
+  display: none !important;
+}
+html[data-theme="light"] #kanitRejectedAnalisaBtn{
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 14px !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  background: #fff !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  cursor: pointer;
+}
+html[data-theme="light"] #kanitRejectedActionsRow{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 </style>
 
