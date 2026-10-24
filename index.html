@@ -33866,7 +33866,6 @@ $on("cabangPinSubmit", "click", function(){
       if(btn.dataset.tab === "kanitkasarea" || btn.dataset.tab === "kasarea"){
         try{ loadKasArea(true); }catch(eKa){}
       }
-      }
       // Kalau tombolnya ada di sidebar admin: judul topbar ikut ganti +
       // sidebar ditutup otomatis di HP (biar gak nutupin konten setelah pilih menu).
       if(btn.classList.contains("admin-nav-btn")){
@@ -46579,6 +46578,473 @@ html[data-theme="light"] #kanitRejectedActionsRow{
   flex-wrap: wrap;
 }
 </style>
+
+
+<style id="grok-custom-calendar">
+/* ===== Custom Calendar (dark + purple, match design) ===== */
+.gcal-overlay{
+  position: fixed; inset: 0; z-index: 12000;
+  background: transparent;
+  display: none;
+}
+.gcal-overlay.show{ display: block; }
+.gcal-pop{
+  position: fixed;
+  z-index: 12001;
+  width: 300px;
+  padding: 18px 16px 16px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #2A2D35 0%, #1C1F26 40%, #171A20 100%);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 24px 48px rgba(0,0,0,0.45),
+    0 8px 16px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  color: #F8FAFC;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  user-select: none;
+  animation: gcalIn .18s ease-out;
+}
+@keyframes gcalIn{
+  from{ opacity:0; transform: translateY(6px) scale(.97); }
+  to{ opacity:1; transform: none; }
+}
+.gcal-pop::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 72px; height: 5px;
+  border-radius: 0 0 10px 10px;
+  background: linear-gradient(90deg, #7C3AED, #A78BFA);
+  box-shadow: 0 0 18px rgba(124,58,237,0.55);
+}
+.gcal-head{
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 6px 4px 14px;
+}
+.gcal-title{
+  font-size: 15px; font-weight: 700; letter-spacing: 0.02em;
+  color: #F1F5F9;
+}
+.gcal-nav{
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: #CBD5E1;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; padding: 0;
+}
+.gcal-nav:hover{ background: rgba(255,255,255,0.1); color: #fff; }
+.gcal-nav svg{ width: 14px; height: 14px; }
+.gcal-dows{
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 2px; margin-bottom: 6px; padding: 0 2px;
+}
+.gcal-dow{
+  text-align: center;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #64748B;
+  padding: 4px 0;
+}
+.gcal-days{
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 2px; padding: 0 2px;
+}
+.gcal-day{
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  font-size: 13px; font-weight: 500;
+  color: #E2E8F0;
+  cursor: pointer;
+  border: none; background: transparent;
+  transition: background .12s, color .12s, transform .1s;
+}
+.gcal-day:hover:not(.is-empty):not(.is-selected){
+  background: rgba(255,255,255,0.08);
+}
+.gcal-day.is-muted{ color: #4B5563; }
+.gcal-day.is-today:not(.is-selected){
+  box-shadow: inset 0 0 0 1.5px rgba(167,139,250,0.55);
+}
+.gcal-day.is-selected{
+  background: #7C3AED;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.45);
+}
+.gcal-day.is-empty{ cursor: default; visibility: hidden; }
+.gcal-day.is-disabled{
+  color: #374151; cursor: not-allowed; opacity: 0.45;
+}
+/* Month mode */
+.gcal-months{
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; padding: 4px 2px 2px;
+}
+.gcal-mon{
+  height: 40px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  color: #E2E8F0; font-size: 13px; font-weight: 600;
+  cursor: pointer;
+}
+.gcal-mon:hover{ background: rgba(255,255,255,0.08); }
+.gcal-mon.is-selected{
+  background: #7C3AED; border-color: #7C3AED; color: #fff;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.4);
+}
+.gcal-foot{
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 12px; padding: 0 2px;
+}
+.gcal-foot button{
+  height: 30px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: #94A3B8; font-size: 12px; font-weight: 600;
+  cursor: pointer;
+}
+.gcal-foot button:hover{ background: rgba(255,255,255,0.1); color: #F1F5F9; }
+.gcal-foot .gcal-today-btn{
+  background: rgba(124,58,237,0.18);
+  border-color: rgba(124,58,237,0.35);
+  color: #C4B5FD;
+}
+
+/* Host input: hide native picker, keep look */
+input.gcal-host[type="date"],
+input.gcal-host[type="month"]{
+  position: relative;
+  cursor: pointer;
+  color-scheme: light;
+}
+input.gcal-host::-webkit-calendar-picker-indicator{
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+input.gcal-host.gcal-open{
+  border-color: #A78BFA !important;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
+}
+@media (max-width: 420px){
+  .gcal-pop{ width: min(300px, calc(100vw - 24px)); }
+}
+</style>
+
+
+<script id="grok-custom-calendar-js">
+(function(){
+  if (window.__gcalReady) return;
+  window.__gcalReady = true;
+
+  var DOW = ["MON","TUE","WED","THU","FRI","SAT","SUN"];
+  var MON_ID = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agt","Sep","Okt","Nov","Des"];
+  var MON_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  var overlay, pop, hostEl = null, viewY, viewM, mode = "date"; // date | month
+  var minD = null, maxD = null;
+
+  function pad(n){ return n < 10 ? "0"+n : ""+n; }
+  function parseISO(s){
+    if(!s) return null;
+    var m = String(s).match(/^(\d{4})-(\d{2})(?:-(\d{2}))?/);
+    if(!m) return null;
+    return { y:+m[1], m:+m[2], d: m[3] ? +m[3] : 1 };
+  }
+  function toISO(y,m,d){ return y+"-"+pad(m)+"-"+(d!=null?pad(d):"01"); }
+  function toMonth(y,m){ return y+"-"+pad(m); }
+  function today(){
+    var n = new Date();
+    return { y:n.getFullYear(), m:n.getMonth()+1, d:n.getDate() };
+  }
+  function daysInMonth(y,m){ return new Date(y, m, 0).getDate(); }
+  // Monday-first index: Mon=0 ... Sun=6
+  function firstDowMon(y,m){
+    var js = new Date(y, m-1, 1).getDay(); // Sun=0
+    return (js + 6) % 7;
+  }
+  function inRange(y,m,d){
+    if(minD){
+      if(y < minD.y) return false;
+      if(y === minD.y && m < minD.m) return false;
+      if(y === minD.y && m === minD.m && d < minD.d) return false;
+    }
+    if(maxD){
+      if(y > maxD.y) return false;
+      if(y === maxD.y && m > maxD.m) return false;
+      if(y === maxD.y && m === maxD.m && d > maxD.d) return false;
+    }
+    return true;
+  }
+
+  function ensureDom(){
+    if(overlay) return;
+    overlay = document.createElement("div");
+    overlay.className = "gcal-overlay";
+    overlay.addEventListener("mousedown", function(e){
+      if(e.target === overlay) close();
+    });
+    pop = document.createElement("div");
+    pop.className = "gcal-pop";
+    pop.addEventListener("mousedown", function(e){ e.stopPropagation(); });
+    document.body.appendChild(overlay);
+    document.body.appendChild(pop);
+  }
+
+  function setValue(val){
+    if(!hostEl) return;
+    hostEl.value = val;
+    try{
+      hostEl.dispatchEvent(new Event("input", { bubbles:true }));
+      hostEl.dispatchEvent(new Event("change", { bubbles:true }));
+    }catch(e){}
+  }
+
+  function render(){
+    ensureDom();
+    var t = today();
+    var sel = parseISO(hostEl && hostEl.value);
+
+    if(mode === "month"){
+      pop.innerHTML =
+        '<div class="gcal-head">'+
+          '<button type="button" class="gcal-nav" data-act="prev" aria-label="Prev">'+
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>'+
+          '</button>'+
+          '<div class="gcal-title">'+viewY+'</div>'+
+          '<button type="button" class="gcal-nav" data-act="next" aria-label="Next">'+
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>'+
+          '</button>'+
+        '</div>'+
+        '<div class="gcal-months"></div>'+
+        '<div class="gcal-foot"><button type="button" class="gcal-today-btn" data-act="today">Bulan ini</button><button type="button" data-act="clear">Hapus</button></div>';
+      var grid = pop.querySelector(".gcal-months");
+      for(var i=1;i<=12;i++){
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "gcal-mon";
+        b.textContent = MON_ID[i-1];
+        b.dataset.m = i;
+        if(sel && sel.y === viewY && sel.m === i) b.classList.add("is-selected");
+        else if(!sel && t.y === viewY && t.m === i) b.classList.add("is-today");
+        grid.appendChild(b);
+      }
+    } else {
+      var title = MON_EN[viewM-1] + " " + viewY;
+      pop.innerHTML =
+        '<div class="gcal-head">'+
+          '<button type="button" class="gcal-nav" data-act="prev" aria-label="Prev">'+
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>'+
+          '</button>'+
+          '<div class="gcal-title">'+title+'</div>'+
+          '<button type="button" class="gcal-nav" data-act="next" aria-label="Next">'+
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>'+
+          '</button>'+
+        '</div>'+
+        '<div class="gcal-dows">'+DOW.map(function(d){ return '<div class="gcal-dow">'+d+'</div>'; }).join("")+'</div>'+
+        '<div class="gcal-days"></div>'+
+        '<div class="gcal-foot"><button type="button" class="gcal-today-btn" data-act="today">Hari ini</button><button type="button" data-act="clear">Hapus</button></div>';
+
+      var days = pop.querySelector(".gcal-days");
+      var start = firstDowMon(viewY, viewM);
+      var dim = daysInMonth(viewY, viewM);
+      var prevDim = daysInMonth(viewY, viewM === 1 ? 12 : viewM-1);
+      // leading muted
+      for(var i=0;i<start;i++){
+        var pd = prevDim - start + i + 1;
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "gcal-day is-muted";
+        btn.textContent = pd;
+        btn.dataset.off = "prev";
+        btn.dataset.d = pd;
+        days.appendChild(btn);
+      }
+      for(var d=1; d<=dim; d++){
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "gcal-day";
+        btn.textContent = d;
+        btn.dataset.d = d;
+        if(!inRange(viewY, viewM, d)) btn.classList.add("is-disabled");
+        if(sel && sel.y===viewY && sel.m===viewM && sel.d===d) btn.classList.add("is-selected");
+        else if(t.y===viewY && t.m===viewM && t.d===d) btn.classList.add("is-today");
+        days.appendChild(btn);
+      }
+      // trailing to fill 6 rows max
+      var total = start + dim;
+      var need = (Math.ceil(total/7)*7) - total;
+      for(var j=1;j<=need;j++){
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "gcal-day is-muted";
+        btn.textContent = j;
+        btn.dataset.off = "next";
+        btn.dataset.d = j;
+        days.appendChild(btn);
+      }
+    }
+
+    // events
+    pop.querySelectorAll("[data-act]").forEach(function(el){
+      el.addEventListener("click", function(){
+        var act = el.getAttribute("data-act");
+        if(act === "prev"){
+          if(mode === "month"){ viewY--; }
+          else { viewM--; if(viewM<1){ viewM=12; viewY--; } }
+          render(); position();
+        } else if(act === "next"){
+          if(mode === "month"){ viewY++; }
+          else { viewM++; if(viewM>12){ viewM=1; viewY++; } }
+          render(); position();
+        } else if(act === "today"){
+          var td = today();
+          if(mode === "month"){
+            setValue(toMonth(td.y, td.m));
+          } else {
+            setValue(toISO(td.y, td.m, td.d));
+          }
+          close();
+        } else if(act === "clear"){
+          setValue("");
+          close();
+        }
+      });
+    });
+
+    if(mode === "month"){
+      pop.querySelectorAll(".gcal-mon").forEach(function(el){
+        el.addEventListener("click", function(){
+          var m = +el.dataset.m;
+          setValue(toMonth(viewY, m));
+          close();
+        });
+      });
+    } else {
+      pop.querySelectorAll(".gcal-day").forEach(function(el){
+        el.addEventListener("click", function(){
+          if(el.classList.contains("is-disabled")) return;
+          var d = +el.dataset.d;
+          var y = viewY, m = viewM;
+          if(el.dataset.off === "prev"){
+            m--; if(m<1){ m=12; y--; }
+          } else if(el.dataset.off === "next"){
+            m++; if(m>12){ m=1; y++; }
+          }
+          if(!inRange(y,m,d) && !el.dataset.off) return;
+          setValue(toISO(y,m,d));
+          close();
+        });
+      });
+    }
+  }
+
+  function position(){
+    if(!hostEl || !pop) return;
+    var r = hostEl.getBoundingClientRect();
+    var pw = pop.offsetWidth || 300;
+    var ph = pop.offsetHeight || 320;
+    var left = r.left + (r.width/2) - (pw/2);
+    left = Math.max(12, Math.min(left, window.innerWidth - pw - 12));
+    var top = r.bottom + 10;
+    if(top + ph > window.innerHeight - 12){
+      top = r.top - ph - 10;
+      if(top < 12) top = 12;
+    }
+    pop.style.left = left + "px";
+    pop.style.top = top + "px";
+  }
+
+  function open(el){
+    ensureDom();
+    hostEl = el;
+    mode = (el.getAttribute("type") === "month") ? "month" : "date";
+    minD = parseISO(el.getAttribute("min"));
+    maxD = parseISO(el.getAttribute("max"));
+    if(mode === "month"){
+      // month min is yyyy-MM — parseISO still works (d defaults 1)
+    }
+    var cur = parseISO(el.value) || today();
+    viewY = cur.y; viewM = cur.m;
+    el.classList.add("gcal-open");
+    overlay.classList.add("show");
+    render();
+    position();
+  }
+
+  function close(){
+    if(hostEl) hostEl.classList.remove("gcal-open");
+    hostEl = null;
+    if(overlay) overlay.classList.remove("show");
+  }
+
+  function bindOne(el){
+    if(!el || el.dataset.gcal === "1") return;
+    el.dataset.gcal = "1";
+    el.classList.add("gcal-host");
+    // Block native picker (Chrome/Safari)
+    try {
+      el.showPicker = function(){ open(el); };
+    } catch (e0) {}
+    el.addEventListener("click", function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      if(hostEl === el && overlay && overlay.classList.contains("show")) close();
+      else open(el);
+    }, true);
+    el.addEventListener("focus", function(e){
+      // jangan buka native
+      open(el);
+    });
+    el.addEventListener("mousedown", function(e){
+      // cegah native di beberapa browser
+      e.preventDefault();
+      el.focus();
+      open(el);
+    });
+    el.addEventListener("keydown", function(e){
+      if(e.key === "Escape") close();
+      if(e.key === "Enter" || e.key === " "){ e.preventDefault(); open(el); }
+    });
+  }
+
+  function scan(root){
+    root = root || document;
+    root.querySelectorAll('input[type="date"], input[type="month"]').forEach(bindOne);
+  }
+
+  // observe dynamic fields (Kas Area debit, etc.)
+  function boot(){
+    scan(document);
+    try{
+      var mo = new MutationObserver(function(muts){
+        muts.forEach(function(m){
+          m.addedNodes && m.addedNodes.forEach(function(n){
+            if(n.nodeType !== 1) return;
+            if(n.matches && (n.matches('input[type="date"]') || n.matches('input[type="month"]'))) bindOne(n);
+            if(n.querySelectorAll) scan(n);
+          });
+        });
+      });
+      mo.observe(document.documentElement, { childList:true, subtree:true });
+    }catch(e){}
+    window.addEventListener("resize", function(){ if(hostEl) position(); });
+    window.addEventListener("scroll", function(){ if(hostEl) position(); }, true);
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+
+  // public
+  window.GrokCalendar = { open: open, close: close, scan: scan };
+})();
+</script>
 
 </body>
 </html>
