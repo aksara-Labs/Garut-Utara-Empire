@@ -6,7 +6,7 @@
   2. Deploy New version (Apps Script) atau push (GitHub Pages)
   3. Hard refresh Ctrl+Shift+R
   4. Login NIK + PIN 123456
-  5. Console: [MyDashboard] build SIDEBAR-FIX-20261005
+  5. Console: [MyDashboard] build SIDEBAR-FIX-20261028
 -->
 <head>
 <title>MYdashboard</title>
@@ -29060,6 +29060,32 @@ html[data-theme="light"] table.libur-table td{
 
 </style>
 <style id="helios-critical">html{background:#050406 !important}html:not([data-hready]) body{opacity:0;animation:hshow 0s linear 3s forwards}@keyframes hshow{to{opacity:1}}</style>
+<style id="audit-tw-detail-css">
+.audit-tw-click{cursor:pointer;}
+.audit-tw-click:hover{filter:brightness(1.08);}
+.audit-tw-click::after{content:"▾";margin-left:6px;font-size:11px;opacity:.55;transition:transform .15s;}
+.audit-tw-click.is-open::after{transform:rotate(180deg);}
+.audit-tw-detail{list-style:none;margin:2px 0 8px 34px;padding:6px 10px;border-left:2px solid rgba(124,92,255,.45);border-radius:6px;background:rgba(127,127,127,.07);}
+.audit-tw-pet{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:12.5px;}
+.audit-tw-pet .pc{font-weight:700;white-space:nowrap;}
+.audit-tw-pet .pc em{font-style:normal;font-weight:400;opacity:.65;margin-left:4px;font-size:11px;}
+</style>
+<style id="kh-wa-btn-css">
+#tab-kinerjaharian .kh-detail-card-h button.kh-wa-btn{
+  all:unset !important;
+  box-sizing:border-box !important;
+  display:inline-flex !important;align-items:center !important;justify-content:center !important;
+  flex:0 0 auto !important;
+  width:28px !important;height:28px !important;min-width:28px !important;min-height:28px !important;max-width:28px !important;max-height:28px !important;
+  margin:0 0 0 auto !important;padding:0 !important;
+  border-radius:8px !important;border:0 !important;background:transparent !important;box-shadow:none !important;
+  color:#16A34A !important;cursor:pointer !important;line-height:1 !important;
+  transition:background .12s,transform .12s !important;
+}
+#tab-kinerjaharian .kh-detail-card-h button.kh-wa-btn:hover{background:rgba(22,163,74,.14) !important;transform:scale(1.08);}
+#tab-kinerjaharian .kh-detail-card-h button.kh-wa-btn svg{width:17px !important;height:17px !important;stroke:currentColor !important;fill:none !important;}
+#tab-kinerjaharian .kh-detail-card-h button.kh-wa-btn.is-busy{opacity:.45 !important;cursor:wait !important;}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#mainContent" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">Lewati ke konten</a>
@@ -30595,7 +30621,8 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
         var ctrl = (typeof AbortController === "function") ? new AbortController() : null;
         var isDoc = String(action || "").indexOf("docProses") === 0 || String(action || "") === "docUploadTtdKaryawan";
         var isKa = String(action || "") === "getKasAreaData";
-        var timeoutMs = isDoc ? 180000 : (isKa ? 60000 : 25000);
+        var isUpload = /^upload(SuratAcp|AuditSummary)/.test(String(action || ""));
+        var timeoutMs = (isDoc || isUpload) ? 180000 : ((isKa || String(action || "") === "sendKinerjaWa") ? 60000 : 25000);
         var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, timeoutMs);
 
         // GET untuk request biasa (andal dari GitHub Pages)
@@ -30639,7 +30666,7 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
           })
           .catch(function(err){
             clearTimeout(timer);
-            var msg = (err && err.name === "AbortError") ? "Timeout ke server (proses dokumen max 3 menit)" : (err && err.message ? err.message : String(err));
+            var msg = (err && err.name === "AbortError") ? ("Timeout ke server (batas " + Math.round(timeoutMs/1000) + " detik)." + (isUpload ? " Sebagian surat mungkin sudah terkirim — cek daftar, lalu kirim ulang yang belum." : "")) : (err && err.message ? err.message : String(err));
             errFn({ message: msg });
           })
           .then(function(){ done(); }, function(){ done(); });
@@ -32690,7 +32717,7 @@ $on("cabangPinSubmit", "click", function(){
         '<td style="color:var(--kh-ink,#f5eff4) !important;background:var(--kh-tot,rgba(201,160,196,.10)) !important;font-weight:700">'+escHtml(khPerHari_(tot.targetHarian != null ? tot.targetHarian : tot.butuhPerHari, tot.target, tot.aktual))+'</td>'+
       '</tr>';
       return '<div class="kh-detail-card" style="background:var(--kh-bg,#0d0b0e) !important;border:1px solid var(--kh-line,rgba(255,255,255,.09));border-radius:20px;overflow:hidden">'+
-        '<div class="kh-detail-card-h" style="color:var(--kh-ink2,#fff) !important;background:var(--kh-hbg,rgba(255,255,255,.04)) !important;border-bottom:1px solid var(--kh-line,rgba(255,255,255,.08))">'+khCatIconSvg_(cat.key)+'<span style="color:var(--kh-ink2,#fff) !important">'+escHtml(cat.label||"")+'</span></div>'+
+        '<div class="kh-detail-card-h" style="color:var(--kh-ink2,#fff) !important;background:var(--kh-hbg,rgba(255,255,255,.04)) !important;border-bottom:1px solid var(--kh-line,rgba(255,255,255,.08))">'+khCatIconSvg_(cat.key)+'<span style="color:var(--kh-ink2,#fff) !important">'+escHtml(cat.label||"")+'</span>'+(showBenchmark ? '<button type="button" class="kh-wa-btn" data-cat="'+escHtml(cat.key)+'" title="Teruskan ke WhatsApp" aria-label="Teruskan ke WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>' : '')+'</div>'+
         '<div class="kh-detail-table-wrap" style="background:transparent !important"><table class="kh-detail-table" style="color:var(--kh-ink,#f5eff4) !important;background:transparent !important;width:100%">'+
           '<thead><tr>'+
             '<th '+stH+'>Cabang</th><th '+stH+'>Target</th><th '+stH+'>Aktual</th><th '+stH+'>%</th><th '+stH+'>Proyeksi</th><th '+stH+'>Gap</th><th '+stH+' title="Sisa target ÷ sisa hari kerja">Target/Hari</th>'+
@@ -32710,6 +32737,211 @@ $on("cabangPinSubmit", "click", function(){
       '</div>';
 
     wrap.innerHTML = header + statStrip + badgesHtml + kpiHtml + detailHtml;
+
+    // ---- Teruskan tabel ke WhatsApp (khusus admin / KC, bukan Kanit) ----
+    if (showBenchmark) {
+      // Kalimat penutup per kategori — silakan ubah teksnya di sini.
+      var KH_WA_PENUTUP = {
+        waspada: {
+          gadai: "Dicek kembali data rejected yang masuk per hari kemarin supaya bisa jadi peluang omset untuk bulan ini.",
+          _: "Mohon dimaksimalkan sisa waktu yang ada untuk mengejar kekurangan target."
+        },
+        kritis: {
+          gadai: "Dicek kembali data rejected yang masuk per hari kemarin supaya bisa jadi peluang omset untuk bulan ini.",
+          _: ""
+        }
+      };
+      // Instruksi untuk Marketing — silakan ubah teksnya di sini.
+      var KH_WA_MARKETING = {
+        waspada: [
+          "Untuk Marketing, mohon dimaksimalkan:",
+          "- Sebar brosur",
+          "- FU nasabah pelunasan",
+          "- SMM di media sosial, tawarkan promo yang sedang berjalan",
+          "- Pelayanan kepada nasabah",
+          "- Jalankan promo spin wheel bagi nasabah yang mendapat kesempatan"
+        ].join("\n"),
+        kritis: [
+          "Instruksi untuk Marketing, mohon dimaksimalkan:",
+          "- Sebar brosur",
+          "- FU nasabah pelunasan",
+          "- SMM di media sosial, tawarkan promo yang sedang berjalan",
+          "- Pelayanan kepada nasabah",
+          "- Jalankan promo spin wheel bagi nasabah yang mendapat kesempatan",
+          "Mohon laporkan hasilnya hari ini."
+        ].join("\n")
+      };
+      function khToast_(msg){
+        var t = document.createElement("div");
+        t.textContent = msg;
+        t.style.cssText = "position:fixed;left:50%;bottom:28px;transform:translateX(-50%);max-width:92vw;background:#111827;color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;line-height:1.4;z-index:99999;box-shadow:0 8px 30px rgba(0,0,0,.35)";
+        document.body.appendChild(t);
+        setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); }, 9000);
+      }
+      function khFmtP_(p){ return (Math.round(p * 10) / 10).toString().replace(".", ",") + "%"; }
+      function khWaMessage_(cat){
+        var tot = kpiByKey[cat.key] || {};
+        var rows = cat.rows || [];
+        var label = String(cat.label || tot.label || cat.key || "");
+        var h = new Date().getHours();
+        var salam = h < 11 ? "Pagi" : (h < 15 ? "Siang" : (h < 18 ? "Sore" : "Malam"));
+        var selB = document.getElementById("kinerjaHarianBulan");
+        var bulan = "";
+        try { bulan = (selB && selB.selectedIndex >= 0 && selB.options[selB.selectedIndex].text) || ""; } catch(e0){}
+        if (!bulan) bulan = String(data.monitoringBulan || "");
+        var nT = parseNum(tot.target), nA = parseNum(tot.aktual), nP = parseNum(tot.proyeksi);
+        var est = tot.estimasiAkhirBulanPersen;
+        est = (est === null || est === undefined) ? NaN
+          : (typeof est === "number" ? est : parseFloat(String(est).replace("%", "").replace(",", ".")));
+        if (isNaN(est)) est = nT > 0 ? (nP / nT) * 100 : NaN;
+        var estTxt = isNaN(est) ? "-" : (Math.round(est) + "%");
+        var sisa = parseNum(data.sisaHariKerja);
+        var gapTxt = String(tot.gap == null ? "-" : tot.gap).replace(/^\s*-\s*/, "");
+        var perHari = khPerHari_(tot.targetHarian != null ? tot.targetHarian : tot.butuhPerHari, tot.target, tot.aktual);
+        var hasPerHari = perHari && perHari !== "-" && perHari !== "0";
+        var sisaPhrase = sisa >= 1 ? ("sisa " + sisa + " hari kerja") : "sisa waktu yang sangat terbatas";
+
+        var ranked = rows.map(function(r){
+          var t = parseNum(r.target), a = parseNum(r.aktual);
+          var pp = parseFloat(String(r.persen == null ? "" : r.persen).replace("%", "").replace(",", "."));
+          if (isNaN(pp)) pp = t > 0 ? (a / t) * 100 : NaN;
+          return { n: String(r.cabang || ""), t: t, p: pp };
+        }).filter(function(x){ return x.n && x.t > 0 && !isNaN(x.p); });
+        var cabLine = "";
+        if (ranked.length >= 2) {
+          var mx = Math.max.apply(null, ranked.map(function(x){ return x.p; }));
+          var mn = Math.min.apply(null, ranked.map(function(x){ return x.p; }));
+          if (mx !== mn) {
+            var top = ranked.filter(function(x){ return Math.abs(x.p - mx) < 0.05; }).map(function(x){ return x.n; }).join(" & ");
+            var low = ranked.filter(function(x){ return Math.abs(x.p - mn) < 0.05; }).map(function(x){ return x.n; }).join(" & ");
+            cabLine = "Pencapaian tertinggi: " + top + " (" + khFmtP_(mx) + "). Pencapaian terendah: " + low + " (" + khFmtP_(mn) + ")";
+          }
+        }
+        function cab_(suffix){ return cabLine ? (cabLine + suffix) : ""; }
+        function penutup_(st){ var m = KH_WA_PENUTUP[st] || {}; return m[cat.key] || m._ || ""; }
+
+        var state = (nT > 0 && nA >= nT) ? "tercapai"
+          : (!isNaN(est) && est >= 100 ? "aman" : ((isNaN(est) || est >= 80) ? "waspada" : "kritis"));
+        var L = ["Selamat " + salam];
+        function pushNZ_(x){ if(x) L.push(x); }
+        if (state === "tercapai") {
+          L.push("Berikut saya kirimkan update omset " + label + " " + bulan + ".", "");
+          L.push("Alhamdulillah target " + label + " sudah tercapai (" + (tot.capaianPersen || "-") + "). Terima kasih atas kerja keras Team.");
+          pushNZ_(cab_(", mohon tetap dijaga sampai akhir bulan."));
+          if (sisa > 1) L.push("Masih ada " + sisa + " hari kerja, mari maksimalkan.");
+          else if (sisa === 1) L.push("Tinggal 1 hari kerja lagi, mari maksimalkan.");
+        } else if (state === "aman") {
+          L.push("Berikut saya kirimkan selisih target omset " + label + " " + bulan + ".", "");
+          L.push("Proyeksi akhir bulan " + estTxt + ", masih aman. Kekurangan target " + gapTxt + " dengan " + sisaPhrase + ".");
+          pushNZ_(cab_("."));
+          if (hasPerHari) L.push("Tolong jaga laju harian di " + perHari + " per hari supaya tetap on track.");
+        } else if (state === "waspada") {
+          L.push("Berikut saya kirimkan selisih target omset " + label + " " + bulan + ".", "");
+          L.push("Proyeksi akhir bulan baru " + estTxt + ", masih di bawah target. Kekurangan " + gapTxt + ", " +
+            (sisa >= 1 ? "masih ada " + sisa + " hari kerja lagi untuk memaksimalkannya." : "waktu tinggal sedikit, mohon dimaksimalkan."));
+          pushNZ_(cab_(", mohon jadi fokus untuk dikejar."));
+          L.push("Team pantau pencapaian hariannya" + (hasPerHari ? ", targetkan rata-rata " + perHari + " per hari." : "."));
+          pushNZ_(penutup_("waspada"));
+          L.push(KH_WA_MARKETING.waspada);
+        } else {
+          L.push("Berikut saya kirimkan selisih target omset " + label + " " + bulan + ".", "");
+          L.push("Proyeksi akhir bulan baru " + estTxt + ", masih jauh dari target. Kekurangan " + gapTxt + " dengan " + sisaPhrase +
+            (hasPerHari ? ", artinya butuh " + perHari + " per hari." : "."));
+          pushNZ_(cab_(", mohon jadi perhatian khusus."));
+          pushNZ_(penutup_("kritis"));
+          L.push(KH_WA_MARKETING.kritis);
+        }
+        L.push("", "Terimakasih");
+        return L.join("\n");
+      }
+      function khWaModal_(blob, text, waUrl, copiedAlready){
+        var old = document.getElementById("khWaModal");
+        if (old && old.parentNode) old.parentNode.removeChild(old);
+        var imgUrl = URL.createObjectURL(blob);
+        var ov = document.createElement("div");
+        ov.id = "khWaModal";
+        ov.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99998;display:flex;align-items:center;justify-content:center;padding:16px;";
+        var box = document.createElement("div");
+        box.style.cssText = "background:#fff;color:#0F172A;border-radius:16px;max-width:760px;width:100%;max-height:92vh;overflow:auto;padding:16px;font-family:inherit;box-shadow:0 20px 60px rgba(0,0,0,.4)";
+        box.innerHTML =
+          '<div style="font-weight:800;margin-bottom:6px">Kirim ke WhatsApp</div>' +
+          '<div id="khWaStatus" style="font-size:12.5px;margin-bottom:10px;color:#475569">' +
+            (copiedAlready ? "Gambar sudah tersalin. Buka WhatsApp, pilih chat, lalu tekan Ctrl+V."
+                           : "Klik <b>Salin gambar</b>, lalu <b>Buka WhatsApp</b> dan tekan Ctrl+V di chat.") +
+          '</div>' +
+          '<img src="'+imgUrl+'" alt="Tabel" style="max-width:100%;border:1px solid #E2E8F0;border-radius:10px;display:block;margin-bottom:12px">' +
+          '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+            '<button type="button" id="khWaCopy" style="all:unset;cursor:pointer;padding:9px 14px;border-radius:10px;background:#0F172A;color:#fff;font-size:13px;font-weight:700">Salin gambar</button>' +
+            '<button type="button" id="khWaOpen" style="all:unset;cursor:pointer;padding:9px 14px;border-radius:10px;background:#16A34A;color:#fff;font-size:13px;font-weight:700">Buka WhatsApp</button>' +
+            '<button type="button" id="khWaDl" style="all:unset;cursor:pointer;padding:9px 14px;border-radius:10px;background:#E2E8F0;color:#0F172A;font-size:13px;font-weight:700">Unduh gambar</button>' +
+            '<button type="button" id="khWaClose" style="all:unset;cursor:pointer;padding:9px 14px;border-radius:10px;background:#E2E8F0;color:#0F172A;font-size:13px;font-weight:700;margin-left:auto">Tutup</button>' +
+          '</div>';
+        ov.appendChild(box);
+        document.body.appendChild(ov);
+        function close_(){ if (ov.parentNode) ov.parentNode.removeChild(ov); try{ URL.revokeObjectURL(imgUrl); }catch(e){} }
+        function status_(m){ var el = document.getElementById("khWaStatus"); if (el) el.textContent = m; }
+        ov.addEventListener("click", function(ev){ if (ev.target === ov) close_(); });
+        document.getElementById("khWaClose").addEventListener("click", close_);
+        document.getElementById("khWaCopy").addEventListener("click", function(){
+          if (!(navigator.clipboard && window.ClipboardItem)) { status_("Browser tidak mendukung salin gambar. Pakai Unduh gambar lalu lampirkan manual."); return; }
+          navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]).then(function(){
+            status_("Gambar tersalin. Klik Buka WhatsApp, pilih chat, lalu tekan Ctrl+V.");
+          }, function(){
+            status_("Gagal menyalin. Pakai Unduh gambar lalu lampirkan manual di WhatsApp.");
+          });
+        });
+        document.getElementById("khWaOpen").addEventListener("click", function(){ window.open(waUrl, "_blank"); });
+        document.getElementById("khWaDl").addEventListener("click", function(){
+          var a = document.createElement("a");
+          a.href = imgUrl; a.download = "omset.png";
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        });
+      }
+      function khWaSend_(btn){
+        var key = btn.getAttribute("data-cat");
+        var cat = (details || []).filter(function(c){ return c.key === key; })[0];
+        var card = btn.closest ? btn.closest(".kh-detail-card") : null;
+        if (!cat || !card) return;
+        if (typeof html2canvas === "undefined") { khToast_("Modul gambar belum termuat. Coba lagi sebentar lagi."); return; }
+        var text = khWaMessage_(cat);
+        if (!window.confirm("Kirim tabel " + (cat.label || key) + " ke WhatsApp dengan pesan ini?\n\n" + text)) return;
+        var waUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(text);
+        var pin = "";
+        try { pin = (session && (session.adminPin || session.sessionToken)) || ""; } catch(e0){}
+        var bg = "";
+        try { bg = getComputedStyle(card).backgroundColor; } catch(e1){}
+        if (!bg || bg === "transparent" || bg === "rgba(0, 0, 0, 0)") bg = "#0d0b0e";
+        btn.disabled = true; btn.classList.add("is-busy");
+        function done_(){ btn.disabled = false; btn.classList.remove("is-busy"); }
+
+        html2canvas(card, {
+          backgroundColor: bg, scale: 2, useCORS: true, scrollX: 0, scrollY: 0,
+          ignoreElements: function(el){ return !!(el.classList && el.classList.contains("kh-wa-btn")); }
+        }).then(function(canvas){
+          var dataUrl = canvas.toDataURL("image/png");
+          khToast_("Mengirim ke WhatsApp...");
+          // Cadangan manual (Ctrl+V) kalau pengiriman otomatis gagal
+          function fallback_(reason){
+            done_();
+            khToast_(reason + " Memakai cara manual (Ctrl+V).");
+            canvas.toBlob(function(b){ if (b) khWaModal_(b, text, waUrl, false); }, "image/png");
+          }
+          google.script.run
+            .withSuccessHandler(function(r){
+              if (r && r.status === "OK") { done_(); khToast_("Terkirim ke WhatsApp \u2713"); return; }
+              fallback_((r && r.reason) ? String(r.reason) : "Pengiriman otomatis gagal.");
+            })
+            .withFailureHandler(function(err){
+              fallback_("Koneksi ke server gagal: " + ((err && err.message) || err));
+            })
+            .sendKinerjaWa(pin, { kategori: key, caption: text, imageBase64: dataUrl });
+        }).catch(function(){ done_(); khToast_("Gagal membuat gambar tabel."); });
+      }
+      wrap.querySelectorAll(".kh-wa-btn").forEach(function(b){
+        b.addEventListener("click", function(ev){ ev.preventDefault(); ev.stopPropagation(); khWaSend_(b); });
+      });
+    }
+
 
     var toggleBtn = document.getElementById("khDetailToggleBtn");
     var panel = document.getElementById("khDetailPanel");
@@ -37798,6 +38030,47 @@ function applyRejectedAlasanFilter_(which){
     html += '</ol>';
     el.innerHTML = html;
   }
+  // Distribusi TW: klik TW1/TW2/TW3 -> tampil nama petugas + jumlah temuan
+  function renderTwBars_(el, arr, detail){
+    renderHBars(el, arr, "");
+    if(!el) return;
+    var map = {};
+    (detail || []).forEach(function(r){
+      var tw = String(r.tw || "").trim().toUpperCase().replace(/\s+/g, "");
+      if(!tw) return;
+      var pet = String(r.petugas || "").trim() || "(Tanpa nama petugas)";
+      if(!map[tw]) map[tw] = {};
+      map[tw][pet] = (map[tw][pet] || 0) + 1;
+    });
+    el.querySelectorAll(".audit-rank-item").forEach(function(li){
+      var nmEl = li.querySelector(".nm");
+      if(!nmEl) return;
+      var key = String(nmEl.getAttribute("title") || nmEl.textContent || "").trim().toUpperCase().replace(/\s+/g, "");
+      var list = Object.keys(map[key] || {}).map(function(n){ return { n: n, c: map[key][n] }; })
+        .sort(function(x, y){ return y.c - x.c || x.n.localeCompare(y.n, "id"); });
+      var box = document.createElement("li");
+      box.className = "audit-tw-detail";
+      box.style.display = "none";
+      box.innerHTML = list.length
+        ? list.map(function(it){
+            return '<div class="audit-tw-pet"><span class="pn">'+escHtml(it.n)+'</span><span class="pc">'+it.c+'<em>temuan</em></span></div>';
+          }).join("")
+        : '<div class="audit-tw-pet"><span class="pn">Tidak ada data petugas</span></div>';
+      li.parentNode.insertBefore(box, li.nextSibling);
+      li.classList.add("audit-tw-click");
+      li.setAttribute("role", "button");
+      li.setAttribute("tabindex", "0");
+      function toggle(){
+        var open = box.style.display === "none";
+        box.style.display = open ? "" : "none";
+        li.classList.toggle("is-open", open);
+      }
+      li.addEventListener("click", toggle);
+      li.addEventListener("keydown", function(ev){
+        if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); toggle(); }
+      });
+    });
+  }
   function renderVBars(el, arr){
     if(!el) return;
     if(!arr || !arr.length){ el.innerHTML = '<div class="empty-log">Belum ada bulan yang diaudit.</div>'; return; }
@@ -37937,7 +38210,7 @@ function applyRejectedAlasanFilter_(which){
     renderHBars(document.getElementById("auditCabangChart"), d.cabangPie, "");
     renderHBars(document.getElementById("auditTopPetugas"), d.topPetugas, "green");
     renderHBars(document.getElementById("auditTopTemuan"), d.topTemuan, "orange");
-    renderHBars(document.getElementById("auditTw"), d.twDist, "");
+    renderTwBars_(document.getElementById("auditTw"), d.twDist, d.detail);
     var tipeLabel = (d.filterTipe && d.filterTipe !== "SEMUA") ? d.filterTipe : "Semua";
     try {
       var tf = document.getElementById("auditTipeFilter");
@@ -37975,7 +38248,7 @@ function applyRejectedAlasanFilter_(which){
     renderHBars(document.getElementById("kanitAuditCabangChart"), d.cabangPie || [], "");
     renderHBars(document.getElementById("kanitAuditTopTemuan"), d.topTemuan, "orange");
     renderHBars(document.getElementById("kanitAuditTopPetugas"), d.topPetugas, "green");
-    renderHBars(document.getElementById("kanitAuditTw"), d.twDist, "");
+    renderTwBars_(document.getElementById("kanitAuditTw"), d.twDist, d.detail);
     var tipeLabel = (d.filterTipe && d.filterTipe !== "SEMUA") ? d.filterTipe : "Semua";
     try {
       var tf = document.getElementById("kanitAuditTipeFilter");
@@ -38822,33 +39095,42 @@ function renderKanitAuditWizard(){
       modal.id = "apprPreviewModal";
       modal.className = "appr-preview-modal";
       var isImg = String(mime||"").indexOf("image/")===0;
+      var viewUrl = dataUrl, blobUrl = "";
+      if(!isImg){
+        try{
+          var parts = String(dataUrl).split(","), bin = atob(parts[1]||""), arr = new Uint8Array(bin.length);
+          for(var bi=0; bi<bin.length; bi++) arr[bi] = bin.charCodeAt(bi);
+          blobUrl = URL.createObjectURL(new Blob([arr], { type: mime || "application/pdf" }));
+          viewUrl = blobUrl;
+        }catch(e){ viewUrl = dataUrl; }
+      }
       var bodyHtml = isImg
         ? '<img src="'+dataUrl+'" alt="preview"/>'
-        : '<p class="appr-preview-msg">Preview PDF dibuka di tab baru. Jika tidak muncul, gunakan tombol di bawah.</p>';
+        : '<iframe class="appr-preview-frame" src="'+viewUrl+'" title="'+escHtml(name||"Surat")+'"></iframe>';
       modal.innerHTML =
         '<div class="appr-preview-backdrop" data-close="1"></div>'+
-        '<div class="appr-preview-panel">'+
+        '<div class="appr-preview-panel'+(isImg ? '' : ' is-pdf')+'">'+
           '<div class="appr-preview-head"><strong>'+escHtml(name||"Surat")+'</strong>'+
             '<button type="button" class="appr-btn appr-btn-ghost" data-close="1">Tutup</button></div>'+
           '<div class="appr-preview-body">'+bodyHtml+'</div>'+
           '<div class="appr-preview-foot">'+
-            '<a class="appr-btn appr-btn-outline" href="'+dataUrl+'" target="_blank" rel="noopener">Buka di tab baru</a>'+
-            '<a class="appr-btn appr-btn-outline" href="'+dataUrl+'" download="'+escHtml(name||"surat")+'">Unduh</a>'+
+            '<a class="appr-btn appr-btn-outline" href="'+viewUrl+'" target="_blank" rel="noopener">Buka di tab baru</a>'+
+            '<a class="appr-btn appr-btn-outline" href="'+viewUrl+'" download="'+escHtml(name||"surat")+'">Unduh</a>'+
           '</div>'+
         '</div>';
       document.body.appendChild(modal);
       modal.querySelectorAll("[data-close]").forEach(function(el){
-        el.addEventListener("click", function(){ try{ modal.remove(); }catch(e){} });
+        el.addEventListener("click", function(){
+          try{ modal.remove(); }catch(e){}
+          if(blobUrl){ try{ URL.revokeObjectURL(blobUrl); }catch(e){} }
+        });
       });
-      if(!isImg){
-        try{ window.open(dataUrl, "_blank"); }catch(e){}
-      }
     }
     var run = google.script.run
       .withSuccessHandler(function(r){
         try{ tip.remove(); }catch(e){}
         if(!r || r.status!=="OK" || !r.dataUrl){
-          alert((r&&r.reason)||"Gagal preview. Coba lagi atau minta file dibuka di Drive.");
+          alert((r&&r.reason)||"Gagal memuat surat. Coba lagi.");
           return;
         }
         showPreviewModal(r.dataUrl, r.mimeType, r.name);
@@ -39351,6 +39633,45 @@ function renderKanitAuditWizard(){
         if(info) info.textContent = "Selesai: "+(ok||0)+" surat"+((fail)?(", "+fail+" gagal"):"");
         try{ loadKanitAcpList_({ noFallback:true }); }catch(e){}
       }
+      // Kirim bertahap (3 file per request) agar tiap request jauh di bawah batas waktu server
+      function runSuratChunks_(allFiles, onDone, onFail){
+        var SIZE = 3, chunks = [];
+        for(var i = 0; i < allFiles.length; i += SIZE) chunks.push(allFiles.slice(i, i + SIZE));
+        var agg = { status: "OK", ok: 0, fail: 0, results: [] };
+        var okChunks = 0, idx = 0, lastErr = null, lastReason = "";
+        function next(){
+          if(idx >= chunks.length){
+            window._kanitAcpChunkInfo = "";
+            if(!okChunks){
+              if(lastErr) return onFail(lastErr);
+              return onDone({ status: "ERR", reason: lastReason || "Gagal kirim surat" });
+            }
+            return onDone(agg);
+          }
+          var part = chunks[idx++];
+          window._kanitAcpChunkInfo = "bagian " + idx + "/" + chunks.length;
+          google.script.run
+            .withSuccessHandler(function(r){
+              if(r && r.status === "OK"){
+                okChunks++;
+                agg.ok += (r.ok || 0);
+                agg.fail += (r.fail || 0);
+                (r.results || []).forEach(function(x){ agg.results.push(x); });
+              } else {
+                lastReason = (r && r.reason) || "";
+                agg.fail += part.length;
+              }
+              next();
+            })
+            .withFailureHandler(function(err){
+              lastErr = err;
+              agg.fail += part.length;
+              next();
+            })
+            .uploadSuratAcpTemuanBatch(session.cabang, session.cabangPin, { files: part });
+        }
+        next();
+      }
       function sendSuratsBatch(){
         var total = queue.length;
         var files = queue.map(function(job){
@@ -39365,10 +39686,9 @@ function renderKanitAuditWizard(){
         if(window._kanitAcpProgTimer) clearInterval(window._kanitAcpProgTimer);
         window._kanitAcpProgTimer = setInterval(function(){
           fake = Math.min(88, fake + Math.max(1, Math.round(12/Math.max(1,total))));
-          setKanitAcpProgress_(fake, "Mengunggah ke Drive… "+fake+"%");
+          setKanitAcpProgress_(fake, "Mengunggah ke Drive… "+fake+"%"+(window._kanitAcpChunkInfo ? " · "+window._kanitAcpChunkInfo : ""));
         }, 450);
-        google.script.run
-          .withSuccessHandler(function(r){
+        var onDone_ = function(r){
             if(window._kanitAcpProgTimer){ clearInterval(window._kanitAcpProgTimer); window._kanitAcpProgTimer=null; }
             if(!r || r.status!=="OK"){
               window._kanitAcpSending = false;
@@ -39412,8 +39732,8 @@ function renderKanitAuditWizard(){
               try{ updateKanitAcpBulkBar_(); }catch(e){}
             }
             try{ loadKanitAcpList_({ noFallback:true }); }catch(e){}
-          })
-          .withFailureHandler(function(err){
+        };
+        var onFail_ = function(err){
             if(window._kanitAcpProgTimer){ clearInterval(window._kanitAcpProgTimer); window._kanitAcpProgTimer=null; }
             window._kanitAcpSending = false;
             hideKanitAcpProgress_();
@@ -39421,8 +39741,10 @@ function renderKanitAuditWizard(){
             btn.textContent = "Kirim semua";
             alert(String(err.message||err));
             try{ updateKanitAcpBulkBar_(); }catch(e){}
-          })
-          .uploadSuratAcpTemuanBatch(session.cabang, session.cabangPin, { files: files });
+            // status asli dari server (sebagian surat bisa saja sudah masuk)
+            try{ loadKanitAcpList_({ noFallback:true }); }catch(e){}
+        };
+        runSuratChunks_(files, onDone_, onFail_);
       }
       // 1) Audit Summary ke Drive dulu jika masih draft, lalu batch surat
       if(window._kanitAcpSummaryDraft && window._kanitAcpSummaryDraft.base64 && !window._kanitAcpSummaryUrl){
@@ -39708,11 +40030,9 @@ function renderKanitAuditWizard(){
         (it.approveNote ? '<div class="appr-note-tolak">Catatan: '+escHtml(it.approveNote)+'</div>' : '')+
         '<footer class="appr-card-foot">'+
           '<div class="appr-links">'+
-            (it.suratUrl
-              ? '<a class="appr-btn appr-btn-ghost" href="'+escHtml(it.suratUrl)+'" target="_blank" rel="noopener">Lihat Surat</a>'
-              : (it.hasPreview || it.stagingFileId || stU==="MENUNGGU"
-                  ? '<button type="button" class="appr-btn appr-btn-ghost btn-appr-preview" data-id="'+escHtml(it.id)+'">Lihat Surat</button>'
-                  : '<span class="appr-muted">Belum ada surat</span>'))+
+            (it.suratUrl || it.hasPreview || it.stagingFileId || stU==="MENUNGGU"
+              ? '<button type="button" class="appr-btn appr-btn-ghost btn-appr-preview" data-id="'+escHtml(it.id)+'">Lihat Surat</button>'
+              : '<span class="appr-muted">Belum ada surat</span>')+
           '</div>'+
           (stU==="MENUNGGU"
             ? '<div class="appr-decide">'+
@@ -39968,13 +40288,16 @@ function renderKanitAuditWizard(){
             ? '<input class="ed-ket" value="'+escAttr(ed.keterangan||"")+'">'
             : '<div class="appr-readonly">'+escHtml(ed.keterangan||"—")+'</div>')+
         '</div>'+
-        (d.fileUrl
-          ? '<a class="appr-summary-link" href="'+escHtml(d.fileUrl)+'" target="_blank" rel="noopener">📄 Lihat surat pernyataan</a>'
+        (d.fileUrl || d.hasPreview
+          ? '<button type="button" class="appr-summary-link btn-appr-preview-detail" data-id="'+escAttr(d.id)+'">📄 Lihat surat pernyataan</button>'
           : '<div class="empty-log">Surat tidak tersedia</div>')+
       '</div>';
     nav.innerHTML =
       '<button type="button" class="btn-xs secondary" id="apprPrevBtn">'+(step <= 1 ? '← Ringkasan' : '← Sebelumnya')+'</button>'+
       '<button type="button" class="btn-xs" id="apprNextBtn">'+(step >= total ? 'Ke keputusan →' : 'Next →')+'</button>';
+    body.querySelectorAll(".btn-appr-preview-detail").forEach(function(b){
+      b.addEventListener("click", function(){ openAcpSuratPreview_(b.getAttribute("data-id"), true); });
+    });
     var prevB = document.getElementById("apprPrevBtn");
     if(prevB) prevB.onclick = function(){
       saveCurrentApprEdit_();
@@ -40109,6 +40432,61 @@ function renderKanitAuditWizard(){
     if(b && !b._wired){
       b._wired = true;
       b.addEventListener("click", function(){ showAuditApprList_(); });
+    }
+  })();
+
+  // ---- Wiring tombol "Approval Audit" (buka) & "Kembali" (tutup) di Dashboard Audit KC ----
+  (function wireApprovalAuditToggle(){
+    var RESET = ["display","visibility","opacity","position","left","height","overflow","pointer-events"];
+    function clearHide_(el){ if(!el) return; RESET.forEach(function(k){ try{ el.style.removeProperty(k); }catch(e){} }); }
+    function show_(el, disp){
+      if(!el) return;
+      clearHide_(el);
+      el.style.setProperty("display",disp||"block","important");
+      el.style.setProperty("visibility","visible","important");
+      el.style.setProperty("opacity","1","important");
+      el.style.setProperty("pointer-events","auto","important");
+    }
+    function hide_(el){
+      if(!el) return;
+      el.style.setProperty("display","none","important");
+    }
+    function setTitle_(t){
+      try{ var at = document.getElementById("adminTopbarTitle"); if(at) at.textContent = t; }catch(e){}
+    }
+    function openAppr_(){
+      var am = document.getElementById("auditMainView");
+      var aa = document.getElementById("auditApprovalView");
+      if(!aa) return;
+      hide_(am);
+      show_(aa, "flex");
+      setTitle_("Approval Audit");
+      try{ loadAuditPengajuanAdmin(true); }catch(e){ try{ console.error("[Approval Audit]", e); }catch(e2){} }
+      try{ var main = document.querySelector(".admin-main"); if(main) main.scrollTop = 0; }catch(e){}
+    }
+    function closeAppr_(){
+      var am = document.getElementById("auditMainView");
+      var aa = document.getElementById("auditApprovalView");
+      try{ if(aa) aa.classList.remove("is-detail"); }catch(e){}
+      hide_(aa);
+      if(am){
+        clearHide_(am);
+        am.style.setProperty("display","block","important");
+        am.style.setProperty("visibility","visible","important");
+        am.style.setProperty("opacity","1","important");
+      }
+      setTitle_("Dashboard Audit");
+    }
+    // Delegasi di document: tetap jalan walau tombol dirender ulang / ada overlay lapisan lain
+    if(!document._apprAuditToggleWired){
+      document._apprAuditToggleWired = true;
+      document.addEventListener("click", function(ev){
+        var t = ev.target && ev.target.closest ? ev.target.closest("#btnOpenApprovalAudit,#btnBackApprovalAudit") : null;
+        if(!t) return;
+        ev.preventDefault();
+        if(t.id === "btnOpenApprovalAudit") openAppr_();
+        else closeAppr_();
+      });
     }
   })();
 
@@ -41877,7 +42255,11 @@ function loadAdminBertugas(){
     if(t.closest && t.closest("#kanitProfileBtn")){
       e.preventDefault();
       e.stopPropagation();
+      try{ if(typeof fillKanitProfileModalFields==="function") fillKanitProfileModalFields(); }catch(err){}
+      try{ var pb=document.getElementById("kanitProfilePinBox"); if(pb) pb.classList.remove("show"); var pm=document.getElementById("kanitProfileMsg"); if(pm){ pm.textContent=""; pm.classList.remove("show","ok","err"); } }catch(err){}
       openOverlay("kanitProfileModal");
+      try{ var pc=document.querySelector("#kanitProfileModal .profile-modal"); if(pc) pc.scrollTop=0; }catch(err){}
+      try{ if(typeof loadKanitProfileFromServer==="function") loadKanitProfileFromServer(); }catch(err){}
       return;
     }
     // close buttons
@@ -47888,6 +48270,687 @@ html[data-mode="light"]{ --kh-ink:#0B1F4B; --kh-ink2:#0B1F4B; --kh-mute:#4A5C80;
   /* Lencana terbaik: senada dengan kartu terang */
   :root:root:root:root:root:root[data-mode="light"] .kinerja-badge{ background:#FFFFFF !important; border:1px solid #DCE4F3 !important; box-shadow:none !important; }
 }
+</style>
+<style id="fix-sidebar-active-and-acp-20261028">
+/* =====================================================================
+   FIX 1 — Sidebar aktif (MODE TERANG): teks & ikon PUTIH
+   ===================================================================== */
+:root:root:root:root:root:root:root:root[data-mode="light"] #screen-omset-form .admin-sidebar .admin-nav-btn.active:not(#_h),
+:root:root:root:root:root:root:root:root[data-mode="light"] #screen-admin-dashboard .admin-sidebar .admin-nav-btn.active:not(#_h),
+:root:root:root:root:root:root:root:root[data-mode="light"] #screen-omset-form .admin-sidebar .admin-nav-btn.active:not(#_h) .admin-nav-label,
+:root:root:root:root:root:root:root:root[data-mode="light"] #screen-admin-dashboard .admin-sidebar .admin-nav-btn.active:not(#_h) .admin-nav-label,
+:root:root:root:root:root:root:root:root[data-mode="light"] #screen-omset-form .admin-sidebar .admin-nav-btn.active:not(#_h) .admin-nav-icon,
+:root:root:root:root:root:root:root:root[data-mode="light"] #screen-admin-dashboard .admin-sidebar .admin-nav-btn.active:not(#_h) .admin-nav-icon{
+  color:#FFFFFF !important;
+  -webkit-text-fill-color:#FFFFFF !important;
+  opacity:1 !important;
+}
+:root:root:root:root:root:root:root:root[data-mode="light"] #screen-omset-form .admin-sidebar .admin-nav-btn.active:not(#_h) svg,
+:root:root:root:root:root:root:root:root[data-mode="light"] #screen-admin-dashboard .admin-sidebar .admin-nav-btn.active:not(#_h) svg,
+:root:root:root:root:root:root:root:root[data-mode="light"] #screen-omset-form .admin-sidebar .admin-nav-btn.active:not(#_h) svg *,
+:root:root:root:root:root:root:root:root[data-mode="light"] #screen-admin-dashboard .admin-sidebar .admin-nav-btn.active:not(#_h) svg *{
+  stroke:#FFFFFF !important;
+  opacity:1 !important;
+}
+
+/* =====================================================================
+   FIX 2 — Report Audit Kanit (Upload Surat Pernyataan)
+   Token warna per mode, satu gaya tombol, satu gaya badge
+   ===================================================================== */
+:root:root:root:root:root:root:root:root[data-mode="light"] #tab-kanitauditreport{
+  --rp-surface:#FFFFFF; --rp-surface2:#F4F7FC; --rp-line:#DCE4F3; --rp-line2:#C5D2EC;
+  --rp-text:#0B1F4B; --rp-mute:#4A5C80; --rp-acc:#1E3A8A; --rp-acc-hov:#16307A; --rp-acc-soft:rgba(30,58,138,.10); --rp-on-acc:#FFFFFF;
+  --rp-bar:#0B1F4B; --rp-bar-text:#FFFFFF; --rp-bar-mute:rgba(255,255,255,.70);
+  --rp-pel-bg:#FDE8E8; --rp-pel-fg:#B42318; --rp-sup-bg:#E3ECFD; --rp-sup-fg:#1E3A8A;
+  --rp-belum-bg:#FEF3C7; --rp-belum-fg:#92400E; --rp-wait-bg:#E0F2FE; --rp-wait-fg:#075985;
+  --rp-ok-bg:#DCFCE7; --rp-ok-fg:#166534; --rp-bad-bg:#FEE2E2; --rp-bad-fg:#B91C1C;
+}
+:root:root:root:root:root:root:root:root[data-mode="dark"] #tab-kanitauditreport{
+  --rp-surface:#0d0b0e; --rp-surface2:rgba(255,255,255,.04); --rp-line:rgba(255,255,255,.09); --rp-line2:rgba(255,255,255,.18);
+  --rp-text:#f5eff4; --rp-mute:#a99ea8; --rp-acc:#c9a0c4; --rp-acc-hov:#d8b4d3; --rp-acc-soft:rgba(201,160,196,.14); --rp-on-acc:#1a1219;
+  --rp-bar:#17121a; --rp-bar-text:#f5eff4; --rp-bar-mute:#a99ea8;
+  --rp-pel-bg:rgba(248,113,113,.16); --rp-pel-fg:#fca5a5; --rp-sup-bg:rgba(147,170,255,.16); --rp-sup-fg:#b8c5ff;
+  --rp-belum-bg:rgba(251,191,36,.16); --rp-belum-fg:#fcd34d; --rp-wait-bg:rgba(56,189,248,.16); --rp-wait-fg:#7dd3fc;
+  --rp-ok-bg:rgba(74,222,128,.16); --rp-ok-fg:#86efac; --rp-bad-bg:rgba(248,113,113,.16); --rp-bad-fg:#fca5a5;
+}
+
+/* kartu pembungkus */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-shell:not(#_h){
+  background:var(--rp-surface) !important; border:1px solid var(--rp-line) !important; box-shadow:none !important; color:var(--rp-text) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-page-title:not(#_h){ color:var(--rp-text) !important; -webkit-text-fill-color:var(--rp-text) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-page-sub:not(#_h){ color:var(--rp-mute) !important; -webkit-text-fill-color:var(--rp-mute) !important; }
+
+/* toolbar: label + input + tombol Muat sejajar */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-toolbar:not(#_h){ display:flex !important; align-items:flex-end !important; gap:12px !important; flex-wrap:wrap !important; background:transparent !important; border:0 !important; box-shadow:none !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-toolbar label:not(#_h){ color:var(--rp-mute) !important; -webkit-text-fill-color:var(--rp-mute) !important; font-size:11px !important; font-weight:600 !important; letter-spacing:.06em !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-toolbar :is(select,input):not(#_h){
+  height:38px !important; padding:0 12px !important; border-radius:10px !important; font-size:13px !important;
+  background:var(--rp-surface2) !important; color:var(--rp-text) !important; -webkit-text-fill-color:var(--rp-text) !important;
+  border:1px solid var(--rp-line) !important; box-shadow:none !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-toolbar :is(select,input):focus:not(#_h){ border-color:var(--rp-acc) !important; outline:0 !important; box-shadow:0 0 0 3px var(--rp-acc-soft) !important; }
+
+/* kartu Audit Summary */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-summary-card:not(#_h){
+  background:var(--rp-surface2) !important; border:1px solid var(--rp-line) !important; border-radius:14px !important; box-shadow:none !important;
+  display:flex !important; align-items:center !important; justify-content:space-between !important; gap:12px !important; padding:10px 14px !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-sum-title:not(#_h){ color:var(--rp-text) !important; -webkit-text-fill-color:var(--rp-text) !important; font-weight:700 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-sum-title .req:not(#_h){ color:var(--rp-pel-fg) !important; -webkit-text-fill-color:var(--rp-pel-fg) !important; background:var(--rp-pel-bg) !important; border-radius:999px !important; padding:2px 8px !important; font-size:10px !important; font-weight:700 !important; text-transform:uppercase !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-sum-right:not(#_h){ display:flex !important; align-items:center !important; gap:10px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-summary-status:not(#_h){ color:var(--rp-mute) !important; -webkit-text-fill-color:var(--rp-mute) !important; font-size:12px !important; font-weight:600 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-summary-status.ok:not(#_h){ color:var(--rp-ok-fg) !important; -webkit-text-fill-color:var(--rp-ok-fg) !important; }
+
+/* KPI chips (3 Pelanggaran · 2 Support · …) */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-kpi-chips :is(.chip,span):not(#_h){
+  background:var(--rp-surface2) !important; color:var(--rp-text) !important; -webkit-text-fill-color:var(--rp-text) !important;
+  border:1px solid var(--rp-line) !important; border-radius:999px !important; padding:3px 10px !important; font-size:12px !important; font-weight:600 !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-kpi-chips .chip.pel:not(#_h){ background:var(--rp-pel-bg) !important; color:var(--rp-pel-fg) !important; -webkit-text-fill-color:var(--rp-pel-fg) !important; border-color:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-kpi-chips .chip.sup:not(#_h){ background:var(--rp-sup-bg) !important; color:var(--rp-sup-fg) !important; -webkit-text-fill-color:var(--rp-sup-fg) !important; border-color:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-kpi-chips .chip.belum:not(#_h){ background:var(--rp-belum-bg) !important; color:var(--rp-belum-fg) !important; -webkit-text-fill-color:var(--rp-belum-fg) !important; border-color:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-kpi-chips .chip.wait:not(#_h){ background:var(--rp-wait-bg) !important; color:var(--rp-wait-fg) !important; -webkit-text-fill-color:var(--rp-wait-fg) !important; border-color:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-kpi-chips .chip.ok:not(#_h){ background:var(--rp-ok-bg) !important; color:var(--rp-ok-fg) !important; -webkit-text-fill-color:var(--rp-ok-fg) !important; border-color:transparent !important; }
+
+/* tabel */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-table-wrap:not(#_h){ background:transparent !important; border:1px solid var(--rp-line) !important; border-radius:14px !important; overflow-x:auto !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-table:not(#_h){ width:100% !important; border-collapse:collapse !important; background:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-table th:not(#_h){ background:var(--rp-surface2) !important; color:var(--rp-mute) !important; -webkit-text-fill-color:var(--rp-mute) !important; font-size:11px !important; font-weight:700 !important; letter-spacing:.06em !important; text-transform:uppercase !important; text-align:left !important; padding:11px 14px !important; border-bottom:1px solid var(--rp-line) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-table td:not(#_h){ background:transparent !important; color:var(--rp-text) !important; -webkit-text-fill-color:var(--rp-text) !important; font-size:13px !important; padding:12px 14px !important; border-bottom:1px solid var(--rp-line) !important; vertical-align:middle !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-table tr:last-child td:not(#_h){ border-bottom:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-table tbody tr:hover td:not(#_h){ background:var(--rp-acc-soft) !important; }
+
+/* badge tipe & status — satu bentuk */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-badge:not(#_h){
+  display:inline-flex !important; align-items:center !important; height:22px !important; padding:0 10px !important; border-radius:999px !important;
+  font-size:11px !important; font-weight:700 !important; letter-spacing:.03em !important; text-transform:uppercase !important; border:0 !important; box-shadow:none !important; white-space:nowrap !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-badge.pel:not(#_h){ background:var(--rp-pel-bg) !important; color:var(--rp-pel-fg) !important; -webkit-text-fill-color:var(--rp-pel-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-badge.sup:not(#_h){ background:var(--rp-sup-bg) !important; color:var(--rp-sup-fg) !important; -webkit-text-fill-color:var(--rp-sup-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-badge.belum:not(#_h){ background:var(--rp-belum-bg) !important; color:var(--rp-belum-fg) !important; -webkit-text-fill-color:var(--rp-belum-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-badge.menunggu:not(#_h){ background:var(--rp-wait-bg) !important; color:var(--rp-wait-fg) !important; -webkit-text-fill-color:var(--rp-wait-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-badge.approve:not(#_h){ background:var(--rp-ok-bg) !important; color:var(--rp-ok-fg) !important; -webkit-text-fill-color:var(--rp-ok-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-badge.tolak:not(#_h){ background:var(--rp-bad-bg) !important; color:var(--rp-bad-fg) !important; -webkit-text-fill-color:var(--rp-bad-fg) !important; }
+
+/* TOMBOL — semua seragam: tinggi 34px, radius 10px, font 12.5px/600, tanpa gradient */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport :is(.btn-outline-gold,.kanit-acp-btn-primary,.kanit-acp-btn-ghost,.kanit-acp-btn-link,#kanitAuditReportBack):not(#_h){
+  display:inline-flex !important; align-items:center !important; justify-content:center !important; gap:6px !important;
+  height:34px !important; min-height:34px !important; padding:0 16px !important; border-radius:10px !important; box-sizing:border-box !important;
+  font-family:inherit !important; font-size:12.5px !important; font-weight:600 !important; line-height:1 !important; letter-spacing:0 !important; text-transform:none !important; text-decoration:none !important; white-space:nowrap !important;
+  background-image:none !important; box-shadow:none !important; transform:none !important; cursor:pointer !important; transition:background .15s,border-color .15s,color .15s !important;
+}
+/* utama (Muat, Pilih file, Kirim semua) = terisi aksen */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport :is(.btn-outline-gold,.kanit-acp-btn-primary):not(#_h){
+  background-color:var(--rp-acc) !important; color:var(--rp-on-acc) !important; -webkit-text-fill-color:var(--rp-on-acc) !important; border:1px solid var(--rp-acc) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport :is(.btn-outline-gold,.kanit-acp-btn-primary):hover:not(:disabled):not(#_h){ background-color:var(--rp-acc-hov) !important; border-color:var(--rp-acc-hov) !important; }
+/* sekunder (Hapus, Kembali) = garis */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport :is(.kanit-acp-btn-ghost,#kanitAuditReportBack):not(#_h){
+  background-color:transparent !important; color:var(--rp-text) !important; -webkit-text-fill-color:var(--rp-text) !important; border:1px solid var(--rp-line2) !important;
+}
+/* tersier (Lihat) = garis aksen */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-btn-link:not(#_h){
+  background-color:var(--rp-acc-soft) !important; color:var(--rp-acc) !important; -webkit-text-fill-color:var(--rp-acc) !important; border:1px solid transparent !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport :is(.kanit-acp-btn-ghost,.kanit-acp-btn-link,#kanitAuditReportBack):hover:not(#_h){ border-color:var(--rp-acc) !important; color:var(--rp-acc) !important; -webkit-text-fill-color:var(--rp-acc) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport :is(button,a):disabled:not(#_h){ opacity:.45 !important; cursor:not-allowed !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-actions:not(#_h){ display:flex !important; align-items:center !important; gap:8px !important; flex-wrap:wrap !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-preview:not(#_h){ color:var(--rp-mute) !important; -webkit-text-fill-color:var(--rp-mute) !important; font-size:12px !important; max-width:180px !important; overflow:hidden !important; text-overflow:ellipsis !important; white-space:nowrap !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport :is(.kanit-acp-locked,.kanit-acp-done,.kanit-acp-note):not(#_h){ color:var(--rp-mute) !important; -webkit-text-fill-color:var(--rp-mute) !important; font-size:12px !important; font-style:italic !important; }
+
+/* bar kirim semua */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-bulk-bar:not(#_h){
+  background:var(--rp-bar) !important; border:1px solid var(--rp-line) !important; border-radius:14px !important; box-shadow:none !important;
+  display:flex !important; align-items:center !important; justify-content:space-between !important; gap:12px !important; padding:10px 14px !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-bulk-info:not(#_h){ color:var(--rp-bar-text) !important; -webkit-text-fill-color:var(--rp-bar-text) !important; font-size:13px !important; font-weight:600 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-prog-pct:not(#_h){ color:var(--rp-bar-mute) !important; -webkit-text-fill-color:var(--rp-bar-mute) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-prog-track:not(#_h){ background:rgba(255,255,255,.16) !important; border-radius:999px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-prog-fill:not(#_h){ background:var(--rp-acc) !important; border-radius:999px !important; }
+/* di dalam bar gelap tombol utama dibalik agar terbaca */
+:root:root:root:root:root:root:root:root[data-mode="light"] #tab-kanitauditreport .acp-bulk-bar .btn-outline-gold:not(#_h){ background-color:#FFFFFF !important; color:#0B1F4B !important; -webkit-text-fill-color:#0B1F4B !important; border-color:#FFFFFF !important; }
+:root:root:root:root:root:root:root:root[data-mode="light"] #tab-kanitauditreport .acp-bulk-bar .btn-outline-gold:hover:not(:disabled):not(#_h){ background-color:#E4ECF9 !important; border-color:#E4ECF9 !important; }
+</style>
+<style id="fix-kanit-dashboard-and-acp-table-20261028b">
+/* =====================================================================
+   FIX A — Tabel Upload Surat: kolom Tipe terlalu sempit → pill terpotong
+   ===================================================================== */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table:not(#_h):not(#_h){ table-layout:fixed !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(1):not(#_h):not(#_h){ width:17% !important; min-width:150px !important; padding-left:22px !important; padding-right:10px !important; overflow:visible !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(2):not(#_h):not(#_h){ width:25% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(3):not(#_h):not(#_h){ width:15% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(4):not(#_h):not(#_h){ width:14% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(5):not(#_h):not(#_h){ width:12% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(6):not(#_h):not(#_h){ width:17% !important; padding-right:18px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-badge:not(#_h):not(#_h){ width:auto !important; max-width:none !important; flex:none !important; overflow:visible !important; text-overflow:clip !important; padding:0 12px !important; box-sizing:border-box !important; }
+
+/* =====================================================================
+   FIX B — Dashboard Kepala Unit: layout + warna (logika JS tidak diubah)
+   ===================================================================== */
+:root:root:root:root:root:root:root:root[data-mode="light"] #tab-kanitdashboard{
+  --kd-ink:#0B1F4B; --kd-mute:#5B6B8C; --kd-line:#DCE4F3; --kd-surface:#FFFFFF; --kd-surface2:#F4F7FC;
+  --kd-acc:#1E3A8A; --kd-acc-soft:rgba(30,58,138,.09);
+  --kd-ok:#15803D; --kd-ok-bg:#DCFCE7; --kd-mid:#B45309; --kd-mid-bg:#FEF3C7; --kd-low:#DC2626; --kd-low-bg:#FEE2E2;
+  --kd-hero:linear-gradient(135deg,#0B1F4B 0%,#1E3A8A 62%,#2A4FB0 100%); --kd-hero-ink:#FFFFFF; --kd-hero-mute:rgba(255,255,255,.72);
+  --kd-glass:rgba(255,255,255,.12); --kd-glass-line:rgba(255,255,255,.22); --kd-track:rgba(255,255,255,.18);
+  --kd-act-ok:#4ADE80; --kd-act-mid:#FBBF24; --kd-act-low:#F87171; --kd-proj:rgba(255,255,255,.38);
+  --kd-shadow:0 1px 2px rgba(11,31,75,.05),0 8px 24px rgba(11,31,75,.07);
+}
+:root:root:root:root:root:root:root:root[data-mode="dark"] #tab-kanitdashboard{
+  --kd-ink:#f5eff4; --kd-mute:#a99ea8; --kd-line:rgba(255,255,255,.09); --kd-surface:#0d0b0e; --kd-surface2:rgba(255,255,255,.04);
+  --kd-acc:#c9a0c4; --kd-acc-soft:rgba(201,160,196,.14);
+  --kd-ok:#86efac; --kd-ok-bg:rgba(74,222,128,.16); --kd-mid:#fcd34d; --kd-mid-bg:rgba(251,191,36,.16); --kd-low:#fca5a5; --kd-low-bg:rgba(248,113,113,.16);
+  --kd-hero:linear-gradient(135deg,#2b1f2d 0%,#1d1520 60%,#140f16 100%); --kd-hero-ink:#f5eff4; --kd-hero-mute:#b9aeb8;
+  --kd-glass:rgba(255,255,255,.06); --kd-glass-line:rgba(255,255,255,.12); --kd-track:rgba(255,255,255,.10);
+  --kd-act-ok:#4ade80; --kd-act-mid:#fbbf24; --kd-act-low:#f87171; --kd-proj:rgba(201,160,196,.38);
+  --kd-shadow:none;
+}
+/* header sambutan */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-wrap:not(#_h):not(#_h):not(#_h){ gap:16px !important; padding:6px 4px 4px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-head:not(#_h):not(#_h):not(#_h){ padding:0 2px !important; margin:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-greet:not(#_h):not(#_h):not(#_h){ font-size:22px !important; font-weight:700 !important; color:var(--kd-ink) !important; -webkit-text-fill-color:var(--kd-ink) !important; letter-spacing:-.02em !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-meta:not(#_h):not(#_h):not(#_h){ font-size:12.5px !important; color:var(--kd-mute) !important; -webkit-text-fill-color:var(--kd-mute) !important; margin-top:3px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-btn-primary:not(#_h):not(#_h):not(#_h){ height:40px !important; padding:0 18px !important; border-radius:12px !important; background:var(--kd-acc) !important; background-image:none !important; color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; border:0 !important; font-size:13px !important; font-weight:600 !important; box-shadow:none !important; }
+:root:root:root:root:root:root:root:root[data-mode="dark"] #tab-kanitdashboard .kd-btn-primary:not(#_h):not(#_h):not(#_h){ color:#1a1219 !important; -webkit-text-fill-color:#1a1219 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-btn-primary:hover:not(#_h):not(#_h):not(#_h){ filter:brightness(1.1) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-icon-btn:not(#_h):not(#_h):not(#_h){ width:40px !important; height:40px !important; border-radius:12px !important; background:var(--kd-surface) !important; color:var(--kd-ink) !important; border:1px solid var(--kd-line) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-icon-btn:hover:not(#_h):not(#_h):not(#_h){ border-color:var(--kd-acc) !important; color:var(--kd-acc) !important; }
+
+/* kartu hero: blok warna utama */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero:not(#_h):not(#_h):not(#_h){
+  background:var(--kd-hero) !important; border:1px solid var(--kd-glass-line) !important; border-radius:22px !important; padding:24px 28px 20px !important; box-shadow:var(--kd-shadow) !important; color:var(--kd-hero-ink) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-hero-top:not(#_h):not(#_h):not(#_h){ align-items:center !important; gap:24px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-k:not(#_h):not(#_h):not(#_h){ color:var(--kd-hero-mute) !important; -webkit-text-fill-color:var(--kd-hero-mute) !important; font-size:12.5px !important; font-weight:600 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-v:not(#_h):not(#_h):not(#_h){ color:var(--kd-hero-ink) !important; -webkit-text-fill-color:var(--kd-hero-ink) !important; font-size:56px !important; font-weight:700 !important; letter-spacing:-.045em !important; line-height:1.05 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-v.is-ok:not(#_h):not(#_h):not(#_h){ color:var(--kd-act-ok) !important; -webkit-text-fill-color:var(--kd-act-ok) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-v.is-mid:not(#_h):not(#_h):not(#_h){ color:var(--kd-act-mid) !important; -webkit-text-fill-color:var(--kd-act-mid) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-v.is-low:not(#_h):not(#_h):not(#_h){ color:var(--kd-act-low) !important; -webkit-text-fill-color:var(--kd-act-low) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-sub:not(#_h):not(#_h):not(#_h){ color:var(--kd-hero-mute) !important; -webkit-text-fill-color:var(--kd-hero-mute) !important; font-size:13px !important; }
+/* chip GE / GB / GG: tiga kotak sejajar */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-chips:not(#_h):not(#_h):not(#_h){ flex-direction:row !important; gap:10px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-chip:not(#_h):not(#_h):not(#_h){ flex-direction:column !important; align-items:flex-start !important; justify-content:center !important; gap:2px !important; min-width:92px !important; padding:10px 16px !important; border-radius:14px !important; background:var(--kd-glass) !important; border:1px solid var(--kd-glass-line) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-chip i:not(#_h):not(#_h):not(#_h){ color:var(--kd-hero-mute) !important; -webkit-text-fill-color:var(--kd-hero-mute) !important; font-size:11px !important; letter-spacing:.08em !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-chip b:not(#_h):not(#_h):not(#_h){ color:var(--kd-hero-ink) !important; -webkit-text-fill-color:var(--kd-hero-ink) !important; font-size:22px !important; font-weight:700 !important; }
+/* progress */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-track:not(#_h):not(#_h):not(#_h){ height:12px !important; margin-top:22px !important; background:var(--kd-track) !important; border-radius:999px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-track-proj:not(#_h):not(#_h):not(#_h){ background:var(--kd-proj) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-track-act.is-ok:not(#_h):not(#_h):not(#_h){ background:var(--kd-act-ok) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-track-act.is-mid:not(#_h):not(#_h):not(#_h){ background:var(--kd-act-mid) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-track-act.is-low:not(#_h):not(#_h):not(#_h){ background:var(--kd-act-low) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-bar-lab:not(#_h):not(#_h):not(#_h){ color:var(--kd-hero-mute) !important; -webkit-text-fill-color:var(--kd-hero-mute) !important; font-size:12px !important; font-weight:500 !important; margin-top:12px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-leg-act:not(#_h):not(#_h):not(#_h){ background:var(--kd-act-mid) !important; border-radius:50% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-leg i.kd-leg-proj:not(#_h):not(#_h):not(#_h){ background:var(--kd-proj) !important; border-radius:50% !important; }
+
+/* grid KPI: 3 kolom atas, 2/3 + 1/3 bawah */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid:not(#_h):not(#_h):not(#_h){ grid-template-columns:repeat(12,minmax(0,1fr)) !important; gap:14px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card:not(#_h):not(#_h):not(#_h){ grid-column:span 4 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card:nth-child(4):not(#_h):not(#_h):not(#_h){ grid-column:span 8 !important; }
+@media (max-width:900px){
+  :root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card:not(#_h):not(#_h):not(#_h){ grid-column:span 6 !important; }
+  :root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card:nth-child(4):not(#_h):not(#_h):not(#_h){ grid-column:span 12 !important; }
+  :root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-chips:not(#_h):not(#_h):not(#_h){ width:100% !important; }
+  :root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-chip:not(#_h):not(#_h):not(#_h){ flex:1 1 0 !important; }
+}
+@media (max-width:560px){
+  :root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card:not(#_h):not(#_h):not(#_h){ grid-column:span 12 !important; }
+  :root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero .kd-v:not(#_h):not(#_h):not(#_h){ font-size:44px !important; }
+  :root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-hero:not(#_h):not(#_h):not(#_h){ padding:20px 18px 16px !important; }
+}
+/* kartu KPI */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card:not(#_h):not(#_h):not(#_h){
+  background:var(--kd-surface) !important; background-image:none !important; border:1px solid var(--kd-line) !important; border-radius:18px !important; padding:18px 20px 16px !important; box-shadow:var(--kd-shadow) !important; position:relative !important; min-height:132px !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card:not(#_h):not(#_h):not(#_h)::before{ content:"" !important; position:absolute !important; left:20px !important; top:0 !important; width:34px !important; height:3px !important; border-radius:0 0 3px 3px !important; background:var(--kd-acc) !important; opacity:.85 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-k:not(#_h):not(#_h):not(#_h){ color:var(--kd-mute) !important; -webkit-text-fill-color:var(--kd-mute) !important; font-size:12.5px !important; font-weight:600 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-v:not(#_h):not(#_h):not(#_h){ color:var(--kd-ink) !important; -webkit-text-fill-color:var(--kd-ink) !important; font-size:34px !important; font-weight:700 !important; letter-spacing:-.035em !important; margin-top:6px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-v.is-ok:not(#_h):not(#_h):not(#_h){ color:var(--kd-ok) !important; -webkit-text-fill-color:var(--kd-ok) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-v.is-mid:not(#_h):not(#_h):not(#_h){ color:var(--kd-mid) !important; -webkit-text-fill-color:var(--kd-mid) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-v.is-danger:not(#_h):not(#_h):not(#_h){ color:var(--kd-low) !important; -webkit-text-fill-color:var(--kd-low) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-sub:not(#_h):not(#_h):not(#_h){ color:var(--kd-mute) !important; -webkit-text-fill-color:var(--kd-mute) !important; font-size:12.5px !important; margin-top:6px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-sub.is-danger:not(#_h):not(#_h):not(#_h){ color:var(--kd-low) !important; -webkit-text-fill-color:var(--kd-low) !important; }
+/* Target hari ini = kartu prioritas berwarna aksen */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card-priority:not(#_h):not(#_h):not(#_h){ background:var(--kd-hero) !important; border-color:var(--kd-glass-line) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card-priority:not(#_h):not(#_h):not(#_h)::before{ background:var(--kd-hero-ink) !important; opacity:.7 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-priority .kd-k:not(#_h):not(#_h):not(#_h),
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-priority .kd-sub:not(#_h):not(#_h):not(#_h){ color:var(--kd-hero-mute) !important; -webkit-text-fill-color:var(--kd-hero-mute) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-card-priority .kd-v:not(#_h):not(#_h):not(#_h){ color:var(--kd-hero-ink) !important; -webkit-text-fill-color:var(--kd-hero-ink) !important; }
+/* kartu omset kemarin di bawah target: tint merah lembut, bukan blok merah */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card.kd-danger:not(#_h):not(#_h):not(#_h){ background:var(--kd-surface) !important; border-color:var(--kd-low-bg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid > .kd-card.kd-danger:not(#_h):not(#_h):not(#_h)::before{ background:var(--kd-low) !important; }
+/* badge & pill */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-badge:not(#_h):not(#_h):not(#_h){ height:22px !important; padding:0 10px !important; font-size:11px !important; font-weight:700 !important; border-radius:999px !important; -webkit-text-fill-color:currentColor !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-badge-ok:not(#_h):not(#_h):not(#_h){ background:var(--kd-ok-bg) !important; color:var(--kd-ok) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-badge-warn:not(#_h):not(#_h):not(#_h){ background:var(--kd-mid-bg) !important; color:var(--kd-mid) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-badge-neutral:not(#_h):not(#_h):not(#_h){ background:var(--kd-surface2) !important; color:var(--kd-mute) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-pct-pill:not(#_h):not(#_h):not(#_h){ height:22px !important; display:inline-flex !important; align-items:center !important; padding:0 10px !important; background:var(--kd-acc-soft) !important; color:var(--kd-acc) !important; -webkit-text-fill-color:var(--kd-acc) !important; font-size:11px !important; border-radius:999px !important; }
+/* progress pekan */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-bar:not(#_h):not(#_h):not(#_h){ height:10px !important; margin-top:14px !important; background:var(--kd-acc-soft) !important; border-radius:999px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-bar > span:not(#_h):not(#_h):not(#_h){ background:var(--kd-acc) !important; border-radius:999px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-bar.is-ok > span:not(#_h):not(#_h):not(#_h){ background:var(--kd-ok) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-bar.is-mid > span:not(#_h):not(#_h):not(#_h){ background:var(--kd-mid) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitdashboard .kd-grid .kd-bar.is-low > span:not(#_h):not(#_h):not(#_h){ background:var(--kd-low) !important; }
+</style>
+<style id="fix-acp-actions-bulkbar-20261028c">
+/* ===== Tabel: kolom Aksi rapi, satu baris, nama file terpotong rapi ===== */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-table-wrap:not(#_h):not(#_h){ overflow-x:auto !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table:not(#_h):not(#_h){ min-width:980px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(1):not(#_h):not(#_h){ width:15% !important; min-width:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(2):not(#_h):not(#_h){ width:23% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(3):not(#_h):not(#_h){ width:14% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(4):not(#_h):not(#_h){ width:14% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(5):not(#_h):not(#_h){ width:11% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table :is(th,td):nth-child(6):not(#_h):not(#_h){ width:23% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport table.kanit-acp-table td:not(#_h):not(#_h){ height:64px !important; vertical-align:middle !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-actions:not(#_h):not(#_h){ display:flex !important; flex-wrap:nowrap !important; align-items:center !important; gap:8px !important; justify-content:flex-start !important; min-width:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-actions > *:not(#_h):not(#_h){ flex:0 0 auto !important; margin:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-actions > .kanit-acp-preview:not(#_h):not(#_h){ flex:1 1 0 !important; min-width:0 !important; max-width:none !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-actions :is(button,a):not(#_h):not(#_h){ height:30px !important; min-height:30px !important; padding:0 14px !important; font-size:12px !important; }
+/* hover baris: tint netral supaya badge tidak melebur */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-table tbody tr:hover td:not(#_h):not(#_h){ background:var(--rp-surface2) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-table tbody tr:nth-child(even) td:not(#_h):not(#_h){ background:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .kanit-acp-table tbody tr:nth-child(even):hover td:not(#_h):not(#_h){ background:var(--rp-surface2) !important; }
+
+/* ===== Bar "Kirim semua": kartu bersih, bukan blok navy ===== */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-bulk-bar:not(#_h):not(#_h){
+  position:sticky !important; bottom:12px !important; z-index:5 !important; margin-top:16px !important;
+  background:var(--rp-surface) !important; border:1px solid var(--rp-line) !important; border-left:4px solid var(--rp-acc) !important; border-radius:14px !important;
+  box-shadow:0 8px 24px rgba(11,31,75,.12) !important; padding:12px 16px 12px 18px !important;
+  display:flex !important; align-items:center !important; justify-content:space-between !important; gap:16px !important;
+}
+:root:root:root:root:root:root:root:root[data-mode="dark"] #tab-kanitauditreport .acp-bulk-bar:not(#_h):not(#_h){ box-shadow:0 8px 24px rgba(0,0,0,.45) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-bulk-left:not(#_h):not(#_h){ flex:1 1 auto !important; min-width:0 !important; display:flex !important; flex-direction:column !important; gap:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-bulk-info:not(#_h):not(#_h){ color:var(--rp-text) !important; -webkit-text-fill-color:var(--rp-text) !important; font-size:14px !important; font-weight:700 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-prog-wrap:not([style*="none"]):not(#_h):not(#_h){ display:flex !important; align-items:center !important; gap:12px !important; margin-top:8px !important; max-width:420px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-prog-track:not(#_h):not(#_h){ flex:1 1 auto !important; height:8px !important; background:var(--rp-acc-soft) !important; border-radius:999px !important; overflow:hidden !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-prog-fill:not(#_h):not(#_h){ height:100% !important; background:var(--rp-acc) !important; border-radius:999px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-prog-pct:not(#_h):not(#_h){ color:var(--rp-mute) !important; -webkit-text-fill-color:var(--rp-mute) !important; font-size:12px !important; font-weight:700 !important; min-width:36px !important; text-align:right !important; }
+/* tombol di dalam bar = tombol utama biasa (batalkan balik putih di navy) */
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-bulk-bar .btn-outline-gold:not(#_h):not(#_h){ height:38px !important; padding:0 22px !important; background-color:var(--rp-acc) !important; color:var(--rp-on-acc) !important; -webkit-text-fill-color:var(--rp-on-acc) !important; border:1px solid var(--rp-acc) !important; flex:0 0 auto !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-bulk-bar .btn-outline-gold:hover:not(:disabled):not(#_h):not(#_h){ background-color:var(--rp-acc-hov) !important; border-color:var(--rp-acc-hov) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-bulk-bar .btn-outline-gold:disabled:not(#_h):not(#_h){ background-color:var(--rp-surface2) !important; color:var(--rp-mute) !important; -webkit-text-fill-color:var(--rp-mute) !important; border-color:var(--rp-line) !important; opacity:1 !important; }
+@media (max-width:640px){
+  :root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-bulk-bar:not(#_h):not(#_h){ flex-direction:column !important; align-items:stretch !important; }
+  :root:root:root:root:root:root:root:root[data-mode] #tab-kanitauditreport .acp-bulk-bar .btn-outline-gold:not(#_h):not(#_h){ width:100% !important; }
+}
+
+/* ===== KC: tombol Approval Audit / Kembali pasti bisa diklik ===== */
+#btnOpenApprovalAudit, #btnBackApprovalAudit{ pointer-events:auto !important; position:relative !important; z-index:3 !important; cursor:pointer !important; }
+</style>
+<style id="fix-approval-audit-20261028d">
+/* ===== Dashboard Audit: tombol Terapkan dihapus (filter sudah auto-load) ===== */
+#auditLoadBtn, #kanitAuditLoadBtn{ display:none !important; }
+:root:root:root:root:root:root:root:root[data-mode] #tab-audit #btnOpenApprovalAudit:not(#_h):not(#_h){
+  height:38px !important; padding:0 18px !important; border-radius:10px !important; font-size:12.5px !important; font-weight:600 !important; background-image:none !important; box-shadow:none !important;
+  background-color:var(--ap-acc,#1E3A8A) !important; color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; border:1px solid var(--ap-acc,#1E3A8A) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode="light"] #tab-audit #btnOpenApprovalAudit:not(#_h):not(#_h){ background-color:#1E3A8A !important; border-color:#1E3A8A !important; }
+:root:root:root:root:root:root:root:root[data-mode="dark"] #tab-audit #btnOpenApprovalAudit:not(#_h):not(#_h){ background-color:#c9a0c4 !important; border-color:#c9a0c4 !important; color:#1a1219 !important; -webkit-text-fill-color:#1a1219 !important; }
+
+/* ===== Approval Audit: token warna ===== */
+:root:root:root:root:root:root:root:root[data-mode="light"] #auditApprovalView{
+  --ap-surface:#FFFFFF; --ap-surface2:#F4F7FC; --ap-line:#DCE4F3; --ap-line2:#C5D2EC; --ap-text:#0B1F4B; --ap-mute:#5B6B8C;
+  --ap-acc:#1E3A8A; --ap-acc-soft:rgba(30,58,138,.09); --ap-on-acc:#FFFFFF;
+  --ap-pel-bg:#FDE8E8; --ap-pel-fg:#B42318; --ap-sup-bg:#E3ECFD; --ap-sup-fg:#1E3A8A;
+  --ap-belum-bg:#FEF3C7; --ap-belum-fg:#92400E; --ap-wait-bg:#E0F2FE; --ap-wait-fg:#075985;
+  --ap-ok-bg:#DCFCE7; --ap-ok-fg:#166534; --ap-ok:#15803D; --ap-bad-bg:#FEE2E2; --ap-bad-fg:#B91C1C; --ap-bad:#DC2626;
+}
+:root:root:root:root:root:root:root:root[data-mode="dark"] #auditApprovalView{
+  --ap-surface:#0d0b0e; --ap-surface2:rgba(255,255,255,.04); --ap-line:rgba(255,255,255,.09); --ap-line2:rgba(255,255,255,.18); --ap-text:#f5eff4; --ap-mute:#a99ea8;
+  --ap-acc:#c9a0c4; --ap-acc-soft:rgba(201,160,196,.14); --ap-on-acc:#1a1219;
+  --ap-pel-bg:rgba(248,113,113,.16); --ap-pel-fg:#fca5a5; --ap-sup-bg:rgba(147,170,255,.16); --ap-sup-fg:#b8c5ff;
+  --ap-belum-bg:rgba(251,191,36,.16); --ap-belum-fg:#fcd34d; --ap-wait-bg:rgba(56,189,248,.16); --ap-wait-fg:#7dd3fc;
+  --ap-ok-bg:rgba(74,222,128,.16); --ap-ok-fg:#86efac; --ap-ok:#4ade80; --ap-bad-bg:rgba(248,113,113,.16); --ap-bad-fg:#fca5a5; --ap-bad:#f87171;
+}
+/* lebar penuh, tidak lagi menyempit di kiri */
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView:not(#_h):not(#_h),
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView :is(#auditApprListPane,#auditPengajuanList,#auditApprDetailPane,#auditApprDetailBody):not(#_h):not(#_h){ width:100% !important; max-width:none !important; box-sizing:border-box !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView:not(#_h):not(#_h){ display:flex; flex-direction:column; gap:16px; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView[style*="none"]:not(#_h):not(#_h){ display:none !important; }
+
+/* toolbar: satu baris, semua kontrol sejajar di dasar */
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .approval-toolbar:not(#_h):not(#_h){
+  display:flex !important; flex-wrap:wrap !important; align-items:flex-end !important; gap:14px !important; width:100% !important; max-width:none !important; box-sizing:border-box !important;
+  background:var(--ap-surface2) !important; border:1px solid var(--ap-line) !important; border-radius:16px !important; padding:14px 16px !important; box-shadow:none !important; margin:0 !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .approval-filters:not(#_h):not(#_h){ display:flex !important; align-items:flex-end !important; gap:14px !important; flex:0 1 auto !important; margin:0 !important; padding:0 !important; background:transparent !important; border:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .approval-filters .field:not(#_h):not(#_h){ min-width:180px !important; margin:0 !important; padding:0 !important; background:transparent !important; border:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .approval-toolbar label:not(#_h):not(#_h){ display:block !important; margin:0 0 6px !important; color:var(--ap-mute) !important; -webkit-text-fill-color:var(--ap-mute) !important; font-size:11px !important; font-weight:700 !important; letter-spacing:.06em !important; text-transform:uppercase !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .approval-toolbar select:not(#_h):not(#_h){ height:38px !important; padding:0 12px !important; border-radius:10px !important; font-size:13px !important; background:var(--ap-surface) !important; color:var(--ap-text) !important; -webkit-text-fill-color:var(--ap-text) !important; border:1px solid var(--ap-line) !important; box-shadow:none !important; width:100% !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .approval-toolbar select:focus:not(#_h):not(#_h){ border-color:var(--ap-acc) !important; box-shadow:0 0 0 3px var(--ap-acc-soft) !important; outline:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView :is(#btnBackApprovalAudit,#btnBackApprList):not(#_h):not(#_h){
+  height:38px !important; padding:0 16px !important; border-radius:10px !important; font-size:12.5px !important; font-weight:600 !important; display:inline-flex !important; align-items:center !important; gap:6px !important; background:var(--ap-surface) !important; background-image:none !important; color:var(--ap-text) !important; -webkit-text-fill-color:var(--ap-text) !important; border:1px solid var(--ap-line2) !important; box-shadow:none !important; align-self:flex-end !important; margin:0 !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView :is(#btnBackApprovalAudit,#btnBackApprList):hover:not(#_h):not(#_h){ border-color:var(--ap-acc) !important; color:var(--ap-acc) !important; -webkit-text-fill-color:var(--ap-acc) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView #auditPengajuanLoadBtn:not(#_h):not(#_h){ margin-left:auto !important; width:38px !important; height:38px !important; border-radius:10px !important; background:var(--ap-surface) !important; color:var(--ap-text) !important; border:1px solid var(--ap-line2) !important; box-shadow:none !important; align-self:flex-end !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView #auditPengajuanLoadBtn:hover:not(#_h):not(#_h){ border-color:var(--ap-acc) !important; color:var(--ap-acc) !important; }
+
+/* daftar cabang: grid kartu */
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView #auditPengajuanList:not(#_h):not(#_h){ display:grid !important; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)) !important; gap:14px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView #auditPengajuanList > .empty-log:not(#_h):not(#_h){ grid-column:1 / -1 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-card:not(#_h):not(#_h){
+  display:flex !important; align-items:center !important; justify-content:space-between !important; gap:16px !important; min-height:84px !important; padding:16px 18px !important; box-sizing:border-box !important; cursor:pointer !important;
+  background:var(--ap-surface) !important; background-image:none !important; border:1px solid var(--ap-line) !important; border-left:4px solid var(--ap-line2) !important; border-radius:16px !important; box-shadow:none !important; transform:none !important; transition:border-color .15s,background .15s !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-card:has(.appr-status.menunggu):not(#_h):not(#_h){ border-left-color:var(--ap-wait-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-card:has(.appr-status.belum):not(#_h):not(#_h){ border-left-color:var(--ap-belum-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-card:has(.appr-status.approve):not(#_h):not(#_h){ border-left-color:var(--ap-ok) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-card:has(.appr-status.tolak):not(#_h):not(#_h){ border-left-color:var(--ap-bad) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-card:hover:not(#_h):not(#_h){ border-color:var(--ap-acc) !important; background:var(--ap-surface2) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-left:not(#_h):not(#_h){ display:flex !important; flex-direction:column !important; gap:8px !important; min-width:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView :is(.appr-cab-code,.appr-meta-cab):not(#_h):not(#_h){ color:var(--ap-text) !important; -webkit-text-fill-color:var(--ap-text) !important; font-size:17px !important; font-weight:700 !important; letter-spacing:-.01em !important; line-height:1.2 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-right:not(#_h):not(#_h){ display:flex !important; align-items:center !important; gap:12px !important; flex:0 0 auto !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-arrow:not(#_h):not(#_h){ color:var(--ap-mute) !important; -webkit-text-fill-color:var(--ap-mute) !important; font-size:22px !important; line-height:1 !important; }
+
+/* chip hitungan */
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-chips:not(#_h):not(#_h){ display:flex !important; flex-wrap:wrap !important; align-items:center !important; gap:6px !important; margin:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-chip:not(#_h):not(#_h){
+  display:inline-flex !important; align-items:center !important; gap:5px !important; height:24px !important; padding:0 10px !important; border-radius:999px !important; font-size:12px !important; font-weight:500 !important; text-decoration:none !important;
+  background:var(--ap-surface2) !important; color:var(--ap-mute) !important; -webkit-text-fill-color:var(--ap-mute) !important; border:1px solid var(--ap-line) !important; box-shadow:none !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-chip b:not(#_h):not(#_h){ color:var(--ap-text) !important; -webkit-text-fill-color:var(--ap-text) !important; font-weight:700 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-chip.s-belum:not(#_h):not(#_h){ background:var(--ap-belum-bg) !important; color:var(--ap-belum-fg) !important; -webkit-text-fill-color:var(--ap-belum-fg) !important; border-color:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-chip.s-wait:not(#_h):not(#_h){ background:var(--ap-wait-bg) !important; color:var(--ap-wait-fg) !important; -webkit-text-fill-color:var(--ap-wait-fg) !important; border-color:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-chip.s-ok:not(#_h):not(#_h){ background:var(--ap-ok-bg) !important; color:var(--ap-ok-fg) !important; -webkit-text-fill-color:var(--ap-ok-fg) !important; border-color:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-chip.s-no:not(#_h):not(#_h){ background:var(--ap-bad-bg) !important; color:var(--ap-bad-fg) !important; -webkit-text-fill-color:var(--ap-bad-fg) !important; border-color:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView :is(.appr-chip.s-ok,.appr-chip.s-no,.appr-chip.s-wait,.appr-chip.s-belum) b:not(#_h):not(#_h){ color:inherit !important; -webkit-text-fill-color:currentColor !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-chip.s-link:not(#_h):not(#_h){ background:var(--ap-acc-soft) !important; color:var(--ap-acc) !important; -webkit-text-fill-color:var(--ap-acc) !important; border-color:transparent !important; font-weight:600 !important; }
+
+/* pill status (list & detail) */
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-status:not(#_h):not(#_h){
+  display:inline-flex !important; align-items:center !important; height:26px !important; padding:0 12px !important; border-radius:999px !important; font-size:12px !important; font-weight:700 !important; border:0 !important; box-shadow:none !important; white-space:nowrap !important;
+  background:var(--ap-belum-bg) !important; color:var(--ap-belum-fg) !important; -webkit-text-fill-color:var(--ap-belum-fg) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-status.menunggu:not(#_h):not(#_h){ background:var(--ap-wait-bg) !important; color:var(--ap-wait-fg) !important; -webkit-text-fill-color:var(--ap-wait-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView :is(.appr-status.approve,.appr-status.disetujui):not(#_h):not(#_h){ background:var(--ap-ok-bg) !important; color:var(--ap-ok-fg) !important; -webkit-text-fill-color:var(--ap-ok-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView :is(.appr-status.tolak,.appr-status.ditolak):not(#_h):not(#_h){ background:var(--ap-bad-bg) !important; color:var(--ap-bad-fg) !important; -webkit-text-fill-color:var(--ap-bad-fg) !important; }
+
+/* ===== Detail cabang ===== */
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-detail-head:not(#_h):not(#_h){
+  display:flex !important; align-items:center !important; gap:16px !important; flex-wrap:wrap !important; padding:14px 18px !important; margin:0 !important;
+  background:var(--ap-surface) !important; border:1px solid var(--ap-line) !important; border-radius:16px !important; box-shadow:none !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-detail-meta:not(#_h):not(#_h){ display:flex !important; align-items:center !important; gap:14px !important; flex-wrap:wrap !important; flex:1 1 auto !important; min-width:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-detail-meta .appr-meta-cab:not(#_h):not(#_h){ font-size:20px !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView #auditApprDetailBody:not(#_h):not(#_h){ display:grid !important; grid-template-columns:repeat(auto-fill,minmax(420px,1fr)) !important; gap:14px !important; align-items:stretch !important; }
+@media (max-width:520px){ :root:root:root:root:root:root:root:root[data-mode] #auditApprovalView #auditApprDetailBody:not(#_h):not(#_h){ grid-template-columns:1fr !important; } }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-card:not(#_h):not(#_h){
+  display:flex !important; flex-direction:column !important; gap:12px !important; padding:18px 20px !important; margin:0 !important; box-sizing:border-box !important; height:100% !important;
+  background:var(--ap-surface) !important; background-image:none !important; border:1px solid var(--ap-line) !important; border-radius:16px !important; box-shadow:none !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-card-head:not(#_h):not(#_h){ display:flex !important; align-items:center !important; justify-content:space-between !important; gap:10px !important; margin:0 !important; padding:0 !important; border:0 !important; background:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-card-head-left:not(#_h):not(#_h){ display:flex !important; align-items:center !important; gap:10px !important; flex-wrap:wrap !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-tipe:not(#_h):not(#_h){ display:inline-flex !important; align-items:center !important; height:24px !important; padding:0 12px !important; border-radius:999px !important; font-size:11px !important; font-weight:700 !important; letter-spacing:.04em !important; text-transform:uppercase !important; border:0 !important; background:var(--ap-pel-bg) !important; color:var(--ap-pel-fg) !important; -webkit-text-fill-color:var(--ap-pel-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-tipe.sup:not(#_h):not(#_h){ background:var(--ap-sup-bg) !important; color:var(--ap-sup-fg) !important; -webkit-text-fill-color:var(--ap-sup-fg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-period-tag:not(#_h):not(#_h){ color:var(--ap-mute) !important; -webkit-text-fill-color:var(--ap-mute) !important; font-size:12px !important; font-weight:500 !important; background:transparent !important; border:0 !important; padding:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-jenis:not(#_h):not(#_h){ color:var(--ap-text) !important; -webkit-text-fill-color:var(--ap-text) !important; font-size:16px !important; font-weight:600 !important; line-height:1.4 !important; margin:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-meta-row:not(#_h):not(#_h){ display:grid !important; grid-template-columns:1fr 1fr !important; gap:12px !important; margin:0 !important; padding:12px 0 !important; border-top:1px solid var(--ap-line) !important; border-bottom:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-meta-row > span:not(#_h):not(#_h){ display:flex !important; flex-direction:column !important; gap:3px !important; min-width:0 !important; color:var(--ap-text) !important; -webkit-text-fill-color:var(--ap-text) !important; font-size:14px !important; font-weight:500 !important; overflow-wrap:anywhere !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-meta-row em:not(#_h):not(#_h){ font-style:normal !important; color:var(--ap-mute) !important; -webkit-text-fill-color:var(--ap-mute) !important; font-size:11px !important; font-weight:700 !important; letter-spacing:.06em !important; text-transform:uppercase !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-note-tolak:not(#_h):not(#_h){ background:var(--ap-bad-bg) !important; color:var(--ap-bad-fg) !important; -webkit-text-fill-color:var(--ap-bad-fg) !important; border-radius:10px !important; padding:10px 12px !important; font-size:13px !important; margin:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-card-foot:not(#_h):not(#_h){ display:flex !important; align-items:center !important; justify-content:space-between !important; gap:10px !important; flex-wrap:wrap !important; margin:auto 0 0 !important; padding:14px 0 0 !important; border-top:1px solid var(--ap-line) !important; background:transparent !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView :is(.appr-links,.appr-decide):not(#_h):not(#_h){ display:flex !important; align-items:center !important; gap:8px !important; margin:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-muted:not(#_h):not(#_h){ color:var(--ap-mute) !important; -webkit-text-fill-color:var(--ap-mute) !important; font-size:12.5px !important; font-style:italic !important; }
+/* tombol keputusan: satu ukuran */
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-btn:not(#_h):not(#_h){
+  display:inline-flex !important; align-items:center !important; justify-content:center !important; height:34px !important; min-height:34px !important; padding:0 16px !important; border-radius:10px !important; box-sizing:border-box !important;
+  font-size:12.5px !important; font-weight:600 !important; line-height:1 !important; text-decoration:none !important; cursor:pointer !important; box-shadow:none !important; background-image:none !important; transform:none !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-btn-ghost:not(#_h):not(#_h),
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-btn-outline:not(#_h):not(#_h){ background:transparent !important; color:var(--ap-text) !important; -webkit-text-fill-color:var(--ap-text) !important; border:1px solid var(--ap-line2) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView :is(.appr-btn-ghost,.appr-btn-outline):hover:not(#_h):not(#_h){ border-color:var(--ap-acc) !important; color:var(--ap-acc) !important; -webkit-text-fill-color:var(--ap-acc) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-btn-ok:not(#_h):not(#_h){ background:var(--ap-ok) !important; color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; border:1px solid var(--ap-ok) !important; }
+:root:root:root:root:root:root:root:root[data-mode="dark"] #auditApprovalView .appr-btn-ok:not(#_h):not(#_h){ color:#052e16 !important; -webkit-text-fill-color:#052e16 !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-btn-ok:hover:not(:disabled):not(#_h):not(#_h){ filter:brightness(1.08) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-btn-no:not(#_h):not(#_h){ background:transparent !important; color:var(--ap-bad) !important; -webkit-text-fill-color:var(--ap-bad) !important; border:1px solid var(--ap-bad) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-btn-no:hover:not(:disabled):not(#_h):not(#_h){ background:var(--ap-bad-bg) !important; }
+:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-btn:disabled:not(#_h):not(#_h){ opacity:.5 !important; cursor:not-allowed !important; }
+</style>
+<style id="profile-modal-v3">
+/* ===== PROFIL MODAL V3 — Kepala Unit & Kepala Cabang (modern, profesional) ===== */
+#kanitProfileModal,#adminProfileModal{
+  --pm-surface:#FFFFFF; --pm-field:#F6F8FD; --pm-ro:#F1F4FA; --pm-hover:#EEF2FB;
+  --pm-line:#E2E8F4; --pm-line2:#CBD5E8;
+  --pm-ink:#0B1F4B; --pm-mute:#5B6B8C; --pm-faint:#8A96AE;
+  --pm-accent:#1E3A8A; --pm-accent-hi:#1B3479; --pm-accent-soft:rgba(30,58,138,.08); --pm-ring:rgba(30,58,138,.22); --pm-on-accent:#FFFFFF;
+  --pm-av1:#3B5BDB; --pm-av2:#1E3A8A;
+  --pm-danger:#B42318; --pm-danger-bg:#FEF3F2; --pm-danger-bg-hi:#FEE4E2; --pm-danger-line:#FDCFC9;
+  --pm-ok:#067647; --pm-ok-bg:#ECFDF3; --pm-ok-line:#ABEFC6;
+  --pm-scrim:rgba(10,20,50,.52);
+  --pm-shadow:0 28px 64px -16px rgba(11,31,75,.35),0 0 0 1px rgba(11,31,75,.04);
+}
+html[data-mode="dark"] #kanitProfileModal,
+html[data-mode="dark"] #adminProfileModal{
+  --pm-surface:#15121A; --pm-field:rgba(255,255,255,.045); --pm-ro:rgba(255,255,255,.035); --pm-hover:rgba(255,255,255,.08);
+  --pm-line:rgba(255,255,255,.10); --pm-line2:rgba(255,255,255,.18);
+  --pm-ink:#F5EFF4; --pm-mute:#A99EA8; --pm-faint:#7D727C;
+  --pm-accent:#C9A0C4; --pm-accent-hi:#8B6A89; --pm-accent-soft:rgba(201,160,196,.12); --pm-ring:rgba(201,160,196,.30); --pm-on-accent:#FFFFFF;
+  --pm-av1:#A47E9D; --pm-av2:#5A4357;
+  --pm-danger:#FCA5A5; --pm-danger-bg:rgba(248,113,113,.10); --pm-danger-bg-hi:rgba(248,113,113,.18); --pm-danger-line:rgba(248,113,113,.32);
+  --pm-ok:#86EFAC; --pm-ok-bg:rgba(74,222,128,.10); --pm-ok-line:rgba(74,222,128,.30);
+  --pm-scrim:rgba(0,0,0,.70);
+  --pm-shadow:0 28px 70px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.04);
+}
+
+/* Latar belakang */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal):not(#_h):not(#_h){
+  background:var(--pm-scrim) !important;
+  -webkit-backdrop-filter:blur(6px) !important; backdrop-filter:blur(6px) !important;
+  padding:16px !important; overscroll-behavior:contain !important;
+}
+
+/* Kartu */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal.profile-modal-v2:not(#_h):not(#_h){
+  position:relative !important; display:flex !important; flex-direction:column !important;
+  width:min(420px,calc(100vw - 32px)) !important; max-width:none !important;
+  max-height:calc((100vh - 24px) / .8) !important; max-height:calc((100dvh - 24px) / .8) !important;
+  overflow-x:hidden !important; overflow-y:auto !important; overscroll-behavior:contain !important;
+  box-sizing:border-box !important; padding:26px 24px 0 !important; margin:0 !important;
+  background:var(--pm-surface) !important; background-image:none !important;
+  border:1px solid var(--pm-line) !important; border-radius:20px !important;
+  box-shadow:var(--pm-shadow) !important; color:var(--pm-ink) !important;
+  font-family:inherit !important; scrollbar-width:thin; scrollbar-color:var(--pm-line2) transparent;
+  animation:pm-in .22s cubic-bezier(.2,.8,.2,1) both;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal.profile-modal-v2:not(#_h):not(#_h) > *{ flex-shrink:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal.profile-modal-v2:not(#_h):not(#_h)::-webkit-scrollbar{ width:8px; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal.profile-modal-v2:not(#_h):not(#_h)::-webkit-scrollbar-thumb{ background:var(--pm-line2); border-radius:8px; border:2px solid var(--pm-surface); }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal.profile-modal-v2:not(#_h):not(#_h)::-webkit-scrollbar-track{ background:transparent; }
+@keyframes pm-in{ from{ opacity:0; transform:translateY(10px) scale(.985); } to{ opacity:1; transform:none; } }
+
+/* Judul */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal h3:not(#_h):not(#_h){
+  margin:0 !important; padding:0 !important; font-family:inherit !important;
+  font-size:21px !important; line-height:1.25 !important; font-weight:600 !important; letter-spacing:-.01em !important;
+  color:var(--pm-ink) !important; -webkit-text-fill-color:var(--pm-ink) !important; text-transform:none !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal > .sub:not(#_h):not(#_h){
+  margin:4px 0 20px !important; padding:0 !important; font-size:13.5px !important; line-height:1.45 !important; font-weight:400 !important;
+  color:var(--pm-mute) !important; -webkit-text-fill-color:var(--pm-mute) !important;
+}
+
+/* Foto profil */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-photo-wrap:not(#_h):not(#_h){
+  display:flex !important; align-items:center !important; gap:16px !important;
+  margin:0 0 20px !important; padding:14px 16px !important;
+  background:var(--pm-field) !important; border:1px solid var(--pm-line) !important; border-radius:16px !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-photo:not(#_h):not(#_h){
+  width:64px !important; height:64px !important; flex:0 0 64px !important; border-radius:50% !important;
+  display:flex !important; align-items:center !important; justify-content:center !important; overflow:hidden !important;
+  background:linear-gradient(135deg,var(--pm-av1),var(--pm-av2)) !important;
+  color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;
+  font-size:26px !important; font-weight:600 !important; line-height:1 !important;
+  border:0 !important; box-shadow:0 0 0 3px var(--pm-surface),0 0 0 4px var(--pm-line2) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-photo img:not(#_h):not(#_h){ width:100% !important; height:100% !important; object-fit:cover !important; display:block !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-photo-actions:not(#_h):not(#_h){
+  display:flex !important; flex-direction:row !important; flex-wrap:wrap !important; align-items:center !important;
+  gap:8px !important; flex:1 1 auto !important; min-width:0 !important;
+}
+
+/* Field */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .field:not(#_h):not(#_h){ display:block !important; margin:0 0 14px !important; padding:0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .field label:not(#_h):not(#_h){
+  display:block !important; margin:0 0 6px !important; padding:0 !important;
+  font-size:13px !important; font-weight:500 !important; line-height:1.3 !important; letter-spacing:0 !important; text-transform:none !important;
+  color:var(--pm-mute) !important; -webkit-text-fill-color:var(--pm-mute) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal input:not([type="file"]):not(#_h):not(#_h){
+  display:block !important; width:100% !important; height:46px !important; min-height:46px !important; box-sizing:border-box !important;
+  margin:0 !important; padding:0 14px !important; border-radius:12px !important;
+  background:var(--pm-field) !important; background-image:none !important; border:1px solid var(--pm-line) !important; box-shadow:none !important;
+  font-family:inherit !important; font-size:15px !important; font-weight:500 !important; letter-spacing:0 !important;
+  color:var(--pm-ink) !important; -webkit-text-fill-color:var(--pm-ink) !important;
+  transition:border-color .15s ease,box-shadow .15s ease,background-color .15s ease;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal input:not([type="file"]):not([readonly]):hover:not(#_h):not(#_h){ border-color:var(--pm-line2) !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal input:not([type="file"]):not([readonly]):focus:not(#_h):not(#_h){
+  outline:0 !important; border-color:var(--pm-accent) !important; box-shadow:0 0 0 3px var(--pm-ring) !important; background:var(--pm-surface) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal input[readonly]:not(#_h):not(#_h){
+  background:var(--pm-ro) !important; cursor:default !important;
+  color:var(--pm-ink) !important; -webkit-text-fill-color:var(--pm-ink) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal input[readonly]:focus:not(#_h):not(#_h){ outline:0 !important; box-shadow:none !important; border-color:var(--pm-line) !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal input.pin-input:not(#_h):not(#_h){ letter-spacing:.35em !important; font-size:16px !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal input:not(#_h):not(#_h)::placeholder{ color:var(--pm-faint) !important; -webkit-text-fill-color:var(--pm-faint) !important; opacity:1 !important; letter-spacing:0 !important; }
+
+/* Tombol: dasar */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs:not(#_h):not(#_h){
+  display:inline-flex !important; align-items:center !important; justify-content:center !important; gap:8px !important;
+  min-height:46px !important; height:auto !important; box-sizing:border-box !important; margin:0 !important; padding:0 18px !important;
+  border-radius:12px !important; border:1px solid var(--pm-line2) !important; box-shadow:none !important; background-image:none !important;
+  font-family:inherit !important; font-size:14.5px !important; font-weight:600 !important; line-height:1.2 !important; letter-spacing:0 !important; text-transform:none !important; text-decoration:none !important;
+  cursor:pointer !important; transition:background-color .15s ease,border-color .15s ease,color .15s ease,filter .15s ease;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs:focus-visible:not(#_h):not(#_h){ outline:2px solid var(--pm-accent) !important; outline-offset:2px !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs:active:not(#_h):not(#_h){ transform:translateY(1px); }
+
+/* Varian */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs.profile-btn-neutral:not(#_h):not(#_h){
+  background:var(--pm-surface) !important; color:var(--pm-ink) !important; -webkit-text-fill-color:var(--pm-ink) !important; border-color:var(--pm-line2) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs.profile-btn-neutral:hover:not(#_h):not(#_h){ background:var(--pm-hover) !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs.profile-btn-primary:not(#_h):not(#_h){
+  background:var(--pm-accent) !important; color:var(--pm-on-accent) !important; -webkit-text-fill-color:var(--pm-on-accent) !important; border-color:transparent !important;
+}
+:root:root:root:root:root:root:root:root[data-mode="dark"] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs.profile-btn-primary:not(#_h):not(#_h){ background:#7A5A78 !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs.profile-btn-primary:hover:not(#_h):not(#_h){ filter:brightness(1.08); }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs.profile-btn-danger:not(#_h):not(#_h){
+  background:var(--pm-danger-bg) !important; color:var(--pm-danger) !important; -webkit-text-fill-color:var(--pm-danger) !important; border-color:var(--pm-danger-line) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs.profile-btn-danger:hover:not(#_h):not(#_h){ background:var(--pm-danger-bg-hi) !important; }
+
+/* Tombol foto (kecil) */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-photo-actions .btn-xs:not(#_h):not(#_h){
+  min-height:36px !important; padding:0 14px !important; border-radius:10px !important; font-size:13px !important; font-weight:500 !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal #kanitProfilePhotoClear:not(#_h):not(#_h),
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal #adminProfilePhotoClear:not(#_h):not(#_h){
+  background:transparent !important; border-color:transparent !important; color:var(--pm-mute) !important; -webkit-text-fill-color:var(--pm-mute) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal #kanitProfilePhotoClear:hover:not(#_h):not(#_h),
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal #adminProfilePhotoClear:hover:not(#_h):not(#_h){
+  background:var(--pm-danger-bg) !important; color:var(--pm-danger) !important; -webkit-text-fill-color:var(--pm-danger) !important;
+}
+
+/* Tombol Ganti PIN */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-btn-block:not(#_h):not(#_h){ width:100% !important; margin:2px 0 0 !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-btn-block:not(#_h):not(#_h)::before{
+  content:""; width:16px; height:16px; flex:0 0 16px; background:currentColor; opacity:.85;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='11' width='16' height='9' rx='2'/%3E%3Cpath d='M8 11V8a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='11' width='16' height='9' rx='2'/%3E%3Cpath d='M8 11V8a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* Kotak PIN (tampil saat .show — display diatur aturan lama) */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-pin-box:not(#_h):not(#_h){
+  margin:12px 0 0 !important; padding:16px 16px 4px !important;
+  background:var(--pm-field) !important; border:1px solid var(--pm-line) !important; border-radius:14px !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-pin-box .field:not(#_h):not(#_h){ margin:0 0 12px !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-pin-box .btn-xs:not(#_h):not(#_h){ width:100% !important; margin:4px 0 12px !important; }
+
+/* Pesan status */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .msg:not(#_h):not(#_h){
+  margin:14px 0 0 !important; padding:10px 12px !important; border-radius:10px !important;
+  font-family:inherit !important; font-size:13px !important; line-height:1.5 !important; letter-spacing:0 !important;
+  border:1px solid var(--pm-line) !important; background:var(--pm-field) !important; color:var(--pm-mute) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .msg.err:not(#_h):not(#_h),
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .msg.error:not(#_h):not(#_h){ background:var(--pm-danger-bg) !important; border-color:var(--pm-danger-line) !important; color:var(--pm-danger) !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .msg.ok:not(#_h):not(#_h),
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .msg.success:not(#_h):not(#_h){ background:var(--pm-ok-bg) !important; border-color:var(--pm-ok-line) !important; color:var(--pm-ok) !important; }
+
+/* Footer aksi: selalu terlihat (sticky) */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-modal-actions:not(#_h):not(#_h){
+  position:sticky !important; bottom:0 !important; z-index:2 !important;
+  display:grid !important; grid-template-columns:1fr 1fr !important; gap:10px !important;
+  margin:20px -24px 0 !important; padding:16px 24px 22px !important;
+  background:var(--pm-surface) !important; border:0 !important; border-top:1px solid var(--pm-line) !important;
+}
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-modal-actions .profile-btn-primary:not(#_h):not(#_h){ grid-column:1 / -1 !important; }
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-modal-actions .profile-btn-danger:not(#_h):not(#_h)::before{
+  content:""; width:16px; height:16px; flex:0 0 16px; background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'/%3E%3Cpath d='M16 17l5-5-5-5'/%3E%3Cpath d='M21 12H9'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'/%3E%3Cpath d='M16 17l5-5-5-5'/%3E%3Cpath d='M21 12H9'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* Layar kecil */
+@media (max-width:480px){
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal.profile-modal-v2:not(#_h):not(#_h){ width:calc(100vw - 24px) !important; padding:22px 18px 0 !important; border-radius:18px !important; }
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-modal-actions:not(#_h):not(#_h){ margin-left:-18px !important; margin-right:-18px !important; padding:14px 18px 18px !important; }
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-photo-wrap:not(#_h):not(#_h){ padding:12px 14px !important; gap:14px !important; }
+}
+@media (prefers-reduced-motion:reduce){
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal.profile-modal-v2:not(#_h):not(#_h){ animation:none !important; }
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs:not(#_h):not(#_h), :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal input:not(#_h):not(#_h){ transition:none !important; }
+}
+
+/* Penyempurnaan */
+:root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-pin-box input:not([type="file"]):not(#_h):not(#_h){ background:var(--pm-surface) !important; text-align:center !important; }
+@media (max-width:480px){
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-photo-actions .btn-xs:not(#_h):not(#_h){ padding:0 10px !important; }
+  html:has(#kanitProfileModal.show) .theme-toggle,
+  html:has(#adminProfileModal.show) .theme-toggle{ opacity:0 !important; pointer-events:none !important; }
+}
+
+/* Layar pendek: padat agar muat tanpa scroll */
+@media (max-height:780px){
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal.profile-modal-v2:not(#_h):not(#_h){ padding-top:20px !important; }
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal > .sub:not(#_h):not(#_h){ margin-bottom:14px !important; }
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-photo-wrap:not(#_h):not(#_h){ margin-bottom:14px !important; padding:10px 14px !important; }
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .field:not(#_h):not(#_h){ margin-bottom:10px !important; }
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal input:not([type="file"]):not(#_h):not(#_h){ height:42px !important; min-height:42px !important; }
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .btn-xs:not(#_h):not(#_h){ min-height:42px !important; }
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-photo-actions .btn-xs:not(#_h):not(#_h){ min-height:34px !important; }
+  :root:root:root:root:root:root:root:root[data-mode] :is(#kanitProfileModal,#adminProfileModal) .profile-modal .profile-modal-actions:not(#_h):not(#_h){ margin-top:14px !important; padding-top:12px !important; padding-bottom:16px !important; }
+}
+</style>
+<style id="appr-preview-pdf">
+html[data-theme="light"] .appr-preview-panel.is-pdf{ width:min(960px,100%) !important; }
+html[data-theme="light"] .appr-preview-panel.is-pdf .appr-preview-body{ padding:0 !important; }
+.appr-preview-frame{ display:block; width:100%; height:72vh; height:72dvh; border:0; background:#F1F5F9; }
+button.appr-summary-link{ cursor:pointer; font:inherit; text-align:left; }
+</style>
+<style id="appr-preview-theme">
+#apprPreviewModal{ --pv-bg:#FFFFFF; --pv-line:#E2E8F4; --pv-ink:#0B1F4B; --pv-mute:#5B6B8C; --pv-hover:#EEF2FB; --pv-frame:#F1F5F9; }
+html[data-mode="dark"] #apprPreviewModal{ --pv-bg:#15121A; --pv-line:rgba(255,255,255,.10); --pv-ink:#F5EFF4; --pv-mute:#A99EA8; --pv-hover:rgba(255,255,255,.08); --pv-frame:#0D0B10; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-backdrop:not(#_h):not(#_h){ background:rgba(10,20,50,.55) !important; -webkit-backdrop-filter:blur(5px); backdrop-filter:blur(5px); }
+html[data-mode="dark"] #apprPreviewModal .appr-preview-backdrop:not(#_h):not(#_h){ background:rgba(0,0,0,.72) !important; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-panel:not(#_h):not(#_h){ display:flex !important; flex-direction:column !important; width:min(720px,100%) !important; max-height:calc(100dvh - 32px) !important; overflow:hidden !important; background:var(--pv-bg) !important; color:var(--pv-ink) !important; border:1px solid var(--pv-line) !important; border-radius:18px !important; box-shadow:0 28px 64px -16px rgba(0,0,0,.45) !important; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-panel.is-pdf:not(#_h):not(#_h){ width:min(960px,100%) !important; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-head:not(#_h):not(#_h){ display:flex !important; align-items:center !important; justify-content:space-between !important; gap:12px !important; padding:12px 16px !important; background:transparent !important; border:0 !important; border-bottom:1px solid var(--pv-line) !important; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-head strong:not(#_h):not(#_h){ color:var(--pv-ink) !important; -webkit-text-fill-color:var(--pv-ink) !important; font-size:14.5px !important; font-weight:600 !important; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-body:not(#_h):not(#_h){ flex:1 1 auto !important; min-height:0 !important; overflow:auto !important; padding:16px !important; text-align:center !important; background:transparent !important; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-panel.is-pdf .appr-preview-body:not(#_h):not(#_h){ padding:0 !important; background:var(--pv-frame) !important; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-frame:not(#_h):not(#_h){ display:block !important; width:100% !important; height:calc(100dvh - 32px - 118px) !important; min-height:320px !important; border:0 !important; background:var(--pv-frame) !important; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-foot:not(#_h):not(#_h){ display:flex !important; justify-content:flex-end !important; gap:8px !important; padding:12px 16px !important; background:transparent !important; border:0 !important; border-top:1px solid var(--pv-line) !important; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-btn:not(#_h):not(#_h){ display:inline-flex !important; align-items:center !important; justify-content:center !important; height:36px !important; padding:0 14px !important; border-radius:10px !important; font-size:13px !important; font-weight:600 !important; text-decoration:none !important; background:transparent !important; color:var(--pv-ink) !important; -webkit-text-fill-color:var(--pv-ink) !important; border:1px solid var(--pv-line) !important; cursor:pointer !important; box-shadow:none !important; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-btn:hover:not(#_h):not(#_h){ background:var(--pv-hover) !important; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-head strong:not(#_h):not(#_h){ margin:0 !important; padding:0 !important; line-height:1.3 !important; align-self:center !important; flex:1 1 auto; min-width:0; }
+:root:root:root:root[data-mode] #apprPreviewModal .appr-preview-head .appr-btn:not(#_h):not(#_h){ margin:0 !important; flex:0 0 auto; align-self:center !important; }
 </style>
 <script id="theme-switch">
 (function(){
