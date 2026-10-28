@@ -29063,8 +29063,8 @@ html[data-theme="light"] table.libur-table td{
 <style id="audit-tw-detail-css">
 .audit-tw-click{cursor:pointer;}
 .audit-tw-click:hover{filter:brightness(1.08);}
-.audit-tw-click::after{content:"▾";margin-left:6px;font-size:11px;opacity:.55;transition:transform .15s;}
-.audit-tw-click.is-open::after{transform:rotate(180deg);}
+.audit-tw-click .nm::after{content:"\25BE";margin-left:6px;font-size:10px;opacity:.5;display:inline-block;transition:transform .15s;}
+.audit-tw-click.is-open .nm::after{transform:rotate(180deg);}
 .audit-tw-detail{list-style:none;margin:2px 0 8px 34px;padding:6px 10px;border-left:2px solid rgba(124,92,255,.45);border-radius:6px;background:rgba(127,127,127,.07);}
 .audit-tw-pet{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:12.5px;}
 .audit-tw-pet .pc{font-weight:700;white-space:nowrap;}
@@ -32904,38 +32904,54 @@ $on("cabangPinSubmit", "click", function(){
         if (!cat || !card) return;
         if (typeof html2canvas === "undefined") { khToast_("Modul gambar belum termuat. Coba lagi sebentar lagi."); return; }
         var text = khWaMessage_(cat);
-        if (!window.confirm("Kirim tabel " + (cat.label || key) + " ke WhatsApp dengan pesan ini?\n\n" + text)) return;
         var waUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(text);
-        var pin = "";
-        try { pin = (session && (session.adminPin || session.sessionToken)) || ""; } catch(e0){}
         var bg = "";
         try { bg = getComputedStyle(card).backgroundColor; } catch(e1){}
         if (!bg || bg === "transparent" || bg === "rgba(0, 0, 0, 0)") bg = "#0d0b0e";
         btn.disabled = true; btn.classList.add("is-busy");
         function done_(){ btn.disabled = false; btn.classList.remove("is-busy"); }
+        var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-        html2canvas(card, {
+        var blobP = html2canvas(card, {
           backgroundColor: bg, scale: 2, useCORS: true, scrollX: 0, scrollY: 0,
-          ignoreElements: function(el){ return !!(el.classList && el.classList.contains("kh-wa-btn")); }
-        }).then(function(canvas){
-          var dataUrl = canvas.toDataURL("image/png");
-          khToast_("Mengirim ke WhatsApp...");
-          // Cadangan manual (Ctrl+V) kalau pengiriman otomatis gagal
-          function fallback_(reason){
-            done_();
-            khToast_(reason + " Memakai cara manual (Ctrl+V).");
-            canvas.toBlob(function(b){ if (b) khWaModal_(b, text, waUrl, false); }, "image/png");
+          ignoreElements: function(el){ return !!(el.classList && el.classList.contains("kh-wa-btn")); },
+          onclone: function(doc){
+            var st = doc.createElement("style");
+            st.textContent = ".kh-detail-card, .kh-detail-card *{letter-spacing:normal !important;font-kerning:none !important;font-variant-ligatures:none !important;font-feature-settings:normal !important;text-rendering:auto !important;}";
+            doc.head.appendChild(st);
           }
-          google.script.run
-            .withSuccessHandler(function(r){
-              if (r && r.status === "OK") { done_(); khToast_("Terkirim ke WhatsApp \u2713"); return; }
-              fallback_((r && r.reason) ? String(r.reason) : "Pengiriman otomatis gagal.");
-            })
-            .withFailureHandler(function(err){
-              fallback_("Koneksi ke server gagal: " + ((err && err.message) || err));
-            })
-            .sendKinerjaWa(pin, { kategori: key, caption: text, imageBase64: dataUrl });
-        }).catch(function(){ done_(); khToast_("Gagal membuat gambar tabel."); });
+        }).then(function(canvas){
+          return new Promise(function(res, rej){
+            canvas.toBlob(function(b){ b ? res(b) : rej(new Error("blob")); }, "image/png");
+          });
+        });
+
+        // Salin ke clipboard dimulai saat klik (pakai Promise) supaya izin gesture tidak hilang.
+        var copyP = (!isMobile && navigator.clipboard && window.ClipboardItem)
+          ? navigator.clipboard.write([new ClipboardItem({ "image/png": blobP })]).then(function(){ return true; }, function(){ return false; })
+          : Promise.resolve(false);
+
+        Promise.all([blobP.then(function(b){ return b; }, function(){ return null; }), copyP]).then(function(r){
+          var blob = r[0], copied = r[1];
+          if (!blob) { done_(); khToast_("Gagal membuat gambar tabel."); return; }
+          if (isMobile) {
+            try {
+              var file = new File([blob], "omset-" + key + ".png", { type: "image/png" });
+              if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({ files: [file], text: text }).catch(function(){}).then(done_);
+                return;
+              }
+            } catch(e2){}
+          }
+          if (copied) {
+            var w = window.open(waUrl, "_blank");
+            if (w) khToast_("Gambar sudah tersalin. Di WhatsApp, klik kolom chat lalu tekan Ctrl+V untuk menempel gambarnya.");
+            else khWaModal_(blob, text, waUrl, true);
+          } else {
+            khWaModal_(blob, text, waUrl, false);
+          }
+          done_();
+        });
       }
       wrap.querySelectorAll(".kh-wa-btn").forEach(function(b){
         b.addEventListener("click", function(ev){ ev.preventDefault(); ev.stopPropagation(); khWaSend_(b); });
