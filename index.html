@@ -34640,14 +34640,25 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     if(!force && dashCabAt_ && (Date.now() - dashCabAt_) < 60000) return;
     var pin = session.adminPin; if(!pin) return;
     dashCabAt_ = Date.now();
+    var ym = getKinerjaBulanYm_(false);
+    var key = cKey(["dashCab", ym || "now"]);
+    var cached = force ? null : cGet(key);
+    if(cached){
+      try{ setupDashLayout_(); window._dashCabData = cached; renderDashCabang_(); }catch(e){}
+    }
     google.script.run
       .withSuccessHandler(function(r){
-        if(!r || r.status !== "OK"){ var g = document.getElementById("dashCabGrid"); if(g) g.innerHTML = '<div class="empty-log">Gagal memuat kinerja cabang.</div>'; dashCabAt_ = 0; return; }
+        if(!r || r.status !== "OK"){
+          if(!cached){ var g = document.getElementById("dashCabGrid"); if(g) g.innerHTML = '<div class="empty-log">Gagal memuat kinerja cabang.</div>'; }
+          dashCabAt_ = 0; return;
+        }
         window._dashCabData = r.detailByKategori || [];
+        try{ cSet(key, window._dashCabData); }catch(e){}
+        try{ setupDashLayout_(); }catch(e){}
         renderDashCabang_();
       })
       .withFailureHandler(function(){ dashCabAt_ = 0; })
-      .getKinerjaHarianDetail(pin, "Semua Cabang", getKinerjaBulanYm_(false));
+      .getKinerjaHarianDetail(pin, "Semua Cabang", ym);
   }
   function renderDashCabang_(){
     var cats = window._dashCabData || [], grid = document.getElementById("dashCabGrid"), tabs = document.getElementById("dashCabTabs");
@@ -34850,48 +34861,68 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     });
   }
 
-  function loadDashSelisih(){
+  var _dashSelisihInflight = false;
+  function applyDashSelisih_(results){
+    var el = document.getElementById("dashSelisihVal");
+    if(!el) return;
+    var sub = document.getElementById("dashSelisihSub");
+    var c = document.getElementById("dashSelisihCard");
+    if(c) c.classList.remove("selisih-sama","selisih-beda");
+    _dashSelisihResults = results || [];
+    var sama = 0, beda = 0, gagal = 0;
+    _dashSelisihResults.forEach(function(row){
+      if(row.selisih === null || row.selisih === undefined) gagal++;
+      else if(Number(row.selisih) === 0) sama++;
+      else beda++;
+    });
+    if(beda === 0 && gagal === 0){
+      el.textContent = "Sama";
+      if(sub) sub.textContent = sama + " cabang cocok · klik detail";
+      if(c) c.classList.add("selisih-sama");
+    } else if(beda > 0){
+      el.textContent = "Beda " + beda;
+      if(sub) sub.textContent = sama + " sama · " + beda + " beda" + (gagal?(" · "+gagal+" gagal"):"") + " · klik detail";
+      if(c) c.classList.add("selisih-beda");
+    } else {
+      el.textContent = "–";
+      if(sub) sub.textContent = gagal + " gagal cek · klik detail";
+    }
+    try{ bindDashSelisihCard_(); }catch(e){}
+  }
+  // Cache lokal + request paralel: kartu langsung terisi dari cache, server dicek di belakang.
+  function loadDashSelisih(force){
+    if(!session.adminPin) return;
+    var key = cKey(["dashSelisih"]);
+    var cached = force ? null : cGet(key);
     var valEl = document.getElementById("dashSelisihVal");
     var subEl = document.getElementById("dashSelisihSub");
-    var card = document.getElementById("dashSelisihCard");
-    if(!valEl || !session.adminPin) return;
-    valEl.textContent = "…";
-    if(subEl) subEl.textContent = "Memuat…";
-    if(card){ card.classList.remove("selisih-sama","selisih-beda"); }
+    if(cached){
+      _dashSelisihResults = cached;
+      if(valEl) applyDashSelisih_(cached);
+      if(cIsFresh(key, 60000)) return;
+    } else if(valEl){
+      valEl.textContent = "…";
+      if(subEl) subEl.textContent = "Memuat…";
+    }
+    if(_dashSelisihInflight) return;
+    _dashSelisihInflight = true;
     google.script.run
       .withSuccessHandler(function(r){
-        if(!document.getElementById("dashSelisihVal")) return;
+        _dashSelisihInflight = false;
         if(!r || r.status !== "OK" || !r.results){
-          document.getElementById("dashSelisihVal").textContent = "–";
-          if(subEl) subEl.textContent = "Gagal cek";
+          if(cached) return;
+          var v = document.getElementById("dashSelisihVal");
+          if(v){ v.textContent = "–"; var sb = document.getElementById("dashSelisihSub"); if(sb) sb.textContent = "Gagal cek"; }
           _dashSelisihResults = null;
           return;
         }
-        _dashSelisihResults = r.results || [];
-        var sama = 0, beda = 0, gagal = 0;
-        _dashSelisihResults.forEach(function(row){
-          if(row.selisih === null || row.selisih === undefined) gagal++;
-          else if(Number(row.selisih) === 0) sama++;
-          else beda++;
-        });
-        var el = document.getElementById("dashSelisihVal");
-        var sub = document.getElementById("dashSelisihSub");
-        var c = document.getElementById("dashSelisihCard");
-        if(beda === 0 && gagal === 0){
-          el.textContent = "Sama";
-          if(sub) sub.textContent = sama + " cabang cocok · klik detail";
-          if(c) c.classList.add("selisih-sama");
-        } else if(beda > 0){
-          el.textContent = "Beda " + beda;
-          if(sub) sub.textContent = sama + " sama · " + beda + " beda" + (gagal?(" · "+gagal+" gagal"):"") + " · klik detail";
-          if(c) c.classList.add("selisih-beda");
-        } else {
-          el.textContent = "–";
-          if(sub) sub.textContent = gagal + " gagal cek · klik detail";
-        }
-        try{ bindDashSelisihCard_(); }catch(e){}
+        try{ cSet(key, r.results); }catch(e){}
+        _dashSelisihResults = r.results;
+        applyDashSelisih_(r.results);
       })
       .withFailureHandler(function(){
+        _dashSelisihInflight = false;
+        if(cached) return;
         var el = document.getElementById("dashSelisihVal");
         if(el) el.textContent = "–";
         var sub = document.getElementById("dashSelisihSub");
@@ -34912,6 +34943,9 @@ function loadAdminSummary(force){
     }
     var key = cKey(["adminSummary"]);
     var cached = force ? null : cGet(key);
+    // Jalankan paralel (jangan menunggu ringkasan selesai dulu)
+    try{ loadDashCabang_(force); }catch(ePc){}
+    try{ loadDashSelisih(force); }catch(ePs){}
     if(cached){
       try{ renderAdminSummaryCards(cached); adminSummaryLoaded = true; }catch(e){}
     } else {
@@ -36431,7 +36465,7 @@ function applyRejectedAlasanFilter_(which){
         document.getElementById("omsetImportText").value = "";
         if(r.history) renderImportHistoryList(document.getElementById("omsetImportHistory"), r.history);
         else loadUpdateDataMeta();
-        try{ if(typeof loadDashSelisih === "function") loadDashSelisih(); }catch(e){}
+        try{ if(typeof loadDashSelisih === "function") loadDashSelisih(true); }catch(e){}
         try{ if(typeof loadAdminSummary === "function") loadAdminSummary(true); }catch(e){}
       })
       .withFailureHandler(function(err){
