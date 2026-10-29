@@ -29127,15 +29127,15 @@ html[data-theme="light"] table.libur-table td{
     <div class="profile-pin-box" id="adminProfilePinBox">
       <div class="field">
         <label>PIN lama</label>
-        <input type="password" inputmode="numeric" maxlength="6" class="pin-input" id="adminOldPin" placeholder="••••••">
+        <input type="password" inputmode="numeric" maxlength="8" class="pin-input" id="adminOldPin" placeholder="4–8 digit">
       </div>
       <div class="field">
         <label>PIN baru</label>
-        <input type="password" inputmode="numeric" maxlength="6" class="pin-input" id="adminNewPin1" placeholder="••••••">
+        <input type="password" inputmode="numeric" maxlength="8" class="pin-input" id="adminNewPin1" placeholder="4–8 digit">
       </div>
       <div class="field">
         <label>Ulangi PIN baru</label>
-        <input type="password" inputmode="numeric" maxlength="6" class="pin-input" id="adminNewPin2" placeholder="••••••">
+        <input type="password" inputmode="numeric" maxlength="8" class="pin-input" id="adminNewPin2" placeholder="4–8 digit">
       </div>
       <button type="button" id="adminChangeSubmit" class="btn-xs profile-btn-primary">Simpan PIN</button>
     </div>
@@ -29175,19 +29175,19 @@ html[data-theme="light"] table.libur-table td{
       <label>Cabang</label>
       <input type="text" id="kanitProfileCabangInput" readonly placeholder="—">
     </div>
-    <button type="button" id="kanitProfileTogglePin" class="btn-xs profile-btn-neutral profile-btn-block">Ganti PIN Cabang</button>
+    <button type="button" id="kanitProfileTogglePin" class="btn-xs profile-btn-neutral profile-btn-block">Ganti PIN</button>
     <div class="profile-pin-box" id="kanitProfilePinBox">
       <div class="field">
         <label>PIN lama</label>
-        <input type="password" inputmode="numeric" maxlength="4" class="pin-input" id="kanitProfileOldPin" placeholder="••••">
+        <input type="password" inputmode="numeric" maxlength="8" class="pin-input" id="kanitProfileOldPin" placeholder="4–8 digit">
       </div>
       <div class="field">
         <label>PIN baru</label>
-        <input type="password" inputmode="numeric" maxlength="4" class="pin-input" id="kanitProfileNewPin1" placeholder="••••">
+        <input type="password" inputmode="numeric" maxlength="8" class="pin-input" id="kanitProfileNewPin1" placeholder="4–8 digit">
       </div>
       <div class="field">
         <label>Ulangi PIN baru</label>
-        <input type="password" inputmode="numeric" maxlength="4" class="pin-input" id="kanitProfileNewPin2" placeholder="••••">
+        <input type="password" inputmode="numeric" maxlength="8" class="pin-input" id="kanitProfileNewPin2" placeholder="4–8 digit">
       </div>
       <button type="button" id="kanitProfileSavePin" class="btn-xs profile-btn-primary">Simpan PIN</button>
     </div>
@@ -31254,14 +31254,12 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     .getPencapaianPublik();
 
   function openCabangGate(cabang){
-    session.cabang = cabang;
-    document.getElementById("cabangPinTitle").textContent = "Masuk Cabang " + cabang;
-    document.getElementById("cabangPinInput").value = "";
-    clearMsg(document.getElementById("cabangPinMsg"));
-    document.getElementById("cabangLoginBlock").style.display = "block";
-    document.getElementById("cabangChangeBlock").style.display = "none";
-    showScreen("screen-cabang-pin");
-    document.getElementById("cabangPinInput").focus();
+    // PIN cabang bersama sudah dihapus: masuk hanya lewat NIK + PIN pribadi
+    try{ showScreen("screen-landing"); }catch(e0){}
+    var nikEl_ = document.getElementById("landingNikInput");
+    if(nikEl_) nikEl_.focus();
+    var lm_ = document.getElementById("landingLoginMsg");
+    if(lm_) showMsg(lm_, "Masuk dengan NIK dan PIN Anda.", "ok");
   }
 
   $on("backFromCabangPin", "click", function(){
@@ -31537,84 +31535,9 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
     }catch(e){}
   })();
 
-$on("cabangPinSubmit", "click", function(){
-    var pin = document.getElementById("cabangPinInput").value.trim();
-    var msgEl = document.getElementById("cabangPinMsg");
-    if(!/^\d{4}$/.test(pin)){ showMsg(msgEl, "PIN harus 4 digit angka.", "err"); return; }
-    clearMsg(msgEl);
-    this.disabled = true;
-    var self = this;
-    var progress = startProgressBar("cabangPinProgress", "cabangPinProgressPct", function(){
-      self.dataset.busy = "0"; self.disabled = false;
-      showMsg(msgEl, "Waktu tunggu habis (server terlalu lama merespons). Coba lagi.", "err");
-    });
-    google.script.run
-      .withSuccessHandler(function(r){
-        progress.finish();
-        if(!r){ console.error("Server returned null/undefined — kemungkinan ada exception tak tertangkap di sisi .gs."); alert("Terjadi kesalahan di server (hasil kosong). Coba lagi, atau kirim screenshot Console (F12) untuk dicek."); self.dataset.busy = "0"; self.disabled = false; return; }
-        self.dataset.busy = "0"; self.disabled = false;
-        if(r.ok){
-          session.cabangPin = pin;
-          openOmsetForm();
-        } else {
-          showMsg(msgEl, "PIN salah. Coba lagi.", "err");
-        }
-      })
-      .withFailureHandler(function(err){
-        progress.stop();
-        self.dataset.busy = "0"; self.disabled = false;
-        showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err");
-      })
-      .verifyCabangPin(session.cabang, pin);
-  });
 
-  $on("showChangeCabangPin", "click", function(){
-    document.getElementById("cabangLoginBlock").style.display = "none";
-    document.getElementById("cabangChangeBlock").style.display = "block";
-    clearMsg(document.getElementById("cabangChangeMsg"));
-  });
-  $on("showLoginCabangPin", "click", function(){
-    document.getElementById("cabangChangeBlock").style.display = "none";
-    document.getElementById("cabangLoginBlock").style.display = "block";
-  });
 
-  $on("cabangChangeSubmit", "click", function(){
-    var oldPin = document.getElementById("cabangOldPin").value.trim();
-    var n1 = document.getElementById("cabangNewPin1").value.trim();
-    var n2 = document.getElementById("cabangNewPin2").value.trim();
-    var msgEl = document.getElementById("cabangChangeMsg");
-    if(!/^\d{4}$/.test(oldPin) || !/^\d{4}$/.test(n1)){ showMsg(msgEl, "PIN harus 4 digit angka.", "err"); return; }
-    if(n1 !== n2){ showMsg(msgEl, "PIN baru tidak sama dengan ulangan.", "err"); return; }
-    this.disabled = true;
-    var self = this;
-    google.script.run
-      .withSuccessHandler(function(r){
-        if(!r){ console.error("Server returned null/undefined — kemungkinan ada exception tak tertangkap di sisi .gs."); alert("Terjadi kesalahan di server (hasil kosong). Coba lagi, atau kirim screenshot Console (F12) untuk dicek."); return; }
-        self.dataset.busy = "0"; self.disabled = false;
-        if(r.status === "OK"){
-          showMsg(msgEl, "PIN berhasil diganti. Silakan login dengan PIN baru.", "ok");
-          document.getElementById("cabangOldPin").value = "";
-          document.getElementById("cabangNewPin1").value = "";
-          document.getElementById("cabangNewPin2").value = "";
-          setTimeout(function(){
-            document.getElementById("showLoginCabangPin").click();
-          }, 1200);
-        } else {
-          showMsg(msgEl, r.reason || "Gagal mengganti PIN.", "err");
-        }
-      })
-      .withFailureHandler(function(err){
-        self.dataset.busy = "0"; self.disabled = false;
-        showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err");
-      })
-      .changeCabangPin(session.cabang, oldPin, n1);
-  });
 
-  var _pinFromForm = document.getElementById("showChangeCabangPinFromForm");
-  if(_pinFromForm) _pinFromForm.addEventListener("click", function(){
-    openCabangGate(session.cabang);
-    document.getElementById("showChangeCabangPin").click();
-  });
 
   // ---------------- Omset form ----------------
 
@@ -32349,50 +32272,11 @@ $on("cabangPinSubmit", "click", function(){
   if(modalOverlay) modalOverlay.addEventListener("click", function(ev){ if(ev.target === modalOverlay){ modalOverlay.classList.remove("show"); pendingData = null; } });
 
   // ---------------- Admin gate ----------------
-  var _gearBtn = document.getElementById("gearBtn");
-  if(_gearBtn) _gearBtn.addEventListener("click", function(){
-    document.getElementById("adminPinInput").value = "";
-    clearMsg(document.getElementById("adminPinMsg"));
-    showScreen("screen-admin-pin");
-    document.getElementById("adminPinInput").focus();
-  });
   var _backAdminPin = document.getElementById("backFromAdminPin");
   if(_backAdminPin) _backAdminPin.addEventListener("click", function(){
     showScreen("screen-landing");
   });
 
-  var _adminPinSubmit = document.getElementById("adminPinSubmit");
-  if(_adminPinSubmit) _adminPinSubmit.addEventListener("click", function(){
-    var pin = document.getElementById("adminPinInput").value.trim();
-    var msgEl = document.getElementById("adminPinMsg");
-    if(!/^\d{6}$/.test(pin)){ showMsg(msgEl, "PIN admin harus 6 digit angka.", "err"); return; }
-    clearMsg(msgEl);
-    this.disabled = true;
-    var self = this;
-    var progress = startProgressBar("adminPinProgress", "adminPinProgressPct", function(){
-      self.dataset.busy = "0"; self.disabled = false;
-      showMsg(msgEl, "Waktu tunggu habis (server terlalu lama merespons). Coba lagi.", "err");
-    });
-    google.script.run
-      .withSuccessHandler(function(r){
-        progress.finish();
-        if(!r){ console.error("Server returned null/undefined — kemungkinan ada exception tak tertangkap di sisi .gs."); alert("Terjadi kesalahan di server (hasil kosong). Coba lagi, atau kirim screenshot Console (F12) untuk dicek."); self.dataset.busy = "0"; self.disabled = false; return; }
-        self.dataset.busy = "0"; self.disabled = false;
-        if(r.ok){
-          session.adminPin = pin;
-          openAdminDashboard();
-          // Hanya ringkasan (ringan). Data berat load saat buka tab-nya.
-        } else {
-          showMsg(msgEl, "PIN admin salah.", "err");
-        }
-      })
-      .withFailureHandler(function(err){
-        progress.stop();
-        self.dataset.busy = "0"; self.disabled = false;
-        showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err");
-      })
-      .verifyAdminPin(pin);
-  });
 
   $on("logoutFromAdmin", "click", function(){
     performAutoLogout_("manual kc");
@@ -36642,29 +36526,42 @@ function applyRejectedAlasanFilter_(which){
     var oldPin = document.getElementById("adminOldPin").value.trim();
     var n1 = document.getElementById("adminNewPin1").value.trim();
     var n2 = document.getElementById("adminNewPin2").value.trim();
-    if(!/^\d{6}$/.test(oldPin) || !/^\d{6}$/.test(n1)){ showMsg(msgEl, "PIN admin harus 6 digit angka.", "err"); return; }
+    if(!/^\d{4,8}$/.test(oldPin) || !/^\d{4,8}$/.test(n1)){ showMsg(msgEl, "PIN harus 4–8 digit angka.", "err"); return; }
     if(n1 !== n2){ showMsg(msgEl, "PIN baru tidak sama dengan ulangan.", "err"); return; }
+    if(!session.nik){ showMsg(msgEl, "Sesi tidak valid. Silakan login ulang dengan NIK.", "err"); return; }
     this.disabled = true;
     var self = this;
-    google.script.run
+    // Token sesi baru dari server dipakai menggantikan token lama
+    function applyNewPinSession_(r){
+      var tok = r && (r.sessionToken || r.sessionPin);
+      if(!tok) return;
+      session.sessionToken = tok;
+      session.adminPin = tok;
+      try{
+        var raw = sessionStorage.getItem("gueSession");
+        if(raw){ var o = JSON.parse(raw); o.sessionToken = tok; o.adminPin = tok; sessionStorage.setItem("gueSession", JSON.stringify(o)); }
+      }catch(e0){}
+    }
+    var runner = google.script.run
       .withSuccessHandler(function(r){
-        if(!r){ console.error("Server returned null/undefined — kemungkinan ada exception tak tertangkap di sisi .gs."); alert("Terjadi kesalahan di server (hasil kosong). Coba lagi, atau kirim screenshot Console (F12) untuk dicek."); return; }
         self.dataset.busy = "0"; self.disabled = false;
+        if(!r){ showMsg(msgEl, "Terjadi kesalahan di server (hasil kosong). Coba lagi.", "err"); return; }
         if(r.status === "OK"){
-          session.adminPin = n1;
-          showMsg(msgEl, "PIN admin berhasil diganti.", "ok");
+          applyNewPinSession_(r);
+          showMsg(msgEl, "PIN login berhasil diganti.", "ok");
           document.getElementById("adminOldPin").value = "";
           document.getElementById("adminNewPin1").value = "";
           document.getElementById("adminNewPin2").value = "";
         } else {
-          showMsg(msgEl, r.reason || "Gagal mengganti PIN admin.", "err");
+          showMsg(msgEl, r.reason || "Gagal mengganti PIN.", "err");
         }
       })
       .withFailureHandler(function(err){
         self.dataset.busy = "0"; self.disabled = false;
         showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err");
-      })
-      .changeAdminPin(oldPin, n1);
+      });
+    // PIN yang diganti = PIN login akun yang sedang masuk (berdasarkan NIK)
+    runner.changeUserPin(session.nik, oldPin, n1);
   });
 
   // ---------------- Kelola Cabang ----------------
@@ -36696,7 +36593,6 @@ function applyRejectedAlasanFilter_(which){
           '<span class="cabang-cfg-badge '+(c.kcu?"is-kcu":"is-kcp")+'">'+statusLbl+'</span>'+
         '</label>'+
         '<label class="cabang-cfg-check"><input type="checkbox" data-kode="'+c.kode+'" class="cabang-libur-toggle"'+(c.liburMinggu ? ' checked' : '')+'> Minggu</label>'+
-        '<button type="button" class="btn-xs secondary cabang-reset-pin-btn" data-kode="'+c.kode+'">Reset</button> '+
         '<button type="button" class="btn-xs cabang-ttd-btn" data-kode="'+c.kode+'">Karyawan &amp; TTD</button>'+
       '</div>';
     }).join("")+'</div>';
@@ -36725,30 +36621,6 @@ function applyRejectedAlasanFilter_(which){
 
     
 
-    wrap.querySelectorAll(".cabang-reset-pin-btn").forEach(function(btn){
-      btn.addEventListener("click", function(){
-        var kode = btn.dataset.kode;
-        var msgEl = document.getElementById("cabangConfigMsg");
-        clearMsg(msgEl);
-        if(!adminSessionGuard(msgEl)) return;
-        if(!confirm("Reset PIN cabang "+kode+" ke 0000?")) return;
-        btn.disabled = true;
-        google.script.run
-          .withSuccessHandler(function(r){
-            btn.disabled = false;
-            if(!r || r.status !== "OK"){
-              showMsg(msgEl, (r && r.reason) || "Gagal reset PIN.", "err");
-              return;
-            }
-            showMsg(msgEl, "PIN cabang "+r.cabang+" berhasil direset ke 0000.", "ok");
-          })
-          .withFailureHandler(function(err){
-            btn.disabled = false;
-            showMsg(msgEl, "Kesalahan koneksi: " + (err.message || err), "err");
-          })
-          .resetCabangPin(session.adminPin, kode);
-      });
-    });
   }
 
   function loadCabangConfigTab(){
@@ -37820,17 +37692,28 @@ function applyRejectedAlasanFilter_(which){
       var oldPin = document.getElementById("kanitProfileOldPin").value.trim();
       var n1 = document.getElementById("kanitProfileNewPin1").value.trim();
       var n2 = document.getElementById("kanitProfileNewPin2").value.trim();
-      if(!/^\d{4}$/.test(n1)){ showMsg(msgEl, "PIN baru harus 4 digit.", "err"); return; }
+      if(!/^\d{4,8}$/.test(oldPin)){ showMsg(msgEl, "PIN lama harus 4–8 digit angka.", "err"); return; }
+      if(!/^\d{4,8}$/.test(n1)){ showMsg(msgEl, "PIN baru harus 4–8 digit angka.", "err"); return; }
       if(n1 !== n2){ showMsg(msgEl, "Ulangi PIN tidak sama.", "err"); return; }
-      if(!session.cabang){ showMsg(msgEl, "Sesi berakhir.", "err"); return; }
+      if(!session.nik){ showMsg(msgEl, "Sesi berakhir. Silakan login ulang dengan NIK.", "err"); return; }
       this.disabled = true;
       var self = this;
-      google.script.run
+      function applyNewPinSession_(r){
+        var tok = r && (r.sessionToken || r.sessionPin);
+        if(!tok) return;
+        session.sessionToken = tok;
+        session.cabangPin = tok;
+        try{
+          var raw = sessionStorage.getItem("gueSession");
+          if(raw){ var o = JSON.parse(raw); o.sessionToken = tok; o.cabangPin = tok; sessionStorage.setItem("gueSession", JSON.stringify(o)); }
+        }catch(e0){}
+      }
+      var runner = google.script.run
         .withSuccessHandler(function(r){
           self.dataset.busy = "0"; self.disabled = false;
           if(!r || r.status !== "OK"){ showMsg(msgEl, (r && r.reason) || "Gagal ganti PIN.", "err"); return; }
-          session.cabangPin = n1;
-          showMsg(msgEl, "PIN cabang berhasil diganti.", "ok");
+          applyNewPinSession_(r);
+          showMsg(msgEl, "PIN login berhasil diganti.", "ok");
           document.getElementById("kanitProfileOldPin").value = "";
           document.getElementById("kanitProfileNewPin1").value = "";
           document.getElementById("kanitProfileNewPin2").value = "";
@@ -37839,8 +37722,9 @@ function applyRejectedAlasanFilter_(which){
         .withFailureHandler(function(err){
           self.dataset.busy = "0"; self.disabled = false;
           showMsg(msgEl, "Kesalahan: "+(err.message||err), "err");
-        })
-        .changeCabangPin(session.cabang, oldPin, n1);
+        });
+      // PIN yang diganti = PIN login akun yang sedang masuk (berdasarkan NIK)
+      runner.changeUserPin(session.nik, oldPin, n1);
     });
   })();
 
@@ -42466,9 +42350,12 @@ function loadAdminBertugas(){
     var n = (list||[]).filter(function(x){ return !x.done; }).length;
     var b = document.getElementById("adminTodoBadge");
     if(b){
-      if(n>0){ b.hidden=false; b.style.display="inline-flex"; b.textContent=String(n); }
-      else { b.hidden=true; b.style.display="none"; }
+      if(n>0){ b.hidden=false; b.style.setProperty("display","inline-flex","important"); b.textContent=String(n); }
+      else { b.hidden=true; b.style.setProperty("display","none","important"); }
     }
+    // ikon jarum tetap tampil; hanya angka badge yang disembunyikan saat 0
+    var pinBtn = document.getElementById("adminTodoBtn");
+    if(pinBtn) pinBtn.style.removeProperty("display");
   }
   function esc(s){
     return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
@@ -48988,5 +48875,49 @@ html[data-mode="dark"] #apprPreviewModal .appr-preview-backdrop:not(#_h):not(#_h
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',sync); else sync();
 })();
 </script>
+<style id="fix-ui-20261029">
+#adminTodoBadge[hidden]{display:none !important;}
+/* ===== Cash Opname: kartu Selisih (mode terang), latar terang dan teks terbaca ===== */
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox.kurang:not(#_h):not(#_h):not(#_h){
+  background:linear-gradient(160deg,#FDECEC,#FFFFFF 75%) !important; background-image:linear-gradient(160deg,#FDECEC,#FFFFFF 75%) !important;
+  border:1px solid rgba(220,38,38,.35) !important;
+}
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox.lebih:not(#_h):not(#_h):not(#_h){
+  background:linear-gradient(160deg,#FFF1E0,#FFFFFF 75%) !important; background-image:linear-gradient(160deg,#FFF1E0,#FFFFFF 75%) !important;
+  border:1px solid rgba(194,65,12,.35) !important;
+}
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox.ok:not(#_h):not(#_h):not(#_h){
+  background:linear-gradient(160deg,#E7F6EC,#FFFFFF 75%) !important; background-image:linear-gradient(160deg,#E7F6EC,#FFFFFF 75%) !important;
+  border:1px solid rgba(21,128,61,.35) !important;
+}
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox.kurang #coSelisihLbl:not(#_h):not(#_h){ color:#B42318 !important; -webkit-text-fill-color:#B42318 !important; }
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox.lebih #coSelisihLbl:not(#_h):not(#_h){ color:#B45309 !important; -webkit-text-fill-color:#B45309 !important; }
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox.ok #coSelisihLbl:not(#_h):not(#_h){ color:#15803D !important; -webkit-text-fill-color:#15803D !important; }
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox.kurang .co-badge:not(#_h):not(#_h){ background:rgba(220,38,38,.12) !important; color:#B42318 !important; -webkit-text-fill-color:#B42318 !important; }
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox.lebih .co-badge:not(#_h):not(#_h){ background:rgba(194,65,12,.12) !important; color:#B45309 !important; -webkit-text-fill-color:#B45309 !important; }
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox.ok .co-badge:not(#_h):not(#_h){ background:rgba(21,128,61,.12) !important; color:#15803D !important; -webkit-text-fill-color:#15803D !important; }
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox .co-sum-lab:not(#_h):not(#_h),
+:root:root:root:root:root:root:root:root:root[data-mode="light"] #tab-cashopname#tab-cashopname #coStatusBox .co-sum-sub:not(#_h):not(#_h){ color:#475569 !important; -webkit-text-fill-color:#475569 !important; }
+
+/* ===== Cash Opname: kotak input satuan lebih ramping ===== */
+:root:root:root:root:root:root:root:root:root[data-mode] #tab-cashopname#tab-cashopname .co-row:not(#_h):not(#_h):not(#_h){ grid-template-columns:64px 84px minmax(0,1fr) !important; gap:10px !important; }
+:root:root:root:root:root:root:root:root:root[data-mode] #tab-cashopname#tab-cashopname .co-row .co-qty:not(#_h):not(#_h):not(#_h){ width:84px !important; min-width:0 !important; max-width:84px !important; height:34px !important; padding:0 8px !important; justify-self:start !important; }
+
+/* ===== Approval Audit: kartu cabang sejajar (judul, status, panah satu baris; chip di bawah) ===== */
+:root:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-card:not(#_h):not(#_h):not(#_h){
+  display:grid !important; grid-template-columns:minmax(0,1fr) auto !important; grid-template-areas:"code right" "chips chips" !important;
+  align-items:center !important; justify-content:stretch !important; column-gap:12px !important; row-gap:10px !important; min-height:0 !important; padding:16px 18px !important;
+}
+:root:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-left:not(#_h):not(#_h):not(#_h){ display:contents !important; }
+:root:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-card .appr-cab-code:not(#_h):not(#_h):not(#_h){ grid-area:code !important; margin:0 !important; align-self:center !important; }
+:root:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-card .appr-cab-chips:not(#_h):not(#_h):not(#_h){ grid-area:chips !important; margin:0 !important; }
+:root:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .appr-cab-card .appr-cab-right:not(#_h):not(#_h):not(#_h){ grid-area:right !important; justify-self:end !important; align-self:center !important; }
+
+/* Approval Audit: filter Bulan / Status tampil sebagai kotak yang jelas dan sejajar */
+:root:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .approval-toolbar select:not(#_h):not(#_h):not(#_h){
+  min-width:190px !important; height:38px !important; border:1px solid var(--ap-line2) !important; background-color:var(--ap-surface) !important; box-sizing:border-box !important;
+}
+:root:root:root:root:root:root:root:root:root[data-mode] #auditApprovalView .approval-filters .field:not(#_h):not(#_h):not(#_h){ display:flex !important; flex-direction:column !important; justify-content:flex-end !important; }
+</style>
 </body>
 </html>
