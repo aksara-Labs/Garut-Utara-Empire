@@ -37321,19 +37321,112 @@ function applyRejectedAlasanFilter_(which){
     if(karyawanLoaded) renderKaryawanPage();
   });
 
+  // Dialog aksi karyawan: mutasi + promosi sekaligus, atau keluar area / SP3
+  function openKaryawanAksi_(id){
+    var k = karyawanDataCache.filter(function(x){ return x.id === id; })[0];
+    if(!k) return;
+    var old = document.getElementById("karAksiOverlay"); if(old) old.remove();
+    if(!document.getElementById("karAksiStyle")){
+      var st = document.createElement("style"); st.id = "karAksiStyle";
+      st.textContent =
+        '#karAksiOverlay{position:fixed;inset:0;z-index:99990;background:rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;padding:16px}'+
+        '#karAksiOverlay .ka-box{width:100%;max-width:420px;background:#fff;color:#0F172A;border-radius:18px;padding:20px;box-shadow:0 24px 60px rgba(15,23,42,.35);font-family:inherit}'+
+        'html[data-mode="dark"] #karAksiOverlay .ka-box{background:#151B2B;color:#F1F5F9}'+
+        '#karAksiOverlay .ka-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}'+
+        '#karAksiOverlay .ka-n{font-size:16px;font-weight:800}'+
+        '#karAksiOverlay .ka-s{font-size:12px;color:#64748B;margin-top:3px}'+
+        '#karAksiOverlay .ka-x{border:0;background:transparent;font-size:20px;line-height:1;cursor:pointer;color:#64748B;padding:2px 6px}'+
+        '#karAksiOverlay label{display:block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#64748B;margin:14px 0 5px}'+
+        '#karAksiOverlay select{width:100%;height:42px;border-radius:10px;border:1px solid #D5DCE8;background:#F4F6FB;color:inherit;padding:0 12px;font-size:14px;font-family:inherit}'+
+        'html[data-mode="dark"] #karAksiOverlay select{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}'+
+        '#karAksiOverlay .ka-note{font-size:12px;color:#64748B;margin-top:10px;min-height:16px;line-height:1.45}'+
+        '#karAksiOverlay .ka-note.err{color:#DC2626}'+
+        '#karAksiOverlay .ka-btns{display:flex;gap:8px;margin-top:16px}'+
+        '#karAksiOverlay .ka-btns button{height:42px;border-radius:10px;border:0;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}'+
+        '#karAksiOverlay .ka-save{flex:1;background:linear-gradient(135deg,#0B1F5C,#2B4EFF);color:#fff}'+
+        '#karAksiOverlay .ka-save:disabled{opacity:.6;cursor:wait}'+
+        '#karAksiOverlay .ka-cancel{padding:0 16px;background:#EEF2F8;color:#334155}'+
+        '#karAksiOverlay .ka-resign{margin-top:14px;width:100%;background:transparent!important;color:#DC2626;border:1px solid rgba(220,38,38,.35)!important}';
+      document.head.appendChild(st);
+    }
+    var ov = document.createElement("div"); ov.id = "karAksiOverlay";
+    ov.innerHTML =
+      '<div class="ka-box" role="dialog" aria-label="Aksi karyawan">'+
+        '<div class="ka-h"><div><div class="ka-n">'+escHtml(k.nama)+'</div>'+
+          '<div class="ka-s">NIK '+escHtml(k.nik||"-")+' · '+escHtml(k.cabang)+' · '+escHtml(k.jabatan)+'</div></div>'+
+          '<button type="button" class="ka-x" aria-label="Tutup">×</button></div>'+
+        '<label>Cabang tujuan (mutasi)</label>'+
+        '<select id="kaCabang">'+karyawanMutasiOptionsHtml(k.cabang)+'</select>'+
+        '<label>Jabatan (promosi)</label>'+
+        '<select id="kaJabatan">'+karyawanPromosiOptionsHtml(k.jabatan)+'</select>'+
+        '<div class="ka-note" id="kaNote">Ubah salah satu atau keduanya, lalu Simpan.</div>'+
+        '<div class="ka-btns"><button type="button" class="ka-save" id="kaSave">Simpan</button>'+
+          '<button type="button" class="ka-cancel">Batal</button></div>'+
+        '<button type="button" class="ka-resign" id="kaResign">SP3 / Resign (hapus data)</button>'+
+      '</div>';
+    document.body.appendChild(ov);
+    var note = ov.querySelector("#kaNote"), selC = ov.querySelector("#kaCabang"), selJ = ov.querySelector("#kaJabatan"), save = ov.querySelector("#kaSave");
+    function close(){ ov.remove(); }
+    function setNote(t, err){ note.textContent = t; note.className = "ka-note" + (err ? " err" : ""); }
+    ov.addEventListener("click", function(ev){
+      if(ev.target === ov || ev.target.classList.contains("ka-x") || ev.target.classList.contains("ka-cancel")) close();
+    });
+    function syncJab(){
+      var keluar = selC.value === KARYAWAN_KELUAR_AREA;
+      selJ.disabled = keluar;
+      if(keluar) setNote("Keluar Area = data karyawan DIHAPUS PERMANEN.", true);
+      else setNote("Ubah salah satu atau keduanya, lalu Simpan.", false);
+    }
+    selC.addEventListener("change", syncJab);
+    function finish(r, msg){
+      karyawanDataCache = r.karyawan || karyawanDataCache;
+      showMsg(document.getElementById("karyawanMutasiMsg"), msg, "ok");
+      close(); renderKaryawanPage();
+    }
+    function fail(r){ save.disabled = false; setNote((r && r.reason) || "Gagal memproses. Coba lagi.", true); }
+    function failConn(err){ save.disabled = false; setNote("Kesalahan koneksi: " + ((err && err.message) || err), true); }
+    ov.querySelector("#kaResign").addEventListener("click", function(){
+      if(!window.confirm("Yakin '"+k.nama+"' SP3 / Resign? Data akan DIHAPUS PERMANEN.")) return;
+      if(!adminSessionGuard(note)) return;
+      save.disabled = true;
+      google.script.run.withSuccessHandler(function(r){
+        if(!r || r.status !== "OK") return fail(r);
+        finish(r, "'"+k.nama+"' dihapus (SP3/Resign).");
+      }).withFailureHandler(failConn).mutasiKaryawan(session.adminPin, k.id, KARYAWAN_KELUAR_AREA);
+    });
+    save.addEventListener("click", function(){
+      if(!adminSessionGuard(note)) return;
+      var tujuan = selC.value, jab = selJ.value;
+      var keluar = tujuan === KARYAWAN_KELUAR_AREA;
+      var gantiCab = tujuan !== k.cabang, gantiJab = !keluar && jab !== k.jabatan;
+      if(!gantiCab && !gantiJab){ setNote("Belum ada yang diubah.", true); return; }
+      if(keluar && !window.confirm("Yakin '"+k.nama+"' keluar area? Data karyawan ini akan DIHAPUS PERMANEN dan tidak bisa dikembalikan.")) return;
+      save.disabled = true; setNote("Menyimpan…", false);
+      function doPromosi(prev){
+        if(!gantiJab) return finish(prev, "'"+k.nama+"' dipindah ke "+tujuan+".");
+        google.script.run.withSuccessHandler(function(r){
+          if(!r || r.status !== "OK"){
+            if(prev){ karyawanDataCache = prev.karyawan || karyawanDataCache; renderKaryawanPage(); }
+            return fail({reason: (gantiCab ? "Mutasi berhasil, tapi promosi gagal: " : "") + ((r && r.reason) || "Gagal promosi.")});
+          }
+          finish(r, "'"+k.nama+"' " + (gantiCab ? "dipindah ke "+tujuan+" dan " : "") + "sekarang jadi "+jab+".");
+        }).withFailureHandler(failConn).promosiKaryawan(session.adminPin, k.id, jab);
+      }
+      if(gantiCab){
+        google.script.run.withSuccessHandler(function(r){
+          if(!r || r.status !== "OK") return fail(r);
+          if(keluar) return finish(r, "'"+k.nama+"' dihapus dari data (keluar area).");
+          doPromosi(r);
+        }).withFailureHandler(failConn).mutasiKaryawan(session.adminPin, k.id, tujuan);
+      } else doPromosi(null);
+    });
+  }
+
   // Klik ikon i → menu Mutasi / Promosi / SP3-Resign
   $on("karyawanListWrap", "click", function(e){
     var infoBtn = e.target.closest(".karyawan-info-btn");
     if(infoBtn){
-      var trI = infoBtn.closest("tr");
-      var cellI = trI.querySelector(".karyawan-aksi-cell");
-      cellI.innerHTML =
-        '<div class="karyawan-aksi-menu">'+
-          '<button type="button" class="karyawan-mutasi-btn" data-id="'+trI.dataset.id+'">Mutasi</button>'+
-          '<button type="button" class="karyawan-promosi-btn" data-id="'+trI.dataset.id+'">Promosi</button>'+
-          '<button type="button" class="karyawan-resign-btn danger" data-id="'+trI.dataset.id+'">SP3 / Resign</button>'+
-          '<button type="button" class="link-btn karyawan-aksi-cancel">Batal</button>'+
-        '</div>';
+      openKaryawanAksi_(infoBtn.closest("tr").dataset.id);
       return;
     }
 
