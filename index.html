@@ -41430,19 +41430,64 @@ function renderKanitAuditWizard(){
       })
       .docGetPdf(tok, link);
   }
-  function hapusDokumen_(link, cabang, onDone){
+  function hapusDokumen_(link, cabang, onDone, tr){
     if(!link) return;
     if(!confirm("Hapus dokumen ini? File dipindah ke sampah Drive dan dihapus dari riwayat.")) return;
     var tok = docAuthToken_();
+    var lastCell = null, oldCell = "";
+    if(tr){
+      // Umpan balik langsung: baris diredupkan + "Menghapus…" (tanpa muat ulang seluruh daftar)
+      tr.style.transition = "opacity .2s";
+      tr.style.opacity = ".45";
+      tr.style.pointerEvents = "none";
+      lastCell = tr.lastElementChild;
+      if(lastCell){ oldCell = lastCell.innerHTML; lastCell.innerHTML = '<span style="font-size:12px;font-weight:700;color:#64748B;white-space:nowrap">Menghapus…</span>'; }
+    }
+    function restore(){
+      if(!tr) return;
+      tr.style.opacity = ""; tr.style.pointerEvents = "";
+      if(lastCell) lastCell.innerHTML = oldCell;
+    }
+    function removeRowUi(){
+      var group = tr.closest(".doc-hasil-month");
+      var jLab = ((tr.children[2] || {}).textContent || "").trim();
+      var wrap = document.getElementById("docRiwayatWrap");
+      tr.style.opacity = "0";
+      setTimeout(function(){
+        tr.remove();
+        // perbarui hitungan bulan / hapus grup kosong
+        if(group){
+          var left = group.querySelectorAll("tbody tr").length;
+          if(!left) group.remove();
+          else { var cnt = group.querySelector(".doc-hasil-month-count"); if(cnt) cnt.textContent = left + " dokumen"; }
+        }
+        // perbarui KPI
+        var kpi = document.getElementById("docRiwayatKpi");
+        if(kpi){
+          var lab = jLab === "SP" ? "Surat Pernyataan" : jLab;
+          kpi.querySelectorAll(".audit-kpi").forEach(function(box){
+            var k = (box.querySelector(".k")||{}).textContent;
+            if(k === lab || k === "Ditampilkan"){
+              var v = box.querySelector(".v"); if(v) v.textContent = Math.max(0, (parseInt(v.textContent,10)||0) - 1);
+            }
+          });
+        }
+        if(wrap && !wrap.querySelector(".doc-hasil-month")){
+          wrap.innerHTML = '<div class="empty-log">Belum ada riwayat dokumen.</div>';
+        }
+      }, 200);
+    }
     google.script.run
       .withSuccessHandler(function(r){
         if(!r || r.status !== "OK"){
+          restore();
           alert((r && r.reason) || "Gagal menghapus");
           return;
         }
-        if(typeof onDone === "function") onDone();
+        if(tr) removeRowUi();
+        else if(typeof onDone === "function") onDone();
       })
-      .withFailureHandler(function(err){ alert(String(err.message||err)); })
+      .withFailureHandler(function(err){ restore(); alert(String(err.message||err)); })
       .docHapusDokumen(tok, link, cabang || "");
   }
   function docActionBtns_(row){
@@ -41466,7 +41511,7 @@ function renderKanitAuditWizard(){
     });
     root.querySelectorAll(".doc-btn-hapus").forEach(function(btn){
       btn.addEventListener("click", function(){
-        hapusDokumen_(btn.getAttribute("data-link"), btn.getAttribute("data-cabang"), reloadFn);
+        hapusDokumen_(btn.getAttribute("data-link"), btn.getAttribute("data-cabang"), reloadFn, btn.closest("tr"));
       });
     });
   }
