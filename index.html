@@ -32039,87 +32039,68 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
 
   var lastSubmitInfo = null;
 
+  // Unduh gambar: bangun kartu khusus (lebar tetap, rapi) dari isi hasil — bukan memotret modal yang lebarnya ikut layar.
+  function buildOmsetExportCard_(){
+    var W = 420;
+    function esc_(t){ return String(t == null ? "" : t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+    var lines = Array.prototype.map.call(stampEl.querySelectorAll(".lh-line"), function(el){ return esc_(el.textContent); });
+    var eyebrow = stampEl.querySelector(".lh-eyebrow");
+    var rows = Array.prototype.map.call(recapEl.querySelectorAll(".recap-row"), function(r){
+      var k = r.querySelector(".k"), v = r.querySelector(".v");
+      var vc = v && v.classList.contains("pos") ? "#DC2626" : (v && v.classList.contains("neg") ? "#16A34A" : "#0F172A");
+      var strong = r.classList.contains("total");
+      return '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:10px 0;border-bottom:1px solid #E5E9F0;'+(strong?'background:#F4F6FB;margin:0 -10px;padding:10px;border-radius:8px;border-bottom:0;':'')+'">'+
+        '<span style="flex:1;color:#475569;font-size:14px;line-height:1.35;'+(strong?'font-weight:800;color:#0F172A;':'')+'">'+esc_(k ? k.textContent : "")+'</span>'+
+        '<span style="white-space:nowrap;font-weight:800;font-size:15px;color:'+vc+'">'+esc_(v ? v.textContent : "")+'</span></div>';
+    }).join("");
+    var banner = "";
+    if(ssReminderEl.style.display !== "none" && ssReminderEl.textContent){
+      var ok = ssReminderEl.classList.contains("ss-ok");
+      banner = '<div style="margin-top:16px;padding:12px 14px;border-radius:12px;font-weight:800;font-size:14px;text-align:center;'+
+        (ok ? 'background:#DCFCE7;color:#166534;' : 'background:#FEE2E2;color:#991B1B;')+'">'+esc_(ssReminderEl.textContent)+'</div>';
+    }
+    var box = document.createElement("div");
+    box.id = "omsetExportCard";
+    box.style.cssText = "position:fixed;left:-10000px;top:0;width:"+W+"px;background:#fff;color:#0F172A;padding:24px;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;";
+    box.innerHTML =
+      '<div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#64748B;">'+esc_(eyebrow ? eyebrow.textContent : "Laporan Transaksi Gadai")+'</div>'+
+      '<div style="margin-top:8px;font-size:18px;font-weight:800;line-height:1.3;">'+lines.join('<br>')+'</div>'+
+      '<div style="height:1px;background:#CBD5E1;margin:14px 0;"></div>'+
+      '<div style="font-size:16px;font-weight:800;">'+esc_(thanksEl.textContent)+'</div>'+
+      '<div style="margin-top:6px;font-size:13px;line-height:1.5;color:#64748B;">'+esc_(detailEl.textContent)+'</div>'+
+      '<div style="margin-top:14px;">'+rows+'</div>'+banner;
+    document.body.appendChild(box);
+    return box;
+  }
   resultDownloadBtn.addEventListener("click", function(){
     if(typeof html2canvas === "undefined"){
       alert("Gagal memuat modul download gambar. Coba lagi atau screenshot manual.");
       return;
     }
+    var oldLabel = resultDownloadBtn.textContent;
     resultDownloadBtn.disabled = true;
     resultDownloadBtn.textContent = "Menyiapkan...";
-    resultClose.style.visibility = "hidden";
-    resultActions.style.visibility = "hidden";
-    var ssReminderWasShown = ssReminderEl.style.display !== "none";
-    ssReminderEl.style.display = "none";
-
-    // Expand detail penuh agar ikut ter-capture (bukan screenshot ringkas)
-    var overlay = document.getElementById("resultOverlay");
-    var wasExpanded = overlay && overlay.classList.contains("expanded");
-    if(overlay) overlay.classList.add("expanded");
-    var extra = document.getElementById("recapExtra");
-    var prevExtraDisplay = extra ? extra.style.display : "";
-    if(extra){
-      extra.style.setProperty("display", "block", "important");
-      extra.style.setProperty("visibility", "visible", "important");
-      extra.style.setProperty("height", "auto", "important");
-      extra.style.setProperty("max-height", "none", "important");
-      extra.style.setProperty("opacity", "1", "important");
-      extra.style.setProperty("overflow", "visible", "important");
+    var box = null;
+    try{ box = buildOmsetExportCard_(); }catch(e){ box = null; }
+    function finish_(){
+      if(box && box.parentNode) box.parentNode.removeChild(box);
+      resultDownloadBtn.disabled = false;
+      resultDownloadBtn.textContent = oldLabel;
     }
-    var tog = document.getElementById("recapToggleBtn");
-    var prevTogVis = tog ? tog.style.visibility : "";
-    if(tog) tog.style.visibility = "hidden";
-
-    var prevMaxHeight = resultModalCard.style.maxHeight;
-    var prevOverflowY = resultModalCard.style.overflowY;
-    resultModalCard.style.maxHeight = "none";
-    resultModalCard.style.overflowY = "visible";
-    resultModalCard.style.height = "auto";
-
-    // tunggu layout settle lalu capture full
-    requestAnimationFrame(function(){
-      setTimeout(function(){
-        html2canvas(resultModalCard, {
-          backgroundColor: "#FFFFFF",
-          scale: 2,
-          useCORS: true,
-          scrollY: 0,
-          scrollX: 0,
-          windowWidth: resultModalCard.scrollWidth,
-          windowHeight: resultModalCard.scrollHeight
-        }).then(function(canvas){
+    if(!box){ finish_(); alert("Gagal menyiapkan gambar. Coba screenshot manual."); return; }
+    setTimeout(function(){
+      html2canvas(box, { backgroundColor: "#FFFFFF", scale: 2, useCORS: true, scrollX: 0, scrollY: 0, windowWidth: 420 })
+        .then(function(canvas){
           var link = document.createElement("a");
           var cabang = lastSubmitInfo ? lastSubmitInfo.cabang : "omset";
           var tanggal = lastSubmitInfo ? lastSubmitInfo.tanggal : "";
           link.download = "omset-"+cabang+"-"+tanggal+"-full.png";
           link.href = canvas.toDataURL("image/png");
           link.click();
-        }).catch(function(){
-          alert("Gagal membuat gambar. Coba screenshot manual sebagai cadangan.");
-        }).finally(function(){
-          resultModalCard.style.maxHeight = prevMaxHeight;
-          resultModalCard.style.overflowY = prevOverflowY;
-          resultModalCard.style.height = "";
-          if(extra){
-            extra.style.display = prevExtraDisplay;
-            extra.style.removeProperty("visibility");
-            extra.style.removeProperty("height");
-            extra.style.removeProperty("max-height");
-            extra.style.removeProperty("opacity");
-            extra.style.removeProperty("overflow");
-          }
-          if(tog) tog.style.visibility = prevTogVis || "visible";
-          if(overlay){
-            if(wasExpanded) overlay.classList.add("expanded");
-            else overlay.classList.remove("expanded");
-          }
-          resultDownloadBtn.disabled = false;
-          resultDownloadBtn.textContent = "⬇ Download Gambar";
-          resultClose.style.visibility = "visible";
-          resultActions.style.visibility = "visible";
-          if(ssReminderWasShown) ssReminderEl.style.display = "block";
-        });
-      }, 80);
-    });
+        })
+        .catch(function(){ alert("Gagal membuat gambar. Coba screenshot manual sebagai cadangan."); })
+        .finally(finish_);
+    }, 60);
   });
 
   function doActualSubmit(){
