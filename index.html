@@ -574,6 +574,7 @@
           <button class="tab-btn admin-nav-btn" data-tab="rejected"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg></span><span class="admin-nav-label">Rejected</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="audit"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a1 1 0 0 1 1-1h9l6 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></span><span class="admin-nav-label">Dashboard Audit</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="cashopname"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="admin-nav-label">Cash Opname</span></button>
+          <button class="tab-btn admin-nav-btn" data-tab="reclaim"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13l-3-3M21 17H8l3 3"/><path d="M16 7a4 4 0 0 1 0 8M8 17a4 4 0 0 1 0-8"/></svg></span><span class="admin-nav-label">Reclaim</span></button>
           <button class="tab-btn admin-nav-btn" data-tab="dokumen"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span><span class="admin-nav-label">Dokumen</span></button>
           <div class="admin-sidebar-section">Pengaturan</div>
           <button class="tab-btn admin-nav-btn" data-tab="updatedata"><span class="admin-nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 11a8 8 0 0 0-14.9-3M4 5v4h4"/><path d="M4 13a8 8 0 0 0 14.9 3M20 19v-4h-4"/></svg></span><span class="admin-nav-label">Update Data</span></button>
@@ -1029,6 +1030,54 @@
     </div>
 
     
+
+    <!-- Reclaim (KC) -->
+    <div class="panel subpanel" id="tab-reclaim">
+      <div class="rc-cards" id="rcCards">
+        <button type="button" class="rc-card" data-rc-filter="SEMUA"><div class="rc-card-n" id="rcNTotal">0</div><div class="rc-card-l">Semua</div></button>
+        <button type="button" class="rc-card rc-s-proses" data-rc-filter="Proses Reclaim"><div class="rc-card-n" id="rcNProses">0</div><div class="rc-card-l">Proses Reclaim</div></button>
+        <button type="button" class="rc-card rc-s-kirim" data-rc-filter="Pengiriman"><div class="rc-card-n" id="rcNKirim">0</div><div class="rc-card-l">Pengiriman</div></button>
+        <button type="button" class="rc-card rc-s-terima" data-rc-filter="Diterima Cabang"><div class="rc-card-n" id="rcNTerima">0</div><div class="rc-card-l">Diterima Cabang</div></button>
+      </div>
+
+      <div class="rc-bar">
+        <div class="rc-bar-filters">
+          <div class="field"><label>Cabang</label><select id="rcFilterCabang"></select></div>
+          <div class="field"><label>Cari</label><input type="text" id="rcFilterQ" placeholder="NF / barang / IMEI" autocomplete="off"></div>
+          <div class="field"><label>Dari</label><input type="date" id="rcFilterStart"></div>
+          <div class="field"><label>Sampai</label><input type="date" id="rcFilterEnd"></div>
+          <button type="button" id="rcLoadBtn" class="auth-primary-btn rc-btn-load">Tampilkan</button>
+        </div>
+        <button type="button" id="rcToggleFormBtn" class="rc-btn-new">+ Input Reclaim</button>
+      </div>
+
+      <div class="rc-form-card" id="rcFormCard" hidden>
+        <div class="rc-form-title">Input Reclaim</div>
+        <div class="rc-form-grid">
+          <div class="field"><label>Tanggal Reclaim</label><input type="date" id="rcTanggal"></div>
+          <div class="field"><label>Cabang</label><select id="rcCabang"></select></div>
+          <div class="field"><label>NF</label><input type="text" id="rcNf" inputmode="numeric" placeholder="No Faktur" autocomplete="off"></div>
+          <div class="field"><label>Barang</label><input type="text" id="rcBarang" placeholder="mis. HP Oppo A5s" autocomplete="off"></div>
+          <div class="field"><label>IMEI <span class="rc-opt">(opsional)</span></label><input type="text" id="rcImei" inputmode="numeric" placeholder="IMEI / SN" autocomplete="off"></div>
+          <div class="field"><label>Transaksi</label>
+            <div class="rc-seg" id="rcTransaksiSeg">
+              <button type="button" class="rc-seg-btn active" data-val="Perpanjang">Perpanjang</button>
+              <button type="button" class="rc-seg-btn" data-val="Pelunasan">Pelunasan</button>
+            </div>
+          </div>
+        </div>
+        <div class="rc-form-foot">
+          <span class="rc-form-hint">Status awal: <b>Proses Reclaim</b></span>
+          <div class="rc-form-actions">
+            <button type="button" id="rcCancelBtn" class="rc-btn-ghost">Batal</button>
+            <button type="button" id="rcSaveBtn" class="auth-primary-btn rc-btn-load">Simpan</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="msg" id="rcMsg"></div>
+      <div id="rcListWrap" class="rc-list-wrap"><div class="empty-log">Memuat...</div></div>
+    </div>
 
     <!-- Hidden stub supaya JS lama yang referensi tab-approvalcuti tidak error -->
     <div class="panel subpanel" id="tab-approvalcuti" style="display:none !important;"></div>
@@ -8790,6 +8839,223 @@ function applyRejectedAlasanFilter_(which){
     }
   });
 
+  // ---------------- Reclaim (KC) ----------------
+  (function reclaimModule_(){
+    var STATUS_FLOW = ["Proses Reclaim", "Pengiriman", "Diterima Cabang"];
+    var rcState = { filterStatus: "SEMUA", loaded: false, busy: false, transaksi: "Perpanjang" };
+
+    function $(id){ return document.getElementById(id); }
+    function pin_(){ return session.adminPin || session.sessionToken || ""; }
+    function today_(){
+      var d = new Date();
+      var m = d.getMonth() + 1, day = d.getDate();
+      return d.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (day < 10 ? "0" : "") + day;
+    }
+    function fmtTgl_(s){
+      var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || ""));
+      return m ? (m[3] + "/" + m[2] + "/" + m[1]) : (s || "");
+    }
+    function statusClass_(s){
+      return s === "Diterima Cabang" ? "rc-b-terima" : (s === "Pengiriman" ? "rc-b-kirim" : "rc-b-proses");
+    }
+
+    function fillCabangSelects_(){
+      var opts = (CABANG_LIST || []).map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join("");
+      var f = $("rcFilterCabang"), n = $("rcCabang");
+      if(f){ var cur = f.value; f.innerHTML = '<option value="SEMUA">Semua cabang</option>' + opts; if(cur) f.value = cur; }
+      if(n){ var cur2 = n.value; n.innerHTML = opts; if(cur2) n.value = cur2; }
+    }
+
+    function setCounts_(sum){
+      sum = sum || {};
+      $("rcNTotal").textContent = sum.total || 0;
+      $("rcNProses").textContent = sum["Proses Reclaim"] || 0;
+      $("rcNKirim").textContent = sum["Pengiriman"] || 0;
+      $("rcNTerima").textContent = sum["Diterima Cabang"] || 0;
+      document.querySelectorAll("#rcCards .rc-card").forEach(function(c){
+        c.classList.toggle("active", c.getAttribute("data-rc-filter") === rcState.filterStatus);
+      });
+    }
+
+    function renderList_(items){
+      var wrap = $("rcListWrap");
+      if(!items || !items.length){
+        wrap.innerHTML = '<div class="empty-log">Belum ada data reclaim.</div>';
+        return;
+      }
+      var rows = items.map(function(it){
+        var idx = STATUS_FLOW.indexOf(it.status);
+        var nextStatus = (idx >= 0 && idx < STATUS_FLOW.length - 1) ? STATUS_FLOW[idx + 1] : "";
+        var aksi = nextStatus
+          ? '<button type="button" class="rc-act" data-rc-id="'+escHtml(it.id)+'" data-rc-next="'+escHtml(nextStatus)+'">→ '+escHtml(nextStatus)+'</button>'
+          : '<span class="rc-done">Selesai</span>';
+        var tgls = [];
+        if(it.tglPengiriman) tgls.push("Kirim " + fmtTgl_(it.tglPengiriman));
+        if(it.tglDiterima) tgls.push("Diterima " + fmtTgl_(it.tglDiterima));
+        return '<tr>'
+          + '<td data-label="Tanggal">'+escHtml(fmtTgl_(it.tanggal))+'</td>'
+          + '<td data-label="Cabang"><b>'+escHtml(it.cabang)+'</b></td>'
+          + '<td data-label="NF" class="rc-mono">'+escHtml(it.nf)+'</td>'
+          + '<td data-label="Barang">'+escHtml(it.barang)+'</td>'
+          + '<td data-label="IMEI" class="rc-mono">'+(it.imei ? escHtml(it.imei) : '<span class="rc-dash">—</span>')+'</td>'
+          + '<td data-label="Transaksi">'+escHtml(it.transaksi)+'</td>'
+          + '<td data-label="Status"><span class="rc-badge '+statusClass_(it.status)+'">'+escHtml(it.status)+'</span>'
+          + (tgls.length ? '<div class="rc-sub">'+escHtml(tgls.join(" · "))+'</div>' : '') + '</td>'
+          + '<td data-label="Aksi" class="rc-td-act">'+aksi+'</td>'
+          + '</tr>';
+      }).join("");
+      wrap.innerHTML = '<div class="rc-table-scroll"><table class="rc-table"><thead><tr>'
+        + '<th>Tanggal</th><th>Cabang</th><th>NF</th><th>Barang</th><th>IMEI</th><th>Transaksi</th><th>Status</th><th>Aksi</th>'
+        + '</tr></thead><tbody>'+rows+'</tbody></table></div>';
+    }
+
+    function load_(force){
+      if(!pin_()){ return; }
+      if(rcState.busy) return;
+      rcState.busy = true;
+      var msg = $("rcMsg");
+      var wrap = $("rcListWrap");
+      if(!rcState.loaded || force) wrap.innerHTML = '<div class="empty-log">Memuat...</div>';
+      var filters = {
+        cabang: $("rcFilterCabang").value || "SEMUA",
+        status: rcState.filterStatus,
+        q: ($("rcFilterQ").value || "").trim(),
+        start: $("rcFilterStart").value || "",
+        end: $("rcFilterEnd").value || ""
+      };
+      google.script.run
+        .withSuccessHandler(function(r){
+          rcState.busy = false;
+          if(!r || r.status !== "OK"){
+            wrap.innerHTML = '<div class="empty-log">'+escHtml((r && r.reason) || "Gagal memuat Reclaim")+'</div>';
+            return;
+          }
+          rcState.loaded = true;
+          setCounts_(r.summary);
+          renderList_(r.items);
+        })
+        .withFailureHandler(function(err){
+          rcState.busy = false;
+          wrap.innerHTML = '<div class="empty-log">Kesalahan koneksi: '+escHtml((err && err.message) || err)+'</div>';
+        })
+        .getReclaimList(pin_(), filters);
+    }
+
+    function openForm_(open){
+      var card = $("rcFormCard");
+      card.hidden = !open;
+      $("rcToggleFormBtn").textContent = open ? "Tutup Form" : "+ Input Reclaim";
+      if(open){
+        if(!$("rcTanggal").value) $("rcTanggal").value = today_();
+        setTimeout(function(){ try{ $("rcNf").focus(); }catch(e){} }, 50);
+      }
+    }
+    function resetForm_(){
+      $("rcTanggal").value = today_();
+      $("rcNf").value = "";
+      $("rcBarang").value = "";
+      $("rcImei").value = "";
+      setTransaksi_("Perpanjang");
+    }
+    function setTransaksi_(val){
+      rcState.transaksi = val;
+      document.querySelectorAll("#rcTransaksiSeg .rc-seg-btn").forEach(function(b){
+        b.classList.toggle("active", b.getAttribute("data-val") === val);
+      });
+    }
+
+    function save_(){
+      var msg = $("rcMsg");
+      var btn = $("rcSaveBtn");
+      var payload = {
+        tanggal: $("rcTanggal").value,
+        cabang: $("rcCabang").value,
+        nf: ($("rcNf").value || "").trim(),
+        barang: ($("rcBarang").value || "").trim(),
+        imei: ($("rcImei").value || "").trim(),
+        transaksi: rcState.transaksi
+      };
+      if(!payload.tanggal){ showMsg(msg, "Tanggal reclaim wajib diisi.", "err"); return; }
+      if(!payload.cabang){ showMsg(msg, "Pilih cabang.", "err"); return; }
+      if(!payload.nf){ showMsg(msg, "NF wajib diisi.", "err"); return; }
+      if(!payload.barang){ showMsg(msg, "Barang wajib diisi.", "err"); return; }
+      if(!pin_()){ showMsg(msg, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
+      btn.disabled = true; btn.textContent = "Menyimpan...";
+      google.script.run
+        .withSuccessHandler(function(r){
+          btn.disabled = false; btn.textContent = "Simpan";
+          if(!r || r.status !== "OK"){ showMsg(msg, (r && r.reason) || "Gagal menyimpan.", "err"); return; }
+          showMsg(msg, "Reclaim tersimpan — status: Proses Reclaim.", "ok");
+          resetForm_();
+          openForm_(false);
+          rcState.filterStatus = "SEMUA";
+          load_(true);
+        })
+        .withFailureHandler(function(err){
+          btn.disabled = false; btn.textContent = "Simpan";
+          showMsg(msg, "Kesalahan koneksi: " + ((err && err.message) || err), "err");
+        })
+        .addReclaim(pin_(), payload);
+    }
+
+    function changeStatus_(id, next, btn){
+      if(!window.confirm("Ubah status menjadi \"" + next + "\"?")) return;
+      var msg = $("rcMsg");
+      btn.disabled = true;
+      google.script.run
+        .withSuccessHandler(function(r){
+          if(!r || r.status !== "OK"){
+            btn.disabled = false;
+            showMsg(msg, (r && r.reason) || "Gagal mengubah status.", "err");
+            load_(true);
+            return;
+          }
+          showMsg(msg, "Status diubah ke " + next + ".", "ok");
+          load_(true);
+        })
+        .withFailureHandler(function(err){
+          btn.disabled = false;
+          showMsg(msg, "Kesalahan koneksi: " + ((err && err.message) || err), "err");
+        })
+        .updateReclaimStatus(pin_(), id, next);
+    }
+
+    function wire_(){
+      var panel = $("tab-reclaim");
+      if(!panel || panel._rcWired) return;
+      panel._rcWired = true;
+      fillCabangSelects_();
+      $("rcTanggal").value = today_();
+
+      $("rcToggleFormBtn").addEventListener("click", function(){ openForm_($("rcFormCard").hidden); });
+      $("rcCancelBtn").addEventListener("click", function(){ resetForm_(); openForm_(false); });
+      $("rcSaveBtn").addEventListener("click", save_);
+      $("rcLoadBtn").addEventListener("click", function(){ load_(true); });
+      $("rcFilterQ").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); load_(true); } });
+      $("rcFilterCabang").addEventListener("change", function(){ load_(true); });
+      document.querySelectorAll("#rcTransaksiSeg .rc-seg-btn").forEach(function(b){
+        b.addEventListener("click", function(){ setTransaksi_(b.getAttribute("data-val")); });
+      });
+      document.querySelectorAll("#rcCards .rc-card").forEach(function(c){
+        c.addEventListener("click", function(){
+          rcState.filterStatus = c.getAttribute("data-rc-filter") || "SEMUA";
+          load_(true);
+        });
+      });
+      $("rcListWrap").addEventListener("click", function(e){
+        var b = e.target.closest ? e.target.closest(".rc-act") : null;
+        if(!b) return;
+        changeStatus_(b.getAttribute("data-rc-id"), b.getAttribute("data-rc-next"), b);
+      });
+    }
+
+    window.loadReclaim = function(force){ wire_(); fillCabangSelects_(); load_(!!force); };
+    document.querySelectorAll('.tab-btn[data-tab="reclaim"]').forEach(function(btn){
+      btn.addEventListener("click", function(){ setTimeout(function(){ window.loadReclaim(true); }, 60); });
+    });
+    wire_();
+  })();
+
   // ---------------- Kas Area (KC) ----------------
   function kaFmtRp_(n){
     n = Math.round(Number(n) || 0);
@@ -15240,6 +15506,64 @@ html[data-mode="dark"] .sk-card{ border-color:rgba(150,185,255,.16) !important; 
 .sk-slow{ display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin:12px 0 0; padding:10px 14px; border-radius:10px; font-size:13px; font-weight:600; color:#5B6B8C; }
 html[data-mode="dark"] .sk-slow{ color:#9DB1DB; }
 .sk-slow .es-action{ min-height:36px; padding:0 14px; border-radius:8px; cursor:pointer; font-size:12.5px; font-weight:700; background:transparent; border:1px solid currentColor; color:inherit; }
+}
+</style>
+<style id="reclaim-css">
+#tab-reclaim .rc-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:4px 0 16px}
+#tab-reclaim .rc-card{all:unset;box-sizing:border-box;cursor:pointer;background:var(--m-surface,#fff);border:1px solid var(--m-line,#E6EAF2);border-radius:14px;padding:14px 16px;transition:border-color .15s,box-shadow .15s}
+#tab-reclaim .rc-card:hover{background:var(--m-hover,#F8FAFD)}
+#tab-reclaim .rc-card.active{border-color:var(--m-brand,#0F2A6B);box-shadow:0 0 0 1px var(--m-brand,#0F2A6B) inset}
+#tab-reclaim .rc-card-n{font-size:26px;font-weight:700;color:var(--m-ink,#0B1530);line-height:1.1}
+#tab-reclaim .rc-card-l{font-size:12.5px;color:var(--m-mute,#5B667A);margin-top:4px;font-weight:500}
+#tab-reclaim .rc-s-proses .rc-card-n{color:var(--m-amb,#D97706)}
+#tab-reclaim .rc-s-kirim .rc-card-n{color:#2563EB}
+#tab-reclaim .rc-s-terima .rc-card-n{color:#15803D}
+#tab-reclaim .rc-bar{display:flex;gap:12px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}
+#tab-reclaim .rc-bar-filters{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;flex:1 1 auto}
+#tab-reclaim .rc-bar-filters .field{min-width:130px;flex:0 1 160px}
+#tab-reclaim .rc-btn-load{width:auto!important;padding:10px 18px!important;margin:0!important}
+#tab-reclaim .rc-btn-new{cursor:pointer;border:0;border-radius:10px;padding:10px 16px;font-weight:600;font-size:14px;background:var(--m-brand,#0F2A6B);color:#fff}
+#tab-reclaim .rc-btn-ghost{cursor:pointer;border:1px solid var(--m-line,#E6EAF2);background:transparent;color:var(--m-ink,#0B1530);border-radius:10px;padding:10px 16px;font-weight:600;font-size:14px}
+#tab-reclaim .rc-form-card{background:var(--m-surface,#fff);border:1px solid var(--m-line,#E6EAF2);border-radius:14px;padding:18px;margin-bottom:16px}
+#tab-reclaim .rc-form-card[hidden]{display:none!important}
+#tab-reclaim .rc-form-title{font-weight:700;font-size:15px;color:var(--m-ink,#0B1530);margin-bottom:12px}
+#tab-reclaim .rc-form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+#tab-reclaim .rc-opt{opacity:.6;font-weight:400}
+#tab-reclaim .rc-seg{display:flex;border:1px solid var(--m-line,#E6EAF2);border-radius:10px;overflow:hidden}
+#tab-reclaim .rc-seg-btn{flex:1;cursor:pointer;border:0;padding:10px 8px;font-size:14px;font-weight:600;background:transparent;color:var(--m-mute,#5B667A)}
+#tab-reclaim .rc-seg-btn.active{background:var(--m-soft,#EAF0FD);color:var(--m-brand,#0F2A6B)}
+#tab-reclaim .rc-form-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap}
+#tab-reclaim .rc-form-hint{font-size:13px;color:var(--m-mute,#5B667A)}
+#tab-reclaim .rc-form-actions{display:flex;gap:10px}
+#tab-reclaim .rc-table-scroll{overflow-x:auto;background:var(--m-surface,#fff);border:1px solid var(--m-line,#E6EAF2);border-radius:14px}
+#tab-reclaim .rc-table{width:100%;border-collapse:collapse;font-size:13.5px;color:var(--m-ink,#0B1530)}
+#tab-reclaim .rc-table th{text-align:left;padding:11px 12px;font-size:12px;font-weight:600;color:var(--m-mute,#5B667A);border-bottom:1px solid var(--m-line,#E6EAF2);white-space:nowrap}
+#tab-reclaim .rc-table td{padding:11px 12px;border-bottom:1px solid var(--m-line,#E6EAF2);vertical-align:top}
+#tab-reclaim .rc-table tbody tr:last-child td{border-bottom:0}
+#tab-reclaim .rc-mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px}
+#tab-reclaim .rc-dash{opacity:.45}
+#tab-reclaim .rc-sub{font-size:11.5px;color:var(--m-mute,#5B667A);margin-top:4px}
+#tab-reclaim .rc-badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+#tab-reclaim .rc-b-proses{background:rgba(217,119,6,.14);color:#B45309}
+#tab-reclaim .rc-b-kirim{background:rgba(37,99,235,.13);color:#1D4ED8}
+#tab-reclaim .rc-b-terima{background:rgba(21,128,61,.14);color:#15803D}
+:root[data-mode="dark"] #tab-reclaim .rc-b-proses{color:#FBBF6A}
+:root[data-mode="dark"] #tab-reclaim .rc-b-kirim{color:#8DB2FF}
+:root[data-mode="dark"] #tab-reclaim .rc-b-terima{color:#6EE7A0}
+#tab-reclaim .rc-td-act{white-space:nowrap}
+#tab-reclaim .rc-act{cursor:pointer;border:1px solid var(--m-brand,#0F2A6B);color:var(--m-brand,#0F2A6B);background:transparent;border-radius:8px;padding:6px 11px;font-size:12.5px;font-weight:600}
+#tab-reclaim .rc-act:hover{background:var(--m-soft,#EAF0FD)}
+#tab-reclaim .rc-act:disabled{opacity:.5;cursor:default}
+#tab-reclaim .rc-done{font-size:12.5px;color:var(--m-mute,#5B667A)}
+@media (max-width:760px){
+  #tab-reclaim .rc-cards{grid-template-columns:repeat(2,1fr)}
+  #tab-reclaim .rc-form-grid{grid-template-columns:1fr}
+  #tab-reclaim .rc-bar-filters .field{flex:1 1 140px}
+  #tab-reclaim .rc-table thead{display:none}
+  #tab-reclaim .rc-table,#tab-reclaim .rc-table tbody,#tab-reclaim .rc-table tr,#tab-reclaim .rc-table td{display:block;width:100%}
+  #tab-reclaim .rc-table tr{padding:10px 12px;border-bottom:1px solid var(--m-line,#E6EAF2)}
+  #tab-reclaim .rc-table td{border:0;padding:3px 0;display:flex;justify-content:space-between;gap:12px;text-align:right}
+  #tab-reclaim .rc-table td::before{content:attr(data-label);color:var(--m-mute,#5B667A);font-size:12px;text-align:left;flex:0 0 auto}
 }
 </style>
 </body>
