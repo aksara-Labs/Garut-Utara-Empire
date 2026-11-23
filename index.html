@@ -1033,50 +1033,58 @@
 
     <!-- Reclaim (KC) -->
     <div class="panel subpanel" id="tab-reclaim">
-      <div class="rc-cards" id="rcCards">
-        <button type="button" class="rc-card" data-rc-filter="SEMUA"><div class="rc-card-n" id="rcNTotal">0</div><div class="rc-card-l">Semua</div></button>
-        <button type="button" class="rc-card rc-s-proses" data-rc-filter="Proses Reclaim"><div class="rc-card-n" id="rcNProses">0</div><div class="rc-card-l">Proses Reclaim</div></button>
-        <button type="button" class="rc-card rc-s-kirim" data-rc-filter="Pengiriman"><div class="rc-card-n" id="rcNKirim">0</div><div class="rc-card-l">Pengiriman</div></button>
-        <button type="button" class="rc-card rc-s-terima" data-rc-filter="Diterima Cabang"><div class="rc-card-n" id="rcNTerima">0</div><div class="rc-card-l">Diterima Cabang</div></button>
+      <div class="rcx-page">
+      <div class="rcx-head">
+        <p class="rcx-head-sub">Lacak barang reclaim dari proses sampai diterima cabang.</p>
+        <button type="button" id="rcToggleFormBtn" class="rcx-btn rcx-btn-primary rc-btn-new" aria-expanded="false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Input reclaim</span></button>
       </div>
 
-      <div class="rc-bar">
-        <div class="rc-bar-filters">
-          <div class="field"><label>Cabang</label><select id="rcFilterCabang"></select></div>
-          <div class="field"><label>Cari</label><input type="text" id="rcFilterQ" placeholder="NF / barang / IMEI" autocomplete="off"></div>
-          <div class="field"><label>Dari</label><input type="date" id="rcFilterStart"></div>
-          <div class="field"><label>Sampai</label><input type="date" id="rcFilterEnd"></div>
-          <button type="button" id="rcLoadBtn" class="auth-primary-btn rc-btn-load">Tampilkan</button>
+      <div class="rcx-stats" id="rcCards">
+        <button type="button" class="rc-card rcx-stat rc-s-all" data-rc-filter="SEMUA"><span class="rcx-stat-top"><span class="rcx-stat-ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg></span><span class="rcx-stat-label">Semua</span></span><span class="rcx-stat-n" id="rcNTotal">0</span></button>
+        <button type="button" class="rc-card rcx-stat rc-s-proses" data-rc-filter="Proses Reclaim"><span class="rcx-stat-top"><span class="rcx-stat-ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h13l-3-3M21 17H8l3 3"/><path d="M16 7a4 4 0 0 1 0 8M8 17a4 4 0 0 1 0-8"/></svg></span><span class="rcx-stat-label">Proses Reclaim</span></span><span class="rcx-stat-n" id="rcNProses">0</span></button>
+        <button type="button" class="rc-card rcx-stat rc-s-kirim" data-rc-filter="Pengiriman"><span class="rcx-stat-top"><span class="rcx-stat-ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span><span class="rcx-stat-label">Pengiriman</span></span><span class="rcx-stat-n" id="rcNKirim">0</span></button>
+        <button type="button" class="rc-card rcx-stat rc-s-terima" data-rc-filter="Diterima Cabang"><span class="rcx-stat-top"><span class="rcx-stat-ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg></span><span class="rcx-stat-label">Diterima Cabang</span></span><span class="rcx-stat-n" id="rcNTerima">0</span></button>
+      </div>
+
+      <div class="rcx-card rcx-filter">
+        <div class="rcx-field rcx-f-cabang"><label for="rcFilterCabang">Cabang</label><select id="rcFilterCabang"></select></div>
+        <div class="rcx-field rcx-f-q"><label for="rcFilterQ">Cari</label><div class="rcx-search"><svg class="rcx-search-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" id="rcFilterQ" placeholder="NF, barang, atau IMEI" autocomplete="off"></div></div>
+        <div class="rcx-field"><label for="rcFilterStart">Dari tanggal</label><input type="date" id="rcFilterStart"></div>
+        <div class="rcx-field"><label for="rcFilterEnd">Sampai tanggal</label><input type="date" id="rcFilterEnd"></div>
+        <button type="button" id="rcLoadBtn" class="rcx-btn rcx-btn-dark rc-btn-load">Tampilkan</button>
+      </div>
+
+      <div class="rcx-card rcx-form rc-form-card" id="rcFormCard" hidden>
+        <div class="rcx-form-head">
+          <button type="button" id="rcBackBtn" class="rcx-btn rcx-btn-ghost rc-back-btn" style="align-self:flex-start" aria-label="Kembali ke daftar reclaim"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>Kembali</span></button>
+          <div class="rcx-card-title" id="rcFormTitle">Input reclaim</div>
+          <div class="rcx-card-sub" id="rcFormSub">Data baru otomatis berstatus Proses Reclaim.</div>
         </div>
-        <button type="button" id="rcToggleFormBtn" class="rc-btn-new">+ Input Reclaim</button>
-      </div>
-
-      <div class="rc-form-card" id="rcFormCard" hidden>
-        <div class="rc-form-title">Input Reclaim</div>
-        <div class="rc-form-grid">
-          <div class="field"><label>Tanggal Reclaim</label><input type="date" id="rcTanggal"></div>
-          <div class="field"><label>Cabang</label><select id="rcCabang"></select></div>
-          <div class="field"><label>NF</label><input type="text" id="rcNf" inputmode="numeric" placeholder="No Faktur" autocomplete="off"></div>
-          <div class="field"><label>Barang</label><input type="text" id="rcBarang" placeholder="mis. HP Oppo A5s" autocomplete="off"></div>
-          <div class="field"><label>IMEI <span class="rc-opt">(opsional)</span></label><input type="text" id="rcImei" inputmode="numeric" placeholder="IMEI / SN" autocomplete="off"></div>
-          <div class="field"><label>Transaksi</label>
-            <div class="rc-seg" id="rcTransaksiSeg">
+        <div class="rcx-form-grid">
+          <div class="rcx-field"><label for="rcTanggal">Tanggal reclaim</label><input type="date" id="rcTanggal"></div>
+          <div class="rcx-field"><label for="rcCabang">Cabang</label><select id="rcCabang"></select></div>
+          <div class="rcx-field"><label for="rcNf">No. faktur (NF)</label><input type="text" id="rcNf" inputmode="numeric" placeholder="Nomor faktur" autocomplete="off"></div>
+          <div class="rcx-field"><label for="rcBarang">Nama barang</label><input type="text" id="rcBarang" placeholder="mis. HP Oppo A5s" autocomplete="off"></div>
+          <div class="rcx-field"><label for="rcImei">IMEI / SN <span class="rcx-opt">(opsional)</span></label><input type="text" id="rcImei" inputmode="numeric" placeholder="IMEI atau SN" autocomplete="off"></div>
+          <div class="rcx-field"><label id="rcTransaksiLbl">Jenis transaksi</label>
+            <div class="rcx-seg rc-seg" id="rcTransaksiSeg" role="group" aria-labelledby="rcTransaksiLbl">
               <button type="button" class="rc-seg-btn active" data-val="Perpanjang">Perpanjang</button>
               <button type="button" class="rc-seg-btn" data-val="Pelunasan">Pelunasan</button>
             </div>
           </div>
         </div>
-        <div class="rc-form-foot">
-          <span class="rc-form-hint">Status awal: <b>Proses Reclaim</b></span>
-          <div class="rc-form-actions">
-            <button type="button" id="rcCancelBtn" class="rc-btn-ghost">Batal</button>
-            <button type="button" id="rcSaveBtn" class="auth-primary-btn rc-btn-load">Simpan</button>
+        <div class="rcx-form-foot">
+          <span class="rcx-form-hint" id="rcFormHint">Status awal <span class="rcx-badge rc-b-proses">Proses Reclaim</span></span>
+          <div class="rcx-form-actions">
+            <button type="button" id="rcCancelBtn" class="rcx-btn rcx-btn-ghost rc-btn-ghost">Batal</button>
+            <button type="button" id="rcSaveBtn" class="rcx-btn rcx-btn-primary rc-btn-load">Simpan reclaim</button>
           </div>
         </div>
       </div>
 
       <div class="msg" id="rcMsg"></div>
       <div id="rcListWrap" class="rc-list-wrap"><div class="empty-log">Memuat...</div></div>
+      </div>
     </div>
 
     <!-- Hidden stub supaya JS lama yang referensi tab-approvalcuti tidak error -->
@@ -1688,7 +1696,8 @@ function $el(id){ try{ return document.getElementById(id); }catch(e){ return nul
         var isDoc = String(action || "").indexOf("docProses") === 0 || String(action || "") === "docUploadTtdKaryawan";
         var isKa = String(action || "") === "getKasAreaData";
         var isUpload = /^(upload(SuratAcp|AuditSummary)|importAuditAcpText)/.test(String(action || ""));
-        var timeoutMs = (isDoc || isUpload) ? 180000 : ((isKa || String(action || "") === "sendKinerjaWa") ? 60000 : 25000);
+        var isRc = /^(getReclaimList|addReclaim|updateReclaim)/.test(String(action || ""));
+        var timeoutMs = (isDoc || isUpload) ? 180000 : ((isKa || isRc || String(action || "") === "sendKinerjaWa") ? 60000 : 25000);
         var timer = setTimeout(function(){ try{ if(ctrl) ctrl.abort(); }catch(e){} }, timeoutMs);
 
         // GET untuk request biasa (andal dari GitHub Pages)
@@ -8842,7 +8851,7 @@ function applyRejectedAlasanFilter_(which){
   // ---------------- Reclaim (KC) ----------------
   (function reclaimModule_(){
     var STATUS_FLOW = ["Proses Reclaim", "Pengiriman", "Diterima Cabang"];
-    var rcState = { filterStatus: "SEMUA", loaded: false, busy: false, transaksi: "Perpanjang" };
+    var rcState = { filterStatus: "SEMUA", loaded: false, busy: false, transaksi: "Perpanjang", items: [], editId: null, inlineId: null };
 
     function $(id){ return document.getElementById(id); }
     function pin_(){ return session.adminPin || session.sessionToken || ""; }
@@ -8863,7 +8872,7 @@ function applyRejectedAlasanFilter_(which){
       var opts = (CABANG_LIST || []).map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join("");
       var f = $("rcFilterCabang"), n = $("rcCabang");
       if(f){ var cur = f.value; f.innerHTML = '<option value="SEMUA">Semua cabang</option>' + opts; if(cur) f.value = cur; }
-      if(n){ var cur2 = n.value; n.innerHTML = opts; if(cur2) n.value = cur2; }
+      if(n){ var cur2 = n.value; n.innerHTML = '<option value="">Pilih cabang</option>' + opts; n.value = cur2 || ""; }
     }
 
     function setCounts_(sum){
@@ -8877,45 +8886,171 @@ function applyRejectedAlasanFilter_(which){
       });
     }
 
+    var RC_ICON_PLUS = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+    var RC_ICON_X = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    var RC_ICON_OK = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+    var RC_ICON_EDIT = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>';
+    var RC_ICON_SHIP = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>';
+    var RC_NEXT_LABEL = { "Pengiriman": "Tandai dikirim", "Diterima Cabang": "Tandai diterima" };
+
+    var RC_ICON_WA = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8 19.6z"/><path d="M9 9.5c.3 2 2.5 4.2 4.5 4.5l1.3-1.2-1.8-1.1-.9.6c-.7-.3-1.4-1-1.7-1.7l.6-.9-1.1-1.8z"/></svg>';
+    // Isi nomor WA PIC di sini (format 62812xxxx, tanpa + / spasi) agar chat langsung ke PIC.
+    // Kosongkan untuk memilih kontak sendiri di WhatsApp.
+    var RC_PIC_WA = "";
+
+    function rcSalam_(){
+      var h = new Date().getHours();
+      if(h >= 4 && h < 11) return "pagi";
+      if(h >= 11 && h < 15) return "siang";
+      if(h >= 15 && h < 18) return "sore";
+      return "malam";
+    }
+    function rcBuildAsk_(list){
+      var lines = [];
+      lines.push("Selamat " + rcSalam_() + " kak, mohon info untuk proses barang reclaim berikut sudah sampai mana ya prosesnya? Berikut datanya:");
+      lines.push("");
+      list.forEach(function(it, i){
+        lines.push((i + 1) + ". *" + String(it.barang || "-") + "*");
+        lines.push("Tanggal: " + fmtTgl_(it.tanggal));
+        lines.push("Cabang: " + (it.cabang || "-"));
+        lines.push("NF: " + (it.nf || "-"));
+        lines.push("Transaksi: " + (it.transaksi || "-"));
+        lines.push("");
+      });
+      lines.push("Mohon update progresnya ya kak. Terima kasih.");
+      return lines.join("\n");
+    }
+    var rcAskAt_ = 0;
+    function askPic_(){
+      var now = Date.now();
+      if(now - rcAskAt_ < 2000) return; // cegah terbuka dobel kalau diklik/terpicu dua kali
+      rcAskAt_ = now;
+      var msg = $("rcMsg");
+      var list = (rcState.items || []).filter(function(it){ return it.status === "Proses Reclaim"; });
+      if(!list.length){ showMsg(msg, "Tidak ada barang berstatus Proses Reclaim di daftar ini.", "err"); return; }
+      var num = String(RC_PIC_WA || "").replace(/\D/g, "");
+      var url = "https://wa.me/" + num + "?text=" + encodeURIComponent(rcBuildAsk_(list));
+      window.open(url, "_blank", "noopener");
+    }
+
+    function inlineRow_(it){
+      var m = /^(\d{4}-\d{2}-\d{2})/.exec(String(it.tanggal || ""));
+      var list = (CABANG_LIST || []).slice();
+      if(it.cabang && list.indexOf(it.cabang) < 0) list.push(it.cabang);
+      var cabOpts = list.map(function(c){ return '<option value="'+escHtml(c)+'"'+(c === it.cabang ? ' selected' : '')+'>'+escHtml(c)+'</option>'; }).join("");
+      var trOpts = ["Perpanjang","Pelunasan"].map(function(t){ return '<option value="'+t+'"'+(t === it.transaksi ? ' selected' : '')+'>'+t+'</option>'; }).join("");
+      return '<tr class="rc-editing" data-rc-row="'+escHtml(it.id)+'">'
+        + '<td data-label="Tanggal"><input type="date" class="rc-in" data-f="tanggal" value="'+escHtml(m ? m[1] : today_())+'"></td>'
+        + '<td data-label="Cabang"><select class="rc-in" data-f="cabang">'+cabOpts+'</select></td>'
+        + '<td data-label="NF"><input type="text" class="rc-in rc-in-mono" data-f="nf" inputmode="numeric" value="'+escHtml(it.nf)+'"></td>'
+        + '<td data-label="Barang" class="rc-td-item"><input type="text" class="rc-in" data-f="barang" placeholder="Nama barang" value="'+escHtml(it.barang)+'">'
+        + '<input type="text" class="rc-in rc-in-mono rc-in-imei" data-f="imei" inputmode="numeric" placeholder="IMEI / SN (opsional)" value="'+escHtml(it.imei)+'"></td>'
+        + '<td data-label="Transaksi"><select class="rc-in" data-f="transaksi">'+trOpts+'</select></td>'
+        + '<td data-label="Status"><span class="rcx-badge '+statusClass_(it.status)+'">'+escHtml(it.status)+'</span></td>'
+        + '<td data-label="Aksi" class="rc-td-act"><div class="rc-iact">'
+        + '<button type="button" class="rc-isave" data-rc-id="'+escHtml(it.id)+'">Simpan</button>'
+        + '<button type="button" class="rc-icancel">Batal</button></div></td>'
+        + '</tr>';
+    }
+
+    function startInline_(id){
+      rcState.inlineId = id;
+      renderList_(rcState.items);
+      try{
+        var tr = document.querySelector('#rcListWrap tr[data-rc-row="'+String(id).replace(/"/g,'')+'"]');
+        var f = tr && tr.querySelector('[data-f="nf"]'); if(f){ f.focus(); }
+      }catch(e){}
+    }
+    function cancelInline_(){ rcState.inlineId = null; renderList_(rcState.items); }
+    function saveInline_(id, btn){
+      var tr = btn.closest("tr"), msg = $("rcMsg");
+      function v(f){ var el = tr.querySelector('[data-f="'+f+'"]'); return el ? String(el.value || "").trim() : ""; }
+      var payload = { tanggal: v("tanggal"), cabang: v("cabang"), nf: v("nf"), barang: v("barang"), imei: v("imei"), transaksi: v("transaksi") };
+      if(!payload.tanggal){ showMsg(msg, "Tanggal reclaim wajib diisi.", "err"); return; }
+      if(!payload.cabang){ showMsg(msg, "Pilih cabang.", "err"); return; }
+      if(!payload.nf){ showMsg(msg, "NF wajib diisi.", "err"); return; }
+      if(!payload.barang){ showMsg(msg, "Barang wajib diisi.", "err"); return; }
+      if(!pin_()){ showMsg(msg, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
+      tr.querySelectorAll("input,select,button").forEach(function(x){ x.disabled = true; });
+      btn.textContent = "Menyimpan...";
+      google.script.run
+        .withSuccessHandler(function(r){
+          if(!r || r.status !== "OK"){
+            tr.querySelectorAll("input,select,button").forEach(function(x){ x.disabled = false; });
+            btn.textContent = "Simpan";
+            showMsg(msg, (r && r.reason) || "Gagal menyimpan.", "err");
+            return;
+          }
+          var arr = (rcState.items || []).map(function(x){
+            return String(x.id) === String(id) ? Object.assign({}, x, payload, r.item || {}) : x;
+          });
+          rcState.inlineId = null;
+          showMsg(msg, "Perubahan tersimpan.", "ok");
+          renderList_(arr);
+          load_(true, true);
+        })
+        .withFailureHandler(function(err){
+          var em = String((err && err.message) || err || "");
+          rcState.inlineId = null;
+          if(/timeout/i.test(em)){
+            showMsg(msg, "Server lambat merespons. Data mungkin sudah tersimpan — daftar dimuat ulang untuk dicek.", "err");
+            load_(true, true);
+            return;
+          }
+          tr.querySelectorAll("input,select,button").forEach(function(x){ x.disabled = false; });
+          btn.textContent = "Simpan";
+          showMsg(msg, "Kesalahan koneksi: " + em, "err");
+        })
+        .updateReclaim(pin_(), id, payload);
+    }
+
     function renderList_(items){
       var wrap = $("rcListWrap");
+      rcState.items = items || [];
       if(!items || !items.length){
-        wrap.innerHTML = '<div class="empty-log">Belum ada data reclaim.</div>';
+        wrap.innerHTML = '<div class="rcx-empty"><div class="rcx-empty-ico">' + RC_ICON_PLUS.replace('width="16" height="16"','width="22" height="22"') + '</div>'
+          + '<div class="rcx-empty-t">Belum ada data reclaim</div>'
+          + '<div class="rcx-empty-s">Ubah filter di atas, atau catat reclaim baru lewat tombol Input reclaim.</div></div>';
         return;
       }
       var rows = items.map(function(it){
+        if(rcState.inlineId && String(it.id) === String(rcState.inlineId)) return inlineRow_(it);
         var idx = STATUS_FLOW.indexOf(it.status);
         var nextStatus = (idx >= 0 && idx < STATUS_FLOW.length - 1) ? STATUS_FLOW[idx + 1] : "";
+        var editBtn = '<button type="button" class="rc-edit" data-rc-edit="'+escHtml(it.id)+'" aria-label="Edit reclaim '+escHtml(it.nf)+'" title="Edit">'+RC_ICON_EDIT+'</button>';
         var aksi = nextStatus
-          ? '<button type="button" class="rc-act" data-rc-id="'+escHtml(it.id)+'" data-rc-next="'+escHtml(nextStatus)+'">→ '+escHtml(nextStatus)+'</button>'
-          : '<span class="rc-done">Selesai</span>';
-        var tgls = [];
-        if(it.tglPengiriman) tgls.push("Kirim " + fmtTgl_(it.tglPengiriman));
-        if(it.tglDiterima) tgls.push("Diterima " + fmtTgl_(it.tglDiterima));
+          ? '<button type="button" class="rc-act" data-rc-id="'+escHtml(it.id)+'" data-rc-next="'+escHtml(nextStatus)+'" aria-label="'+escHtml(RC_NEXT_LABEL[nextStatus] || nextStatus)+'" title="'+escHtml(RC_NEXT_LABEL[nextStatus] || nextStatus)+'">'+(nextStatus === "Pengiriman" ? RC_ICON_SHIP : RC_ICON_OK)+'</button>'
+          : '<span class="rc-done">'+RC_ICON_OK+'Selesai</span>';
+        aksi = '<div class="rc-act-wrap">'+editBtn+aksi+'</div>';
+        var tgls = "";
+        if(it.tglPengiriman) tgls += '<div class="rc-sub">Dikirim ' + escHtml(fmtTgl_(it.tglPengiriman)) + '</div>';
+        if(it.tglDiterima) tgls += '<div class="rc-sub">Diterima ' + escHtml(fmtTgl_(it.tglDiterima)) + '</div>';
         return '<tr>'
-          + '<td data-label="Tanggal">'+escHtml(fmtTgl_(it.tanggal))+'</td>'
-          + '<td data-label="Cabang"><b>'+escHtml(it.cabang)+'</b></td>'
+          + '<td data-label="Tanggal" class="rc-td-date">'+escHtml(fmtTgl_(it.tanggal))+'</td>'
+          + '<td data-label="Cabang"><span class="rc-cab">'+escHtml(it.cabang)+'</span></td>'
           + '<td data-label="NF" class="rc-mono">'+escHtml(it.nf)+'</td>'
-          + '<td data-label="Barang">'+escHtml(it.barang)+'</td>'
-          + '<td data-label="IMEI" class="rc-mono">'+(it.imei ? escHtml(it.imei) : '<span class="rc-dash">—</span>')+'</td>'
-          + '<td data-label="Transaksi">'+escHtml(it.transaksi)+'</td>'
-          + '<td data-label="Status"><span class="rc-badge '+statusClass_(it.status)+'">'+escHtml(it.status)+'</span>'
-          + (tgls.length ? '<div class="rc-sub">'+escHtml(tgls.join(" · "))+'</div>' : '') + '</td>'
+          + '<td data-label="Barang" class="rc-td-item"><div class="rc-item-name">'+escHtml(it.barang)+'</div>'
+          + (it.imei ? '<div class="rc-sub rc-mono">IMEI '+escHtml(it.imei)+'</div>' : '') + '</td>'
+          + '<td data-label="Transaksi"><span class="rc-tag '+(it.transaksi === "Pelunasan" ? "rc-t-lunas" : "rc-t-perpanjang")+'">'+escHtml(it.transaksi)+'</span></td>'
+          + '<td data-label="Status"><span class="rcx-badge '+statusClass_(it.status)+'">'+escHtml(it.status)+'</span>'+tgls+'</td>'
           + '<td data-label="Aksi" class="rc-td-act">'+aksi+'</td>'
           + '</tr>';
       }).join("");
-      wrap.innerHTML = '<div class="rc-table-scroll"><table class="rc-table"><thead><tr>'
-        + '<th>Tanggal</th><th>Cabang</th><th>NF</th><th>Barang</th><th>IMEI</th><th>Transaksi</th><th>Status</th><th>Aksi</th>'
-        + '</tr></thead><tbody>'+rows+'</tbody></table></div>';
+      wrap.innerHTML = '<div class="rcx-card rcx-list"><div class="rcx-list-head"><span class="rcx-list-count">'+items.length+' data reclaim</span>'
+        + '<button type="button" class="rcx-btn rcx-btn-dark rc-ask" title="Tanyakan semua barang yang masih Proses Reclaim ke PIC lewat WhatsApp">'+RC_ICON_WA+'Tanya PIC</button></div>'
+        + '<div class="rc-table-scroll"><table class="rc-table"><thead><tr>'
+        + '<th>Tanggal</th><th>Cabang</th><th>NF</th><th>Barang</th><th>Transaksi</th><th>Status</th><th class="rc-th-act">Aksi</th>'
+        + '</tr></thead><tbody>'+rows+'</tbody></table></div></div>';
     }
 
-    function load_(force){
+    function load_(force, silent){
       if(!pin_()){ return; }
+      if(rcState.inlineId && silent) return;
       if(rcState.busy) return;
       rcState.busy = true;
       var msg = $("rcMsg");
       var wrap = $("rcListWrap");
-      if(!rcState.loaded || force) wrap.innerHTML = '<div class="empty-log">Memuat...</div>';
+      if(!silent && (!rcState.loaded || force)) wrap.innerHTML = '<div class="empty-log">Memuat...</div>';
       var filters = {
         cabang: $("rcFilterCabang").value || "SEMUA",
         status: rcState.filterStatus,
@@ -8941,17 +9076,62 @@ function applyRejectedAlasanFilter_(which){
         .getReclaimList(pin_(), filters);
     }
 
-    function openForm_(open){
+    function setEditMode_(id){
+      rcState.editId = id || null;
+      var editing = !!id;
+      $("rcFormTitle").textContent = editing ? "Edit reclaim" : "Input reclaim";
+      $("rcFormSub").textContent = editing ? "Perbaiki data yang salah, lalu simpan perubahan." : "Data baru otomatis berstatus Proses Reclaim.";
+      $("rcSaveBtn").textContent = editing ? "Simpan perubahan" : "Simpan reclaim";
+      if(!editing){
+        $("rcFormHint").innerHTML = 'Status awal <span class="rcx-badge rc-b-proses">Proses Reclaim</span>';
+      }
+    }
+    function startEdit_(id){
+      var it = null;
+      for(var i = 0; i < rcState.items.length; i++){ if(String(rcState.items[i].id) === String(id)){ it = rcState.items[i]; break; } }
+      if(!it) return;
+      setEditMode_(id);
+      var cab = $("rcCabang");
+      if(it.cabang && !Array.prototype.some.call(cab.options, function(o){ return o.value === it.cabang; })){
+        cab.insertAdjacentHTML("beforeend", '<option value="'+escHtml(it.cabang)+'">'+escHtml(it.cabang)+'</option>');
+      }
+      var m = /^(\d{4}-\d{2}-\d{2})/.exec(String(it.tanggal || ""));
+      $("rcTanggal").value = m ? m[1] : today_();
+      cab.value = it.cabang || "";
+      $("rcNf").value = it.nf || "";
+      $("rcBarang").value = it.barang || "";
+      $("rcImei").value = it.imei || "";
+      setTransaksi_(it.transaksi === "Pelunasan" ? "Pelunasan" : "Perpanjang");
+      $("rcFormHint").innerHTML = 'Status saat ini <span class="rcx-badge '+statusClass_(it.status)+'">'+escHtml(it.status)+'</span>';
+      openForm_(true, true);
+      try{ $("rcFormCard").scrollIntoView({ block: "start" }); }catch(e){}
+    }
+
+    function openForm_(open, keepEdit){
       var card = $("rcFormCard");
+      if(!open || !keepEdit){ if(rcState.editId) { setEditMode_(null); } }
       card.hidden = !open;
-      $("rcToggleFormBtn").textContent = open ? "Tutup Form" : "+ Input Reclaim";
+      var pg = card.closest ? card.closest(".rcx-page") : null;
+      if(pg){
+        pg.classList.toggle("rc-formview", !!open);
+        Array.prototype.forEach.call(pg.children, function(ch){
+          if(ch === card || ch.id === "rcMsg") return;
+          if(open) ch.style.setProperty("display", "none", "important");
+          else ch.style.removeProperty("display");
+        });
+      }
+      var tb = $("rcToggleFormBtn");
+      tb.innerHTML = (open ? RC_ICON_X : RC_ICON_PLUS) + '<span>' + (open ? "Tutup form" : "Input reclaim") + '</span>';
+      tb.setAttribute("aria-expanded", open ? "true" : "false");
       if(open){
+        try{ card.scrollIntoView({ block: "start" }); }catch(e){}
         if(!$("rcTanggal").value) $("rcTanggal").value = today_();
-        setTimeout(function(){ try{ $("rcNf").focus(); }catch(e){} }, 50);
+        setTimeout(function(){ try{ $(keepEdit ? "rcTanggal" : "rcNf").focus(); }catch(e){} }, 50);
       }
     }
     function resetForm_(){
       $("rcTanggal").value = today_();
+      $("rcCabang").value = "";
       $("rcNf").value = "";
       $("rcBarang").value = "";
       $("rcImei").value = "";
@@ -8977,25 +9157,44 @@ function applyRejectedAlasanFilter_(which){
       };
       if(!payload.tanggal){ showMsg(msg, "Tanggal reclaim wajib diisi.", "err"); return; }
       if(!payload.cabang){ showMsg(msg, "Pilih cabang.", "err"); return; }
+      var editId = rcState.editId;
+      var saveLabel = editId ? "Simpan perubahan" : "Simpan reclaim";
       if(!payload.nf){ showMsg(msg, "NF wajib diisi.", "err"); return; }
       if(!payload.barang){ showMsg(msg, "Barang wajib diisi.", "err"); return; }
       if(!pin_()){ showMsg(msg, "Sesi berakhir, silakan masuk ulang.", "err"); return; }
       btn.disabled = true; btn.textContent = "Menyimpan...";
       google.script.run
         .withSuccessHandler(function(r){
-          btn.disabled = false; btn.textContent = "Simpan";
+          btn.disabled = false; btn.textContent = saveLabel;
           if(!r || r.status !== "OK"){ showMsg(msg, (r && r.reason) || "Gagal menyimpan.", "err"); return; }
-          showMsg(msg, "Reclaim tersimpan — status: Proses Reclaim.", "ok");
+          showMsg(msg, editId ? "Perubahan tersimpan." : "Reclaim tersimpan — status: Proses Reclaim.", "ok");
           resetForm_();
           openForm_(false);
+          // Tampilkan hasil langsung (tanpa menunggu server), lalu sinkron diam-diam di belakang
+          try{
+            if(r.item){
+              var arr = (rcState.items || []).slice(), found = false;
+              for(var k = 0; k < arr.length; k++){
+                if(String(arr[k].id) === String(r.item.id)){ arr[k] = Object.assign({}, arr[k], r.item); found = true; break; }
+              }
+              if(!found) arr.unshift(r.item);
+              renderList_(arr);
+            }
+          }catch(e){}
           rcState.filterStatus = "SEMUA";
-          load_(true);
+          load_(true, true);
         })
         .withFailureHandler(function(err){
-          btn.disabled = false; btn.textContent = "Simpan";
-          showMsg(msg, "Kesalahan koneksi: " + ((err && err.message) || err), "err");
+          btn.disabled = false; btn.textContent = saveLabel;
+          var em = String((err && err.message) || err || "");
+          if(/timeout/i.test(em)){
+            showMsg(msg, "Server lambat merespons. Data mungkin sudah tersimpan — daftar dimuat ulang untuk dicek.", "err");
+            openForm_(false); load_(true, true);
+            return;
+          }
+          showMsg(msg, "Kesalahan koneksi: " + em, "err");
         })
-        .addReclaim(pin_(), payload);
+        [editId ? "updateReclaim" : "addReclaim"](editId ? pin_() : pin_(), editId ? editId : payload, editId ? payload : undefined);
     }
 
     function changeStatus_(id, next, btn){
@@ -9029,6 +9228,7 @@ function applyRejectedAlasanFilter_(which){
 
       $("rcToggleFormBtn").addEventListener("click", function(){ openForm_($("rcFormCard").hidden); });
       $("rcCancelBtn").addEventListener("click", function(){ resetForm_(); openForm_(false); });
+      $("rcBackBtn").addEventListener("click", function(){ resetForm_(); openForm_(false); });
       $("rcSaveBtn").addEventListener("click", save_);
       $("rcLoadBtn").addEventListener("click", function(){ load_(true); });
       $("rcFilterQ").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); load_(true); } });
@@ -9042,7 +9242,19 @@ function applyRejectedAlasanFilter_(which){
           load_(true);
         });
       });
+      $("rcListWrap").addEventListener("keydown", function(e){
+        var tr = e.target.closest ? e.target.closest("tr.rc-editing") : null;
+        if(!tr) return;
+        if(e.key === "Escape"){ e.preventDefault(); cancelInline_(); }
+        else if(e.key === "Enter" && e.target.tagName !== "BUTTON"){ e.preventDefault(); var b = tr.querySelector(".rc-isave"); if(b && !b.disabled) saveInline_(b.getAttribute("data-rc-id"), b); }
+      });
       $("rcListWrap").addEventListener("click", function(e){
+        var eb = e.target.closest ? e.target.closest(".rc-edit") : null;
+        if(eb){ startInline_(eb.getAttribute("data-rc-edit")); return; }
+        var sv = e.target.closest ? e.target.closest(".rc-isave") : null;
+        if(sv){ saveInline_(sv.getAttribute("data-rc-id"), sv); return; }
+        if(e.target.closest && e.target.closest(".rc-icancel")){ cancelInline_(); return; }
+        if(e.target.closest && e.target.closest(".rc-ask")){ askPic_(); return; }
         var b = e.target.closest ? e.target.closest(".rc-act") : null;
         if(!b) return;
         changeStatus_(b.getAttribute("data-rc-id"), b.getAttribute("data-rc-next"), b);
@@ -15508,63 +15720,143 @@ html[data-mode="dark"] .sk-slow{ color:#9DB1DB; }
 .sk-slow .es-action{ min-height:36px; padding:0 14px; border-radius:8px; cursor:pointer; font-size:12.5px; font-weight:700; background:transparent; border:1px solid currentColor; color:inherit; }
 }
 </style>
+
 <style id="reclaim-css">
-#tab-reclaim .rc-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:4px 0 16px}
-#tab-reclaim .rc-card{all:unset;box-sizing:border-box;cursor:pointer;background:var(--m-surface,#fff);border:1px solid var(--m-line,#E6EAF2);border-radius:14px;padding:14px 16px;transition:border-color .15s,box-shadow .15s}
-#tab-reclaim .rc-card:hover{background:var(--m-hover,#F8FAFD)}
-#tab-reclaim .rc-card.active{border-color:var(--m-brand,#0F2A6B);box-shadow:0 0 0 1px var(--m-brand,#0F2A6B) inset}
-#tab-reclaim .rc-card-n{font-size:26px;font-weight:700;color:var(--m-ink,#0B1530);line-height:1.1}
-#tab-reclaim .rc-card-l{font-size:12.5px;color:var(--m-mute,#5B667A);margin-top:4px;font-weight:500}
-#tab-reclaim .rc-s-proses .rc-card-n{color:var(--m-amb,#D97706)}
-#tab-reclaim .rc-s-kirim .rc-card-n{color:#2563EB}
-#tab-reclaim .rc-s-terima .rc-card-n{color:#15803D}
-#tab-reclaim .rc-bar{display:flex;gap:12px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}
-#tab-reclaim .rc-bar-filters{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;flex:1 1 auto}
-#tab-reclaim .rc-bar-filters .field{min-width:130px;flex:0 1 160px}
-#tab-reclaim .rc-btn-load{width:auto!important;padding:10px 18px!important;margin:0!important}
-#tab-reclaim .rc-btn-new{cursor:pointer;border:0;border-radius:10px;padding:10px 16px;font-weight:600;font-size:14px;background:var(--m-brand,#0F2A6B);color:#fff}
-#tab-reclaim .rc-btn-ghost{cursor:pointer;border:1px solid var(--m-line,#E6EAF2);background:transparent;color:var(--m-ink,#0B1530);border-radius:10px;padding:10px 16px;font-weight:600;font-size:14px}
-#tab-reclaim .rc-form-card{background:var(--m-surface,#fff);border:1px solid var(--m-line,#E6EAF2);border-radius:14px;padding:18px;margin-bottom:16px}
-#tab-reclaim .rc-form-card[hidden]{display:none!important}
-#tab-reclaim .rc-form-title{font-weight:700;font-size:15px;color:var(--m-ink,#0B1530);margin-bottom:12px}
-#tab-reclaim .rc-form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-#tab-reclaim .rc-opt{opacity:.6;font-weight:400}
-#tab-reclaim .rc-seg{display:flex;border:1px solid var(--m-line,#E6EAF2);border-radius:10px;overflow:hidden}
-#tab-reclaim .rc-seg-btn{flex:1;cursor:pointer;border:0;padding:10px 8px;font-size:14px;font-weight:600;background:transparent;color:var(--m-mute,#5B667A)}
-#tab-reclaim .rc-seg-btn.active{background:var(--m-soft,#EAF0FD);color:var(--m-brand,#0F2A6B)}
-#tab-reclaim .rc-form-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap}
-#tab-reclaim .rc-form-hint{font-size:13px;color:var(--m-mute,#5B667A)}
-#tab-reclaim .rc-form-actions{display:flex;gap:10px}
-#tab-reclaim .rc-table-scroll{overflow-x:auto;background:var(--m-surface,#fff);border:1px solid var(--m-line,#E6EAF2);border-radius:14px}
-#tab-reclaim .rc-table{width:100%;border-collapse:collapse;font-size:13.5px;color:var(--m-ink,#0B1530)}
-#tab-reclaim .rc-table th{text-align:left;padding:11px 12px;font-size:12px;font-weight:600;color:var(--m-mute,#5B667A);border-bottom:1px solid var(--m-line,#E6EAF2);white-space:nowrap}
-#tab-reclaim .rc-table td{padding:11px 12px;border-bottom:1px solid var(--m-line,#E6EAF2);vertical-align:top}
-#tab-reclaim .rc-table tbody tr:last-child td{border-bottom:0}
-#tab-reclaim .rc-mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px}
-#tab-reclaim .rc-dash{opacity:.45}
-#tab-reclaim .rc-sub{font-size:11.5px;color:var(--m-mute,#5B667A);margin-top:4px}
-#tab-reclaim .rc-badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
-#tab-reclaim .rc-b-proses{background:rgba(217,119,6,.14);color:#B45309}
-#tab-reclaim .rc-b-kirim{background:rgba(37,99,235,.13);color:#1D4ED8}
-#tab-reclaim .rc-b-terima{background:rgba(21,128,61,.14);color:#15803D}
-:root[data-mode="dark"] #tab-reclaim .rc-b-proses{color:#FBBF6A}
-:root[data-mode="dark"] #tab-reclaim .rc-b-kirim{color:#8DB2FF}
-:root[data-mode="dark"] #tab-reclaim .rc-b-terima{color:#6EE7A0}
-#tab-reclaim .rc-td-act{white-space:nowrap}
-#tab-reclaim .rc-act{cursor:pointer;border:1px solid var(--m-brand,#0F2A6B);color:var(--m-brand,#0F2A6B);background:transparent;border-radius:8px;padding:6px 11px;font-size:12.5px;font-weight:600}
-#tab-reclaim .rc-act:hover{background:var(--m-soft,#EAF0FD)}
-#tab-reclaim .rc-act:disabled{opacity:.5;cursor:default}
-#tab-reclaim .rc-done{font-size:12.5px;color:var(--m-mute,#5B667A)}
-@media (max-width:760px){
-  #tab-reclaim .rc-cards{grid-template-columns:repeat(2,1fr)}
-  #tab-reclaim .rc-form-grid{grid-template-columns:1fr}
-  #tab-reclaim .rc-bar-filters .field{flex:1 1 140px}
-  #tab-reclaim .rc-table thead{display:none}
-  #tab-reclaim .rc-table,#tab-reclaim .rc-table tbody,#tab-reclaim .rc-table tr,#tab-reclaim .rc-table td{display:block;width:100%}
-  #tab-reclaim .rc-table tr{padding:10px 12px;border-bottom:1px solid var(--m-line,#E6EAF2)}
-  #tab-reclaim .rc-table td{border:0;padding:3px 0;display:flex;justify-content:space-between;gap:12px;text-align:right}
-  #tab-reclaim .rc-table td::before{content:attr(data-label);color:var(--m-mute,#5B667A);font-size:12px;text-align:left;flex:0 0 auto}
-}
+:root[data-mode="light"] #tab-reclaim, :root:not([data-mode]) #tab-reclaim{--rx-surface:#FFFFFF;--rx-tint:#F5F7FB;--rx-line:#E3E9F4;--rx-line2:#D3DCEC;--rx-ink:#0B1530;--rx-mute:#5B667A;--rx-brand:#12306E;--rx-brand-hi:#0B2257;--rx-on:#FFFFFF;--rx-soft:#EAF0FC;--rx-amb:#B45309;--rx-amb-bg:#FFF3DC;--rx-blu:#1D4ED8;--rx-blu-bg:#E4EDFF;--rx-grn:#15803D;--rx-grn-bg:#E7F6EC;--rx-ring:rgba(18,48,110,.16);color-scheme:light;}
+:root[data-mode="dark"] #tab-reclaim{--rx-surface:#0F2150;--rx-tint:rgba(255,255,255,.045);--rx-line:rgba(255,255,255,.10);--rx-line2:rgba(255,255,255,.20);--rx-ink:#EAF0FF;--rx-mute:#9DB1DB;--rx-brand:#8DB2FF;--rx-brand-hi:#B3CBFF;--rx-on:#0B1530;--rx-soft:rgba(141,178,255,.14);--rx-amb:#FBBF6A;--rx-amb-bg:rgba(251,191,106,.14);--rx-blu:#8DB2FF;--rx-blu-bg:rgba(141,178,255,.16);--rx-grn:#6EE7A0;--rx-grn-bg:rgba(110,231,160,.14);--rx-ring:rgba(141,178,255,.30);color-scheme:dark;}
+:root:root:root[data-mode] #tab-reclaim:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important;margin:0!important;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;color:var(--rx-ink)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-page:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;flex-direction:column!important;gap:16px!important;max-width:1240px!important;width:100%!important;margin:0!important;padding:0!important;box-sizing:border-box!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-head:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important;margin:0!important;padding:0!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-head-sub:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){margin:0!important;font-size:14px!important;line-height:1.5!important;font-weight:400!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;height:40px!important;min-height:40px!important;width:auto!important;margin:0!important;padding:0 18px!important;border-radius:10px!important;font-family:inherit!important;font-size:13.5px!important;font-weight:600!important;line-height:1!important;letter-spacing:0!important;text-transform:none!important;white-space:nowrap!important;cursor:pointer!important;box-shadow:none!important;background-image:none!important;transform:none!important;box-sizing:border-box!important;transition:background-color .15s,border-color .15s,color .15s!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn svg:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:16px!important;height:16px!important;flex:0 0 16px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn-primary:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background-color:var(--rx-brand)!important;color:var(--rx-on)!important;-webkit-text-fill-color:var(--rx-on)!important;border:1px solid var(--rx-brand)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn-primary:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):hover:not(:disabled){background-color:var(--rx-brand-hi)!important;border-color:var(--rx-brand-hi)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn-dark:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background-color:var(--rx-tint)!important;color:var(--rx-brand)!important;-webkit-text-fill-color:var(--rx-brand)!important;border:1px solid var(--rx-line2)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn-dark:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):hover:not(:disabled){background-color:var(--rx-soft)!important;border-color:var(--rx-brand)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn-ghost:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background-color:transparent!important;color:var(--rx-ink)!important;-webkit-text-fill-color:var(--rx-ink)!important;border:1px solid var(--rx-line2)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn-ghost:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):hover:not(:disabled){background-color:var(--rx-tint)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):focus-visible{outline:2px solid var(--rx-brand)!important;outline-offset:2px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):disabled{opacity:.55!important;cursor:not-allowed!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-stats:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-stat:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){all:unset!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important;gap:14px!important;min-height:104px!important;box-sizing:border-box!important;padding:16px 18px!important;border:1px solid var(--rx-line)!important;border-radius:14px!important;background:var(--rx-surface)!important;cursor:pointer!important;text-align:left!important;font-family:inherit!important;transition:border-color .15s,background-color .15s!important;position:relative!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-stat:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):hover{border-color:var(--rx-line2)!important;background:var(--rx-tint)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-stat:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h).active{border-color:var(--rx-brand)!important;box-shadow:inset 0 0 0 1px var(--rx-brand)!important;background:var(--rx-surface)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-stat:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):focus-visible{outline:2px solid var(--rx-brand)!important;outline-offset:2px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-stat-top:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;align-items:center!important;gap:10px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-stat-ico:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:inline-flex!important;align-items:center!important;justify-content:center!important;width:32px!important;height:32px!important;flex:0 0 32px!important;border-radius:10px!important;background:var(--rx-soft)!important;color:var(--rx-brand)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-stat-ico svg:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:17px!important;height:17px!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-s-proses .rcx-stat-ico:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-amb-bg)!important;color:var(--rx-amb)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-s-kirim .rcx-stat-ico:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-blu-bg)!important;color:var(--rx-blu)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-s-terima .rcx-stat-ico:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-grn-bg)!important;color:var(--rx-grn)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-stat-label:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){font-size:13px!important;font-weight:600!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;line-height:1.2!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-stat-n:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:block!important;font-size:30px!important;font-weight:700!important;line-height:1!important;letter-spacing:-.02em!important;font-variant-numeric:tabular-nums!important;color:var(--rx-ink)!important;-webkit-text-fill-color:var(--rx-ink)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-card:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-surface)!important;background-image:none!important;border:1px solid var(--rx-line)!important;border-radius:14px!important;box-shadow:none!important;padding:18px 20px!important;margin:0!important;box-sizing:border-box!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-card[hidden]:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:none!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-filter:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:grid!important;grid-template-columns:minmax(170px,1.1fr) minmax(220px,1.6fr) minmax(150px,1fr) minmax(150px,1fr) auto!important;gap:14px!important;align-items:end!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-field:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;flex-direction:column!important;gap:6px!important;min-width:0!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-field label:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:block!important;margin:0!important;padding:0!important;font-size:12.5px!important;font-weight:600!important;line-height:1.3!important;letter-spacing:0!important;text-transform:none!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-opt:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){font-weight:400!important;opacity:.75!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-field input:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rcx-field select:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:block!important;width:100%!important;height:40px!important;min-height:40px!important;margin:0!important;padding:0 12px!important;box-sizing:border-box!important;border:1px solid var(--rx-line2)!important;border-radius:10px!important;background-color:var(--rx-surface)!important;background-image:none!important;color:var(--rx-ink)!important;-webkit-text-fill-color:var(--rx-ink)!important;font-family:inherit!important;font-size:14px!important;font-weight:500!important;line-height:1.2!important;box-shadow:none!important;outline:none!important;transition:border-color .15s,box-shadow .15s!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-field select:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){-webkit-appearance:none!important;appearance:none!important;padding-right:36px!important;cursor:pointer!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238794B3' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 12px center!important;background-size:16px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-field input:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h)::placeholder{color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;opacity:.65!important;font-weight:400!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-field input:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):focus,:root:root:root[data-mode] #tab-reclaim .rcx-field select:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):focus{border-color:var(--rx-brand)!important;box-shadow:0 0 0 3px var(--rx-ring)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-field input:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):hover,:root:root:root[data-mode] #tab-reclaim .rcx-field select:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):hover{border-color:var(--rx-brand)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-field input[type="date"]:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h)::-webkit-calendar-picker-indicator{cursor:pointer!important;opacity:.55!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-search:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){position:relative!important;display:block!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-search-ico:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){position:absolute!important;left:12px!important;top:50%!important;transform:translateY(-50%)!important;width:16px!important;height:16px!important;color:var(--rx-mute)!important;pointer-events:none!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-search input:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){padding-left:36px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-filter .rcx-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){align-self:end!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-form:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){padding:22px 24px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-form-head:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;flex-direction:column!important;gap:2px!important;margin:0 0 18px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-card-title:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){font-size:16px!important;font-weight:700!important;line-height:1.3!important;letter-spacing:-.01em!important;color:var(--rx-ink)!important;-webkit-text-fill-color:var(--rx-ink)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-card-sub:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){font-size:13px!important;line-height:1.4!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-form-grid:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px 18px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-seg:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;height:40px!important;padding:3px!important;box-sizing:border-box!important;border:1px solid var(--rx-line2)!important;border-radius:10px!important;background:var(--rx-tint)!important;overflow:hidden!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-seg .rc-seg-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){all:unset!important;display:flex!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;border-radius:7px!important;font-family:inherit!important;font-size:13.5px!important;font-weight:600!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;cursor:pointer!important;transition:background-color .15s,color .15s!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-seg .rc-seg-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):hover{color:var(--rx-ink)!important;-webkit-text-fill-color:var(--rx-ink)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-seg .rc-seg-btn.active:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-surface)!important;color:var(--rx-brand)!important;-webkit-text-fill-color:var(--rx-brand)!important;box-shadow:0 0 0 1px var(--rx-line2),0 1px 2px rgba(11,31,75,.08)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-seg .rc-seg-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):focus-visible{outline:2px solid var(--rx-brand)!important;outline-offset:1px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-form-foot:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;flex-wrap:wrap!important;margin:22px 0 0!important;padding:16px 0 0!important;border-top:1px solid var(--rx-line)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-form-hint:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:inline-flex!important;align-items:center!important;gap:10px!important;font-size:13px!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-form-actions:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;align-items:center!important;gap:10px!important;margin-left:auto!important;}
+:root:root:root[data-mode] #tab-reclaim #rcMsg:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){margin:0!important;}
+:root:root:root[data-mode] #tab-reclaim #rcMsg:not(.show):not(.ok):not(.err):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:none!important;}
+:root:root:root[data-mode] #tab-reclaim #rcMsg.show:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim #rcMsg.ok:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim #rcMsg.err:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:block!important;padding:11px 14px!important;border-radius:10px!important;font-size:13.5px!important;font-weight:500!important;line-height:1.45!important;border:1px solid var(--rx-line)!important;background:var(--rx-tint)!important;color:var(--rx-ink)!important;-webkit-text-fill-color:var(--rx-ink)!important;}
+:root:root:root[data-mode] #tab-reclaim #rcMsg.ok:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-grn-bg)!important;color:var(--rx-grn)!important;-webkit-text-fill-color:var(--rx-grn)!important;border-color:transparent!important;}
+:root:root:root[data-mode] #tab-reclaim #rcMsg.err:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:rgba(217,45,32,.10)!important;color:#B42318!important;-webkit-text-fill-color:#B42318!important;border-color:transparent!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-badge:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:inline-flex!important;align-items:center!important;gap:7px!important;height:26px!important;padding:0 11px!important;border-radius:999px!important;font-size:12px!important;font-weight:600!important;line-height:1!important;white-space:nowrap!important;border:0!important;box-sizing:border-box!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-badge:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h)::before{content:""!important;display:block!important;width:6px!important;height:6px!important;border-radius:50%!important;background:currentColor!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-badge.rc-b-proses:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-amb-bg)!important;color:var(--rx-amb)!important;-webkit-text-fill-color:var(--rx-amb)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-badge.rc-b-kirim:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-blu-bg)!important;color:var(--rx-blu)!important;-webkit-text-fill-color:var(--rx-blu)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-badge.rc-b-terima:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-grn-bg)!important;color:var(--rx-grn)!important;-webkit-text-fill-color:var(--rx-grn)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-tag:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:inline-flex!important;align-items:center!important;height:24px!important;padding:0 10px!important;border-radius:6px!important;font-size:12px!important;font-weight:600!important;background:var(--rx-tint)!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;border:1px solid var(--rx-line)!important;}
+:root[data-mode="light"] #tab-reclaim, :root:not([data-mode]) #tab-reclaim{--rx-tp:#0F766E;--rx-tp-bg:#DDF5F1;--rx-tp-line:#B5E6DE;--rx-pl:#7E22CE;--rx-pl-bg:#F1E6FD;--rx-pl-line:#DCC3F7;}
+:root[data-mode="dark"] #tab-reclaim{--rx-tp:#5EEAD4;--rx-tp-bg:rgba(94,234,212,.14);--rx-tp-line:rgba(94,234,212,.30);--rx-pl:#D8B4FE;--rx-pl-bg:rgba(216,180,254,.16);--rx-pl-line:rgba(216,180,254,.32);}
+:root:root:root[data-mode] #tab-reclaim .rc-tag.rc-t-perpanjang:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-tp-bg)!important;color:var(--rx-tp)!important;-webkit-text-fill-color:var(--rx-tp)!important;border-color:var(--rx-tp-line)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-tag.rc-t-lunas:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-pl-bg)!important;color:var(--rx-pl)!important;-webkit-text-fill-color:var(--rx-pl)!important;border-color:var(--rx-pl-line)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-list:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){padding:0!important;overflow:hidden!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-list-head:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;align-items:center!important;justify-content:space-between!important;padding:14px 20px!important;border-bottom:1px solid var(--rx-line)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-list-count:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){font-size:14px!important;font-weight:700!important;color:var(--rx-ink)!important;-webkit-text-fill-color:var(--rx-ink)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-btn.rc-ask:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){height:34px!important;min-height:34px!important;padding:0 14px!important;font-size:13px!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-table-scroll:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){overflow-x:auto!important;background:transparent!important;border:0!important;border-radius:0!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-table:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:100%!important;border-collapse:separate!important;border-spacing:0!important;background:transparent!important;font-size:13.5px!important;color:var(--rx-ink)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-table th:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){text-align:left!important;padding:11px 16px!important;font-size:12px!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important;white-space:nowrap!important;background:var(--rx-tint)!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;border:0!important;border-bottom:1px solid var(--rx-line)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-table td:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){padding:14px 16px!important;vertical-align:middle!important;background:transparent!important;color:var(--rx-ink)!important;-webkit-text-fill-color:var(--rx-ink)!important;font-size:13.5px!important;border:0!important;border-bottom:1px solid var(--rx-line)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-table tbody tr:last-child td:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){border-bottom:0!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-table tbody tr:hover td:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:var(--rx-tint)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-th-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rc-td-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){text-align:right!important;white-space:nowrap!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-td-date:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){white-space:nowrap!important;font-variant-numeric:tabular-nums!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-cab:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){font-weight:700!important;letter-spacing:.01em!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-mono:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){font-family:"JetBrains Mono",ui-monospace,Menlo,monospace!important;font-size:12.5px!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-item-name:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){font-weight:600!important;line-height:1.35!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-td-item:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){min-width:200px!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-sub:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){margin:3px 0 0!important;font-size:12px!important;line-height:1.35!important;font-weight:400!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){all:unset!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;height:32px!important;padding:0 14px!important;box-sizing:border-box!important;border:1px solid var(--rx-brand)!important;border-radius:8px!important;font-family:inherit!important;font-size:12.5px!important;font-weight:600!important;white-space:nowrap!important;color:var(--rx-brand)!important;-webkit-text-fill-color:var(--rx-brand)!important;background:transparent!important;cursor:pointer!important;transition:background-color .15s,color .15s!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):hover:not(:disabled){background:var(--rx-brand)!important;color:var(--rx-on)!important;-webkit-text-fill-color:var(--rx-on)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):focus-visible{outline:2px solid var(--rx-brand)!important;outline-offset:2px!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):disabled{opacity:.5!important;cursor:default!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-done:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:inline-flex!important;align-items:center!important;gap:6px!important;font-size:12.5px!important;font-weight:600!important;color:var(--rx-grn)!important;-webkit-text-fill-color:var(--rx-grn)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-list-wrap .empty-log:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){padding:36px 16px!important;text-align:center!important;font-size:13.5px!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;background:var(--rx-surface)!important;border:1px dashed var(--rx-line2)!important;border-radius:14px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-empty:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;flex-direction:column!important;align-items:center!important;gap:6px!important;padding:44px 20px!important;text-align:center!important;background:var(--rx-surface)!important;border:1px dashed var(--rx-line2)!important;border-radius:14px!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-empty-ico:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;align-items:center!important;justify-content:center!important;width:44px!important;height:44px!important;margin-bottom:6px!important;border-radius:12px!important;background:var(--rx-soft)!important;color:var(--rx-brand)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-empty-t:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){font-size:15px!important;font-weight:700!important;color:var(--rx-ink)!important;-webkit-text-fill-color:var(--rx-ink)!important;}
+:root:root:root[data-mode] #tab-reclaim .rcx-empty-s:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){max-width:360px!important;font-size:13px!important;line-height:1.5!important;color:var(--rx-mute)!important;-webkit-text-fill-color:var(--rx-mute)!important;}
+@media (max-width:1100px){:root:root:root[data-mode] #tab-reclaim .rcx-filter:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){grid-template-columns:repeat(2,minmax(0,1fr))!important;}:root:root:root[data-mode] #tab-reclaim .rcx-filter .rcx-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:100%!important;grid-column:1/-1!important;}}
+@media (max-width:820px){:root:root:root[data-mode] #tab-reclaim .rcx-stats:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){grid-template-columns:repeat(2,minmax(0,1fr))!important;}:root:root:root[data-mode] #tab-reclaim .rcx-form-grid:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){grid-template-columns:1fr!important;}:root:root:root[data-mode] #tab-reclaim .rcx-stat:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){min-height:92px!important;}}
+@media (max-width:720px){:root:root:root[data-mode] #tab-reclaim .rcx-head:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){flex-direction:column!important;align-items:stretch!important;gap:12px!important;}:root:root:root[data-mode] #tab-reclaim .rcx-head .rcx-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:100%!important;}:root:root:root[data-mode] #tab-reclaim .rcx-filter:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){grid-template-columns:1fr 1fr!important;padding:16px!important;}:root:root:root[data-mode] #tab-reclaim .rcx-f-cabang:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rcx-f-q:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){grid-column:1/-1!important;}:root:root:root[data-mode] #tab-reclaim .rcx-form:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){padding:18px 16px!important;}:root:root:root[data-mode] #tab-reclaim .rcx-form-foot:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){flex-direction:column!important;align-items:stretch!important;}:root:root:root[data-mode] #tab-reclaim .rcx-form-actions:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:100%!important;margin-left:0!important;}:root:root:root[data-mode] #tab-reclaim .rcx-form-actions .rcx-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){flex:1 1 0!important;}:root:root:root[data-mode] #tab-reclaim .rcx-field input:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rcx-field select:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){font-size:16px!important;}:root:root:root[data-mode] #tab-reclaim .rc-table thead:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:none!important;}:root:root:root[data-mode] #tab-reclaim .rc-table:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rc-table tbody:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rc-table tr:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:block!important;width:100%!important;}:root:root:root[data-mode] #tab-reclaim .rc-table tr:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){padding:12px 16px!important;border-bottom:1px solid var(--rx-line)!important;}:root:root:root[data-mode] #tab-reclaim .rc-table tbody tr:last-child:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){border-bottom:0!important;}:root:root:root[data-mode] #tab-reclaim .rc-table td:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;justify-content:space-between!important;align-items:flex-start!important;gap:16px!important;width:100%!important;padding:5px 0!important;border:0!important;text-align:right!important;box-sizing:border-box!important;}:root:root:root[data-mode] #tab-reclaim .rc-table td:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h)::before{content:attr(data-label)!important;flex:0 0 auto!important;font-size:12px!important;font-weight:600!important;color:var(--rx-mute)!important;text-align:left!important;}:root:root:root[data-mode] #tab-reclaim .rc-table tbody tr:hover td:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background:transparent!important;}:root:root:root[data-mode] #tab-reclaim .rc-td-item:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){min-width:0!important;}:root:root:root[data-mode] #tab-reclaim .rc-td-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){justify-content:flex-end!important;padding-top:10px!important;}:root:root:root[data-mode] #tab-reclaim .rc-td-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h)::before{display:none!important;}}
+@media (prefers-reduced-motion:reduce){:root:root:root[data-mode] #tab-reclaim .rcx-btn:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rcx-stat:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rc-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rcx-field input:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rcx-field select:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){transition:none!important;}}
+:root:root:root[data-mode] #tab-reclaim .rc-act-wrap:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-edit:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){all:unset!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;height:32px!important;padding:0 12px!important;box-sizing:border-box!important;border:1px solid var(--rx-line2)!important;border-radius:8px!important;font-family:inherit!important;font-size:12.5px!important;font-weight:600!important;white-space:nowrap!important;color:var(--rx-ink)!important;-webkit-text-fill-color:var(--rx-ink)!important;background:transparent!important;cursor:pointer!important;transition:background-color .15s,border-color .15s!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-edit:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):hover{background:var(--rx-tint)!important;border-color:var(--rx-brand)!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-edit:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):focus-visible{outline:2px solid var(--rx-brand)!important;outline-offset:2px!important;}
+@media (max-width:720px){:root:root:root[data-mode] #tab-reclaim .rc-act-wrap:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:100%!important;}}
+@media (min-width:721px){:root:root:root[data-mode] #tab-reclaim .rc-table:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){table-layout:auto!important;min-width:960px!important;}:root:root:root[data-mode] #tab-reclaim .rc-table th.rc-th-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){text-align:right!important;padding-right:20px!important;width:250px!important;}:root:root:root[data-mode] #tab-reclaim .rc-table td.rc-td-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){text-align:right!important;padding-right:20px!important;width:250px!important;}:root:root:root[data-mode] #tab-reclaim .rc-table th:nth-child(1):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:110px!important;}:root:root:root[data-mode] #tab-reclaim .rc-table th:nth-child(2):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:90px!important;}:root:root:root[data-mode] #tab-reclaim .rc-table th:nth-child(5):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:120px!important;}:root:root:root[data-mode] #tab-reclaim .rc-table th:nth-child(6):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:170px!important;}}
+:root:root:root[data-mode] #tab-reclaim .rc-act-wrap:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:grid!important;grid-template-columns:76px 132px!important;gap:8px!important;justify-content:end!important;align-items:center!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-act-wrap .rc-edit:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rc-act-wrap .rc-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:100%!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-act-wrap .rc-done:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){grid-column:2!important;justify-content:center!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-act-wrap:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){grid-template-columns:36px 36px!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-act-wrap .rc-edit:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rc-act-wrap .rc-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:36px!important;height:36px!important;padding:0!important;border-radius:9px!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-act-wrap .rc-edit svg:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rc-act-wrap .rc-act svg:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:16px!important;height:16px!important;}
+:root:root:root[data-mode] #tab-reclaim .rc-act-wrap .rc-done:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){grid-column:1/-1!important;justify-content:flex-end!important;}
+@media (min-width:721px){:root:root:root[data-mode] #tab-reclaim .rc-table th.rc-th-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rc-table td.rc-td-act:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){width:110px!important;}}
+<style id="reclaim-formpage-css">
+#tab-reclaim .rcx-page.rc-formview > :not(#rcFormCard):not(#rcMsg){display:none !important}
+#tab-reclaim .rcx-page.rc-formview #rcFormCard{max-width:860px;margin:0 auto}
+#tab-reclaim .rc-back-btn{display:inline-flex;align-items:center;gap:6px;margin:0 0 12px;padding:7px 12px}
+@media (max-width:720px){#tab-reclaim .rcx-page.rc-formview #rcFormCard{max-width:none}}
+#tab-reclaim .rc-in-imei{margin-top:6px !important}
+:root:root:root[data-mode] #tab-reclaim .rc-in{display:block !important;width:100% !important;min-width:110px !important;height:36px !important;padding:0 10px !important;border:1px solid var(--rx-line2) !important;border-radius:8px !important;background:var(--rx-surface) !important;color:var(--rx-ink) !important;-webkit-text-fill-color:var(--rx-ink) !important;font:inherit !important;font-size:13px !important;box-sizing:border-box !important;}
+:root:root:root[data-mode] #tab-reclaim .rc-in:focus{outline:2px solid var(--rx-brand) !important;outline-offset:1px !important;}
+:root:root:root[data-mode] #tab-reclaim .rc-in-mono{font-family:ui-monospace,Menlo,Consolas,monospace !important;}
+:root:root:root[data-mode] #tab-reclaim tr.rc-editing td{background:var(--rx-soft) !important;vertical-align:top !important;}
+:root:root:root[data-mode] #tab-reclaim .rc-iact:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:flex !important;flex-direction:column !important;align-items:stretch !important;gap:6px !important;width:92px !important;margin-left:auto !important;}
+:root:root:root[data-mode] #tab-reclaim .rc-iact .rc-isave:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h),:root:root:root[data-mode] #tab-reclaim .rc-iact .rc-icancel:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){display:inline-flex !important;align-items:center !important;justify-content:center !important;width:100% !important;height:34px !important;min-height:34px !important;margin:0 !important;padding:0 12px !important;border-radius:9px !important;font:inherit !important;font-size:13px !important;font-weight:600 !important;line-height:1 !important;cursor:pointer !important;box-shadow:none !important;background-image:none !important;box-sizing:border-box !important;transition:background-color .15s,border-color .15s !important;}
+:root:root:root[data-mode] #tab-reclaim .rc-iact .rc-isave:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background-color:var(--rx-brand) !important;border:1px solid var(--rx-brand) !important;color:var(--rx-on) !important;-webkit-text-fill-color:var(--rx-on) !important;}
+:root:root:root[data-mode] #tab-reclaim .rc-iact .rc-isave:hover:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background-color:var(--rx-brand-hi) !important;border-color:var(--rx-brand-hi) !important;}
+:root:root:root[data-mode] #tab-reclaim .rc-iact .rc-icancel:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background-color:transparent !important;border:1px solid var(--rx-line2) !important;color:var(--rx-mute) !important;-webkit-text-fill-color:var(--rx-mute) !important;}
+:root:root:root[data-mode] #tab-reclaim .rc-iact .rc-icancel:hover:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){background-color:var(--rx-tint) !important;color:var(--rx-ink) !important;-webkit-text-fill-color:var(--rx-ink) !important;}
+:root:root:root[data-mode] #tab-reclaim .rc-iact button:disabled:not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h):not(#_h){opacity:.55 !important;cursor:not-allowed !important;}
 </style>
 </body>
 </html>
